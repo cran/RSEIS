@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <rpc/rpc.h>
 
 #include <assert.h>
 #include <math.h>
@@ -9,7 +8,6 @@
 #include <unistd.h>
 #include <stddef.h>
 
-#include <sys/stat.h>
 
 #include <malloc.h>
 
@@ -26,7 +24,10 @@
 
 
 #if USE_AH_XDR
+#include <rpc/rpc.h>
 #include <sys/ioctl.h>
+#include <sys/stat.h>
+
 #endif
 
 #include "seis.h"
