@@ -1,6 +1,7 @@
 `PICK.GEN` <-
 function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  STDLAB=NULL,
-                   PADDLAB=NULL, SHOWONLY=FALSE, CHOP=FALSE, TIT="", pts=FALSE, forcepix=FALSE, SCALE=1, velfile="", stafile="", LOC=NULL, FILT=list(fl=.2, fh=15,  type="HP", proto="BU") )
+                   PADDLAB=NULL, TEMPBUT=NULL, SHOWONLY=FALSE, CHOP=FALSE, TIT="", pts=FALSE, forcepix=FALSE, SCALE=1,
+         velfile="", stafile="", LOC=NULL, FILT=list(fl=.2, fh=15,  type="HP", proto="BU") )
 {
 ###  a = PICK.MARIO(GH,  sel, WIN=twin)
   #########  velfile is a 1D velocity file
@@ -19,6 +20,9 @@ function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  ST
    if(missing(STDLAB)) { STDLAB = c("DONE", "QUIT","zoom out", "zoom in", "Left", "Right", "restore", "Pinfo",
                            "AUTOP", "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "SCALE")}
   if(missing(PADDLAB)) { PADDLAB=c( "PPIK", "AccPIK", "XPIK", "NOPIX", "REPIX", "Postscript") }
+
+  if(missing(TEMPBUT)) { TEMPBUT=NULL } 
+  
   if(missing(TIT)) { TIT=NULL }
   if(missing(pts)) { pts=FALSE }
   if(missing(forcepix)) { forcepix=FALSE }
@@ -41,6 +45,26 @@ function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  ST
 
   
  if( is.null(sel) ) { sel = 1:length(GH$dt) }
+
+
+  getrdpix<-function(zloc,zenclick,sel,NH   )
+    {
+
+      ppick = zloc$x[1:(zenclick-1)]
+      
+      ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
+      ipick = sel[ypick]
+      
+      asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick
+      
+      rd = recdate( NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], asec)
+      
+      rd$yr =   NH$info$yr[ipick]
+      rd$stn =  NH$STNS[ipick]
+      rd$comp = NH$COMPS[ipick]
+      invisible(rd) 
+    }
+  
 
   SEL.ORIG = sel
   
@@ -75,6 +99,78 @@ function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  ST
         "PickWin", "XTR", "SPEC", "SGRAM" ,"WLET")
     }
 
+
+
+fixedbuttons = c("DONE",
+"QUIT", 
+"NEXT", 
+"PREV", 
+"S1", 
+"S2", 
+"MARK", 
+"DOC", 
+"restore", 
+"refresh", 
+"zoom out", 
+"zoom in", 
+"Left", 
+ "Right", 
+"SCALE", 
+ "SHOWALL", 
+"SHOWSEL", 
+"saveFN", 
+"FLIP", 
+"TR_INFO", 
+"Postscript", 
+"AUTOP",
+"AUTOPALL", 
+"DETECT", 
+ "MAP", 
+"XTR", 
+ "SIG", 
+"SPEC.old", 
+ "ASCII", 
+ "AMPL", 
+  "TRNAMPL",
+  "SPEC", 
+"SGRAM", 
+ "WLET", 
+"FILT", 
+"UNFILT", 
+ "BRUNE", 
+  "DETAIL", 
+   "PTS", 
+"MMARKS", 
+  "PMOT", 
+ "STERNET", 
+ "GTAZI", 
+"ENVLP", 
+   "WINFO", 
+   "Pinfo", 
+     "XCOR", 
+"PHLAG", 
+   "3COMP", 
+ "Predict1D", 
+   "SavePF", 
+     "SavePIX", 
+   "LQUAKE", 
+    "PickWin", 
+     "Ppic", 
+    "Spic", 
+   "Apic", 
+     "Pup",   
+     "Pdown", 
+     "Pnil", 
+     "YPIX", 
+     "WPIX", 
+     "EDIX", 
+ "NOPIX", 
+      "REPIX", 
+       "ADDBUTTS")
+     
+
+
+  
 
     
   stdlab =  STDLAB
@@ -282,8 +378,8 @@ function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  ST
          ##  text(xpix, ypixB, labels=cpixa, col=colpix, pos=4)
         }
       
-  if(is.numeric(SHOWONLY)) { Sys.sleep(SHOWONLY); return(0) }
-  if(SHOWONLY==TRUE) { return(0) }
+  if(is.numeric(SHOWONLY)) { Sys.sleep(SHOWONLY); return(list(but=NULL, zloc=0, pix=0)) }
+  if(SHOWONLY==TRUE) { return(list(but=NULL, zloc=0, pix=0)) }
 
   
   buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
@@ -321,7 +417,7 @@ function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  ST
   
   Nclick = length(iloc$x)
   zenclick =  length(zloc$x)
-  if(is.null(zloc$x)) { return(-3) }
+  if(is.null(zloc$x)) { return(list(but="None", zloc=0, pix=0)) }
   K = whichbutt(iloc ,buttons)
   
   sloc = zloc
@@ -362,6 +458,8 @@ function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  ST
    
         if(zenclick==0 & Nclick<1 )
         {
+
+          
          break;
           #### next
         }
@@ -383,23 +481,29 @@ function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  ST
         {
            buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)))
             title("Return to Calling Program")
-          
-          return(NULL)
+          rd = getrdpix(zloc, zenclick, sel, NH)
+          return(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
         }
      if(K[Nclick] == match("NEXT", BLABS, nomatch = NOLAB))
         {
-          return(1)
+          rd = getrdpix(zloc, zenclick, sel, NH)
+          return(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
           
         }
      if(K[Nclick] == match("PREV", BLABS, nomatch = NOLAB))
         {
-          return(-1)
+           rd = getrdpix(zloc, zenclick, sel, NH)
+          return(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
         }
 
+      
+  
 
       if(K[Nclick] == match("MARK", BLABS, nomatch = NOLAB))
         {
-          return(list(mark = TRUE))
+
+          rd = getrdpix(zloc, zenclick, sel, NH)
+          return(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
          
           
         }
@@ -1123,7 +1227,7 @@ function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  ST
           TP = list(yr=NH$info$yr[ipick], jd=NH$info$jd[ipick], hr=NH$info$hr[ipick], mi=NH$info$mi[ipick], sec=asec )
 
 
-          RETX = list(x=smallex, y=temp, dt=NH$dt[ipick],   name=NH$info$name[ipick] , Tpick=TP, mark=mark, deltat=NH$dt[ipick] )
+          RETX = list(but="RET", x=smallex, y=temp, dt=NH$dt[ipick],   name=NH$info$name[ipick] , Tpick=TP, mark=mark, deltat=NH$dt[ipick] )
          invisible(RETX)
           zloc = list(x=NULL, y=NULL)
         }
@@ -2181,9 +2285,12 @@ function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  ST
 
           print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], asec, "sta=", NH$STNS[ipick], "comp=", NH$COMPS[ipick] ))
           print(ppick)
-          print(dpick)
+          cat("", sep="\n")
+          cat("Time Differences between picks:", sep="\n")
+          
+          cat(paste(dpick), sep="\n")
 
-
+          cat("", sep="\n")
         ####  print(zloc$y[1:(zenclick-1)])
           
            ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
@@ -2196,15 +2303,7 @@ function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  ST
 
          ####  print(ipick)
 
-         
-
-          asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+secpick
-          rd = recdate( NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], asec)
-
-          rd$yr =   NH$info$yr[ipick]
-          rd$stn =  NH$STNS[ipick]
-           rd$comp = NH$COMPS[ipick]
-
+         rd =getrdpix(zloc,zenclick,sel,NH   )
           
           print(data.frame(rd))
 
@@ -3448,8 +3547,10 @@ function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  ST
               
             
               #### print(paste(" ", azap, kzap))
+
+              zloc = list(x=NULL, y=NULL) 
             }
-          zloc = list(x=NULL, y=NULL) 
+          
         }
 ###################   REMOVE  PICKs   ###########################      
       
@@ -3529,26 +3630,23 @@ function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  ST
 
      ##### doMYBUTTS(butt=BLABS[K[Nclick]], click=zloc, NH=NH, sel=sel, APIX=WPX)
 #########################################################################  
-
-      
+      if(K[Nclick] > 0)
+        {
+          if(   K[Nclick] == match(BLABS[K[Nclick]]   , BLABS, nomatch = NOLAB) &
+             is.na( match(BLABS[K[Nclick]] , fixedbuttons) )        )
+            {
+              ###print(zenclick)
+              ###print(zloc)
+              
+              rd = getrdpix(zloc, zenclick, sel, NH)
+              return( list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd) )
+            }
+          
+        }
+     
       ####################  END BUTTON DEFINITIONS    ###########################      
-
-
             ###################   WRAP UP and PLOT AGAIN   ###########################      
-
-      
-      ###   source("/home/lees/Progs/R_stuff/tung.R");   a = PICK.MARIO(GH,  sel, WIN=twin) 
-
-       ###  a = PICK.MARIO(GH,  sel, WIN=twin)
-      ####  plot the picks
-
-     ####   fin = ftorn[ii]
-     ###    JH = Get.DumpDat( fin, "/home/beer/lees/DUMP/MARIO2", stloc=6, cmploc=7, XSTA=NULL)
-      ####  a = PICK.MARIO(JH,sel=1:length(JH$dt), WIN=NULL)
-
-
-
-      
+ 
       if(NPX>0)
         {
           
@@ -3570,6 +3668,8 @@ function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  ST
           zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
           zenclick = length(zloc$x)
           K =  whichbutt(iloc ,buttons)
+
+       
         }
       else
         {
@@ -3602,7 +3702,7 @@ function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  ST
 #### print(pwin)
 #### print(WIN)
   
-  RETP = list(sloc=sloc, WPX=WPX, BRUNINFO=BRUNINFO, DETLINFO=DETLINFO,  mark=mark)
+  RETP = list(but="RET", sloc=sloc, WPX=WPX, BRUNINFO=BRUNINFO, DETLINFO=DETLINFO,  mark=mark)
   
   
   if(!is.null(RETX))

@@ -15,6 +15,8 @@ function(a1, a2, DT, PLOT=FALSE, LAG=100)
   
   if(PLOT==TRUE)
     {
+      opar <- par(no.readonly = TRUE)
+
       par(mfrow = c(3,1))  
 
     }
@@ -46,6 +48,7 @@ function(a1, a2, DT, PLOT=FALSE, LAG=100)
         }
       plot(xc)
       points(xc$lag[which.max(xc$acf)], max(xc$acf), col=2)
+      par(opar)
     }
 
   xc$mlag = mlag

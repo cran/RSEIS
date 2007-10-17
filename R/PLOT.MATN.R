@@ -82,6 +82,7 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1, LOG="", 
   minS = rep(0,nn)
   diffS = rep(0,nn)
 
+  windiv = matrix(nrow=nn, ncol=4)
   
   for(i in 1:nn)
     {
@@ -164,6 +165,7 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1, LOG="", 
       if(add!=3) addtix(side=3, pos=y3+dy,   tck=0.005, at=ttics, labels=FALSE, col=gray(0.8) )
       
       z = RESCALE(amp, y3, y3+dy, minamp, maxamp )
+      windiv[i, ] = c(y3, y3+dy, minamp, maxamp)
       
       if(add!=3)abline(h=y3, lty=2, col=grey(0.8))
       
@@ -263,7 +265,7 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1, LOG="", 
   u = par("usr")
   
   
-  invisible(nn)
+  invisible(list(n=nn, windiv=windiv) )
   
   
 

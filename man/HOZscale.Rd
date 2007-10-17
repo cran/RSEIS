@@ -14,8 +14,8 @@ HOZscale(z, col, units = "", SIDE = 1, s1 = 0.4, s2 = 0.95)
   \item{col}{color palette}
   \item{units}{character string, units}
   \item{SIDE}{Side of the plot}
-  \item{s1}{low percent cut-off of color palette}
-  \item{s2}{upper percent cut-off of color palette}
+  \item{s1}{percent of margin for bottom}
+  \item{s2}{percent of margin for top}
 }
 
 \value{

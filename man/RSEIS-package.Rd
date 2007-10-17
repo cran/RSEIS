@@ -13,9 +13,9 @@ Seismic Analysis and Display
 \tabular{ll}{
 Package: \tab RSEIS\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2007-10-17\cr
-License: \tab What license is it under?\cr
+Version: \tab 1.0-3\cr
+Date: \tab 2008-02-11\cr
+License: \tab GPL\cr
 }
 
 PICK.GEN is general all pupose code that uses interaction for seismic analysis.

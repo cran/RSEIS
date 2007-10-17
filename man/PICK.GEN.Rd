@@ -3,10 +3,16 @@
 
 \title{Seismic Analysis }
 \description{
-Main INteractive Program for plotting and analyzing seismic waveform data.
+Main Interactive Program for plotting and analyzing seismic waveform data.
 }
 \usage{
-PICK.GEN(GH, sel = 1:length(GH$dt), ORD = NULL, WIN = NULL, APIX = NULL, PHASE = NULL, STDLAB = NULL, PADDLAB = NULL, SHOWONLY = FALSE, CHOP = FALSE, TIT = "", pts = FALSE, forcepix = FALSE, SCALE = 1, velfile = "", stafile = "", LOC = NULL, FILT=list(fl=.2, fh=15,  type="HP", proto="BU"))
+PICK.GEN(GH, sel = 1:length(GH$dt), ORD = NULL, WIN = NULL, APIX = NULL,
+PHASE = NULL,
+STDLAB = NULL, PADDLAB = NULL, TEMPBUT=NULL,
+SHOWONLY = FALSE, CHOP = FALSE, TIT = "",
+pts = FALSE, forcepix = FALSE, SCALE = 1,
+velfile = "", stafile = "", LOC = NULL,
+FILT=list(fl=.2, fh=15,  type="HP", proto="BU"))
 }
 
 \arguments{
@@ -18,6 +24,7 @@ PICK.GEN(GH, sel = 1:length(GH$dt), ORD = NULL, WIN = NULL, APIX = NULL, PHASE =
   \item{PHASE}{phase to display, "P", "S", etc }
   \item{STDLAB}{label of buttons}
   \item{PADDLAB}{label of phase-pick buttons}
+  \item{TEMPBUT}{temporary, user defined buttons}
   \item{SHOWONLY}{logical, TRUE=non-interactive }
   \item{CHOP}{whether to chop the signal }
   \item{TIT}{title for the top of plot}
