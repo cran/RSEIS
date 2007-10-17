@@ -1,4 +1,14 @@
+#include <stdlib.h>
+
+/*
+#ifdef MAC
+#include <sys/malloc.h>
+#else
 #include <malloc.h>
+#endif
+*/
+
+
 /*
    Package for general recursion filtering; taken from SAC recursion
    filtering package written by Dave Harris (Copyright, Lawrence

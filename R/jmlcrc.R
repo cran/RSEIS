@@ -3,6 +3,8 @@ function (tfrep, tfspec = numeric(dim(tfrep)[2]), bstep = 3,
     iteration = 10000, rate = 0.001, seed = -7, nbclimb = 10, 
     flag.int = TRUE, chain = TRUE, flag.temp = FALSE) 
 {
+  require("Rwave")
+  
     tfspectrum <- tfspec
     d <- dim(tfrep)
     sigsize <- d[1]

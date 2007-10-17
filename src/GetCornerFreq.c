@@ -3,8 +3,16 @@
 #include <stdlib.h>
 #include <math.h>
 
-
+/*
+#ifdef MAC
+#include <sys/malloc.h>
+#else
 #include <malloc.h>
+#endif
+*/
+
+
+
 
 #define SMALL_NUMBER 1e-300
 

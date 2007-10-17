@@ -1,5 +1,5 @@
 `FILT.SEISN` <-
-function(TH, sel=1:length(TH$JSTR), FILT=list(ON=FALSE, fl=0.5, fh=7.0, type="HP", proto="BU"), TAPER=0.1)
+function(TH, sel=1:length(TH$JSTR), FILT=list(ON=FALSE, fl=0.5, fh=7.0, type="HP", proto="BU"), TAPER=0.1, POSTTAPER=0.1)
   {
     ###  TH = seismic structure
     ###  sel = vector of selected time series in structure
@@ -16,6 +16,7 @@ function(TH, sel=1:length(TH$JSTR), FILT=list(ON=FALSE, fl=0.5, fh=7.0, type="HP
     if(missing(sel)) { sel = 1:length(TH$JSTR) }
     if(missing(FILT)) { FILT = list(ON=FALSE, fl=0.5, fh=7.0, type="HP", proto="BU")  }
     if(missing(TAPER)) { TAPER = NULL }
+    if(missing(POSTTAPER)) { POSTTAPER = NULL }
     
     NEWH = TH
     
@@ -31,6 +32,8 @@ function(TH, sel=1:length(TH$JSTR), FILT=list(ON=FALSE, fl=0.5, fh=7.0, type="HP
         fy = butfilt(ry,FILT$fl, FILT$fh , dt, FILT$type , FILT$proto )
         ## ex = dt*0:(length(y)-1)
         ##  plot(ex, fy, type='l')
+        if(!is.null(POSTTAPER)) { fy = applytaper(fy, p=POSTTAPER) }
+        
         NEWH$JSTR[[ii]][!ny] =  fy
         
       }

@@ -2,6 +2,8 @@
 function(Xamp, DT=0.008, STAMP=NULL)
   {
 
+       require("Rwave")
+ 
     if(missing(DT)) { DT=1 }
      if(missing(STAMP)) { STAMP=NULL }
 

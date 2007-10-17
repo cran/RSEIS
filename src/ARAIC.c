@@ -1,5 +1,18 @@
 #include <math.h>
+#include <stdlib.h>
+#include <stdlib.h>
+
+/*
+#ifdef MAC
+#include <sys/malloc.h>
+#else
 #include <malloc.h>
+#endif
+*/
+
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 

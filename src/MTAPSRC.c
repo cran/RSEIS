@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdlib.h>
 
 #define NRANSI
 #include "jl.h"

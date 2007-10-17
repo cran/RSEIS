@@ -1,6 +1,9 @@
 `jmlcfamily` <-
 function (ccridge, bstep = 1, nbchain = 100, ptile = 0.05) 
 {
+
+ require("Rwave")
+ 
     d <- dim(ccridge)
     sigsize <- d[1]
     nscale <- d[2]

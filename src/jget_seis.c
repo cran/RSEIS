@@ -8,8 +8,15 @@
 #include <unistd.h>
 #include <stddef.h>
 
-
+/*
+#ifdef MAC
+#include <sys/malloc.h>
+#else
 #include <malloc.h>
+#endif
+*/
+
+
 
 /**********   change 	USE_AH_XDR  to 0 to exclude all calls to XDR (AH)   **/
 /*                           MUST make sure this is correct   **/

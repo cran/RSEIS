@@ -1,7 +1,19 @@
 #include <stdio.h>
+#include <stdlib.h>
+
+
 #include <math.h>
 #include <string.h>
+
+/*
+#ifdef MAC
+#include <sys/malloc.h>
+#else
 #include <malloc.h>
+#endif
+*/
+
+
 #include <stdlib.h>
 /*************************************************************************************/
 /*************************************************************************************/

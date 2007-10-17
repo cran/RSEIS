@@ -52,11 +52,12 @@ if( length(thefilts$type) != length(thefilts$flo ) &   length(thefilts$type)  !=
 
     utyp  = unique(thefilts$type)
     thecols = rep(colrgb[1], N)
-    for(j in 1:length(utyp))
-      {
 
-        thecols[which(utyp[j]==thefilts$type) ] = colrgb[j]
-      }
+   
+       mcol =    match(thefilts$type, utyp )
+
+     thecols =  colrgb[mcol]
+          
     get(getOption("device"))()  
    ### X11()
     
@@ -68,58 +69,30 @@ if( length(thefilts$type) != length(thefilts$flo ) &   length(thefilts$type)  !=
     dx = 1/ncol
     dy =  1/nrow
  plot(c(0,1), c(0,1), type='n', axes=FALSE, xlab='', ylab='')
-    
-    for(i in 1:N)
-      {
-        B =  itoxyz(i, ncol, nrow, 1)
-        x = (B$ix-1)*dx
+
+
+mtyp = match(thefilts$type,  utyp)
+          
+lolab = paste(sep=' ', thefilts$flo, "Hz")
+          
+lolab[thefilts$flo<1] = paste(sep=' ', 1/thefilts$flo[thefilts$flo<1], "s")
+
+hilab = paste(sep=' ', thefilts$fhi, "Hz")
+hilab[thefilts$fhi<1] = paste(sep=' ', 1/thefilts$fhi[thefilts$fhi<1], "s") 
+
+ B =  itoxyz(1:N, ncol, nrow, 1)
+    x = (B$ix-1)*dx
         y = (B$iy-1)*dy
-        rect(x , y , x+dx, y+dy, lty=1, col=thecols[i] )
+        rect(x , y , x+dx, y+dy, lty=1, col=thecols )
 
-        if(thefilts$flo[i]<1)
-          {
-            lolab = paste(sep=' ', 1/thefilts$flo[i], "s")
+ lab = paste(sep='\n',thefilts$type )
+ lab[thefilts$type=="LP"] = paste(sep='\n',thefilts$type[thefilts$type=="LP"],  hilab[thefilts$type=="LP"] )
+ lab[thefilts$type=="HP"] = paste(sep='\n',thefilts$type[thefilts$type=="HP"],  lolab[thefilts$type=="HP"] )
 
-          }
-        else
-          {
-            lolab = paste(sep=' ', thefilts$flo[i], "Hz")
-          }
-
-        if(thefilts$fhi[i]<1)
-          {
-            hilab = paste(sep=' ', 1/thefilts$fhi[i], "s")
-
-          }
-        else
-          {
-            hilab = paste(sep=' ', thefilts$fhi[i], "Hz")
-          }
-
-        if(thefilts$type[i]=="LP")
-          {
-            lab = paste(sep='\n',thefilts$type[i],  hilab )
-          }
-        if(thefilts$type[i]=="HP")
-          {
-            lab = paste(sep='\n',thefilts$type[i],  lolab )
-          }
-
-          if(thefilts$type[i]=="BP")
-          {
-            lab = paste(sep='\n',thefilts$type[i],  lolab,  hilab )
-          }
-          if(thefilts$type[i]=="None")
-          {
-            lab = paste(sep='\n',thefilts$type[i] )
-          }
-       
-        
-        text(x+dx/2, y+dy/2, lab)
-        
-      }
-
-    z = locator(type='p')
+  lab[thefilts$type=="BP"] =paste(sep='\n',thefilts$type[thefilts$type=="BP"],  lolab[thefilts$type=="BP"],  hilab[thefilts$type=="BP"] )
+     text(x+dx/2, y+dy/2, lab)      
+   
+    z = locator(n=1, type='p')
 
     if(length(z$x)<1)
       {

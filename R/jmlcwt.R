@@ -2,6 +2,8 @@
 function (input, noctave, nvoice = 1, w0 = 2 * pi, twoD = TRUE, 
     plot = TRUE) 
 {
+  require("Rwave")
+  
     oldinput <- input
     isize <- length(oldinput)
     tmp <- jadjust.length(oldinput)
