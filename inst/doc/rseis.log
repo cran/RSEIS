@@ -1,4 +1,4 @@
-This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2007.9.27)  28 FEB 2008 09:29
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4) (format=pdflatex 2007.9.27)  26 MAR 2008 16:42
 entering extended mode
 **rseis.tex
 (./rseis.tex
@@ -332,39 +332,65 @@ LaTeX Font Info:    Try loading font information for T1+aett on input line 114.
 
  (/usr/share/texmf/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
-) [2]
-[3] [4] [5]
-LaTeX Font Info:    Try loading font information for TS1+aett on input line 410
+)
+<rseis-004.pdf, id=23, 433.62pt x 433.62pt>
+File: rseis-004.pdf Graphic file (type pdf)
+ <use rseis-004.pdf> [2] [3 <./rseis-004.pdf>] [4] <rseis-006.pdf, id=44, 433.6
+2pt x 433.62pt>
+File: rseis-006.pdf Graphic file (type pdf)
+ <use rseis-006.pdf>
+<rseis-007.pdf, id=45, 433.62pt x 433.62pt>
+File: rseis-007.pdf Graphic file (type pdf)
+ <use rseis-007.pdf> [5 <./rseis-006.pdf>] [6 <./rseis-007.pdf>] <rseis-012.pdf
+, id=65, 433.62pt x 433.62pt>
+File: rseis-012.pdf Graphic file (type pdf)
+
+<use rseis-012.pdf> [7]
+LaTeX Font Info:    Try loading font information for TS1+aett on input line 414
 .
  (/usr/local/lib64/R/share/texmf/ts1aett.fd
 File: ts1aett.fd 
 )
-LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 410
+LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 414
 .
 
 (/usr/share/texmf/tex/latex/base/ts1cmtt.fd
 File: ts1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `TS1/aett/m/n' in size <10> not available
-(Font)              Font shape `TS1/cmtt/m/n' tried instead on input line 410.
- [6] [7] [8] [9] (./rseis.aux) ) 
+(Font)              Font shape `TS1/cmtt/m/n' tried instead on input line 414.
+ [8 <./rseis-012.pdf>] [9] [10]
+<rseis-015.pdf, id=85, 433.62pt x 433.62pt>
+File: rseis-015.pdf Graphic file (type pdf)
+ <use rseis-015.pdf> [11] [12 <./rseis-015.pdf>] <rseis-017.pdf, id=97, 433.62p
+t x 433.62pt>
+File: rseis-017.pdf Graphic file (type pdf)
+ <use rseis-017.pdf>
+[13 <./rseis-017.pdf>] <rseis-018.pdf, id=107, 433.62pt x 433.62pt>
+File: rseis-018.pdf Graphic file (type pdf)
+
+<use rseis-018.pdf> [14] <rseis-019.pdf, id=111, 433.62pt x 433.62pt>
+File: rseis-019.pdf Graphic file (type pdf)
+
+<use rseis-019.pdf> [15 <./rseis-018.pdf>] [16 <./rseis-019.pdf>] (./rseis.aux)
+ ) 
 Here is how much of TeX's memory you used:
- 3272 strings out of 94500
- 40797 string characters out of 1176766
+ 3313 strings out of 94500
+ 41473 string characters out of 1176766
  86184 words of memory out of 1000000
- 6350 multiletter control sequences out of 10000+50000
+ 6382 multiletter control sequences out of 10000+50000
  34840 words of font info for 80 fonts, out of 500000 for 2000
  580 hyphenation exceptions out of 1000
- 35i,6n,24p,241b,282s stack positions out of 1500i,500n,5000p,200000b,5000s
+ 35i,6n,24p,241b,280s stack positions out of 1500i,500n,5000p,200000b,5000s
 PDF statistics:
- 57 PDF objects out of 300000
+ 127 PDF objects out of 300000
  0 named destinations out of 131072
- 1 words of extra memory for PDF output out of 65536
- </var/lib/texmf/pk/ljfour/jknappen/tc/tctt1000
-.600pk></usr/share/texmf/fonts/type1/bluesky/cm/cmtt10.pfb></usr/share/texmf/fo
-nts/type1/bluesky/cm/cmti10.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmsltt
-10.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr10.pfb></usr/share/texmf/fon
-ts/type1/bluesky/cm/cmbx12.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr9.pf
-b></usr/share/texmf/fonts/type1/bluesky/cm/cmbx9.pfb></usr/share/texmf/fonts/ty
-pe1/bluesky/cm/cmr12.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr17.pfb>
-Output written on rseis.pdf (9 pages, 103940 bytes).
+ 41 words of extra memory for PDF output out of 65536
+ </var/lib/texmf/pk/ljfour/jknappen/tc/tctt1000.600pk></usr/share/texmf/fonts
+/type1/bluesky/cm/cmtt10.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmti10.pf
+b></usr/share/texmf/fonts/type1/bluesky/cm/cmsltt10.pfb></usr/share/texmf/fonts
+/type1/bluesky/cm/cmr10.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmbx12.pfb
+></usr/share/texmf/fonts/type1/bluesky/cm/cmr9.pfb></usr/share/texmf/fonts/type
+1/bluesky/cm/cmbx9.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr12.pfb></usr
+/share/texmf/fonts/type1/bluesky/cm/cmr17.pfb>
+Output written on rseis.pdf (16 pages, 23778440 bytes).

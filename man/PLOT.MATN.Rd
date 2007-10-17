@@ -6,7 +6,7 @@
  Matrix of several seismograms
 }
 \usage{
-PLOT.MATN(ascd, tim = 1, dt = 1, WIN = c(0, 1), labs = "", notes = notes, sfact = 1, LOG = "", COL = 'red', add = 1, AXES = FALSE, units = NULL)
+PLOT.MATN(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost=0,  shift=NULL, LOG="", COL='red', add=1, AXES=1, units=NULL, VS=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -17,11 +17,15 @@ PLOT.MATN(ascd, tim = 1, dt = 1, WIN = c(0, 1), labs = "", notes = notes, sfact 
   \item{labs}{vector of labels for each panel}
   \item{notes}{vector of notes for each panel}
   \item{sfact}{scaling factor, 1=window, 2=trace}
+   \item{ampboost}{increase each amplitude by this multiplier}
+   \item{shift}{vector, shift each trace by these time}
   \item{LOG}{log x-axis}
   \item{COL}{vecotr of colrs or indeces to colors}
   \item{add}{logical, TRUE=add to existing plot}
   \item{AXES}{logical, TRUE=add axes}
   \item{units}{label for units of Y-axis}
+  \item{VS}{ var-squiggle display}
+  
 }
 \details{
  plots a matrix of seismograms that each have the same starting time

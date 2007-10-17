@@ -93,6 +93,18 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL)
     
     while(TRUE)
       {
+
+
+
+        if(zenclick==0 & Nclick<1 )
+        { 
+         break;
+          #### next
+        }
+   
+      
+
+        
         if(K[Nclick] == match("DONE", labs, nomatch = NOLAB))
           {
             buttons = rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))

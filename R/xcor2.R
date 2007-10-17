@@ -23,7 +23,17 @@ function(a1, a2, DT, PLOT=FALSE, LAG=100)
   if(missing(LAG)) { LAG=round(n/4) }
 
   xc =ccf(b1, b2, lag.max = LAG , type ="correlation",  plot = FALSE )
-  mlag = xc$lag[which.max(xc$acf)]
+  wi1 = which.max(xc$acf)
+  mlag = xc$lag[wi1]
+  mccx =  xc$acf[wi1]
+
+
+  wi2 = which.max(abs(xc$acf))
+  mlag2 = xc$lag[wi2]
+  mccx2 =  xc$acf[wi2]
+
+  
+  
   if(is.na(mlag) || is.null(mlag)) { xc$lag[1]  }
   if(PLOT==TRUE)
     {
@@ -52,6 +62,10 @@ function(a1, a2, DT, PLOT=FALSE, LAG=100)
     }
 
   xc$mlag = mlag
+  xc$mccx = mccx
+  xc$mlag2=mlag2
+  xc$mccx2=mccx2
+  
   return(xc)
 }
 

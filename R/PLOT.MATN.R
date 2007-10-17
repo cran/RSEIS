@@ -1,6 +1,8 @@
 `PLOT.MATN` <-
-function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1, LOG="", COL='red', add=1, AXES=FALSE, units=NULL)
+function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost=0,  shift=NULL, LOG="", COL='red', add=1, AXES=1, units=NULL, VS=FALSE)
 {
+###  source("/home/lees/R_PAX/RSEIS/R/PLOT.MATN.R")
+  
 ### plot a matrix of seismograms on a simple panel display
 ###   ascd = matrix(time, trace)
 
@@ -8,14 +10,22 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1, LOG="", 
 ###                  add =2 plot, but no traces
 ###                   add = 3 no plot, but add traces
   if(missing(sfact)) { sfact=1}
+   if(missing(ampboost)) {ampboost=0 }
+ 
   if(missing(dt)) { dt=1}
   if(missing(LOG)) { LOG=""  }
   
   if(missing(add)) { add=1 }
-           ##########  if AXES=TRUE  plot a y-axis for each band, add units for scale
-  if(missing(AXES)) {  AXES=FALSE } 
+
+##########  if AXES=0  no Y axes
+##########  if AXES=1  plot scale for largest amplitude band and a multiplier for all others
+##########  if AXES=2  plot a y-axis for each band, add units for scale
+  
+  
+  if(missing(AXES)) {  AXES=1 } 
   if(missing(units)) {  units=colnames(ascd) } 
-   
+  if(missing(VS)) { VS=FALSE } 
+
   
   if(missing(tim))
     {
@@ -46,6 +56,11 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1, LOG="", 
   
   matsiz = dim(ascd)
   nn = matsiz[2]
+
+
+    if(missing(shift)) { shift=rep(0, length=nn)  } 
+
+  
     if(is.null(units)) { units=rep("",nn ) }
 
 
@@ -162,25 +177,61 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1, LOG="", 
           
         }
 
-      if(add!=3) addtix(side=3, pos=y3+dy,   tck=0.005, at=ttics, labels=FALSE, col=gray(0.8) )
+    
+
+      ylow= y3-ampboost
       
-      z = RESCALE(amp, y3, y3+dy, minamp, maxamp )
+      yhigh= y3+dy+ampboost
+
+      
+      z = RESCALE(amp, ylow, yhigh, minamp, maxamp )
+
+
+      
       windiv[i, ] = c(y3, y3+dy, minamp, maxamp)
       
-      if(add!=3)abline(h=y3, lty=2, col=grey(0.8))
       
+      if(add!=3)
+        {
+
+          addtix(side=3, pos=y3+dy,   tck=0.005, at=ttics, labels=FALSE, col=gray(0.8) )
+ 
+          abline(h=y3, lty=2, col=grey(0.8))
+          
+          axis(side=1, tck=0.01, at=ttics, labels=FALSE)
+          axis(side=1, tick=FALSE,  at=ttics, labels=atics, line=-1)
+          
+          
+          moretics = seq(from=min(ttics), to=max(ttics), by=1)
+          if(length(moretics)<500)
+            {
+              axis(side=3, tck=0.01, at=moretics, labels=FALSE)
+            }
+          title(xlab='Time (s)', line=1.4, cex=1.2) 
+        }
+      
+
       if(add!=2)
         {
           if(ncol<=nn)
             {
-              lines(tim[tflag], z, col=COL[i])
+              ex= tim[tflag]-shift[i]
+              if(VS)
+                {
+
+                  polygon(c(ex, ex[1]) , c(z, mean(z)) , col=COL[i])
+
+                }
+                ex= tim[tflag]-shift[i]
+              lines(ex, z, col=COL[i])
             }
           else
             {
               ni = length(z)
               E = tim[tflag]
-              
-              lines(tim[tflag], z, col=1)
+              ex= tim[tflag]-shift[i]
+                
+              lines(ex, z, col=1)
               segments(E[1:(ni-1)],z[1:(ni-1)],E[2:ni],z[2:ni], col=COL[KX[i]])
               
 
@@ -202,9 +253,11 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1, LOG="", 
       yt = yy[flg]
       yts = RESCALE(yt, y3, y3+dy, minamp, maxamp )
       
+
+
                                         #   axis(2, tck=0.01 , at=yts, labels=yt, las=2 , line=0.1 )
 
-      if(AXES==FALSE)
+      if(AXES==1)
         {
           ############  this is the default
           if(i==KDIFF)
@@ -215,10 +268,12 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1, LOG="", 
             {
               bnum = paste(sep='', "X", format.default(diffS[KDIFF]/diffS[i], digits=4))
               blab=bnum 
-              if(add!=3)text(min(tim[tflag]), y3+0.75*dy, labels=blab, adj=0)
+              if(add!=3) text(min(tim[tflag]), y3+0.75*dy, labels=blab, adj=0)
             }
         }
-      else
+
+
+      if(AXES==2) 
         {
           #######  put a Y axis on each trace, alternate left and right
           if((i%%2) == 1) { side = 2; pos= upar[1] } else { side = 4; pos= upar[2]  }
@@ -247,20 +302,6 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1, LOG="", 
         }
       
     }
-  if(add!=3)
-    {
-      axis(side=1, tck=0.01, at=ttics, labels=FALSE)
-      axis(side=1, tick=FALSE,  at=ttics, labels=atics, line=-1)
-      
-      
-      moretics = seq(from=min(ttics), to=max(ttics), by=1)
-      if(length(moretics)<500)
-        {
-          axis(side=3, tck=0.01, at=moretics, labels=FALSE)
-        }
-      title(xlab='Time (s)', line=1.4, cex=1.2) 
-    }
-  
 
   u = par("usr")
   

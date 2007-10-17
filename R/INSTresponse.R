@@ -6,6 +6,7 @@ function(Kal,key,ff,tt=tt,plotkey=NULL)
     
     if(missing(tt)) {   tt=c(20,0.008) }
 
+    verb = FALSE
 
     nams=names(Kal)
     nam =  nams[key]
@@ -18,12 +19,14 @@ function(Kal,key,ff,tt=tt,plotkey=NULL)
     poles =Calib$poles;
     zeroes=Calib$zeros;
 
-    print(paste(sep=" ","RESPONSE:", nam, npole, nzero, norm, gain))
-    print('poles')
-    print(poles)
-    print('zeros')
-    print(zeroes)
-    
+    if(verb)
+      {
+        print(paste(sep=" ","RESPONSE:", nam, npole, nzero, norm, gain))
+        print('poles')
+        print(poles)
+        print('zeros')
+        print(zeroes)
+      }
     
     bb    =gpoly(zeroes);             ##  convert zeros to polynomial coefficients 
     aa    =gpoly(poles);              ##  convert poles to polynomial coefficients

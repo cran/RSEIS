@@ -6,7 +6,7 @@
 Plot Hodogram and show seismic particle motion
 }
 \usage{
-PMOT.drive(temp, dt, pmolabs = c("Vertical", "North", "East"), STAMP = "")
+PMOT.drive(temp, dt, pmolabs = c("Vertical", "North", "East"), STAMP = "", baz = 0)
 }
 
 \arguments{
@@ -14,9 +14,11 @@ PMOT.drive(temp, dt, pmolabs = c("Vertical", "North", "East"), STAMP = "")
   \item{dt}{sample interval (delta-T, seconds)}
   \item{pmolabs}{labels for traces}
   \item{STAMP}{Character string Identification stamp}
+  \item{baz}{Back Azimuth, degrees}
+  
 }
 \details{
- Input matrix should V, N, E.
+ Input matrix should V, N, E.  Baz is not implemented yet.
 }
 \value{
  Graphical Side Effect.

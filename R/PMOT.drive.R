@@ -1,17 +1,19 @@
 `PMOT.drive` <-
-function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="")
+function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
   {
 
     if(missing(STAMP)) { STAMP = " " }
+    if(missing(baz)) { baz=0 }
     if(missing(pmolabs)) {pmolabs=c("Vertical", "North", "East")  }
     
     TPALS = c("rainbow", "topo.colors", "terrain.colors", "JGRAY", "tomo.colors")
     APALS = c("rainbow", "topo", "terrain", "JGRAY", "tomo")
     ADDBUTS = c("More" )
   
-
+    rotlabs=c("Vertical", "Radial", "Transvers")
+    vnelabs=c("Vertical", "North", "East")
     
-    labs = c("DONE", "Angles", "PTS", "LOCS", "Postscript", APALS, ADDBUTS )
+    labs = c("DONE", "Angles", "PTS", "LOCS", "Postscript", "ROTATE", APALS, ADDBUTS )
     NLABS = length(labs)
     NOLAB = NLABS +1000
 ###  FUN = match.fun(TPALS[1])
@@ -26,6 +28,22 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="")
   
     NSEL = 1
 
+    ROTATEFLAG = 0
+
+    atemp = temp
+
+    if(baz!=0)
+      {
+        rbaz = grotseis(baz, flip=FALSE)
+        btemp  = atemp  %*%  rbaz
+      }
+    else
+      {
+         btemp = atemp
+      }
+    
+
+    
   ###  X11()
 ###  
     
@@ -74,6 +92,31 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="")
           dev.set(jdev)
           zloc = list(x=NULL, y=NULL) 
         }
+
+        if(K[Nclick] == match("ROTATE", labs, nomatch = NOLAB))
+          {
+
+            if(identical(ROTATEFLAG,1 ))
+              {
+                temp = atemp
+                pmolabs=vnelabs
+                ROTATEFLAG=0
+              }
+            else
+              {
+                temp = btemp
+                pmolabs=rotlabs
+                ROTATEFLAG=1
+              }
+            
+            sx = complex.hodo(temp, dt=dt, labs=pmolabs, COL=pal, STAMP=STAMP)
+            buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+            zloc = list(x=NULL, y=NULL) 
+            
+
+          }
+
+
         if(K[Nclick]==match("Angles", labs, nomatch = NOLAB) & (zenclick-1)>=2 )
           {
             

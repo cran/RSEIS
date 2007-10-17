@@ -50,7 +50,7 @@ ph: (919) 962-0695
 %% \contactaddress{Department of Geological Sciences, CB #3315, Mitchell Hall, Chapel Hill, NC  27599-3315}
 %% \contactemail{jonathan.lees@unc.edu}
 %% \contactphone{(919) 962-0695}
-\title{FocR: Earthquake and Focal Mechanism Analysis in R}
+\title{RSEIS: Seismic Time Series Analysis in R}
 \date{September, 2007}
 
 \maketitle
@@ -62,7 +62,7 @@ series analysis and earthquake focal mechanisms.  The packages
 consists of modules that 1) read in seismic waveform data in various
 common exchange formats, 2) display data as either event or continuous
 recordings and 3) performs numerous standard analyses applied to
-earthquake and volcano monitoring.  SeisR is designed as a research
+earthquake and volcano monitoring.  RSEIS is designed as a research
 tool aimed at investigators who need to quickly assess large amounts
 of time-series as they are related to the spatial distribution of
 geologic structure and wave propagation.  In addition to time series
@@ -73,10 +73,10 @@ and radiation patterns to geographical data-base and mapping programs.
 
 \section{Waveform Analysis}
 
-The waveform module of SeisR reads in seismic data in SEGY, SAC, AH,
+The waveform module of RSEIS reads in seismic data in SEGY, SAC, AH,
 UW and various ASCII formats.  The core of these modules are a set of
 C programs that pass waveforms back to R and wrappers that create
-lists of seismograms.  SeisR was written primarily for use with
+lists of seismograms.  RSEIS was written primarily for use with
 continuous data, so the R code is able to sort a large database
 consisting of continuous data from several stations and numerous
 components.  Each component of the waveform database may have a
@@ -93,7 +93,7 @@ Italy.
 An initial, interactive display of the seismic records is presented to
 the user and a large array of useful options are available for further
 processing by buttons that surround the main display but are on the
-same graphics device.  Some of the routines employed in the SeisR
+same graphics device.  Some of the routines employed in the RSEIS
 package are drawn from packages already available on the R
 distribution, for example wavelet transforms - although these have
 been modified to some extent to accommodate specific concerns of
@@ -122,8 +122,8 @@ and RFOC if focal mechanisms are going to be inspected.
 \subsection{Example: Reventador Volcano Explosion }
 
 
-There several dataset that accompany RSEIS,
-and these can be loaded with simple calles to data().
+There several data set that accompany RSEIS,
+and these can be loaded with simple calls to data().
 For example,
 \begin{Schunk}
 \begin{Sinput}
@@ -131,7 +131,7 @@ For example,
 > names(KH)
 \end{Sinput}
 \end{Schunk}
-loads a structure that includes wave forms and other imoportant
+loads a structure that includes wave forms and other important
 meta-data about the earthquake.  To see a view of this data
 we call the main program and display the earthquake records as they are stored
 in memory,
@@ -144,16 +144,17 @@ in memory,
 > PICK.GEN(KH, SHOWONLY = FALSE, STDLAB = STDLAB)
 \end{Sinput}
 \end{Schunk}
+\includegraphics{rseis-004}
 In this example we are showing the vertical component of an explosion 
 of Reventador Volcano.  The buttons at the top
 are defaults chosen from a large selection of 
 buttons designed to be useful for analyzing seismic data.
 To zoom in on the trace, click twice on the trace with the left mouse button,
 and then terminate by clicking the middle mouse.
-(Clicking with the middle mouse with now left mouse clicks terminates the interative session).
-When your are finsihed with RSEIS windows click the ``Done'' 
+(Clicking with the middle mouse with now left mouse clicks terminates the interactive session).
+When your are finished with RSEIS windows click the ``Done'' 
 button to close the window.  Avoid using the small
-``x'' in thecorner of the window to terminate because
+``x'' in the corner of the window to terminate because
 R does not know you have finished yet.
 
 You can view spectra of the signal (SPEC) , spectrograms (SGRAM) 
@@ -161,10 +162,10 @@ and wavelet transforms (WLET). To illustrate,
 left click on this trace around t=1200 and t=2000, which 
 windows the harmonic tremor part of this explosion.
 Click middle mouse to zoom in, or
-select one of th buttons at
+select one of the buttons at
 the top to analyze the time series in the (selected) sub-window.
 Choose  \emph{WLET} to show the wavelet transform of
-the harmonic tremore and important time variations of the
+the harmonic tremor and important time variations of the
 volcano during eruption.
 
 The PICK.GEN program is normally run in interactive mode.
@@ -186,7 +187,7 @@ clicking on the refresh button.
 PICK.GEN is a general analysis program designed for earthquake studies.
 It uses the {\emph Really Poor Man's GUI} to 
 navigate between seismic traces and 
-various analysis proceedures.
+various analysis procedures.
 Once the program is started it waits for the user to
 select on the screen a variety of operations, determined
 by the user via the button selection, STDLAB.
@@ -195,7 +196,7 @@ the user may click on the screen with the left mouse
 button to hi-light specific traces or windows in the panel.
 The right mouse click terminates the clicking sequence and
 a decision is made on what to do, unless a button has been clicked.
-Generally, one click slects a specific trace,
+Generally, one click selects a specific trace,
 two clicks specify a trace and window in that trace.
 If the clicking is terminated immediately, 
 before a left mouse is clicked, the program stops and returns
@@ -230,14 +231,14 @@ clicking ``Done''.
 Each Button has different properties based on the 
 requirements for that process.  Some buttons 
 expect more than one click to operate properly, others 
-are simple butons that control the look and feel of the 
+are simple buttons that control the look and feel of the 
 panel. For example, the ``restore'' button
 reverts the panel to its original time window.
 It can be pressed any time and the 
 window will redraw and resize.
 Each button includes a small set of instructions
 designed to accomplish a specific task.
-There are many buttons curently defined, some described below, and 
+There are many buttons currently defined, some described below, and 
 there is mechanism for users to  make their own
 on the fly.
 
@@ -255,7 +256,7 @@ In this example, taken from the geothermal field
 at Coso, California, there are 49 stations,
 most of which have three components (Vertical, North and East),
 although there are a couple of stations that are missing
-some of the components.  THis situation is not 
+some of the components.  This situation is not 
 atypical of earthquake seismic data recorded in the field.
 If we show only the vertical component traces,
 The plot is more manageable and easier to view:
@@ -269,6 +270,7 @@ The plot is more manageable and easier to view:
 > PICK.GEN(GH, sel = verts, STDLAB = STDLAB, SHOWONLY = TRUE)
 \end{Sinput}
 \end{Schunk}
+\includegraphics{rseis-006}
 
 
 
@@ -280,9 +282,10 @@ We see that the stations here are 'mixed up', i.e. arriving at different times.
 > PICK.GEN(GH, sel = vertord$sel, STDLAB = STDLAB, SHOWONLY = FALSE)
 \end{Sinput}
 \end{Schunk}
+\includegraphics{rseis-007}
 
 A seismic event is usually stored as a combination
-of waveform infomation and meta-date associated with
+of waveform information and meta-date associated with
 the phase arrivals.  Phase arrivals are
 commonly called ``picks'' since and analyst 
 had to pick the arrival times from a representation
@@ -367,8 +370,8 @@ We also store event information:
 \end{Soutput}
 \end{Schunk}
 
-Using this information we can associated the 
-pcisk with the waveforms, and match the timing information
+Using this information we can associate the 
+p-pick with the waveforms, match the timing information
 and plot together.
 finally we add the picks to the section:
 \begin{Schunk}
@@ -378,6 +381,7 @@ finally we add the picks to the section:
      SHOWONLY = FALSE, velfile = VELMOD1D, )
 \end{Sinput}
 \end{Schunk}
+\includegraphics{rseis-012}
 
 Brief documentation for buttons in the PICK.GEN
 program can be seen by calling the documentation function,
@@ -519,7 +523,8 @@ $DOC
 
 One standard data set included in the R
 Distribution is the 
-sunspot data,
+sunspot data.  As an example of RSEIS we can read this time series in and plot it using the
+same code introduced above.
 \begin{Schunk}
 \begin{Sinput}
 > data(sunspots)
@@ -528,26 +533,115 @@ sunspot data,
 > EH = prepSEIS(ES)
 > STDLAB = c("DONE", "zoom in", "zoom out", "refresh", "restore", 
      "XTR", "SPEC", "SGRAM", "WLET", "FILT", "Pinfo")
-> xx = PICK.GEN(EH, STDLAB = STDLAB)
+> xx = PICK.GEN(EH, STDLAB = STDLAB, SHOWONLY = TRUE)
+\end{Sinput}
+\end{Schunk}
+\includegraphics{rseis-015}
+
+
+\begin{Schunk}
+\begin{Sinput}
+> a = list(y = EH$JSTR[[1]], dt = EH$dt[1])
+> Mspec = mtapspec(a$y, a$dt, klen = 1024, MTP = list(kind = 1, 
+     nwin = 5, npi = 3, inorm = 0))
+> f = Mspec$freq
+> amp = Mspec$spec[1:length(f)]
+> ma = amp
+> displ = ma
+> f1 = 0.01
+> f2 = 1/(2 * EH$dt[1])
+> flag = f >= f1 & f <= f2
+> plxy = "xy"
+> plot(range(f[flag]), range(displ[flag]), type = "n", log = plxy, 
+     axes = FALSE, xlab = "Hz", ylab = "Spec")
+> lines(f[flag], displ[flag], col = 1, lty = 1)
+> axis(2, las = 2)
+> axis(1)
+> box()
+> L = list()
+> L$x = c(0.0939105803154482, 0.183351679178275, 0.350333785192083)
+> L$y = c(31166.8951116052, 7536.36156151748, 2370.29538151056)
+> abline(v = L$x, lty = 2, col = grey(0.8))
+> text(L$x, rep(max(range(displ[flag])), length(L$x)), labels = round((1/L$x)), 
+     xpd = TRUE, srt = 45, adj = c(0, 0))
 \end{Sinput}
 \end{Schunk}
 
+
 \subsection{Example: Climate Change}
 
-As an example showing how RSEIS might be used for 
-arbitrary time seriesm, unrelated to 
+As a final example showing how RSEIS might be used for 
+arbitrary time series, unrelated to 
 seismic data, consider the famous 
 Delta-O18 time series.  By windowing the 
 time sereis and looking at the 
 spectrum one can immediately see the 
-Milancovic cycles at 40K and 20K periods.
+Milankovitch cycles at (approximately) 100K, 41K and 20K periods.
 
 \begin{Schunk}
 \begin{Sinput}
 > data(OH)
-> xx = PICK.GEN(OH, sel = which(OH$COMPS == "V"), STDLAB = STDLAB)
+> xx = PICK.GEN(OH, sel = which(OH$COMPS == "V"), STDLAB = STDLAB, 
+     SHOWONLY = TRUE)
 \end{Sinput}
 \end{Schunk}
+\includegraphics{rseis-017}
+
+\begin{Schunk}
+\begin{Sinput}
+> a = list(y = OH$JSTR[[1]], dt = OH$dt[1])
+> Mspec = mtapspec(a$y, a$dt, klen = 1024, MTP = list(kind = 1, 
+     nwin = 5, npi = 3, inorm = 0))
+> f = Mspec$freq
+> amp = Mspec$spec[1:length(f)]
+> ma = amp
+> displ = ma
+> f1 = 0.01
+> f2 = 1/(2 * EH$dt[1])
+> flag = f >= f1 & f <= f2
+> plxy = "xy"
+> plot(range(f[flag]), range(displ[flag]), type = "n", log = plxy, 
+     axes = FALSE, xlab = "Hz", ylab = "Spec")
+> lines(f[flag], displ[flag], col = 1, lty = 1)
+> axis(2, las = 2)
+> axis(1)
+> box()
+> u = par("usr")
+> L = list()
+> L$x = c(0.242745864538716, 0.423063797271721, 0.447439169221329, 
+     0.529320129815409, 0.100457805181183)
+> L$y = c(37.4392793655756, 19.0231348719557, 15.6564640841027, 
+     15.0862607475168, 40.6986171075992)
+> abline(v = L$x, lty = 2, col = grey(0.8))
+> text(L$x, rep(max(range(displ[flag])), length(L$x)), labels = round(10000 * 
+     (1/L$x)), xpd = TRUE, srt = 45, adj = c(0, 0))
+\end{Sinput}
+\end{Schunk}
+\includegraphics{rseis-018}
+
+
+
+To illustrate the effects of comparing numerous filters to 
+a specific volcanic explosions event,
+
+
+\begin{Schunk}
+\begin{Sinput}
+> data(KH)
+> dt = KH$dt[1]
+> y = KH$JSTR[[1]]
+> y = y[1:50000]
+> y = y - mean(y)
+> x = seq(from = 0, by = dt, length = length(y))
+> fl = rep(1/100, 5)
+> fh = 1/c(4, 3, 2, 1, 0.5)
+> FILT.spread(x, y, dt, fl = fl, fh = fh, sfact = 1, WIN = NULL, 
+     PLOT = TRUE, TIT = NULL, TAPER = 0.05, POSTTAPER = 0.1)
+\end{Sinput}
+\end{Schunk}
+\includegraphics{rseis-019}
+
+
 
 
 \end{document}
