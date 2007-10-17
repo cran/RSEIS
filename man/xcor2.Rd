@@ -1,0 +1,45 @@
+\name{xcor2}
+\alias{xcor2}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{Cross Correlation}
+\description{
+Cross correlation of two signals
+}
+\usage{
+xcor2(a1, a2, DT, PLOT = FALSE, LAG = 100)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{a1}{input signal 1}
+  \item{a2}{input signal 1}
+  \item{DT}{deltaT in seconds}
+  \item{PLOT}{logical TRUE=plot}
+  \item{LAG}{ time lag for correlation function }
+}
+\details{
+ Illustrates the cross correlation of two time series.
+}
+\value{
+  Return list from ccf, and position of maximum lag.
+  Graphical Side effects.
+}
+\seealso{ccf}
+
+\author{Jonathan M. Lees<jonathan.lees.edu>}
+\examples{
+
+data(CE1)
+
+ts1 = CE1$y[CE1$x>5.443754 & CE1$x<5.615951]
+
+ts2 = CE1$y[CE1$x>5.760959]
+ts2 = ts2[1:length(ts1)]
+
+ts1 = ts1-mean(ts1)
+ts2 = ts2-mean(ts2)
+
+xc = xcor2(ts1, ts2, CE1$dt , PLOT = TRUE)
+
+}
+
+\keyword{misc}

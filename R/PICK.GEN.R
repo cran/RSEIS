@@ -1,0 +1,3618 @@
+`PICK.GEN` <-
+function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  STDLAB=NULL,
+                   PADDLAB=NULL, SHOWONLY=FALSE, CHOP=FALSE, TIT="", pts=FALSE, forcepix=FALSE, SCALE=1, velfile="", stafile="", LOC=NULL, FILT=list(fl=.2, fh=15,  type="HP", proto="BU") )
+{
+###  a = PICK.MARIO(GH,  sel, WIN=twin)
+  #########  velfile is a 1D velocity file
+  #########  stafile is a file station locations
+  
+  if(missing(WIN)) { WIN = NULL }
+  if(missing(sel)) { sel = 1:length(GH$dt)}
+   if(missing(ORD)) { ORD = NULL } 
+ ###   if(missing(APIX)) { APIX = NULL}  else { if(!exists(deparse(substitute(APIX)))) { print("WARNING: NO WPX"); APIX=NULL} }
+
+  if(missing(APIX)) { APIX = NULL}
+  if(missing(PHASE)) { PHASE = NULL}
+  
+  if(missing(SHOWONLY)) { SHOWONLY=FALSE}
+  if(missing(CHOP)) { CHOP=FALSE }
+   if(missing(STDLAB)) { STDLAB = c("DONE", "QUIT","zoom out", "zoom in", "Left", "Right", "restore", "Pinfo",
+                           "AUTOP", "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "SCALE")}
+  if(missing(PADDLAB)) { PADDLAB=c( "PPIK", "AccPIK", "XPIK", "NOPIX", "REPIX", "Postscript") }
+  if(missing(TIT)) { TIT=NULL }
+  if(missing(pts)) { pts=FALSE }
+  if(missing(forcepix)) { forcepix=FALSE }
+  
+  if(missing(velfile)) {
+    if(!is.null(GH$velfile)) {velfile=GH$velfile } else { 
+    velfile=NULL }
+  }
+  
+  if(missing(stafile)) {
+     if(!is.null(GH$stafile)) {stafile=GH$stafile } else {  
+    stafile=NULL }
+  }
+
+  
+  if(missing(LOC)) { LOC=NULL }
+
+  if(missing(SCALE)) {  ScaleFACT = 1 } else {  ScaleFACT = SCALE }
+  if(missing(FILT)) {  FILT = list(fl=.2, fh=15,  type="HP", proto="BU") }
+
+  
+ if( is.null(sel) ) { sel = 1:length(GH$dt) }
+
+  SEL.ORIG = sel
+  
+  mark = FALSE
+  if(CHOP==TRUE)
+    {
+      if(!is.null(WIN))
+        {
+          NH = CHOP.SEISN(GH, sel , WIN=WIN)
+        }
+      else
+        {
+          
+          NH = GH
+        }
+      
+      WIN = c(0, NH$dt*length(NH$JSTR[[1]]))
+      
+    }
+  else{
+    
+    NH = GH
+  }
+
+
+  if( identical(is.na(match("NOPIX",  PADDLAB)), TRUE)) { PADDLAB = c(PADDLAB, "NOPIX") }
+  if( identical(is.na(match("REPIX",  PADDLAB)), TRUE)) { PADDLAB = c(PADDLAB, "REPIX") }
+
+ if(!exists('STDLAB'))
+    {
+      STDLAB = c("DONE",  "zoom out", "refresh", "restore", "SavePF", 
+        "PickWin", "XTR", "SPEC", "SGRAM" ,"WLET")
+    }
+
+
+    
+  stdlab =  STDLAB
+
+  Pickdev = NULL
+  Mapdev = NULL
+
+  tempbuttons = NULL
+
+  
+  BLABS = c(stdlab, PADDLAB)
+  NLABS = length(BLABS)
+  NOLAB = NLABS +1000
+  
+  ##  match("", BLABS)
+
+  RETX =  NULL
+
+  pnos = grep("PIX", BLABS)
+  
+  colabs = rep(1,length(BLABS))
+  colabs[BLABS=="PickWin"] = 'red'
+  colabs[pnos] = seq(from=2, length=length(pnos))
+  colpix = seq(from=2, length=length(pnos))
+  pchlabs = rep(4,length(BLABS))
+  pchlabs[pnos] = seq(from=15, length=length(pnos))
+
+  specpix =     c("P", "S", "A", "P1")
+  specpix.col = c("violetred", "darkgoldenrod", "blueviolet" , "darkmagenta")
+  
+  
+  NSEL = length(NH$dt[sel])
+
+  if(is.null(APIX)==TRUE)
+    {
+      WPX = list(
+        tag="",
+        name="",
+        comp="",
+        c3="",
+        phase="",
+        err=0,
+        pol=0,
+        flg=0,
+        res=0,
+        yr=0,
+        mo=0,
+        dom=0,
+        jd=0,
+        hr=0,
+        mi=0,
+        sec=0,
+        col='red',  onoff =0  )
+       WPX = data.frame(WPX, stringsAsFactors = FALSE)
+      NPX = 0
+    }
+  else
+    {
+      ## print("reading in pickfile")
+      ##  
+      WPX = APIX
+      WPX = data.frame(WPX, stringsAsFactors = FALSE)
+      NPX = length(WPX$sec)
+
+      ##  print(paste(sep=' ', "read in pickfile",NPX))
+      ## print(xpix)
+    }
+  
+   RIDPIX = list()
+   ADDPIX = list()
+   NADDPIX = 0
+ 
+  BRUNKOUNT = 0
+  BRUNINFO = list()
+
+  DETLKOUNT = 0
+  DETLINFO = list()
+
+  
+  STNS = NH$STNS[sel]
+  COMPS = NH$COMPS[sel]
+
+   ###   print(STNS)
+  ###   print(COMPS)
+ 
+  
+  UNIsta = unique(STNS)
+  
+  NUNI = length( UNIsta)
+
+  if( identical(NH$pcol , "AUTO") |  is.null( NH$pcol )  )
+    {
+      pcols = rep(rgb(0,0,0), length(NH$dt) )
+      pcols[c(grep("1", COMPS), grep("I", COMPS), grep("LD", COMPS) )] = rgb(0,.4,0)
+      pcols[c(grep("4", COMPS), grep("V", COMPS), grep("Z", COMPS), grep("v", COMPS), grep("z", COMPS)   )] = rgb(0.4,0,0)
+      
+      pcols[c(grep("J", COMPS), grep("K", COMPS))] = rgb(0,0,0.4)
+      
+    }
+  else
+    {
+
+     pcols = NH$pcol
+
+    }
+
+  
+
+  ###  print(pcols)
+  
+ ###   for Tung_04 use this mapping 
+###   ords = match(STNS,c("MAS", "JUI" ,"RUN",   "OVT"))
+###   ordc = match(COMPS, c("I", "J", "K", "V", "N",  "E"))
+
+
+###   want the sorting of comps to be Vertical North East always
+
+
+  oCOMPS = COMPS
+
+  oCOMPS[grep("LD", COMPS)] = 1  
+  oCOMPS[grep("I", COMPS)] = 1
+  oCOMPS[grep("A", COMPS)] = 1
+  
+  oCOMPS[grep("V", COMPS)] = 2
+  oCOMPS[grep("Z", COMPS)] = 2
+  
+  oCOMPS[grep("v", COMPS)] = 2
+  oCOMPS[grep("z", COMPS)] = 2
+
+  oCOMPS[grep("N", COMPS)] = 3
+  oCOMPS[grep("n", COMPS)] = 3
+
+  oCOMPS[grep("E", COMPS)] = 4
+  oCOMPS[grep("e", COMPS)] = 4
+
+  
+
+  ords = match(STNS, sort(UNIsta))
+  ordc = match(oCOMPS, sort(unique(oCOMPS) ))
+
+  ordsel = order( ords+ordc/10)
+
+
+####  try to do some automatic ordering....this does not work in certain circumstances
+  ###  need to improve this section
+##  if( length(sel) == length(GH$dt) & ORD==TRUE )
+##     {
+##       sel = ordsel
+##       STNS = STNS[sel]
+##       COMPS = COMPS[sel]
+##     }
+
+    if(!is.null(ORD))
+    {
+      STNS = STNS[ORD]
+      COMPS = COMPS[ORD]
+    }
+
+##   print("*************    check stations and comps****** ")
+##  print(STNS)
+##  print(COMPS)
+ 
+  
+  du = 1/NSEL
+
+  
+  isel = sel[1]
+  
+  Torigin = list(jd=NH$info$jd[isel], hr=NH$info$hr[isel], mi=NH$info$mi[isel], sec=(NH$info$sec[isel]+NH$info$msec[isel]/1000+NH$info$t1[isel]-NH$info$off[isel]))
+
+###  print(Torigin)
+  
+###  print(sel)
+###  print(STNS)
+###  print(COMPS)
+### print(NH$KNOTES[sel])
+###  print(NSEL)
+###  print(NH$dt[sel])
+###  print(pcols[sel])
+  LASTwin = WIN
+  
+  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel , sfact=ScaleFACT, notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+
+  
+  
+##  buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+## return(0)
+##   NPX = 0 
+  TE = TRUE
+  if(exists("WPX") & length(WPX$sec)>0 )
+    {
+      TE = !is.na(WPX$sec[1])
+    }
+  
+       
+     if(NPX>0 & TE[1])
+       { 
+         
+          PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix)
+
+         ##   print(length(WPX))
+          
+        ##   segments(xpix, ypixA, xpix, ypixB, col=colpix)
+         ##  text(xpix, ypixB, labels=cpixa, col=colpix, pos=4)
+        }
+      
+  if(is.numeric(SHOWONLY)) { Sys.sleep(SHOWONLY); return(0) }
+  if(SHOWONLY==TRUE) { return(0) }
+
+  
+  buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+
+  MAINdev = dev.cur()
+
+
+  ###  Get.Screens(2)
+  dev.set( MAINdev)
+  
+###   if(NPX>0)
+ ###       {
+
+  ###        PLOT.WPX(Torigin, STNS, COMPS, WPX, FORCE=forcepix)
+        ##   segments(xpix, ypixA, xpix, ypixB, col=colpix)
+         ##  text(xpix, ypixB, labels=cpixa, col=colpix, pos=4)
+   ###     }
+      
+  
+  u = par("usr")
+  sloc = list(x=c(u[1],u[2]))
+  ppick  = NA
+  spick  = NA
+  xpick = NA
+#### ftime = Zdate(NH$info, sel[1],0)
+#### mtext( ftime, side = 3, at = 0, line=0.5, adj=0)
+  
+####  title("LEFT 0 Click = done; 1 Click=replot;   2 Click=zoom")
+ 
+####  NV = LabelBAR(BLABS)
+ ###   zloc = plocator(COL=rgb(1,0.8, 0.8))
+
+  iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=NSEL, style=1)
+  zloc = iloc
+  
+  Nclick = length(iloc$x)
+  zenclick =  length(zloc$x)
+  if(is.null(zloc$x)) { return(-3) }
+  K = whichbutt(iloc ,buttons)
+  
+  sloc = zloc
+  
+  while(TRUE)
+    {
+
+   ####   print(iloc)
+   ####   print(zloc)
+      if(zenclick>=2 & Nclick<1)        {
+          
+          WIN  = sort(zloc$x[c(zenclick-1, zenclick)])
+          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+
+          Nclick=1
+          K = 0
+            zloc = list(x=NULL, y=NULL)
+          zenclick = 0
+              }
+
+        if(zenclick==1 & Nclick<1 )
+        {
+          WIN = NULL
+          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+          u = par("usr")
+          
+          sloc = list(x=c(u[1],u[2]))
+             
+           Nclick=1
+          K = 0
+        zloc = list(x=NULL, y=NULL)
+          zenclick = 0
+
+          #### next
+        }
+   
+        if(zenclick==0 & Nclick<1 )
+        {
+         break;
+          #### next
+        }
+   
+      
+      
+###  print(paste(sep=' ',  Nclick , zenclick) )
+############   button actions
+      if(K[Nclick] == match("DONE", BLABS, nomatch = NOLAB))
+        {
+          
+            buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)))
+            title("Return to Calling Program")
+          
+          break;
+        }
+
+     if(K[Nclick] == match("QUIT", BLABS, nomatch = NOLAB))
+        {
+           buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)))
+            title("Return to Calling Program")
+          
+          return(NULL)
+        }
+     if(K[Nclick] == match("NEXT", BLABS, nomatch = NOLAB))
+        {
+          return(1)
+          
+        }
+     if(K[Nclick] == match("PREV", BLABS, nomatch = NOLAB))
+        {
+          return(-1)
+        }
+
+
+      if(K[Nclick] == match("MARK", BLABS, nomatch = NOLAB))
+        {
+          return(list(mark = TRUE))
+         
+          
+        }
+      
+      if(K[Nclick] == match("DOC", BLABS, nomatch = NOLAB))
+        {
+          
+           PICK.DOC(BLABS)
+            zloc = list(x=NULL, y=NULL)
+        }
+      
+     #############  two window clicks and a middle mouse click:
+    
+
+       ####################  START  BUTTON DEFINITIONS    ###########################
+
+             ###################   RESTORE  ###########################      
+      if(K[Nclick]==match("restore", BLABS, nomatch = NOLAB))
+        {
+          WIN = NULL
+          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+          u = par("usr")
+          L = length(sloc$x)
+          if(L>1)
+            {
+              abline(v=sloc$x[c(L-1,L)], col=gray(0.8), lty=2)
+            }
+          sloc = list(x=c(u[1],u[2]))
+           zloc = list(x=NULL, y=NULL)
+        }
+
+       ###################   REfresh  ###########################      
+      if(K[Nclick]==match("refresh", BLABS, nomatch = NOLAB))
+        {
+          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+          u = par("usr")
+          L = length(sloc$x)
+          if(L>1)
+            {
+              abline(v=sloc$x[c(L-1,L)], col=gray(0.8), lty=2)
+            }
+          sloc = list(x=c(u[1],u[2]))
+             zloc = list(x=NULL, y=NULL)
+          
+        }
+
+    
+      
+      ###################   ZOOM  OUT  ###########################      
+      if(K[Nclick]==match("zoom out", BLABS, nomatch = NOLAB))
+        {
+          u = par("usr")
+          DX = (u[2]-u[1])*0.3
+          zloc = list(x= c(u[1]-DX, u[2]+DX))
+          WIN  = zloc$x
+          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+         #### ftime = Zdate(NH$info, sel[1], WIN[1])
+         ####  mtext( ftime, side = 3, at = WIN[1], line=0.5, adj=0)
+
+          sloc = zloc
+             zloc = list(x=NULL, y=NULL)
+        }
+      ###################   ZOOM IN   ###########################      
+       if(K[Nclick]==match("zoom in", BLABS, nomatch = NOLAB))
+        {
+          u = par("usr")
+          DX = (u[2]-u[1])*0.3
+        ####  zloc = list(x= c(u[1]+DX, u[2]-DX))
+          WIN  =list(x= c(u[1]+DX, u[2]-DX))
+         
+          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+         #### ftime = Zdate(NH$info, sel[1], WIN[1])
+         ####  mtext( ftime, side = 3, at = WIN[1], line=0.5, adj=0)
+
+          sloc = zloc
+             zloc = list(x=NULL, y=NULL)
+        }
+      ###################   Shift Left   ###########################      
+       if(K[Nclick]==match("Left", BLABS, nomatch = NOLAB))
+        {
+          u = par("usr")
+          DX = (u[2]-u[1])*0.3
+        ####  zloc = list(x= c(u[1]+DX, u[2]+DX))
+          WIN  =list(x= c(u[1]+DX, u[2]+DX))
+         
+          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+         #### ftime = Zdate(NH$info, sel[1], WIN[1])
+         ####  mtext( ftime, side = 3, at = WIN[1], line=0.5, adj=0)
+
+          sloc = zloc
+             zloc = list(x=NULL, y=NULL)
+        }
+      ###################   Shift Left   ###########################      
+       if(K[Nclick]==match("Right", BLABS, nomatch = NOLAB))
+        {
+          u = par("usr")
+          DX = (u[2]-u[1])*0.3
+        ###  zloc = list(x= c(u[1]-DX, u[2]-DX))
+          WIN  =list(x= c(u[1]-DX, u[2]-DX))
+         
+          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+         #### ftime = Zdate(NH$info, sel[1], WIN[1])
+         ####  mtext( ftime, side = 3, at = WIN[1], line=0.5, adj=0)
+
+          sloc = zloc
+             zloc = list(x=NULL, y=NULL)
+        }
+
+
+
+      
+      ###################   ZOOM IN   ###########################      
+       if(K[Nclick]==match("SCALE", BLABS, nomatch = NOLAB))
+        {
+
+          if(ScaleFACT==1)
+            {
+
+              ScaleFACT=2
+            }
+          else
+            {
+              ScaleFACT=1
+
+            }
+          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+         #### ftime = Zdate(NH$info, sel[1], WIN[1])
+         ####  mtext( ftime, side = 3, at = WIN[1], line=0.5, adj=0)
+
+             zloc = list(x=NULL, y=NULL)
+        }
+###################   button to save in file the names of special files (either to reject or save )
+
+
+      if(K[Nclick]==match("SHOWALL", BLABS, nomatch = NOLAB))
+        {
+          
+          sel = 1:length(NH$info$jd)
+           NSEL = length(NH$dt[sel])
+
+          du = 1/NSEL
+          
+          
+          isel = sel[1]
+          
+          Torigin = list(jd=NH$info$jd[isel], hr=NH$info$hr[isel], mi=NH$info$mi[isel], sec=(NH$info$sec[isel]+NH$info$msec[isel]/1000+NH$info$t1[isel]-NH$info$off[isel]))
+          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+             zloc = list(x=NULL, y=NULL)
+          
+          
+        }
+
+      if(K[Nclick]==match("SHOWSEL", BLABS, nomatch = NOLAB))
+        {
+          
+          sel = SEL.ORIG
+          NSEL = length(NH$dt[sel])
+
+          du = 1/NSEL
+          
+          
+          isel = sel[1]
+          
+          Torigin = list(jd=NH$info$jd[isel], hr=NH$info$hr[isel], mi=NH$info$mi[isel], sec=(NH$info$sec[isel]+NH$info$msec[isel]/1000+NH$info$t1[isel]-NH$info$off[isel]))
+          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+             zloc = list(x=NULL, y=NULL)
+          
+          
+        }
+
+
+      
+     	if(K[Nclick]==match("saveFN", BLABS, nomatch = NOLAB))
+        {
+          	
+	nowdate = format(Sys.time(), "%Y_%m_%d")
+
+	ampfn = paste(sep=".", 	nowdate, "SAVEFN")
+
+	 CAPP = file.exists(ampfn)	
+         cat( NH$info$fn[1]  , file=ampfn,sep="\n", append=CAPP)
+   zloc = list(x=NULL, y=NULL)
+        }
+###################   time pick analysis   ###########################      
+ 
+      if(K[Nclick]==match("FLIP", BLABS, nomatch = NOLAB))
+        {
+          zenclick = length(zloc$x)
+          nc = 1:(zenclick-1)
+          lnc = length(nc)
+          
+          ypick = length(sel)-floor(length(sel)*zloc$y[nc])
+          ipick = sel[ypick]
+          
+          for(JJ in ipick) { NH$JSTR[[JJ]] = (-1)*NH$JSTR[[JJ]] }
+
+          
+           YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+             zloc = list(x=NULL, y=NULL)
+ 
+        }
+###################  Trace Info output   ###########################  
+
+        if(K[Nclick]==match("TR_INFO", BLABS, nomatch = NOLAB))
+        {
+          
+     	for(ipick in 1:length(NH$info$name))
+
+	{
+	     print(paste(sep=" ", NH$info$name[ipick], NH$info$t1[ipick], NH$info$dt[ipick], NH$info$n1[ipick]))
+	}
+        zloc = list(x=NULL, y=NULL)
+     	   }
+
+
+      
+       ###################   Postscript output   ###########################  
+      if(K[Nclick] == match("Postscript", BLABS, nomatch = NOLAB))
+        {
+          print(paste(sep=' ' ,"Start postscript PLOT.SEISN"))
+          jdev = dev.cur()
+          plfname = local.file("pick_gen","eps")
+          
+          ### postscript(file=plfname, horizontal=TRUE, print.it=FALSE,  onefile=FALSE)
+           P = round(par('pin'))
+
+          opar = par(no.readonly = TRUE) 
+
+           postscript(file=plfname , width=P[1], height=P[2], paper = "special", bg=opar$bg, fg=opar$fg, horizontal=FALSE, onefile=TRUE,print.it=FALSE)
+
+          ### par(OPAR)
+          print(paste(sep=' ' ,"Doing postscript", plfname))
+          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+
+
+ 
+          if(NPX>0)
+            {
+
+              PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix)
+             ##### PLOT.WPX(Torigin, STNS, COMPS, WPX, FORCE=forcepix)
+            }
+          
+          
+          print(paste(sep=' ' ,"Done creating postscript file: ", plfname))
+          dev.off()
+          dev.set(jdev)
+             zloc = list(x=NULL, y=NULL)
+        }
+
+
+      ###################   AUTO  PICKs   ###########################      
+ 
+      if(K[Nclick]==match("AUTOP", BLABS, nomatch = NOLAB) & zenclick>=3)
+        {
+         ###  u = par("usr")
+
+          
+          ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+        
+          
+          ipick = sel[ypick]
+          print(paste(sep=' ',"start autopick:", ypick, ipick, NH$info$name[ ipick]))
+          if(identical(WIN,NULL))
+            {
+              tim = NH$dt[1]*seq(from=0,to=length(NH$JSTR[[1]])-1)
+
+            }
+         ###   amp = NH$JSTR[[j]][NH$ex>sloc$x[1]&NH$ex<sloc$x[2] ]
+          
+          print(paste(sep=' ',"WINS", YN$DX[1], YN$DX[2], WIN[1], WIN[2]))
+          famp = NH$JSTR[[ipick]]
+
+           pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
+          
+          ex = NH$ex
+          
+          Xamp =  famp[ ex > pwin[1] & ex <pwin[2]]
+
+       ###     dev.set(3)
+          
+       ###   plot.ts(Xamp)
+        ###  locator()
+        ###  dev.set(2)
+          
+
+          
+         ### KPIX = autopick(Xamp, which.max(abs(Xamp)) )
+         ###  ktarg = which.max(abs(Xamp))
+          
+         ### ktarg = floor((zloc$x[zenclick-1]-YN$DX[1])/NH$dt[ypick])
+         ktarg = which.max(abs(Xamp))
+
+          ###  print(paste(sep=' ',"DUMP",zloc$x[zenclick-1], ktarg,which.max(abs(Xamp))))
+
+          deltat = NH$info$dt[ ipick]
+        ###    KPIX = autopick(Xamp, ktarg )
+
+          get(getOption("device"))(width=15, height=10)  
+          ###  X11(width=15, height=10)
+          ###  plot.ts(ts(Xamp, deltat=deltat))
+ 
+          if(COMPS[ypick] == "I")
+            {
+              fy = butfilt(Xamp, fl=.5, fh=20, deltat, "HP", "BU" )
+             ###  RAT = ratcurve(fy, dt=deltat, fwlen =  75,  bwlen  = 125, PLOT=TRUE)
+              RAT = PSTLTcurve(fy, dt=deltat, fwlen=75,  bwlen=125, perc=0.1, stretch=1000 , MED=21, PLOT=TRUE)
+
+
+              
+            }
+          else
+            {
+             ##   if(exists("FILT") )
+               ##   {
+                  
+               ##     fy = butfilt(Xamp, fl=FILT$fl, fh=FILT$fh, deltat, FILT$type, FILT$proto )
+             ##     }
+            ##    else
+             ##     {
+              
+                  fy = butfilt(Xamp, fl=FILT$fl, fh=FILT$fh, deltat, FILT$type, FILT$proto )
+                ##   fy = butfilt(Xamp, fl=.2, fh=15, deltat, "HP", "BU" )
+             ##     }
+
+
+              
+              ##     RAT = ratcurve(fy, dt=deltat, fwlen =  175,  bwlen  = 175, PLOT=TRUE)
+
+
+              Kaol = length(fy)
+              vim = round(pretty(c(100,  Kaol*0.15), n=10))
+              
+              jout = vector()
+              
+              for(jarjar in 1:length(vim))
+                {
+                  fwlen=vim[jarjar];
+                  bwlen=vim[jarjar]
+                  if(jarjar== round(length(vim)/2)  )
+                    {
+                  RAT = PSTLTcurve(fy, dt=deltat, fwlen=fwlen,  bwlen=bwlen, perc=0.10, stretch=1000 , MED=21, PLOT=TRUE)
+                }
+                  else
+                    {
+                      RAT = PSTLTcurve(fy, dt=deltat, fwlen=fwlen,  bwlen=bwlen, perc=0.10, stretch=1000 , MED=21, PLOT=FALSE)
+                    }
+                  ##  locator()
+
+                  if(length(RAT$ind)<1)  RAT$ind = NA
+                  if(length(RAT$mix)<1)  RAT$mix = NA
+                  if(length(RAT$eye)<1)  RAT$eye = NA
+                  
+                  if(is.na(RAT$ind) | is.null(RAT$ind) ) RAT$ind=NA
+                  if(is.na(RAT$eye) | is.null(RAT$eye) ) RAT$eye=NA
+                  if(is.na(RAT$mix) | is.null(RAT$mix) ) RAT$mix=NA
+                  
+                  if(length(c(RAT$ind, RAT$eye, RAT$mix))<3) next
+                  jout = rbind(jout, c(RAT$ind, RAT$eye, RAT$mix) )
+
+                  
+                }
+
+
+              if(is.matrix(jout))
+                {
+                  dj = dim(jout)
+                  print(paste("jout=", dj[1], dj[2]))
+                  print(jout)
+                  RAT$ind =  median(jout[,1], na.rm = TRUE)
+                  RAT$eye  = median(jout[,2], na.rm = TRUE)
+                  RAT$mix  = median(jout[,3], na.rm = TRUE)
+                }
+              else
+                {
+                  print(paste(jout , collapse=" "))
+                  RAT$ind =  jout[1]
+                  RAT$eye  = jout[2]
+                  RAT$mix  = jout[3]
+                  
+                }
+              
+              
+              if(is.na(RAT$eye) | is.null(RAT$eye) ) RAT$eye=Kaol/2
+              
+              araict = GETARAIC(fy, deltat=deltat, T1=RAT$eye, Mar=8, O1=2, O2=0.2, WW=2,   PLOT=FALSE)
+              print(araict)
+              
+              
+              
+              
+            }
+              ##################################################
+               ########  source("PICK.R") ; save.image()
+
+          
+          dev.set( MAINdev)
+          
+          
+          ### print(KPIX)
+         ### dev.set(dev.next())
+          
+          ### plot.ts(Xamp)
+          ### abline(v=KPIX$ind, col=2)
+           ###  dev.set(dev.next())
+
+          
+          autpix = c(pwin[1]+RAT$ind*NH$dt[ipick], pwin[1]+RAT$eye*NH$dt[ipick], pwin[1]+RAT$mix*NH$dt[ipick], pwin[1]+araict*NH$dt[ipick])
+         ###   print(autpix*NH$dt[ipick])
+          cls = c(2,3,4, 4)
+          plit = !is.na( autpix) & !is.null(autpix)
+          abline(v=autpix[plit ]    , col=cls[plit])
+
+        #######  print(paste(sep=" ", "going to vline....", pwin[1], "ara=",araict, "ip=",ipick, NH$dt[ipick]))
+
+          if(length(araict)>0 )
+            {
+              if(!is.na( araict ) |  !is.null( araict )  )
+              vline(pwin[1]+araict*NH$dt[ipick] ,  per =-0.2 , COL=rgb(.9, .5, .5) )
+            }
+          
+             zloc = list(x=NULL, y=NULL)
+        }
+
+
+      ###################   AUTO  PICKs   ###########################      
+ 
+      if(K[Nclick]==match("AUTOPALL", BLABS, nomatch = NOLAB) & zenclick>=3)
+        {
+         
+         ###  u = par("usr")
+          kzap = "AP"
+          
+          ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+        
+          
+          ipick = sel[ypick]
+          print(paste(sep=' ',"start autopick:", ypick, ipick, NH$info$name[ ipick]))
+          
+         ###   amp = NH$JSTR[[j]][NH$ex>sloc$x[1]&NH$ex<sloc$x[2] ]
+          pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
+        
+
+          for( ip in 1:length(sel) )
+            {
+              ipick = sel[ip]
+              
+              famp = NH$JSTR[[ipick]]
+
+               ###  ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+
+              ex = NH$ex
+          
+              
+              Xamp =  famp[ ex > pwin[1] & ex <pwin[2]]
+
+            
+### ktarg = floor((zloc$x[zenclick-1]-YN$DX[1])/NH$dt[ypick])
+              ktarg = which.max(abs(Xamp))
+
+          ###  print(paste(sep=' ',"DUMP",zloc$x[zenclick-1], ktarg,which.max(abs(Xamp))))
+
+              deltat = NH$info$dt[ ipick]
+        ###    KPIX = autopick(Xamp, ktarg )
+
+              Kaol = length(Xamp)
+              vim = round(pretty(c(100,  Kaol*0.15), n=10))
+              
+              jout = vector()
+              
+              for(jarjar in 1:length(vim))
+                {
+                  fwlen=vim[jarjar];
+                  bwlen=vim[jarjar]
+                  if(jarjar== round(length(vim)/2)  )
+                    {
+                      RAT = PSTLTcurve(Xamp, dt=deltat, fwlen=fwlen,  bwlen=bwlen, perc=0.10, stretch=1000 , MED=21, PLOT=FALSE)
+                    }
+                  else
+                    {
+                      RAT = PSTLTcurve(Xamp, dt=deltat, fwlen=fwlen,  bwlen=bwlen, perc=0.10, stretch=1000 , MED=21, PLOT=FALSE)
+                    }
+                  ##  locator()
+                  
+                  if(length(RAT$ind)<1)  RAT$ind = NA
+                  if(length(RAT$mix)<1)  RAT$mix = NA
+                  if(length(RAT$eye)<1)  RAT$eye = NA
+                  
+                  if(is.na(RAT$ind) | is.null(RAT$ind) ) RAT$ind=NA
+                  if(is.na(RAT$eye) | is.null(RAT$eye) ) RAT$eye=NA
+                  if(is.na(RAT$mix) | is.null(RAT$mix) ) RAT$mix=NA
+                  
+                  if(length(c(RAT$ind, RAT$eye, RAT$mix))<3) next
+                  jout = rbind(jout, c(RAT$ind, RAT$eye, RAT$mix) )
+                  
+                  
+                }
+              
+              
+              if(is.matrix(jout))
+                {
+                  dj = dim(jout)
+                  print(paste("jout=", dj[1], dj[2]))
+                  print(jout)
+                  RAT$ind =  median(jout[,1], na.rm = TRUE)
+                  RAT$eye  = median(jout[,2], na.rm = TRUE)
+                  RAT$mix  = median(jout[,3], na.rm = TRUE)
+                }
+              else
+                {
+                  print(paste(jout , collapse=" "))
+                  RAT$ind =  jout[1]
+                  RAT$eye  = jout[2]
+                  RAT$mix  = jout[3]
+                  
+                }
+              
+              
+              if(is.na(RAT$eye) | is.null(RAT$eye) ) RAT$eye=Kaol/2
+              
+              araict = GETARAIC(Xamp, deltat=deltat, T1=RAT$eye, Mar=8, O1=2, O2=0.2, WW=2,   PLOT=FALSE)
+
+
+              if(length(araict)>0 )
+                {
+                  if(!is.na( araict ) |  !is.null( araict )  )
+                    {
+                      t1 = pwin[1]+araict*NH$dt[ipick]
+
+                      NPX = NPX+1
+                      Nn = names(WPX)
+                      WPX =rbind(WPX, rep(NA, length(Nn)))
+  
+                      i1 = ipick
+                      
+                      asec = NH$info$sec[i1]+NH$info$msec[i1]/1000+NH$info$t1[i1]-NH$info$off[i1]+t1                      
+              
+                      pic1 = recdate(NH$info$jd[i1], NH$info$hr[i1], NH$info$mi[i1], asec)
+                      
+                    
+
+                      
+                      NADDPIX = NADDPIX+1
+                      ##  
+                      
+                      
+                      
+                    }
+                }
+              
+              
+              
+              print(araict)
+              
+            }
+                        ##################################################
+               ########  source("PICK.R") ; save.image()
+       zloc = list(x=NULL, y=NULL)
+        }
+
+
+
+
+
+
+      
+      ###################   AUTO  PICKs   ###########################      
+ 
+      if(K[Nclick]==match("DETECT", BLABS, nomatch = NOLAB) & zenclick>=3)
+        {
+         
+         ###  u = par("usr")
+
+          
+          ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+        
+          
+          ipick = sel[ypick]
+          print(paste(sep=' ',ypick, NH$info$name[ ipick]))
+          
+
+          FRWD=20; 
+          BKWD=20; 
+          sbef = 10; 
+          saft = 35; 
+          thresh = 1.2; 
+          Tthresh2 = 2;  
+          flo=1; 
+          fhi=10.0
+          stretch=1000; 
+          PLOT=TRUE; 
+          Kmin=10; 
+          kind=1
+          deltat = 0.008
+          DFRWD=.5
+          DBKWD=.7
+
+
+          ZGH = ETECTG(NH, sel=2:3, FRWD =FRWD , BKWD =BKWD , sbef =sbef , saft = saft, DFRWD = DFRWD,
+            DBKWD = DBKWD, thresh = thresh, Tthresh2 = Tthresh2 , stretch = stretch, flo =flo ,
+            fhi = fhi, PLOT = TRUE, Kmin = Kmin, perc=0.01, kind = 1,  DOARAIC = FALSE)
+          
+          
+          dev.set( MAINdev)
+          
+          
+          ### print(KPIX)
+         ### dev.set(dev.next())
+          
+          ### plot.ts(Xamp)
+          ### abline(v=KPIX$ind, col=2)
+           ###  dev.set(dev.next())
+
+          autpix = c(pwin[1]+RAT$ind*NH$dt[ipick], pwin[1]+RAT$eye*NH$dt[ipick], pwin[1]+RAT$mix*NH$dt[ipick], pwin[1]+araict*NH$dt[ipick])
+          print(autpix*NH$dt[ipick])
+          
+          abline(v=autpix    , col=c(2,3,4, 4))
+
+        #######  print(paste(sep=" ", "going to vline....", pwin[1], "ara=",araict, "ip=",ipick, NH$dt[ipick]))
+          vline(pwin[1]+araict*NH$dt[ipick] ,  per =-0.2 , COL=rgb(.4, 0, 0) )
+          
+          zloc = list(x=NULL, y=NULL)
+        }
+
+
+      ###################   MAP    ###########################      
+ 
+      if(K[Nclick]==match("MAP", BLABS, nomatch = NOLAB) & Nclick>1)
+        {
+         ###  u = par("usr")
+          Apf =  NH$pickfile
+          
+          if(!is.null(Apf$STAS$lon))
+            {
+
+              ###########   set up stations and source location
+              stalats = Apf$STAS$lat
+              stalons = Apf$STAS$lon
+              stanam  = Apf$STAS$name
+
+              srclat = Apf$LOC$lat
+              srclon = Apf$LOC$lon
+
+              print("DOING MAP")
+              if(is.null(Mapdev))
+                {
+                  get(getOption("device"))(width = 12, height = 7) 
+                 ###  X11(width = 12, height = 7)
+                  Mapdev = dev.cur()
+                }
+              else
+                {
+                  devl = dev.list()
+                  
+                  
+                  if(is.null(Pickdev))
+                    {
+                      jsc =  2-length(devl)
+                    }
+                  else
+                    {
+                      jsc =  3-length(devl)
+
+                    }
+
+                  
+                  if(jsc>0) {
+                    get(getOption("device"))(width = 12, height = 7) 
+                    ##X11(width = 12, height = 7);
+                    Mapdev = dev.cur()
+                            }
+                  dev.set(Mapdev)
+                }
+              ###########  print(pcols)
+             
+              plot(range( c(stalons,srclon ), na.rm=TRUE),  range( c(stalats,srclat ), na.rm=TRUE),  type='n')
+              points(stalons, stalats,  pch=6, col='red')
+               points(srclon, srclat,  pch=8, col='blue')
+
+              segments(stalons[sel],  stalats[sel], srclon, srclat , col=pcols[sel])
+              text(stalons[sel],  stalats[sel], stanam[sel], pos=3, col=pcols[sel])
+              dev.set( MAINdev)
+            }
+
+          zloc = list(x=NULL, y=NULL)
+        }
+      
+
+      
+      ###################   XTRACT PART of A trace   ###########################      
+ 
+      if(K[Nclick]==match("XTR", BLABS, nomatch = NOLAB) & zenclick>1)
+        {
+         ###  u = par("usr")
+          ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+          ipick = sel[ypick]
+          print(paste(sep=' ',"EXTRACT", ypick, NH$info$name[ ipick]))
+
+          famp = NH$JSTR[[ipick]]
+
+          pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
+
+          ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+          temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+          Xamp =  -1*temp
+          smallex = ex[ ex > pwin[1] & ex <pwin[2]]
+
+          asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+pwin[1]
+
+          
+          TP = list(yr=NH$info$yr[ipick], jd=NH$info$jd[ipick], hr=NH$info$hr[ipick], mi=NH$info$mi[ipick], sec=asec )
+
+
+          RETX = list(x=smallex, y=temp, dt=NH$dt[ipick],   name=NH$info$name[ipick] , Tpick=TP, mark=mark, deltat=NH$dt[ipick] )
+         invisible(RETX)
+          zloc = list(x=NULL, y=NULL)
+        }
+      
+      
+      ###################   PULSE ANALYSIS   ###########################      
+  ######   print(paste(sep=' ',Nclick,  K[Nclick], match("SIG", BLABS)))
+
+      
+      if(K[Nclick]==match("SIG", BLABS, nomatch = NOLAB) & zenclick>=3)
+        {
+         ###  u = par("usr")
+          ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+          ipick = sel[ypick]
+          print(paste(sep=' ',ypick, NH$info$name[ ipick]))
+
+          famp = NH$JSTR[[ipick]]
+          ###  need to flip the accoustic trace?
+
+          pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
+
+
+          ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+          temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+          Xamp =  -1*temp
+          smallex = ex[ ex > pwin[1] & ex <pwin[2]]
+
+          get(getOption("device"))()  
+         ### X11()
+          ###  plot.ts(Xamp)
+
+          PULS = tung.pulse( smallex , Xamp , NH$dt[ipick])
+          NPX = NPX+1
+          Nn = names(WPX)
+          WPX =rbind(WPX, rep(NA, length(Nn)))
+  
+          asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+pwin[1]
+
+          i1 = ipick
+                    WPX$tag[NPX]=paste(sep=".",NH$STNS[i1],  NH$COMPS[i1])
+                    WPX$name[NPX]=NH$STNS[i1]
+                    WPX$comp[NPX]=NH$COMPS[i1]
+                    WPX$c3[NPX]=NH$OCOMPS[i1]
+                    WPX$phase[NPX]="P"
+                      WPX$err[NPX]=1
+                      WPX$pol[NPX]=0
+                      WPX$flg[NPX]=999
+                      WPX$res[NPX]=0
+                      WPX$yr[NPX]=NH$info$yr[i1]
+                      WPX$mo[NPX]= NH$info$mo[i1]
+                      WPX$dom[NPX]=NH$info$dom[i1]
+                      WPX$jd[NPX]=NH$info$jd[i1]
+                      WPX$hr[NPX]=NH$info$hr[i1]
+                      WPX$mi[NPX]=NH$info$mi[i1]
+                      WPX$sec[NPX]=asec
+                      WPX$col[NPX]="purple"
+                      WPX$onoff[NPX] = 1 
+          
+
+          PULSPX[[NPX]] =  list( pick=c(NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], asec), kind="SHAPE", sta= STNS[ypick], comp=COMPS[ypick], dispcomp=COMPS[ypick], PULS=PULS)
+
+          dev.set( MAINdev)
+          zloc = list(x=NULL, y=NULL)
+        }
+      
+      ###################   FREQUENCY ANALYSIS   ###########################      
+ 
+      if(K[Nclick]==match("SPEC.old", BLABS, nomatch = NOLAB) & zenclick>=1)
+        {
+         ###  u = par("usr")
+
+
+          if(zenclick>=3)
+            {
+              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              ipick = sel[ypick]
+             ### print(paste(sep=' ',ypick, NH$info$name[ ipick]))
+              pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
+            }
+          if(zenclick==2)
+            {
+              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              ipick = sel[ypick]
+            ###  print(paste(sep=' ',ypick, NH$info$name[ipick]))
+              pwin = WIN
+            }
+          
+          if(zenclick==1)
+            {
+              pwin = LASTwin
+            }
+          
+          LASTwin = pwin
+   
+        ###  print(paste(sep=' ',ypick, NH$info$name[ ipick]))
+
+          famp = NH$JSTR[[ipick]]
+          ###  need to flip the accoustic trace?
+
+       ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+          
+          temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+          
+          g  =  list(y=temp-mean(temp), dt=NH$dt[ipick])
+          ### g$x = NH$ex[ NH$ex > zloc$x[zenclick-2] & NH$ex <zloc$x[zenclick-1]]
+
+          get(getOption("device"))()  
+          ### X11()
+          f1 = 0.1
+          f2 = floor(0.33*(1/NH$dt[ipick]))
+
+          
+           Spec = MTMplot(g, f1, f2, PLOT=TRUE)
+          dev.set( MAINdev)
+  
+          ###  dev.off(dev.cur())
+    ###   source("/home/lees/Progs/R_stuff/tung.R");
+          ###     a = PICK.MARIO(GH,  sel, WIN=twin) 
+          zloc = list(x=NULL, y=NULL)
+          
+        }
+
+######################################################################
+######################################################################
+######################################################################
+####### 
+#######  source("PICK.R"); save.image()
+
+      if(K[Nclick]==match("ASCII", BLABS, nomatch = NOLAB) & zenclick>=1)
+        {  ########ascii
+
+          if(zenclick>=3)
+            {
+              nc = 1:(zenclick-1)
+              lnc = length(nc)
+              
+              ypick = length(sel)-floor(length(sel)*zloc$y[nc])
+              ipick = sel[ypick]
+### print(paste(sep=' ',ypick, NH$info$name[ ipick]))
+
+              print(ipick)
+              
+              i1 = seq(from=1, to=max(nc), by=2)
+              i1 = i1[i1<max(nc)]
+              amp = vector()
+              dees = list()
+              stamps =  vector()
+              speccol = vector()
+              ni = 0
+
+              
+              for(ipix in i1)
+                {
+                  pwin = sort(c(zloc$x[ipix], zloc$x[ipix+1]))
+                  print(c(ipix, pwin))
+
+                  famp = NH$JSTR[[ipick[ipix]]]
+	          dsec=NH$dt[ipick[ipix]]
+
+                  ex = seq(from=NH$info$t1[ipick[ipix]], by=NH$info$dt[ipick[ipix]], length.out=NH$info$n1[ipick[ipix]])
+
+                  
+                  temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+                  ni = ni +1
+
+                  amp = temp-mean(temp)
+
+                  
+                  ftime = Zdate(NH$info, ipick[ipix], pwin[1])
+                  psta = NH$STNS[ipick[ipix]]
+                  pcomp =  NH$COMPS[ipick[ipix]]
+
+                  ampfn = paste(sep=".", ftime,psta,pcomp, "asc")
+                  
+                  cat(file=ampfn, paste(sep=" ", ftime , psta , pcomp, dsec, length(amp), "\n"))
+                  ##   cat(file=ampfn, sep="\n", append=TRUE)
+                  cat(file=ampfn, sep="\n", amp, append=TRUE)
+                  ##   print(paste(sep=" ", NH$extras$LEVEL,  NH$extras$PICKER))	
+
+                  
+                }
+
+              
+            }
+          if(zenclick==2)
+            {
+              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              ipick = sel[ypick]
+###  print(paste(sep=' ',ypick, NH$info$name[ipick]))
+              pwin = WIN
+            }
+          
+          if(zenclick==1)
+            {
+              pwin = LASTwin
+            }
+          
+          LASTwin = pwin
+          
+         zloc = list(x=NULL, y=NULL) 
+        }
+
+    
+      
+######################################################################
+######################################################################
+######################################################################
+
+######################################################################
+########  FUJITA-SAN: here  I added inb code for amplitude analysis
+
+
+      ###################   AMPLITUDE ANALYSIS   ###########################      
+ ####### 
+#######  source("PICK.R"); save.image()
+
+  if(K[Nclick]==match("AMPL", BLABS, nomatch = NOLAB) & zenclick>=1)
+        {  #####AMPL
+###  u = par("usr")
+
+          
+          nowdate = format(Sys.time(), "%Y_%m_%d")
+          
+          ampfn = paste(sep=".", 	nowdate, "AMPL")
+          
+          CAPP = file.exists(ampfn)
+          
+          
+          
+          if(zenclick>=3)
+            {
+              nc = 1:(zenclick-1)
+              lnc = length(nc)
+              
+              ypick = length(sel)-floor(length(sel)*zloc$y[nc])
+              ipick = sel[ypick]
+### print(paste(sep=' ',ypick, NH$info$name[ ipick]))
+              
+              print(ipick)
+              
+              i1 = seq(from=1, to=max(nc), by=2)
+              i1 = i1[i1<max(nc)]
+              amp = vector()
+              dees = list()
+              stamps =  vector()
+              speccol = vector()
+              ni = 0
+              
+              
+              for(ipix in i1)
+                {
+                  pwin = sort(c(zloc$x[ipix], zloc$x[ipix+1]))
+                  print(c(ipix, pwin))
+                  
+                  famp = NH$JSTR[[ipick[ipix]]]
+                  
+                  
+                  ex = seq(from=NH$info$t1[ipick[ipix]], by=NH$info$dt[ipick[ipix]], length.out=NH$info$n1[ipick[ipix]])
+                  temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+                  
+                  ni = ni +1
+
+                  amp = temp-mean(temp)
+                  
+                  MSSA = sum(amp*amp)/length(amp)	
+                  ##    VA = var(amp)	
+                  
+                  
+                  
+                  
+                  ftime = Zdate(NH$info, ipick[ipix], pwin[1])
+                  psta = NH$STNS[ipick[ipix]]
+                  pcomp =  NH$COMPS[ipick[ipix]]
+                  STAMP = paste(sep=" ", psta, pcomp, ftime, MSSA)
+                  stamps[ni] = STAMP
+                  
+                }
+              
+              print(stamps)
+              cat(stamps, file=ampfn,sep="\n", append=CAPP)
+              
+            }
+          if(zenclick==2)
+            {
+              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              ipick = sel[ypick]
+###  print(paste(sep=' ',ypick, NH$info$name[ipick]))
+              pwin = WIN
+            }
+          
+          if(zenclick==1)
+            {
+              pwin = LASTwin
+            }
+          
+          LASTwin = pwin
+          zloc = list(x=NULL, y=NULL) 
+          
+        }
+
+################################################
+################################################
+################################################
+###################   ternary filtered AMPLITUDE ANALYSIS   ###########################      
+ ####### 
+#######  source("PICK.R"); save.image()
+
+  if(K[Nclick]==match("TRNAMPL", BLABS, nomatch = NOLAB) & zenclick>=1)
+    {
+###  u = par("usr")
+
+
+      nowdate = format(Sys.time(), "%Y_%m_%d")
+
+      ampfn = paste(sep=".", 	nowdate, "TERNAMPL")
+      
+      CAPP = file.exists(ampfn)
+
+
+
+      if(zenclick>=3)
+        {
+          nc = 1:(zenclick-1)
+          lnc = length(nc)
+              
+          ypick = length(sel)-floor(length(sel)*zloc$y[nc])
+          ipick = sel[ypick]
+### print(paste(sep=' ',ypick, NH$info$name[ ipick]))
+
+              print(ipick)
+              
+              i1 = seq(from=1, to=max(nc), by=2)
+              i1 = i1[i1<max(nc)]
+              amp = vector()
+              dees = list()
+              stamps =  vector()
+              speccol = vector()
+              ni = 0
+
+              
+              for(ipix in i1)
+                {
+                  pwin = sort(c(zloc$x[ipix], zloc$x[ipix+1]))
+                  print(c(ipix, pwin))
+
+                  famp = NH$JSTR[[ipick[ipix]]]
+	          dsec=NH$dt[ipick[ipix]]
+
+                  ex = seq(from=NH$info$t1[ipick[ipix]], by=NH$info$dt[ipick[ipix]], length.out=NH$info$n1[ipick[ipix]])
+
+                  
+                  temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+                  ni = ni +1
+
+                  amp = temp-mean(temp)
+
+			MSSA0 = sum(amp*amp)/length(amp)	
+	
+		fy1 = butfilt(famp, fl=1, fh=3.5 , dsec , "BP", "BU" )
+                 
+ 
+                  temp =  fy1[ ex > pwin[1] & ex <pwin[2]]
+                  
+
+                  ampf1 = temp-mean(temp)
+
+			MSSA1 = sum(ampf1*ampf1)/length(ampf1)	
+
+
+	fy1 = butfilt(famp, fl=3.5, fh=7 , dsec , "BP", "BU" )
+                 
+ 
+                  temp =  fy1[ ex > pwin[1] & ex <pwin[2]]
+                  
+
+                  ampf1 = temp-mean(temp)
+
+			MSSA2 = sum(ampf1*ampf1)/length(ampf1)	
+
+
+	fy1 = butfilt(famp, fl=7, fh=12 , dsec , "BP", "BU" )
+                 
+ 
+                  temp =  fy1[ ex > pwin[1] & ex <pwin[2]]
+                  
+
+                  ampf1 = temp-mean(temp)
+
+			MSSA3 = sum(ampf1*ampf1)/length(ampf1)	
+
+
+
+
+
+                  ftime = Zdate(NH$info, ipick[ipix], pwin[1])
+                  psta = NH$STNS[ipick[ipix]]
+                  pcomp =  NH$COMPS[ipick[ipix]]
+
+         
+
+             ##   print(paste(sep=" ", NH$extras$LEVEL,  NH$extras$PICKER))	
+
+                  STAMP = paste(sep=" ", psta, pcomp, ftime, NH$extras$LEVEL,  NH$extras$PICKER, MSSA0,  MSSA1,  MSSA2, MSSA3  )
+                  stamps[ni] = STAMP
+                  
+                }
+
+              print(stamps)
+              cat(stamps, file=ampfn,sep="\n", append=CAPP)
+              
+            }
+          if(zenclick==2)
+            {
+              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              ipick = sel[ypick]
+            ###  print(paste(sep=' ',ypick, NH$info$name[ipick]))
+              pwin = WIN
+            }
+          
+          if(zenclick==1)
+            {
+              pwin = LASTwin
+            }
+          
+          LASTwin = pwin
+   
+      zloc = list(x=NULL, y=NULL) 
+        }
+
+################################################
+################################################
+################################################
+
+
+
+      if(K[Nclick]==match("SPEC", BLABS, nomatch = NOLAB) & zenclick>=1)
+        {
+         ###  u = par("usr")
+
+
+          if(zenclick>=3)
+            {
+              nc = 1:(zenclick-1)
+              lnc = length(nc)
+              
+              ypick = length(sel)-floor(length(sel)*zloc$y[nc])
+              ipick = sel[ypick]
+             ### print(paste(sep=' ',ypick, NH$info$name[ ipick]))
+
+              print(ipick)
+              
+              i1 = seq(from=1, to=max(nc), by=2)
+              i1 = i1[i1<max(nc)]
+              amp = list()
+              dees = list()
+              stamps =  list()
+              speccol = vector()
+              ni = 0
+
+              
+              for(ipix in i1)
+                {
+                  pwin = sort(c(zloc$x[ipix], zloc$x[ipix+1]))
+                  print(c(ipix, pwin))
+
+                  famp = NH$JSTR[[ipick[ipix]]]
+
+
+                  ex = seq(from=NH$info$t1[ipick[ipix]], by=NH$info$dt[ipick[ipix]], length.out=NH$info$n1[ipick[ipix]])
+                  temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+                  
+                  ni = ni +1
+
+                  amp[[ni]] = temp-mean(temp)
+                  dees[ni] = NH$dt[ipick[ipix]]
+
+                  speccol[ni] = pcols[ipick[ipix]]
+
+                  ftime = Zdate(NH$info, ipick[ipix], pwin[1])
+                  psta = NH$STNS[ipick[ipix]]
+                  pcomp =  NH$COMPS[ipick[ipix]]
+                  STAMP = paste(sep=" ", psta, pcomp, ftime)
+                  stamps[ni] = STAMP
+                  
+                }
+
+              print(stamps)
+              a = list(y=amp, dt=dees, stamps=stamps)
+
+              get(getOption("device"))(width=10, height=10)  
+             ### X11(width=10, height=10)
+              f1 = 0.1
+              f2 = floor(0.33*(1/NH$dt[ipick]))
+              
+              
+              drive.MTM(a, f1, f2[1], COL=speccol, PLOT=TRUE)
+              
+              dev.set( MAINdev)
+            }
+          if(zenclick==2)
+            {
+              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              ipick = sel[ypick]
+            ###  print(paste(sep=' ',ypick, NH$info$name[ipick]))
+              pwin = WIN
+            }
+          
+          if(zenclick==1)
+            {
+              pwin = LASTwin
+            }
+          
+          LASTwin = pwin
+   
+               zloc = list(x=NULL, y=NULL) 
+        }
+                          
+      ###################   SPECTROGRAM  ANALYSIS   ###########################      
+ 
+      if(K[Nclick]==match("SGRAM", BLABS, nomatch = NOLAB) & zenclick>=1)
+        {
+         ###  u = par("usr")
+
+          if(zenclick>=3)
+            {
+              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              ipick = sel[ypick]
+             ### print(paste(sep=' ',ypick, NH$info$name[ ipick]))
+              pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
+            }
+          if(zenclick==2)
+            {
+              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              ipick = sel[ypick]
+            ###  print(paste(sep=' ',ypick, NH$info$name[ipick]))
+              pwin = WIN
+            }
+
+          if(zenclick==1)
+            {
+              pwin = LASTwin
+            }
+
+          LASTwin = pwin
+   
+          ### print(paste(sep=" ", "DOING SGRAM  Nclick, ipick, pwin", Nclick, ipick, pwin))
+          
+          famp = NH$JSTR[[ipick]]
+         
+          ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+         
+          temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+
+          Xamp =   temp-mean(temp)
+
+          ftime = Zdate(NH$info, sel[ypick], pwin[1])
+	print(paste(sep=" ",min(ex), max(ex)))
+	
+	print(paste(sep=" ",pwin[1], pwin[2]))
+	
+          print(paste(sep=" ", ipick, length(famp),length(temp),length(Xamp), NH$dt[ipick],ftime)) 
+
+
+
+          SPECT.drive(Xamp, DT=NH$dt[ipick], STAMP=ftime)
+
+        ###  DEV = evolfft(Xamp,NH$dt[ipick] , Nfft=4096, Ns=250 , Nov=240,  fl=0, fh=15  )
+
+        
+         ###  X11()
+        ###   plotevol(DEV, log=1, fl=0, fh=15, col=rainbow(50))
+          
+          dev.set(MAINdev)
+            zloc = list(x=NULL, y=NULL) 
+        }
+
+      ###################   wavelet  ANALYSIS   ######################
+ 
+      if(K[Nclick]==match("WLET", BLABS, nomatch = NOLAB) & zenclick>=1)
+        {
+        print(zenclick-1)
+          if(zenclick>=3)
+            {
+              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              ipick = sel[ypick]
+          ###    print(paste(sep=' ',ypick, NH$info$name[ ipick]))
+              pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
+            }
+          if(zenclick==1)
+            {
+              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              ipick = sel[ypick]
+            ###  print(paste(sep=' ',ypick, NH$info$name[ipick]))
+              pwin = WIN
+            }
+
+          if(zenclick==0)
+            {
+              pwin = LASTwin
+            }
+            print(NH$info$name[ipick])
+          
+          LASTwin = pwin
+     
+           
+          famp = NH$JSTR[[ipick]]
+         
+          ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+          temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+          Xamp =   temp-mean(temp)
+
+
+           ftime = Zdate(NH$info, sel[ypick], pwin[1])
+
+         ###  smallex = NH$ex[ NH$ex > pwin[1] & NH$ex <pwin[2]]
+          
+          ###X11()
+          ###  plot.ts(Xamp)
+          ### wlet.do(Xamp, NH$dt[ipick], noctave=7, zscale=3,  col=terrain.colors(100))
+          wlet.drive(Xamp, NH$dt[ipick], STAMP=ftime)
+
+          
+          dev.set( MAINdev)
+ #######  source("/home/lees/Progs/R_stuff/PICK.R"); save.image()
+
+          zloc = list(x=NULL, y=NULL) 
+        }
+            ###################   filter stuff  ANALYSIS   ###########################      
+ 
+      if(K[Nclick]==match("FILT", BLABS, nomatch = NOLAB))
+        {####FILT
+
+           Fdef = choosfilt()
+
+           if(!is.null(Fdef))
+             {
+
+             
+
+           if(Fdef$type=="None")
+             {
+               if(exists("OLDH")) 
+               NH = OLDH
+             }
+           else
+             {
+                OLDH=NH
+               KF = FILT.SEISN(NH, sel = sel, FILT=Fdef)
+               NH = KF
+             }
+           ###  X11()
+         }
+           dev.set( MAINdev)  
+           YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel , sfact=ScaleFACT, notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+          ###  dev.set( MAINdev)  
+          zloc = list(x=NULL, y=NULL) 
+         }
+
+
+      if(K[Nclick]==match("UNFILT", BLABS, nomatch = NOLAB))
+        {
+
+         
+          if(exists("OLDH"))NH = OLDH
+          dev.set( MAINdev)  
+           YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel , sfact=ScaleFACT, notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+          ###  dev.set( MAINdev)  
+        zloc = list(x=NULL, y=NULL) 
+         }
+
+
+
+
+      
+ ###########################      
+      if(K[Nclick]==match("BRUNE", BLABS, nomatch = NOLAB) & zenclick>=3)
+        {
+          
+###  u = par("usr")
+          ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+          ipick = sel[ypick]
+         ###  print(paste(sep=' ',"look at Brune", ypick, NH$info$name[ ipick]))
+          
+          famp = NH$JSTR[[ipick]]
+###  need to flip the accoustic trace?
+          
+          pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
+
+
+           ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+          temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+          Xamp =   temp-mean(temp)
+
+          dev.set(MAINdev+1)
+         ##  dev.set(dev.next())
+                 f1 = 0.01
+              f2 = floor(0.25*(1/NH$dt[ipick]))
+         ###    }
+          
+          BF = brune.doom( Xamp, NH$dt[ipick] ,f1=f1, f2=f2 ,  PLOTB = TRUE)
+          BRUNKOUNT = BRUNKOUNT+1
+          BRUNINFO[[BRUNKOUNT]] = list(stn=NH$STNS[ipick], comp=NH$COMPS[ipick] ,  pwin=pwin, BF=BF)
+          print(BF) 
+          NH$KNOTES[ipick] = paste(sep=" ", "BR", NH$KNOTES[ipick])
+          dev.set( MAINdev)
+#######  source("PICK.R"); save.image()
+          zloc = list(x=NULL, y=NULL) 
+        }
+ ###########################      
+###########################      
+      if(K[Nclick]==match("DETAIL", BLABS, nomatch = NOLAB) & zenclick>=3)
+        {
+          screens(2)
+          
+###  u = par("usr")
+          print("Going to  DETAIL")
+        
+          ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+          ipick = sel[ypick]
+          
+          
+          famp = NH$JSTR[[ipick]]
+
+          
+          pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
+
+          ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+          
+          temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+
+          ex = ex[ ex > pwin[1] & ex <pwin[2]]
+  
+          ##  X11()
+          
+          dev.set(MAINdev+1)
+          dsec  = NH$dt[ipick]
+         ##  fh=0.12*(1/dsec)
+         ##  fl = 0.5
+         ##  fy = butfilt(temp, fl=fl, fh=fh , dsec , "BP", "BU" )
+
+         ##   if(exists("DETAIL.FILT"))
+          ##    {
+          ##      fh=DETAIL.FILT[2]
+          ##      fl =DETAIL.FILT[1]
+          ##      fy = butfilt(temp, fl=fl, fh=fh , dsec , "BP", "BU" )
+         ##     }
+         ##     else
+         ##     {
+
+          ########   this is a default - need to have some way to store a
+         ######## database of default parameters...
+               fh=  0.12*(1/dsec)
+               fl = 1/100
+               fy = temp
+         ##     }
+  
+          
+          
+          Xamp =   fy-mean(fy)
+          
+          KSAVE = detail.pick(Xamp, ex,  dsec, TIT=NH$KNOTES[ipick])
+
+          DETLKOUNT = DETLKOUNT+1
+          DETLINFO[[DETLKOUNT]] = list(stn=NH$STNS[ipick], comp=NH$COMPS[ipick] ,  pwin=pwin, points=KSAVE, filt=c(fl,fh))
+
+          ##  dev.off()
+          NH$KNOTES[ipick] = paste(sep=" ", "DT", NH$KNOTES[ipick])
+          dev.set( MAINdev)
+#######  source("/home/lees/Progs/R_stuff/PICK.R")
+           zloc = list(x=NULL, y=NULL) 
+        }
+ ###########################      
+
+
+
+ 
+      if(K[Nclick]==match("PTS", BLABS, nomatch = NOLAB))
+        {
+         pts=!pts
+          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+          zloc = list(x=NULL, y=NULL) 
+        }
+
+
+      #######  source("/home/lees/Progs/R_stuff/PICK.R"); save.image()
+ ###########################      
+
+      if(K[Nclick]==match("MMARKS", BLABS, nomatch = NOLAB))
+        {
+        pwin = WIN
+        ex  =  NH$ex[NH$ex > pwin[1] & NH$ex <pwin[2]]
+
+        #########  ??????????????????????????  ##################
+   ####  asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]
+         zloc = list(x=NULL, y=NULL) 
+        }
+
+
+      #######  source("/home/lees/Progs/R_stuff/PICK.R"); save.image()
+
+#######  source("PICK.R"); save.image()
+      if(K[Nclick]==match("PMOT", BLABS, nomatch = NOLAB))
+        {
+          ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+          ipick = sel[ypick]
+   
+          psta = NH$STNS[ipick]
+
+          ista = psta == NH$STNS
+          
+          
+          Iv =  which(ista &  ("V"==NH$COMPS| "v"==NH$COMPS | "4"==NH$COMPS |"Vertical"==NH$COMPS |"U"==NH$COMPS) )
+          In =  which(ista & ("N"==NH$COMPS | "n"==NH$COMPS | "5"==NH$COMPS |"North"==NH$COMPS) )
+          Ie =  which(ista & ("E"==NH$COMPS | "e"==NH$COMPS | "6"==NH$COMPS |"East"==NH$COMPS) )
+
+          print(paste(sep=' ', "pmot get comps: ", Iv, In, Ie))
+         
+          pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
+
+
+        
+          ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=NH$info$n1[Iv])
+          ex2 = seq(from=NH$info$t1[In], by=NH$info$dt[In], length.out=NH$info$n1[In])
+          ex3 = seq(from=NH$info$t1[Ie], by=NH$info$dt[Ie], length.out=NH$info$n1[Ie])
+         
+       
+          temp =  cbind(NH$JSTR[[Iv]][ex1 > pwin[1] & ex1 <pwin[2]],
+            NH$JSTR[[In]][ex2 > pwin[1] & ex2 <pwin[2]],
+            NH$JSTR[[Ie]][ex3 > pwin[1] & ex3 <pwin[2]])
+
+         #####   ex  =  ex[ex > pwin[1] & ex <pwin[2]]
+          
+
+          pmolabs=NH$COMPS[c(Iv, In, Ie)]
+
+          get(getOption("device"))(width=15, height=10)  
+        ###  X11(width=15, height=10)
+          
+          ###########    PMOtrace(temp, WIN=NULL, labs=pmolabs, PS=FALSE, ID="")
+          ftime = Zdate(NH$info, sel[ypick], pwin[1])
+
+          STAMP = paste(sep=" ", psta, ftime)
+          #####  simple.hodo(temp,labs=pmolabs, COL=rainbow(100))
+          PMOT.drive(temp, NH$dt[1], pmolabs, STAMP=STAMP)
+
+          dev.set( MAINdev)
+          
+           zloc = list(x=NULL, y=NULL) 
+        }
+
+
+
+      if(K[Nclick]==match("STERNET", BLABS, nomatch = NOLAB))
+        {
+          ####  plot an equal area steronet with the points of the 3-comp seismogram
+          ####           on the stereonet
+          ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+          ipick = sel[ypick]
+   
+          psta = NH$STNS[ipick]
+
+          ista = psta == NH$STNS
+          
+           Iv =  which(ista &  ("V"==NH$COMPS| "v"==NH$COMPS | "4"==NH$COMPS |"Vertical"==NH$COMPS |"U"==NH$COMPS) )
+          In =  which(ista & ("N"==NH$COMPS | "n"==NH$COMPS | "5"==NH$COMPS |"North"==NH$COMPS) )
+          Ie =  which(ista & ("E"==NH$COMPS | "e"==NH$COMPS | "6"==NH$COMPS |"East"==NH$COMPS) )
+
+          print(paste(sep=' ', "pmot get comps: ", Iv, In, Ie))
+            
+        
+          pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
+
+
+
+           ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=NH$info$n1[Iv])
+          ex2 = seq(from=NH$info$t1[In], by=NH$info$dt[In], length.out=NH$info$n1[In])
+          ex3 = seq(from=NH$info$t1[Ie], by=NH$info$dt[Ie], length.out=NH$info$n1[Ie])
+         
+        
+         
+          temp =  cbind(NH$JSTR[[Iv]][ex1 > pwin[1] & ex1 <pwin[2]],
+            NH$JSTR[[In]][ex2 > pwin[1] & ex2 <pwin[2]],
+            NH$JSTR[[Ie]][ex3 > pwin[1] & ex3 <pwin[2]])
+
+         
+
+          pmolabs=NH$COMPS[c(Iv, In, Ie)]
+
+          get(getOption("device"))(width=6, height=6)  
+         ###  X11(width=6, height=6)
+          
+          ###########    PMOtrace(temp, WIN=NULL, labs=pmolabs, PS=FALSE, ID="")
+          ftime = Zdate(NH$info, sel[ypick], pwin[1])
+          STAMP = paste(sep=" ", psta, ftime)
+          
+          #####  
+         SNET.drive(temp, STAMP=STAMP)
+          dev.set( MAINdev)
+          
+           zloc = list(x=NULL, y=NULL) 
+        }
+
+#######  source("PICK.R"); save.image()
+      if(K[Nclick]==match("GTAZI", BLABS, nomatch = NOLAB))
+        {
+          ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+          ipick = sel[ypick]
+
+          
+          psta = NH$STNS[ipick]
+
+          ista = psta == NH$STNS
+          
+        
+          Iv =  which(ista &  ("V"==NH$COMPS| "v"==NH$COMPS | "4"==NH$COMPS |"Vertical"==NH$COMPS |"U"==NH$COMPS) )
+          In =  which(ista & ("N"==NH$COMPS | "n"==NH$COMPS | "5"==NH$COMPS |"North"==NH$COMPS) )
+          Ie =  which(ista & ("E"==NH$COMPS | "e"==NH$COMPS | "6"==NH$COMPS |"East"==NH$COMPS) )
+
+          print(paste(sep=' ', "pmot get comps: ", Iv, In, Ie))
+          
+          pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
+
+
+ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=NH$info$n1[Iv])
+          ex2 = seq(from=NH$info$t1[In], by=NH$info$dt[In], length.out=NH$info$n1[In])
+          ex3 = seq(from=NH$info$t1[Ie], by=NH$info$dt[Ie], length.out=NH$info$n1[Ie])
+         
+        
+         
+          temp =  cbind(NH$JSTR[[Iv]][ex1 > pwin[1] & ex1 <pwin[2]],
+            NH$JSTR[[In]][ex2 > pwin[1] & ex2 <pwin[2]],
+            NH$JSTR[[Ie]][ex3 > pwin[1] & ex3 <pwin[2]])
+
+         
+          ftime = Zdate(NH$info, sel[ypick], pwin[1])
+          GAZISTAMP = paste(sep=" ", psta, ftime)
+          
+          pmolabs=NH$COMPS[c(Iv, In, Ie)]
+          get(getOption("device"))()
+         ####  X11()
+          
+          
+          G  = GAZI(temp, dt =NH$dt[Iv]  , comp = pmolabs, sta = psta , az = 0, len =75, shift = 10, prev = 1)
+
+          dev.set( MAINdev)
+          
+           zloc = list(x=NULL, y=NULL) 
+        }
+      
+
+  if(K[Nclick]==match("ENVLP", BLABS, nomatch = NOLAB))
+        {
+          #### 
+          ####         
+          ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
+          ipick = sel[ypick]
+   
+          psta = NH$STNS[ipick]
+
+          print(ypick)
+          print(ipick)
+          pwin = WIN
+          print(pwin)
+          
+           ex1 = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+          ex  =  NH$ex[ex1 > pwin[1] & ex1 <pwin[2]]
+
+          
+          Y = matrix(nrow = length(ex), ncol = length(ipick) )
+          stamps = vector()
+          ftime = Zdate(NH$info, 1, pwin[1])
+          for(i in 1:length(ipick))
+            {
+              Y[,i] = NH$JSTR[[ipick[i]]][ex1>=pwin[1]&ex1<=pwin[2]]
+              psta = NH$STNS[ipick[i]]
+              pcomp =  NH$COMPS[ipick[i]]
+              STAMP = paste(sep=" ", psta, pcomp, ftime)
+              stamps[i] = STAMP
+         
+            }
+         
+         print(stamps)
+
+
+          get(getOption("device"))(width=6, height=6)
+         ###  X11(width=6, height=6)
+          
+          ###########   
+          comp.env(ex, Y, stamps=stamps)
+
+          #####  
+        
+          dev.set( MAINdev)
+           zloc = list(x=NULL, y=NULL) 
+          
+        }
+
+
+                        ###################   Window Information   ###########################      
+ 
+      if(K[Nclick]==match("WINFO", BLABS, nomatch = NOLAB))
+        {
+          
+          ###   print out information on all traces in the window
+          pwin = WIN
+          print(pwin)
+
+          rd = list(stn='', comp='', yr=0, jd=0, hr=0, mi=0, sec=0,  dt=0, min=0, max=0 , blank=FALSE)
+          
+          for(i  in  1:length(sel))
+            {
+              
+              ipick = sel[i]
+              
+              asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+pwin[1]
+              spaz = recdate( NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], asec)
+
+               rd$jd[i]=spaz$jd;  rd$hr[i]= spaz$hr ;  rd$mi[i]=spaz$mi ;  rd$sec[i]=spaz$sec;
+
+              rd$yr[i] =   as.integer(NH$info$yr[ipick])
+              
+              rd$stn[i] =  NH$STNS[ipick]
+              rd$comp[i] = NH$COMPS[ipick]
+              rd$dt[i] = NH$info$dt[ipick]
+
+              
+              ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+              
+              a = NH$JSTR[[ipick]][ex>=pwin[1]&ex<=pwin[2]]
+              rd$min[i] = min(a,  na.rm=TRUE)
+              rd$max[i] = max(a,  na.rm=TRUE)
+              rd$blank[i] = any(is.na(a))
+              
+            }
+            print(data.frame(rd))
+           zloc = list(x=NULL, y=NULL) 
+        }
+
+
+            ###################   time pick analysis   ###########################      
+ 
+      if(K[Nclick]==match("Pinfo", BLABS, nomatch = NOLAB))
+        {
+          ppick = zloc$x[1:(zenclick-1)]
+          dpick = c(0, diff(ppick))
+           ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              ipick = sel[ypick]
+          
+              m = match(STNS[ipick],UNIsta)
+          jj = floor((zloc$y[zenclick-1])/du)
+               asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick[zenclick-1]
+
+          print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], asec, "sta=", NH$STNS[ipick], "comp=", NH$COMPS[ipick] ))
+          print(ppick)
+          print(dpick)
+
+
+        ####  print(zloc$y[1:(zenclick-1)])
+          
+           ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
+
+        ####  print(ypick)
+          
+           secpick = ppick[1:(zenclick-1)]
+          
+              ipick = sel[ypick]
+
+         ####  print(ipick)
+
+         
+
+          asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+secpick
+          rd = recdate( NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], asec)
+
+          rd$yr =   NH$info$yr[ipick]
+          rd$stn =  NH$STNS[ipick]
+           rd$comp = NH$COMPS[ipick]
+
+          
+          print(data.frame(rd))
+
+          PAS = paste(sep=" ", "Jtim(", rd$jd, ", hr=" , rd$hr , ", mi=", rd$mi, ",sec=", rd$sec, ")")
+          
+          print(PAS)
+             zloc = list(x=NULL, y=NULL) 
+        }
+
+#############################################################################
+       ################### 
+      if(K[Nclick]==match("XCOR", BLABS, nomatch = NOLAB))
+        {
+          ppick = zloc$x[1:(zenclick-1)]
+          dpick = c(0, diff(ppick))
+           ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
+              ipick = sel[ypick]
+          print(ypick)
+          print(ipick)
+          ##
+          pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
+          if(length(ipick)>=2)
+            {
+
+              famp = NH$JSTR[[ipick[1]]]
+
+                 ex = seq(from=NH$info$t1[ipick[1]], by=NH$info$dt[ipick[1]], length.out=NH$info$n1[ipick[1]])
+              
+              temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+              Xamp1 =  temp
+              
+          
+              famp = NH$JSTR[[ipick[2]]]
+                 ex = seq(from=NH$info$t1[ipick[2]], by=NH$info$dt[ipick[2]], length.out=NH$info$n1[ipick[2]])
+              
+              temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+              Xamp2 =  temp
+              
+             ### X11()
+              get(getOption("device"))()  
+
+              ########## pshift = getphaselag2(Xamp1, Xamp2, NH$info$dt[ipick[1]] , PLOT=TRUE)
+
+
+              xc = xcor2(Xamp1, Xamp2, NH$info$dt[ipick[1]], LAG =length(Xamp1), PLOT = TRUE)
+              pshift = xc$lag[which.max(xc$acf)]
+              
+              print(paste(sep=' ' , "Shift = ", pshift))
+               dev.set( MAINdev)
+              
+            } 
+          zloc = list(x=NULL, y=NULL) 
+        }
+
+        ################### 
+      if(K[Nclick]==match("PHLAG", BLABS, nomatch = NOLAB))
+        {
+          ppick = zloc$x[1:(zenclick-1)]
+          dpick = c(0, diff(ppick))
+           ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
+              ipick = sel[ypick]
+          print(ypick)
+          print(ipick)
+          ##
+          pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
+          if(length(ipick)>=2)
+            {
+
+              famp = NH$JSTR[[ipick[1]]]
+               ex = seq(from=NH$info$t1[ipick[1]], by=NH$info$dt[ipick[1]], length.out=NH$info$n1[ipick[1]])
+              
+              temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+              Xamp1 =  temp
+              
+          
+              famp = NH$JSTR[[ipick[2]]]
+                 ex = seq(from=NH$info$t1[ipick[2]], by=NH$info$dt[ipick[2]], length.out=NH$info$n1[ipick[2]])
+           
+              temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+              Xamp2 =  temp
+              
+              ###X11()
+              ###
+              get(getOption("device"))()
+              
+              pshift = getphaselag2(Xamp1, Xamp2,  DT=NH$info$dt[ipick[1]],  frange=c(5, 15),  PLOT=TRUE)
+
+
+             
+              print(paste(sep=' ' , "Shift = ", pshift))
+               dev.set( MAINdev)
+              
+            } 
+          zloc = list(x=NULL, y=NULL) 
+        }
+
+
+        ################### 
+      if(K[Nclick]==match("3COMP", BLABS, nomatch = NOLAB))
+        {
+          ppick = zloc$x[(zenclick-1)]
+          
+          ypick = length(sel)-floor(length(sel)*zloc$y[(zenclick-1)])
+          ipick = sel[ypick]
+          cat(paste(sep=" ", ypick, ipick), sep="\n")
+          print(ipick)
+          ##
+          print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], "sta=", NH$STNS[ipick], "comp=", NH$COMPS[ipick] ))
+
+          ma = which(!is.na(match( NH$STNS, NH$STNS[ipick])))
+          
+          print(cbind(NH$STNS[ma], NH$COMPS[ma]))
+
+          if(length(ma==3))
+            {
+              ##### X11(width = 12, height = 7)
+              get(getOption("device"))(width = 12, height = 7)  
+              PICK.GEN(NH, APIX=WPX, sel=ma, STDLAB=STDLAB ,SHOWONLY = FALSE, TIT=TIT)
+              dev.set( MAINdev)
+            }
+
+
+          
+          ## X11()
+          
+          ## dev.set( MAINdev)
+              
+           zloc = list(x=NULL, y=NULL) 
+        }
+      
+      
+
+            ########  source("PICK.R") ; save.image()
+#############################################################################
+       ###################
+
+
+       if(K[Nclick]==match("Predict1D", BLABS, nomatch = NOLAB))
+        {  ####### Predict1D
+
+          if(is.null(velfile) | is.null(stafile) | is.null(LOC))
+            {
+              
+              print("No velocity/station  file available, restart with this information")
+            }
+          else
+            {
+              STAlocs = setstas(stafile)
+              VEL = Get1Dvel(velfile, PLOT=FALSE)
+              m = 0
+            #####   RPX = list()
+              
+              for(ista in 1:length(NH$STNS))
+                {
+                    
+                    m1 = match(NH$STNS[ista], STAlocs$name)
+                    
+                    if(length(m1)<1) next
+                    if(is.na(m1)) next
+                    print(paste(sep=' ', ista, m1, NH$STNS[ista], LOC$lon,  LOC$lat, STAlocs$name[m1], STAlocs$lon[m1], STAlocs$lat[m1]))
+                    
+                    Dis1 = GreatDist(LOC$lon,  LOC$lat , STAlocs$lon[m1], STAlocs$lat[m1] )
+                    dis = Dis1$dkm
+                    hpz  =  LOC$z
+                    stz  = STAlocs$z[m1]
+                    mytt = travel.time1D( dis, hpz, stz,  length(VEL$zp), VEL$zp, VEL$vp );
+                    
+                      NPX = NPX+1
+
+                    Nn = names(WPX)
+                    WPX =rbind(WPX, rep(NA, length(Nn)))
+  
+                  
+
+                    WPX$tag[NPX]=paste(sep=".",NH$STNS[i1],  NH$COMPS[i1])
+                    WPX$name[NPX]=NH$STNS[i1]
+                    WPX$comp[NPX]=NH$COMPS[i1]
+                    WPX$c3[NPX]=NH$OCOMPS[i1]
+                    WPX$phase[NPX]="P"
+                      WPX$err[NPX]=1
+                      WPX$pol[NPX]=0
+                      WPX$flg[NPX]=999
+                      WPX$res[NPX]=0
+                      WPX$yr[NPX]=LOC$yr
+                      WPX$mo[NPX]= LOC$mo
+                      WPX$dom[NPX]=LOC$dom
+                      WPX$jd[NPX]=LOC$jd
+                      WPX$hr[NPX]=LOC$hr
+                      WPX$mi[NPX]=LOC$mi
+                      WPX$sec[NPX]=LOC$sec+mytt$tt
+                      WPX$col[NPX]="purple"
+                      WPX$onoff[NPX] = 1 
+                    
+                    mytt = travel.time1D( dis, hpz, stz,  length(VEL$zs), VEL$zs, VEL$vs ); 
+                    
+                    NPX = NPX+1
+
+                    Nn = names(WPX)
+                    WPX =rbind(WPX, rep(NA, length(Nn)))
+  
+                    
+                      WPX$tag[NPX]=paste(sep=".",NH$STNS[i1],  NH$COMPS[i1])
+                    WPX$name[NPX]=NH$STNS[i1]
+                    WPX$comp[NPX]=NH$COMPS[i1]
+                    WPX$c3[NPX]=NH$OCOMPS[i1]
+                    WPX$phase[NPX]="S"
+                      WPX$err[NPX]=1
+                      WPX$pol[NPX]=0
+                      WPX$flg[NPX]=999
+                      WPX$res[NPX]=0
+                      WPX$yr[NPX]=LOC$yr
+                      WPX$mo[NPX]= LOC$mo
+                      WPX$dom[NPX]=LOC$dom
+                      WPX$jd[NPX]=LOC$jd
+                      WPX$hr[NPX]=LOC$hr
+                      WPX$mi[NPX]=LOC$mi
+                      WPX$sec[NPX]=LOC$sec+mytt$tt
+                      WPX$col[NPX]="purple"
+                      WPX$onoff[NPX] = 1 
+               
+                    
+                  }
+              
+
+            }
+
+
+              
+          zloc = list(x=NULL, y=NULL) 
+
+        }
+  ####################################### ################### ##################  
+  ####################################### ################### ##################  
+ ########  source("PICK.R") ; save.image()
+ 
+      if(K[Nclick]==match("SavePF", BLABS, nomatch = NOLAB))
+        {
+          
+        ###  print(NH$pickfile)
+         
+          ###opix = vector()
+          #########  check current pickfile and
+          ###########    clean up non-conforming records
+          Apf =  cleanpickfile(NH$pickfile)
+          #############   make modifications to the pickfile here
+
+          sex1 = WPX$sec[WPX$onoff>=0]
+          sexrec = recdate(WPX$jd[WPX$onoff>=0], WPX$hr[WPX$onoff>=0],  WPX$mi[WPX$onoff>=0] , sex1)
+          sex2 = sexrec$sec
+         #### print(data.frame(list(sta=WPX$tag[WPX$onoff>=0], min=WPX$mi[WPX$onoff>=0], sec1=sex1, sec2=sex2)))
+
+          Apf$STAS$tag=WPX$tag[WPX$onoff>=0]
+          Apf$STAS$name=WPX$name[WPX$onoff>=0]
+          Apf$STAS$comp=WPX$comp[WPX$onoff>=0]
+          Apf$STAS$c3=WPX$c3[WPX$onoff>=0]
+          Apf$STAS$phase=WPX$phase[WPX$onoff>=0]
+          
+          Apf$STAS$sec=sex2
+
+          
+          Apf$STAS$err=WPX$err[WPX$onoff>=0]
+          Apf$STAS$pol=WPX$pol[WPX$onoff>=0]
+          Apf$STAS$flg=WPX$flg[WPX$onoff>=0]
+          Apf$STAS$res=WPX$res[WPX$onoff>=0]
+
+         #### Apf$STAS$lat=WPX$lat[WPX$onoff>=0]
+          ####Apf$STAS$lon=WPX$lon[WPX$onoff>=0]
+         #### Apf$STAS$z=WPX$z[WPX$onoff>=0]
+
+
+
+          
+          sats =fixUWstasLL(Apf$STAS, NH$stafile)
+          Apf$STAS = sats
+          
+ #####"lat"   "lon"   "z"
+
+          ###  need the lat-lon zee for 
+
+          
+
+          
+#############   
+          Lc  =  length(Apf$comments)
+          Apf$comments[Lc+1] = paste("Repicked", date())
+          USERNAME=Sys.getenv("USERNAME")
+          HOST=Sys.getenv("HOST")
+          Apf$comments[Lc+2] = paste(sep=" ", "BY:",USERNAME, HOST )
+
+          
+##########   next add in pick tokens that are new
+
+          #########  make a backup o fh old pickfile:
+
+          isitthere = file.exists(Apf$filename)
+          if(isitthere)
+            {
+              oldpf = paste(sep="", Apf$filename, "OLD")
+              system(paste(sep=" ", "/bin/cp " , Apf$filename, oldpf), ignore.stderr = TRUE)
+            }
+         #####     output=paste(sep=".", Apf$filename, "temp")
+
+          output=Apf$filename
+          print(output)
+          print(WPX)
+          
+        #####   writeUWpickfile(Apf, output=output)
+          GH = NH
+          GH$pickfile = Apf
+          rootnameID = GH$pickfile$UWFILEID
+          if(is.null(GH$RFilename)) { GH$RFilename = paste(sep="", rootnameID, "R") }
+
+          print(paste("getting ready to overwrite the GH file", GH$RFilename))
+          save(file=GH$RFilename, GH)
+          zloc = list(x=NULL, y=NULL) 
+        }
+
+
+
+
+      if(K[Nclick]==match("SavePIX", BLABS, nomatch = NOLAB))
+        {
+          A = data.frame(WPX)
+          A = A[WPX$onoff>=0, ]
+          
+           A = T12.pix(WPX)
+
+           
+    
+           ireftrace = which.min(A$t1)
+          
+            UWFILEID = paste(sep="",
+          formatC(A$yr[ireftrace], format="d", wid=4, flag="0"),
+          formatC(A$mo[ireftrace], format="d", wid=2, flag="0"), 
+          formatC(A$dom[ireftrace], format="d", wid=2, flag="0"), 
+          formatC(A$hr[ireftrace], format="d", wid=2,  flag="0"), 
+          formatC(A$mi[ireftrace], format="d", wid=2,flag="0"),
+          formatC(floor(A$sec[ireftrace]), format="d", wid=2,flag="0")
+          )
+
+           fout = paste(sep=".", UWFILEID,"WPX")
+           write.table(A, file =  fout)
+        
+          zloc = list(x=NULL, y=NULL) 
+        }
+
+
+
+
+
+
+
+      
+  ####################################### ################### ##################  
+  ####################################### ################### ##################  
+
+      if(K[Nclick]==match("LQUAKE", BLABS, nomatch = NOLAB))
+        {
+          
+        ###  print(NH$pickfile)
+          Apf =  NH$pickfile
+          ###opix = vector()
+
+          #############   make modifications to the pickfile here
+
+          Apf$STAS$tag=WPX$tag[WPX$onoff>=0]
+          Apf$STAS$name=WPX$name[WPX$onoff>=0]
+          Apf$STAS$comp=WPX$comp[WPX$onoff>=0]
+          Apf$STAS$c3=WPX$c3[WPX$onoff>=0]
+          Apf$STAS$phase=WPX$phase[WPX$onoff>=0]
+          Apf$STAS$sec=WPX$sec[WPX$onoff>=0]
+          Apf$STAS$err=WPX$err[WPX$onoff>=0]
+          Apf$STAS$pol=WPX$pol[WPX$onoff>=0]
+          Apf$STAS$flg=WPX$flg[WPX$onoff>=0]
+          Apf$STAS$res=WPX$res[WPX$onoff>=0]
+          
+#############   
+          Lc  =  length(Apf$comments)
+          Apf$comments[Lc+1] = paste("Repicked", date())
+          USERNAME=Sys.getenv("USERNAME")
+          HOST=Sys.getenv("HOST")
+          Apf$comments[Lc+2] = paste(sep=" ", "BY:",USERNAME, HOST )
+
+          
+##########   next add in pick tokens that are new
+
+          #########  make a backup o fh old pickfile:
+          
+          oldpf = paste(sep="", Apf$filename, "OLD")
+          
+          system(paste(sep=" ", "/bin/cp " , Apf$filename, oldpf))
+         ##### output=paste(sep=".", Apf$filename, "temp")
+          output=Apf$filename
+          writeUWpickfile(Apf, output=output)
+
+          setLQUAKE(NH$velfile, NH$stafile, fout="setup.lquake.ZZZ")
+          
+          system(paste("lquake -f setup.lquake.ZZZ" , output))
+          P = getpfile(output)
+          WPX=uwpfile2ypx(P)
+          NH$pickfile = P
+          zloc = list(x=NULL, y=NULL) 
+        }
+
+
+      
+       ####################################### ################### ##################  
+  ####################################### ################### ##################  
+
+        ################### 
+      if(K[Nclick]==match("PickWin", BLABS, nomatch = NOLAB))
+        {
+          
+          ppick = zloc$x[(zenclick-1)]
+          if(length(ppick)>0)
+            {
+              ypick = length(sel)-floor(length(sel)*zloc$y[(zenclick-1)])
+              ipick = sel[ypick]
+              cat(paste(sep=" ", ypick, ipick), sep="\n")
+              print(ipick)
+              ##
+              
+              ma = which(!is.na(match( NH$STNS, NH$STNS[ipick])))
+
+              
+              ##########   sort so Vertical is on top and then North and East
+              acomp  = NH$COMPS[ma]
+              icomp = rep(0, length(acomp))
+              icomp[acomp=="V"] = 1
+              icomp[acomp=="N"] = 2
+              icomp[acomp=="E"] = 3
+
+              ma = ma[order(icomp)]
+
+              
+####  print(cbind(NH$STNS[ma], NH$COMPS[ma]))
+
+              
+              if(is.null(Pickdev))
+                {
+               ####   X11(width = 12, height = 7)
+                  screens(2)
+                  devl = dev.list()
+                  iw =  which(MAINdev!=devl)
+                  
+                  Pickdev = devl[iw[1]]
+                   dev.set(Pickdev)
+                }
+              else
+                {
+                 #### devl = dev.list()
+                ####  jsc = 2-length(devl)
+                ####  if(jsc>0) { X11(width = 12, height = 7); Pickdev = dev.cur() }
+                  dev.set(Pickdev)
+                }
+
+
+              
+
+              if(zenclick>2)
+                {
+
+                  pickwin = range( c(zloc$x[(zenclick-1)], zloc$x[(zenclick-2)]))
+                  
+                }
+              else
+                {
+                  pickwin = WIN
+
+                }
+              
+              
+              PLAB=c( "Ppic", "Spic", "Apic",  "Pup", "Pdown", "Pnil", "AUTOP", "NOPIX", "EDIX", "REPIX")
+              PICKLAB = c("DONE", "zoom out", "refresh", "restore", "FILT", "UNFILT", "Pinfo", "WINFO")
+              
+              stit = NH$STNS[ma[1]]
+              ##  SWP = selAPX(WPX,  NH$STNS[ma[1]], icomp=NULL )
+
+              ##   print(data.frame(SWP))
+              ##   SWP = rectifyAPX(SWP)
+              ##
+              ## print(SWP)
+
+              
+              newpicks = PICK.GEN(NH, APIX=WPX, sel=ma, WIN=pickwin, STDLAB=PICKLAB ,PADDLAB=PLAB, PHASE=1   ,SHOWONLY = FALSE, TIT=stit)
+
+              if(length(newpicks)>1)
+                {
+                  if(!is.null(newpicks$WPX))
+                    {
+                      WPX = newpicks$WPX
+                    }
+                }
+              ##  
+              
+              ##
+####    print(cbind(WPX$name, WPX$comp, WPX$phase, WPX$onoff))
+              
+              print(paste(sep=' ', "DONE with PICKWIN", NPX))
+              dev.set( MAINdev)
+              
+              YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+              buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+              PLOT.ALLPX(Torigin, STNS, COMPS, PHASE=PHASE, WPX, FORCE=forcepix)
+            }
+          zloc = list(x=NULL, y=NULL) 
+          
+        }
+ ########  source("PICK.R") ; save.image()
+      
+#############################################################################
+       ################### 
+      
+      if(K[Nclick]==match("Ppic", BLABS, nomatch = NOLAB))
+        {
+              zappa = match(BLABS[K[Nclick]], PADDLAB)
+              azap = PADDLAB[zappa]
+              print(paste(sep=" ", "My PICKIN", azap, zappa))
+
+             
+###   print(paste(sep=" " , "WIN=",sloc$x))
+              ppick = zloc$x[1:(zenclick-1)]
+###        abline(v=ppick, col=4)
+              
+              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              ipick = sel[ypick]
+              
+               print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick],
+                      NH$info$mi[ipick], "sta=", NH$STNS[ipick], "comp=", NH$COMPS[ipick] ))
+
+              m = match(STNS[ypick],UNIsta)
+###  Upix[[m]]$x  = ppick
+              
+###   PPIX(list(x=zloc$x[zenclick-1], y=zloc$y[zenclick-1]), YN=NSEL, col=3, lab="P")
+              jj = floor((zloc$y[zenclick-1])/du)
+             
+              if((zenclick==2))
+                 {
+                   asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick[zenclick-1]
+                   err = 0.05
+                 }
+                 else
+                 {
+                   asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick[zenclick-2]
+                   bsec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick[zenclick-1]
+                   err =  abs(bsec-asec)
+                 }
+
+              ###########   this looks like a bug./....
+               
+              iseek = which(WPX$phase=="P" & WPX$name==NH$STNS[ipick] &  WPX$comp==NH$COMPS[ipick])
+            ####  print(paste(sep=" ", "ISEEK",  iseek, length(iseek) ))
+              
+              if(length(iseek)==1)
+                {
+                  wNPX = iseek
+                  
+                  WPX$yr[wNPX]=NH$info$yr[ipick]
+                  WPX$mo[wNPX]= NH$info$mo[ipick]
+                  WPX$dom[wNPX]=NH$info$dom[ipick]
+                  WPX$jd[wNPX]=NH$info$jd[ipick]
+                  WPX$hr[wNPX]= NH$info$hr[ipick]
+                  WPX$mi[wNPX]=NH$info$mi[ipick]
+                   WPX$col[wNPX]=specpix.col[4]
+                  WPX$sec[wNPX]=asec
+                    WPX$err[wNPX]=err
+                  WPX$onoff[wNPX] = 1 
+                }
+              else
+                {
+                  NPX = NPX+1
+                  wNPX  = NPX
+                 ####  tag = paste(sep=".",NH$STNS[ipick],  NH$OCOMPS[ipick])
+                 ####  print(tag)
+                  Nn = names(WPX)
+                  WPX =rbind(WPX, rep(NA, length(Nn)))
+  
+                  #########   a 
+                  WPX$tag[wNPX]=paste(sep=".",NH$STNS[ipick],  NH$OCOMPS[ipick])
+                 
+                  WPX$name[wNPX]=NH$STNS[ipick]
+                  WPX$comp[wNPX]=NH$COMPS[ipick]
+                  WPX$c3[wNPX]=NH$OCOMPS[ipick]
+                  WPX$phase[wNPX]="P"
+                  
+                  WPX$yr[wNPX]=NH$info$yr[ipick]
+                  WPX$mo[wNPX]= NH$info$mo[ipick]
+                  WPX$dom[wNPX]=NH$info$dom[ipick]
+                  WPX$jd[wNPX]=NH$info$jd[ipick]
+                  WPX$hr[wNPX]= NH$info$hr[ipick]
+                  WPX$mi[wNPX]=NH$info$mi[ipick]
+                  WPX$sec[wNPX]=asec
+                  WPX$col[wNPX]=specpix.col[4]
+                  WPX$onoff[wNPX] = 1 
+                  WPX$err[wNPX]=err
+                  WPX$flg[wNPX] = 0
+                  WPX$res[wNPX] = NA
+
+                }
+              
+              YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+              buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+              
+              NADDPIX = 3
+### 
+              zloc = list(x=NULL, y=NULL) 
+            }
+
+#########################
+#########################
+#########################
+#########################
+      
+      if(K[Nclick]==match("Spic", BLABS, nomatch = NOLAB))
+        {
+          zappa = match(BLABS[K[Nclick]], PADDLAB)
+          azap = PADDLAB[zappa]
+          print(paste(sep=" ", "My PICKIN", azap, zappa))
+          
+          
+###   print(paste(sep=" " , "WIN=",sloc$x))
+          ppick = zloc$x[1:(zenclick-1)]
+###        abline(v=ppick, col=4)
+          
+          ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+          ipick = sel[ypick]
+          
+          print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick],
+                      NH$info$mi[ipick], "sta=", NH$STNS[ipick], "comp=", NH$COMPS[ipick] ))
+          
+          m = match(STNS[ypick],UNIsta)
+###  Upix[[m]]$x  = ppick
+          
+###   PPIX(list(x=zloc$x[zenclick-1], y=zloc$y[zenclick-1]), YN=NSEL, col=3, lab="P")
+          jj = floor((zloc$y[zenclick-1])/du)
+          
+          if((zenclick==2))
+            {
+              asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick[zenclick-1]
+              err = 0.05
+            }
+          else
+            {
+              asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick[zenclick-2]
+              bsec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick[zenclick-1]
+              err =  abs(bsec-asec)
+            }
+          
+###########   this looks like a bug./....
+          
+          iseek = which(WPX$phase=="S" & WPX$name==NH$STNS[ipick] &  WPX$comp==NH$COMPS[ipick])
+          #### print(paste(sep=" ", "ISEEK",  iseek, length(iseek)))
+
+          
+          if(length(iseek)==1)
+            {
+              wNPX = iseek
+              
+              WPX$yr[wNPX]=NH$info$yr[ipick]
+              WPX$mo[wNPX]= NH$info$mo[ipick]
+              WPX$dom[wNPX]=NH$info$dom[ipick]
+              WPX$jd[wNPX]=NH$info$jd[ipick]
+              WPX$hr[wNPX]= NH$info$hr[ipick]
+              WPX$mi[wNPX]=NH$info$mi[ipick]
+              WPX$sec[wNPX]=asec
+                WPX$err[wNPX]=err
+              WPX$col[wNPX]=specpix.col[2]
+              WPX$onoff[wNPX] = 1 
+            }
+          else
+            {
+              NPX = NPX+1
+              wNPX  = NPX
+               ####stag = paste(sep=".",NH$STNS[ipick],  NH$OCOMPS[ipick])
+                ####  print(stag)
+
+              Nn = names(WPX)
+              WPX =rbind(WPX, rep(NA, length(Nn)))
+  
+
+              
+              WPX$tag[wNPX]=paste(sep=".",NH$STNS[ipick],  NH$OCOMPS[ipick])
+              WPX$name[wNPX]=NH$STNS[ipick]
+              WPX$comp[wNPX]=NH$COMPS[ipick]
+              WPX$c3[wNPX]=NH$OCOMPS[ipick]
+              WPX$phase[wNPX]="S"
+              
+              WPX$yr[wNPX]=NH$info$yr[ipick]
+              WPX$mo[wNPX]= NH$info$mo[ipick]
+              WPX$dom[wNPX]=NH$info$dom[ipick]
+              WPX$jd[wNPX]=NH$info$jd[ipick]
+              WPX$hr[wNPX]= NH$info$hr[ipick]
+              WPX$mi[wNPX]=NH$info$mi[ipick]
+              WPX$sec[wNPX]=asec
+                WPX$err[wNPX]=err
+              WPX$col[wNPX]=specpix.col[2]
+              WPX$onoff[wNPX] = 1 
+                                WPX$flg[wNPX] = 0
+                  WPX$res[wNPX] = NA
+
+            }
+          
+             YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+              buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+              
+          NADDPIX = 3
+### 
+          zloc = list(x=NULL, y=NULL) 
+        }
+
+  
+      if(K[Nclick]==match("Apic", BLABS, nomatch = NOLAB))
+        {
+          zappa = match(BLABS[K[Nclick]], PADDLAB)
+          azap = PADDLAB[zappa]
+          print(paste(sep=" ", "My PICKIN", azap, zappa))
+
+          
+###   print(paste(sep=" " , "WIN=",sloc$x))
+          ppick = zloc$x[1:(zenclick-1)]
+###        abline(v=ppick, col=4)
+          
+          ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+          ipick = sel[ypick]
+              
+          print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick],
+                      NH$info$mi[ipick], "sta=", NH$STNS[ipick], "comp=", NH$COMPS[ipick] ))
+          
+          m = match(STNS[ypick],UNIsta)
+###  Upix[[m]]$x  = ppick
+          
+###   PPIX(list(x=zloc$x[zenclick-1], y=zloc$y[zenclick-1]), YN=NSEL, col=3, lab="P")
+          jj = floor((zloc$y[zenclick-1])/du)
+          
+              if((zenclick==2))
+                {
+                  asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick[zenclick-1]
+                  err = 0.05
+                }
+              else
+                {
+                  asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick[zenclick-2]
+                  bsec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick[zenclick-1]
+                  err =  abs(bsec-asec)
+                 }
+          
+###########   this looks like a bug./....
+          
+          iseek = which(WPX$phase=="A" & WPX$name==NH$STNS[ipick] &  WPX$comp==NH$COMPS[ipick])
+          
+          if(length(iseek)==1)
+                {
+                  wNPX = iseek
+                  
+                  WPX$yr[wNPX]=NH$info$yr[ipick]
+                  WPX$mo[wNPX]= NH$info$mo[ipick]
+                  WPX$dom[wNPX]=NH$info$dom[ipick]
+                  WPX$jd[wNPX]=NH$info$jd[ipick]
+                  WPX$hr[wNPX]= NH$info$hr[ipick]
+                  WPX$mi[wNPX]=NH$info$mi[ipick]
+                  WPX$sec[wNPX]=asec
+                  WPX$err[wNPX]=err
+                  WPX$onoff[wNPX] = 1 
+                }
+              else
+                {
+                  NPX = NPX+1
+                  wNPX  = NPX
+
+                  Nn = names(WPX)
+                  WPX =rbind(WPX, rep(NA, length(Nn)))
+  
+
+                  
+                  WPX$tag[wNPX]=paste(sep=".",NH$STNS[ipick],  NH$COMPS[ipick])
+                  WPX$name[wNPX]=NH$STNS[ipick]
+                  WPX$comp[wNPX]=NH$COMPS[ipick]
+                  WPX$c3[wNPX]=NH$OCOMPS[ipick]
+                  WPX$phase[wNPX]="A"
+                  
+                  WPX$yr[wNPX]=NH$info$yr[ipick]
+                  WPX$mo[wNPX]= NH$info$mo[ipick]
+                  WPX$dom[wNPX]=NH$info$dom[ipick]
+                  WPX$jd[wNPX]=NH$info$jd[ipick]
+                  WPX$hr[wNPX]= NH$info$hr[ipick]
+                  WPX$mi[wNPX]=NH$info$mi[ipick]
+                  WPX$sec[wNPX]=asec
+                  WPX$err[wNPX]=err
+                  WPX$col[wNPX]=specpix.col[3]
+                  WPX$onoff[wNPX] = 1
+                  WPX$flg[wNPX] = 0
+                  WPX$res[wNPX] = NA
+                  
+                  
+                }
+              
+          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+              
+              NADDPIX = 3
+### 
+              zloc = list(x=NULL, y=NULL) 
+            }
+      
+########  source("PICK.R") ; save.image()
+#############################################################################
+################### 
+    ########  source("PICK.R") ; save.image()
+    
+      if(K[Nclick]==match("Pup", BLABS, nomatch = NOLAB))
+        {
+              zappa = match(BLABS[K[Nclick]], PADDLAB)
+              azap = PADDLAB[zappa]
+              print(paste(sep=" ", "My PICK up", azap, zappa))
+
+              ppick = zloc$x[1:(zenclick-1)]
+
+              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              ipick = sel[ypick]
+              
+               print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick],
+                      NH$info$mi[ipick], "sta=", NH$STNS[ipick], "comp=", NH$COMPS[ipick] ))
+
+              m = match(STNS[ypick],UNIsta)
+
+              jj = floor((zloc$y[zenclick-1])/du)
+             
+              iseek = which(WPX$phase=="P" & WPX$name==NH$STNS[ipick] &  WPX$comp==NH$COMPS[ipick])
+            ####  print(paste(sep=" ", "ISEEK",  iseek, length(iseek) ))
+              
+              if(length(iseek)==1)
+                {
+                  wNPX = iseek
+                  
+                  WPX$pol[wNPX]="U"
+                  
+                }
+              
+              YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+              buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+              
+              NADDPIX = 3
+              zloc = list(x=NULL, y=NULL) 
+            }
+
+################### 
+    ########  source("PICK.R") ; save.image()
+    
+      if(K[Nclick]==match("Pdown", BLABS, nomatch = NOLAB))
+        {
+              zappa = match(BLABS[K[Nclick]], PADDLAB)
+              azap = PADDLAB[zappa]
+              print(paste(sep=" ", "My PICK down", azap, zappa))
+
+              ppick = zloc$x[1:(zenclick-1)]
+
+              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              ipick = sel[ypick]
+              
+               print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick],
+                      NH$info$mi[ipick], "sta=", NH$STNS[ipick], "comp=", NH$COMPS[ipick] ))
+
+              m = match(STNS[ypick],UNIsta)
+
+              jj = floor((zloc$y[zenclick-1])/du)
+             
+              iseek = which(WPX$phase=="P" & WPX$name==NH$STNS[ipick] &  WPX$comp==NH$COMPS[ipick])
+            ####  print(paste(sep=" ", "ISEEK",  iseek, length(iseek) ))
+              
+              if(length(iseek)==1)
+                {
+                  wNPX = iseek
+                  
+                  WPX$pol[wNPX]="D"
+                  
+                }
+              
+              YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+              buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+              
+              NADDPIX = 3
+              zloc = list(x=NULL, y=NULL) 
+            }
+
+################### 
+    ########  source("PICK.R") ; save.image()
+    
+      if(K[Nclick]==match("Pnil", BLABS, nomatch = NOLAB))
+        {
+          zappa = match(BLABS[K[Nclick]], PADDLAB)
+              azap = PADDLAB[zappa]
+              print(paste(sep=" ", "My PICK down", azap, zappa))
+
+              ppick = zloc$x[1:(zenclick-1)]
+
+              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              ipick = sel[ypick]
+              
+               print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick],
+                      NH$info$mi[ipick], "sta=", NH$STNS[ipick], "comp=", NH$COMPS[ipick] ))
+
+              m = match(STNS[ypick],UNIsta)
+
+              jj = floor((zloc$y[zenclick-1])/du)
+             
+              iseek = which(WPX$phase=="P" & WPX$name==NH$STNS[ipick] &  WPX$comp==NH$COMPS[ipick])
+            ####  print(paste(sep=" ", "ISEEK",  iseek, length(iseek) ))
+              
+              if(length(iseek)==1)
+                {
+                  wNPX = iseek
+                  
+                  WPX$pol[wNPX]=NA
+                  
+                }
+              
+              YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+              buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+              
+              NADDPIX = 3
+          zloc = list(x=NULL, y=NULL) 
+            }
+
+
+
+      
+
+
+      ################### 
+    ########  source("PICK.R") ; save.image()
+ 
+      if(K[Nclick]==match("YPIX", BLABS, nomatch = NOLAB))
+        {
+
+          zappa = match(BLABS[K[Nclick]], BLABS)
+          col = colpix[which(pnos=="YPIX")]
+          
+          azap = "YPIX"
+          kzap = "Y"
+          
+          ppick = zloc$x[1:(zenclick-1)]
+          
+           ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
+              ipick = sel[ypick]
+         
+          ####### print(ppick)
+         #######  print(ypick)
+         #######  print(ipick)
+          ### print(paste(' ', "Nclick=", Nclick))
+          #### print(STNS)
+          #### print(COMPS)
+
+          print(paste(sep=" ", "DUMP YPIX", zappa, col, azap, kzap , ppick , ypick,ipick)) 
+          
+          for(iz in 1:(zenclick-1))
+            {
+              
+              NPX = NPX+1
+               Nn = names(WPX)
+                  WPX =rbind(WPX, rep(NA, length(Nn)))
+  
+              i1 = ipick[iz]
+              i2 = ypick[iz]
+
+              asec = NH$info$sec[i1]+NH$info$msec[i1]/1000+NH$info$t1[i1]-NH$info$off[i1]+ppick[iz]
+           ####   print("############################")
+           ####  print(paste(' ', "ypix diag", NPX, iz, i1, i2, STNS[i2], COMPS[i2], asec))
+
+              
+              pic1 = recdate(NH$info$jd[i1], NH$info$hr[i1], NH$info$mi[i1], asec)
+              ycol = colpix[zappa]
+              if(is.na(ycol)) { ycol = rgb(0,0,1) }
+
+
+
+              WPX$tag[NPX]=paste(sep=".",NH$STNS[i1],  NH$COMPS[i1])
+              WPX$name[NPX]=NH$STNS[i1]
+              WPX$comp[NPX]=NH$COMPS[i1]
+              WPX$c3[NPX]=NH$OCOMPS[i1]
+              WPX$phase[NPX]=kzap
+            
+              WPX$err[NPX]=1
+              WPX$pol[NPX]=0
+              WPX$flg[NPX]=0
+              WPX$res[NPX]=1
+              WPX$yr[NPX]=NH$info$yr[i1]
+              WPX$mo[NPX]= NH$info$mo[i1]
+              WPX$dom[NPX]=NH$info$dom[i1]
+              WPX$jd[NPX]=pic1$jd
+              WPX$hr[NPX]=pic1$hr
+              WPX$mi[NPX]=pic1$mi
+              WPX$sec[NPX]=pic1$sec
+              WPX$col[NPX]=ycol
+              WPX$onoff[NPX] = 1 
+              
+              NADDPIX = NADDPIX+1
+             ## 
+
+             ## 
+            }
+          
+          zloc = list(x=NULL, y=NULL) 
+          K[Nclick] = 0
+        }
+#############################################################################
+       ################### 
+      if(K[Nclick]==match("WPIX", BLABS, nomatch = NOLAB))
+        {
+
+          zappa = match(BLABS[K[Nclick]], BLABS)
+          col = colpix[which(pnos=="WPIX")]
+          
+          azap = "WPIX"
+          kzap = substr(azap, 1, 1)
+          
+          ppick = zloc$x[1:(zenclick-1)]
+          
+           ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
+              ipick = sel[ypick]
+         
+          ####### print(ppick)
+         #######  print(ypick)
+         #######  print(ipick)
+          ### print(paste(' ', "Nclick=", Nclick))
+          #### print(STNS)
+          #### print(COMPS)
+
+          print(paste(sep=" ", "zappa" ,zappa, col, azap, kzap , ppick , ypick,ipick))
+
+          ######### WPIX must come in pairs, for a pick plus a duration
+
+          npick = zenclick
+          
+ 
+          for(iz in seq(from=1, to=npick-1, by=2))
+            {
+
+             
+    
+              
+              i1 = ipick[iz]
+              i2 = ypick[iz]
+
+              asec = NH$info$sec[i1]+NH$info$msec[i1]/1000+NH$info$t1[i1]-NH$info$off[i1]+ppick[iz]
+
+              if(Nclick<3)
+                {
+                  bsec = asec+5
+                }
+              else
+                {
+
+              iz1 = ipick[iz+1]
+              bsec = NH$info$sec[iz1]+NH$info$msec[iz1]/1000+NH$info$t1[iz1]-NH$info$off[iz1]+ppick[iz+1]
+
+            }
+           ####   print("############################")
+           ####  print(paste(' ', "wpix diag", NPX, iz, i1, i2, STNS[i2], COMPS[i2], asec))
+              print(paste(' ', "wpix diag", NPX, iz, i1, i2, STNS[i2], COMPS[i2], asec, bsec))
+
+              dur = diff(c(asec, bsec) )
+              print(paste(' ', "wpix diag", NPX, iz, i1, i2, STNS[i2], COMPS[i2], asec, bsec, dur))
+
+              
+              if(is.null(dur)) dur = 0
+            ####  if(dur<=0) dur=1
+
+              
+              NPX = NPX+1
+              ycol = colpix[zappa]
+              if(is.na(ycol)) { ycol = rgb(0,0,1) }
+
+
+              Nn = names(WPX)
+              WPX =rbind(WPX, rep(NA, length(Nn)))
+  
+
+              WPX$tag[NPX]=paste(sep=".",NH$STNS[i1],  NH$COMPS[i1])
+                      WPX$name[NPX]=NH$STNS[i1]
+                      WPX$comp[NPX]=NH$COMPS[i1]
+                      WPX$c3[NPX]=NH$OCOMPS[i1]
+                      WPX$phase[NPX]=kzap
+                  
+                      WPX$err[NPX]=1
+                      WPX$pol[NPX]=0
+                      WPX$flg[NPX]=0
+                      WPX$res[NPX]=dur
+                      WPX$yr[NPX]=NH$info$yr[i1]
+                      WPX$mo[NPX]= NH$info$mo[i1]
+                      WPX$dom[NPX]=NH$info$dom[i1]
+                      WPX$jd[NPX]=NH$info$jd[i1]
+                      WPX$hr[NPX]=NH$info$hr[i1]
+                      WPX$mi[NPX]=NH$info$mi[i1]
+                      WPX$sec[NPX]=asec
+                      WPX$col[NPX]=ycol
+                      WPX$onoff[NPX] = 1 
+
+              
+                      NADDPIX = NADDPIX+1
+            
+
+              
+            ##   
+            }
+          
+          zloc = list(x=NULL, y=NULL) 
+          K[Nclick] = 0
+        }
+
+#############################################################################
+       ################### 
+      if(K[Nclick]==match("EDIX", BLABS, nomatch = NOLAB))
+        {
+
+          PTOL = 0.1
+          zappa = match(BLABS[K[Nclick]], PADDLAB)
+          col = colpix[which(pnos=="EDIX")]
+          
+          azap = PADDLAB[zappa]
+          kzap = substr(azap, 1, 1)
+          
+          ppick = zloc$x[1:(zenclick-1)]
+          
+           ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
+              ipick = sel[ypick]
+         
+         ####################################  this is not finished yet
+         ###### ma = which(!is.na(match( NH$STNS, NH$STNS[ipick])))
+         ###### print(cbind(NH$STNS[ma], NH$COMPS[ma]))
+
+          asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick[zenclick-1]
+
+           iseek = which(WPX$name==NH$STNS[ipick] &  WPX$comp==NH$COMPS[ipick])
+          if(length(iseek)<1)
+            {
+              print("No Match")
+              
+            }
+          else
+            {
+              wNPX = iseek
+             
+              bsec=secdif( NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick],    asec,
+                WPX$jd[wNPX],WPX$hr[wNPX],WPX$mi[wNPX],  WPX$sec[wNPX])
+              wtol = abs(bsec)<PTOL
+
+          #########     print(paste( sep=" ", "Match",  wNPX, PTOL, any(wtol) ))
+          #########      print(abs(bsec))
+              
+              if(any(wtol))
+                {
+                  ichange = wNPX[wtol]
+
+              #########     print(ichange)
+                   WPX$onoff[ichange] = -1
+
+                }
+
+            }
+      
+          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+              
+          K[Nclick] = 0
+          zloc = list(x=NULL, y=NULL) 
+        }
+#############################################################################
+      
+                #############################################################################
+                    ########  source("PICK.R") ; save.image()
+
+
+      ###################   generic  PICK   ###########################      
+
+      if(K[Nclick]>0)
+        {
+          ###   restrict search to only labs that have PIX in them
+          pnos = BLABS[grep("PIK", BLABS)]
+
+          ###   print(pnos)
+          ###   print(BLABS)
+          
+          ###   print(paste(sep=" ", "PICKIN", pnos, Nclick,  "MATCH", match(BLABS[K[Nclick]], pnos)))
+          
+          if(!is.na(match(BLABS[K[Nclick]], pnos)) & BLABS[K[Nclick]]!="YPIX" &   zenclick>1)
+            {
+
+              
+              
+              zappa = match(BLABS[K[Nclick]], PADDLAB)
+              azap = PADDLAB[zappa]
+
+
+              print(paste(sep=" ", "My PICKIN", azap, zappa))
+
+              
+              kzap = substr(azap, 1, 1)
+              
+              
+###   print(paste(sep=" " , "WIN=",sloc$x))
+              ppick = zloc$x[1:(zenclick-1)]
+###        abline(v=ppick, col=4)
+              
+              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              ipick = sel[ypick]
+              
+              m = match(STNS[ypick],UNIsta)
+###  Upix[[m]]$x  = ppick
+              
+###   PPIX(list(x=zloc$x[zenclick-1], y=zloc$y[zenclick-1]), YN=NSEL, col=3, lab="P")
+              jj = floor((zloc$y[zenclick-1])/du)
+              
+              
+              NPX = NPX+1
+              Nn = names(WPX)
+              WPX =rbind(WPX, rep(NA, length(Nn)))
+  
+              asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick[zenclick-1]
+
+              i1 = ipick
+              WPX$tag[NPX]=paste(sep=".",NH$STNS[i1],  NH$COMPS[i1])
+              WPX$name[NPX]=NH$STNS[i1]
+              WPX$comp[NPX]=NH$COMPS[i1]
+              WPX$c3[NPX]=NH$OCOMPS[i1]
+              WPX$phase[NPX]=kzap
+              
+              WPX$err[NPX]=1
+              WPX$pol[NPX]=0
+              WPX$flg[NPX]=0
+              WPX$res[NPX]=0
+              WPX$yr[NPX]=NH$info$yr[i1]
+              WPX$mo[NPX]= NH$info$mo[i1]
+              WPX$dom[NPX]=NH$info$dom[i1]
+              WPX$jd[NPX]=NH$info$jd[i1]
+              WPX$hr[NPX]=NH$info$hr[i1]
+              WPX$mi[NPX]=NH$info$mi[i1]
+              WPX$sec[NPX]=asec
+              WPX$col[NPX]=colpix[zappa]
+              WPX$onoff[NPX] = 1 
+              
+              
+            
+              #### print(paste(" ", azap, kzap))
+            }
+          zloc = list(x=NULL, y=NULL) 
+        }
+###################   REMOVE  PICKs   ###########################      
+      
+      
+      if(K[Nclick]==match("NOPIX", BLABS, nomatch = NOLAB))
+        {
+
+        #######  ONPX = NPX
+       #######   OWPX = WPX
+          
+        ######  NPX = 0
+          
+          
+          WPX$onoff = rep(-1, length(WPX$onoff))
+          
+          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+
+          
+        }
+###################   return  PICKs   ###########################      
+  
+
+       if(K[Nclick]==match("REPIX", BLABS, nomatch = NOLAB))
+        {
+        #######  NPX = ONPX
+       #######   WPX = OWPX
+          WPX$onoff[WPX$onoff==(-1)] = 0
+          
+          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+
+          zloc = list(x=NULL, y=NULL) 
+        }
+#########################################################################  
+#########################################################################  
+           
+       if(K[Nclick] == match("ADDBUTTS", BLABS, nomatch = NOLAB))
+          {
+            if(!exists("buthome"))
+            { buthome = "/home/lees/Progs/R_stuff" }
+            buttfile = paste(sep='/', buthome, "MYPICKBUTTS.R")
+            print(paste("ADDING button defined in file:", buttfile))
+
+            
+            source(buttfile)
+            
+            BLABS = c(BLABS , tempbuttons)
+            NLABS = length(BLABS)
+            NOLAB = NLABS +1000
+            ScaleFACT = 1
+            ##  match("", BLABS)
+            
+            RETX =  NULL
+
+            pnos = grep("PIX", BLABS)
+            
+            colabs = rep(1,length(BLABS))
+            colabs[pnos] = seq(from=2, length=length(pnos))
+            colpix = seq(from=2, length=length(pnos))
+            pchlabs = rep(4,length(BLABS))
+            pchlabs[pnos] = seq(from=15, length=length(pnos))
+            
+            buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+            
+#######  source("MYBUTTS")
+            zloc = list(x=NULL, y=NULL) 
+          }
+        
+      if(any(K[Nclick] == match(tempbuttons, BLABS, nomatch = NOLAB)))
+        {
+###   print(BLABS[K[Nclick]])
+          doMYBUTTS(butt=BLABS[K[Nclick]], click=zloc, x=NULL)
+          zloc = list(x=NULL, y=NULL) 
+        }
+#########################################################################
+
+     ##### doMYBUTTS(butt=BLABS[K[Nclick]], click=zloc, NH=NH, sel=sel, APIX=WPX)
+#########################################################################  
+
+      
+      ####################  END BUTTON DEFINITIONS    ###########################      
+
+
+            ###################   WRAP UP and PLOT AGAIN   ###########################      
+
+      
+      ###   source("/home/lees/Progs/R_stuff/tung.R");   a = PICK.MARIO(GH,  sel, WIN=twin) 
+
+       ###  a = PICK.MARIO(GH,  sel, WIN=twin)
+      ####  plot the picks
+
+     ####   fin = ftorn[ii]
+     ###    JH = Get.DumpDat( fin, "/home/beer/lees/DUMP/MARIO2", stloc=6, cmploc=7, XSTA=NULL)
+      ####  a = PICK.MARIO(JH,sel=1:length(JH$dt), WIN=NULL)
+
+
+
+      
+      if(NPX>0)
+        {
+          
+         ## PLOT.WPX(Torigin, STNS, COMPS, WPX, FORCE=forcepix)
+          PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix)
+         ##  segments(xpix, ypixA, xpix, ypixB, col=colpix)
+         ##  text(xpix, ypixB, labels=cpixa, col=colpix, pos=4)
+        }
+      
+      
+       ##   buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+ 
+###  NV = LabelBAR(BLABS)
+      iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=length(sel), style=1)
+      Nclick = length(iloc$x)
+
+      if(Nclick>0)
+        {
+          zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
+          zenclick = length(zloc$x)
+          K =  whichbutt(iloc ,buttons)
+        }
+      else
+        {
+          Nclick = 0
+        ###  zenclick=zenclick+1
+        ###   print(zenclick)
+          K = 0
+         ### break;
+        }
+     
+      
+    ###  if(is.null(zloc$x)) { invisible(list(sloc=sloc, WPX=WPX, BRUNINFO=BRUNINFO, DETLINFO=DETLINFO, mark=mark))  }
+  
+### K = ValBAR(NV, zloc)
+###  print(paste(sep=" ", "K=",K))
+      
+    }
+
+### PRET = list(TPIX=TPIX, xpix=xpix,ypixA=ypixA, ypixB=ypixB,cpixa= cpixa, cpixb=cpixb, cpixc=cpixc, colpix=colpix)
+###  return(PRET)
+  if(zenclick>2)
+    {
+      pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
+    }
+  else
+    {
+      pwin =  c( zloc$x[zenclick-2], zloc$x[zenclick-1])
+
+    }
+#### print(pwin)
+#### print(WIN)
+  
+  RETP = list(sloc=sloc, WPX=WPX, BRUNINFO=BRUNINFO, DETLINFO=DETLINFO,  mark=mark)
+  
+  
+  if(!is.null(RETX))
+    {
+      invisible(RETX)
+    }
+  else
+    {
+      invisible(RETP)
+    }
+  
+}
+

@@ -1,0 +1,26 @@
+'EmptySEIS'<-
+  function()
+{
+  K = list(JSTR=list(),
+               STNS=vector(),
+               dir="",
+               ifile="",
+               COMPS=vector(),
+               OCOMPS=vector(),
+               dt=vector(),
+               KNOTES=vector(),
+               info=list(),
+               nn=vector(),
+               ex=vector(),
+               pcol=vector(),
+               ok=vector(),
+               wintim=vector(),
+               ftime=vector(),
+               units=vector(),
+               pickfile=EmptyPickfile(),
+               velfile=list(),
+               stafile=list(),
+               aname="",
+               UWFILEID="")
+  return(K)
+}
