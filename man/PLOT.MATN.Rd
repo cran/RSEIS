@@ -20,18 +20,24 @@ PLOT.MATN(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost
    \item{ampboost}{increase each amplitude by this multiplier}
    \item{shift}{vector, shift each trace by these time}
   \item{LOG}{log x-axis}
-  \item{COL}{vecotr of colrs or indeces to colors}
+  \item{COL}{vector of colors or indexes to colors}
   \item{add}{logical, TRUE=add to existing plot}
-  \item{AXES}{logical, TRUE=add axes}
+  \item{AXES}{numeric, 0,1,2,3,4; default=1}
   \item{units}{label for units of Y-axis}
   \item{VS}{ var-squiggle display}
   
 }
 \details{
- plots a matrix of seismograms that each have the same starting time
+ Plots a matrix of seismograms that each have the same starting time.
+ For the AXES argument, 0 = no axes,    AXES=1  plot scale for largest
+ amplitude band and a multiplier for all others,
+ AXES=2 left side, AXES=3 right side, AXES=4 alternate sides
 }
 \value{
- graphical side effects
+  Graphical side effects and,
+ \item{n}{n}
+  \item{ windiv}{matrix of n rows, with columns=(window Y min, window Y
+    max, user Y min, user Y max) }
 }
 
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}

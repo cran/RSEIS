@@ -19,7 +19,9 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost=
 
 ##########  if AXES=0  no Y axes
 ##########  if AXES=1  plot scale for largest amplitude band and a multiplier for all others
-##########  if AXES=2  plot a y-axis for each band, add units for scale
+##########  if AXES=2  plot a y-axis for each band, add units for scale, left side
+##########  if AXES=3  plot a y-axis for each band, add units for scale, right side
+##########  if AXES=4  plot a y-axis for each band, add units for scale, alternate sides
   
   
   if(missing(AXES)) {  AXES=1 } 
@@ -66,6 +68,20 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost=
 
   
   if(missing(COL)) { COL=rep(1, nn)  }
+
+  
+  opar <- par(no.readonly = TRUE)
+
+
+  if(AXES==3 | AXES==4)
+    {
+      mai = par("mai")
+      mai[4] = mai[2]
+
+      par(mai=mai )
+    }
+       
+  
 
   ncol = length(COL)
   KX = length(COL)
@@ -273,7 +289,25 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost=
         }
 
 
-      if(AXES==2) 
+     if(AXES==2) 
+        {
+          #######  put a Y axis on each trace, left side
+          side = 2; pos= upar[1]
+          axis(side, pos=pos ,tck=-0.005 , at=yts, labels=yt, las=2 , line=0.1, cex=.7 )
+          mtext(units[i], side =side , line = -1, at=mean(yts))
+          
+        }
+
+     if(AXES==3) 
+        {
+          #######  put a Y axis on each trace, right side
+          side = 4; pos= upar[2]
+          axis(side, pos=pos ,tck=-0.005 , at=yts, labels=yt, las=2 , line=0.1, cex=.7 )
+          mtext(units[i], side =side , line = -1, at=mean(yts))
+          
+        }
+
+      if(AXES==4) 
         {
           #######  put a Y axis on each trace, alternate left and right
           if((i%%2) == 1) { side = 2; pos= upar[1] } else { side = 4; pos= upar[2]  }
@@ -281,6 +315,9 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost=
           mtext(units[i], side =side , line = -1, at=mean(yts))
           
         }
+ 
+
+
       
       
                                         # axis(side=3, pos=y3+dy,   tck=0.005, at=ttics, labels=FALSE, col=2 )
@@ -305,6 +342,13 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost=
 
   u = par("usr")
   
+  colnames(windiv) = c("winymin", "winymax", "usrymin", "usrymax")
+  
+    if(AXES==3 | AXES==4)
+    {
+      par(opar)
+    }
+       
   
   invisible(list(n=nn, windiv=windiv) )
   
