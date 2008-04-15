@@ -2,7 +2,7 @@
 function(GG)
       {
           ####  names(GG[[1]])
-        print("working in GLUE.GET.seis")
+     ####   print("working in GLUE.GET.seis")
         
 	N = length(GG)
         stas  = rep(NA, N)
@@ -45,7 +45,7 @@ function(GG)
 
             ###  this combines the length of all matches
 
-            print(c(i, j[w1], t1[j[w1]], t2[j[w1]], j[w2],  t1[j[w2]], t2[j[w2]] ))
+        ###    print(c(i, j[w1], t1[j[w1]], t2[j[w1]], j[w2],  t1[j[w2]], t2[j[w2]] ))
 
                   
             temy = rep(NA, length(seq(from=0, to=(t2[j[w2]]-mint)*24*3600  , by=dt[j[w1]])))

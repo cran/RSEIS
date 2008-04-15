@@ -9,7 +9,8 @@ function(n)
    {
 for(i in 1:j)
   {
-   get(getOption("device"))()
+  ##  get(getOption("device"))()
+   dev.new()
   }
 }
 }

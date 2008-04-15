@@ -25,7 +25,7 @@ complex.hodo(nbaz, dt = dt, labs = c("Vertical", "North", "East"), COL = rainbow
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{}
+
 \examples{
 
 data("GH")

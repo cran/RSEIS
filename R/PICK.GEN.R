@@ -812,7 +812,15 @@ fixedbuttons = c("DONE",
           deltat = NH$info$dt[ ipick]
         ###    KPIX = autopick(Xamp, ktarg )
 
-          get(getOption("device"))(width=15, height=10)  
+         ### get(getOption("device"))(width=15, height=10)
+### get(getOption("device"))()
+
+         ### get(options("device")$device)(width=15, height=10)
+
+         dev.new()
+           ### dev.new(width=15, height=10)
+
+          
           ###  X11(width=15, height=10)
           ###  plot.ts(ts(Xamp, deltat=deltat))
  
@@ -1160,7 +1168,10 @@ fixedbuttons = c("DONE",
               print("DOING MAP")
               if(is.null(Mapdev))
                 {
-                  get(getOption("device"))(width = 12, height = 7) 
+                 ### get(getOption("device"))(width = 12, height = 7)
+                  dev.new()
+ 
+                  ###
                  ###  X11(width = 12, height = 7)
                   Mapdev = dev.cur()
                 }
@@ -1181,7 +1192,8 @@ fixedbuttons = c("DONE",
 
                   
                   if(jsc>0) {
-                    get(getOption("device"))(width = 12, height = 7) 
+                    ##get(getOption("device"))(width = 12, height = 7)
+                    dev.new()
                     ##X11(width = 12, height = 7);
                     Mapdev = dev.cur()
                             }
@@ -1255,7 +1267,9 @@ fixedbuttons = c("DONE",
           Xamp =  -1*temp
           smallex = ex[ ex > pwin[1] & ex <pwin[2]]
 
-          get(getOption("device"))()  
+          ##get(getOption("device"))()
+          ##
+          dev.new()
          ### X11()
           ###  plot.ts(Xamp)
 
@@ -1334,7 +1348,10 @@ fixedbuttons = c("DONE",
           g  =  list(y=temp-mean(temp), dt=NH$dt[ipick])
           ### g$x = NH$ex[ NH$ex > zloc$x[zenclick-2] & NH$ex <zloc$x[zenclick-1]]
 
-          get(getOption("device"))()  
+          ###get(getOption("device"))()
+          dev.new()
+
+          
           ### X11()
           f1 = 0.1
           f2 = floor(0.33*(1/NH$dt[ipick]))
@@ -1717,7 +1734,9 @@ fixedbuttons = c("DONE",
               print(stamps)
               a = list(y=amp, dt=dees, stamps=stamps)
 
-              get(getOption("device"))(width=10, height=10)  
+             ### get(getOption("device"))(width=10, height=10)
+              dev.new()
+
              ### X11(width=10, height=10)
               f1 = 0.1
               f2 = floor(0.33*(1/NH$dt[ipick]))
@@ -2066,7 +2085,8 @@ fixedbuttons = c("DONE",
 
           pmolabs=NH$COMPS[c(Iv, In, Ie)]
 
-          get(getOption("device"))(width=15, height=10)  
+         ### get(getOption("device"))(width=15, height=10)
+          dev.new()
         ###  X11(width=15, height=10)
           
           ###########    PMOtrace(temp, WIN=NULL, labs=pmolabs, PS=FALSE, ID="")
@@ -2119,7 +2139,8 @@ fixedbuttons = c("DONE",
 
           pmolabs=NH$COMPS[c(Iv, In, Ie)]
 
-          get(getOption("device"))(width=6, height=6)  
+          ###get(getOption("device"))(width=6, height=6)
+          dev.new()
          ###  X11(width=6, height=6)
           
           ###########    PMOtrace(temp, WIN=NULL, labs=pmolabs, PS=FALSE, ID="")
@@ -2169,7 +2190,8 @@ fixedbuttons = c("DONE",
           GAZISTAMP = paste(sep=" ", psta, ftime)
           
           pmolabs=NH$COMPS[c(Iv, In, Ie)]
-          get(getOption("device"))()
+         #### get(getOption("device"))()
+          dev.new()
          ####  X11()
           
           
@@ -2215,7 +2237,8 @@ fixedbuttons = c("DONE",
          print(stamps)
 
 
-          get(getOption("device"))(width=6, height=6)
+         ### get(getOption("device"))(width=6, height=6)
+          dev.new()
          ###  X11(width=6, height=6)
           
           ###########   
@@ -2343,7 +2366,8 @@ fixedbuttons = c("DONE",
               Xamp2 =  temp
               
              ### X11()
-              get(getOption("device"))()  
+              ###get(getOption("device"))()
+              dev.new()
 
               ########## pshift = getphaselag2(Xamp1, Xamp2, NH$info$dt[ipick[1]] , PLOT=TRUE)
 
@@ -2387,8 +2411,9 @@ fixedbuttons = c("DONE",
               
               ###X11()
               ###
-              get(getOption("device"))()
-              
+             ### get(getOption("device"))()
+              ###
+              dev.new()
               pshift = getphaselag2(Xamp1, Xamp2,  DT=NH$info$dt[ipick[1]],  frange=c(5, 15),  PLOT=TRUE)
 
 
@@ -2420,7 +2445,10 @@ fixedbuttons = c("DONE",
           if(length(ma==3))
             {
               ##### X11(width = 12, height = 7)
-              get(getOption("device"))(width = 12, height = 7)  
+              #####get(getOption("device"))(width = 12, height = 7)
+              dev.new()
+
+              
               PICK.GEN(NH, APIX=WPX, sel=ma, STDLAB=STDLAB ,SHOWONLY = FALSE, TIT=TIT)
               dev.set( MAINdev)
             }

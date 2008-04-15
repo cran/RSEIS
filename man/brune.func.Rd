@@ -23,7 +23,11 @@ brune.func(freq, omega0, tstar0, fc, alpha, gamma)
 \value{
   returns displacement spectrum from given parameters
 }
-\references{}
+\references{
+ Lees, J. M. and G. T. Lindley  (1994): Three-dimensional Attenuation
+  Tomography at Loma Prieta:Inverting t* for Q, J. Geophys. Res., 99(B4), 6843-6863.
+
+}
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
 \seealso{brune.doom}

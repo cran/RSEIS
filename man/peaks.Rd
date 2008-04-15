@@ -20,7 +20,7 @@ peaks(series, span = 3, do.pad = TRUE)
 \value{
  vector of peak indexes
 }
-\references{ }
+
 \author{Brian Ripley}
 
 \examples{

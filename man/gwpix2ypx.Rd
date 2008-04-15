@@ -28,6 +28,5 @@ Seismic Travel Times", BSSA, v. 73, pp. 1271-1302
 
 \seealso{uwpfile2ypx, PICK.GEN}
 
-\examples{}
 
 \keyword{misc}

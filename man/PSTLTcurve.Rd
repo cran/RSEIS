@@ -34,11 +34,9 @@ PSTLTcurve(y, dt = 0.008, fwlen = 125, bwlen = 125, perc = 0.05, stretch = 1000,
    \item{rat}{ratio curve}
 
 }
-\references{ ~put references to the literature/web site here ~ }
+
 \author{Jonathan M. Lees<jonathan.lees.edu>}
-\note{ 
-}
-\seealso{}
+
 \examples{
 
 require(stats)

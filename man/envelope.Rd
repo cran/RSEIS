@@ -23,7 +23,7 @@ envelope(x)
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{ }
+
 \examples{
 
 data(CE1)

@@ -37,8 +37,6 @@ Graphical side effects.
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 \seealso{cwt, pwlet2freqs, wlet.do, wlet.drive}
-\examples{
 
-}
 
 \keyword{hplot}

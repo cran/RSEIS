@@ -28,7 +28,7 @@ wlet.do(why, dt, noctave = 6, nvoice = 20, flip = TRUE, ploty = TRUE, zscale = 1
   \item{baha}{wavelet transform list}
     \item{PE}{plotting information list}
 }
-\references{}
+
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
 \seealso{Rwave}

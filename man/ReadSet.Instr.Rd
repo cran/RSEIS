@@ -31,7 +31,7 @@ ReadSet.Instr(file)
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{}
+
 \examples{
 
 ###  in this case a file has already been read in:

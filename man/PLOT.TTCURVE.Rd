@@ -39,7 +39,7 @@ PLOT.TTCURVE(GH, STAXY = NULL, DIST = c(0, 10), DY = 0.1, tim = 1, dt = 1, sel =
   list(n=nn, dy=dy,  minS=minS, maxS=maxS, meanS=meanS, DX=range(tim[tflag]), DY=DY, DIST=DIST )
  
 }
-\references{}
+
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}
 \note{
   This program is similar to PLOT.SEISN

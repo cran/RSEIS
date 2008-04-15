@@ -19,8 +19,7 @@ Comp1Dvel(v, v2)
 }
 
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}
-\note{
-}
+
 \seealso{Get1Dvel, travel.time1D}
 \examples{
 VEL=list()

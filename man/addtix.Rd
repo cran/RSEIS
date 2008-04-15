@@ -26,8 +26,5 @@ addtix(side = 3, pos = 0, tck = 0.005, at =c(0, 1), labels = FALSE, col = 2, ...
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
 \seealso{par}
-\examples{
-
-}
 
 \keyword{aplot}

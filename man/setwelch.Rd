@@ -32,8 +32,7 @@ Electroacoustics 15, 70-73.
 
 }
 \author{originally written by Andreas Weingessel, modified Jonathan M. Lees<jonathan.lees@unc.edu>}
-\note{
-}
+
 \seealso{stft}
 \examples{
 

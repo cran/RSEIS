@@ -25,7 +25,7 @@ hodogram(nbaz, dt = dt, labs = c("Vertical", "North", "East"), COL =rainbow(140)
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{}
+
 \examples{
 
 data("GH")

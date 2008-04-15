@@ -21,6 +21,19 @@ function(a, fl, fh, deltat, type, proto)
    #####                 (SAC default = 5.0)
    #####  float ts:      time sample interval in secs (e.g.,0.01 = 100 samp/sec)
    #####                (SAC default = 0.01)
+
+
+  ###    checks to avoid problems
+
+  if(any(is.na(a))){ print("ERROR in BUTFILT: NA in data"); return(NULL)      }
+  if(any(is.null(a))){ print("ERROR in BUTFILT: NULL in data"); return(NULL)      }
+  if(length(a)<1){ print("ERROR in BUTFILT: length in data"); return(NULL)      }
+  
+  
+  if(is.null(fl) ){ print("ERROR in BUTFILT: filter definition"); return(NULL)      }
+  if(is.null(fh) ){ print("ERROR in BUTFILT: filter definition"); return(NULL)      }
+  if(is.null(deltat) ){ print("ERROR in BUTFILT: deltat null"); return(NULL)      }
+  
   
 .C("CALL_JFILT", PACKAGE = "RSEIS",
 as.single(a),

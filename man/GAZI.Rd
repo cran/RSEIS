@@ -28,8 +28,7 @@ GAZI(ADAT, dt = 1, ex = seq(0, 100), comp = c(4, 5, 6), sta = "ZZZ", az = 0, len
  list(aex=aex[1:jall], rateig=rateig[1:jall], aaz=aaz[1:jall], ai=ai[1:jall], figaz=figaz, azpar=azpar, incpar=incpar )
 }
 \references{ ~put references to the literature/web site here ~ }
-\author{}
-\seealso{}
+
 \examples{
 
 data("GH")

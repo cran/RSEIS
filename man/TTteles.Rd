@@ -46,7 +46,7 @@ Seismic Travel Times", BSSA, v. 73, pp. 1271-1302
   Requires that the working directory be read/write because
   files are created outside of R.
 }
-\seealso{}
+
 \examples{
 
 \dontrun{

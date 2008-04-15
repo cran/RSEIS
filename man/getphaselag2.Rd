@@ -25,7 +25,7 @@ getphaselag2(y1, y2, DT = 0.008, frange = c(0, 20), PLOT = FALSE, PLOT1 = FALSE,
 \value{
  phase lag, seconds
 }
-\references{}
+
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
 \seealso{mtapspec}

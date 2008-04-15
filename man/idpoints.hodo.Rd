@@ -18,9 +18,6 @@ idpoints.hodo(nbaz, sx, X, Y)
 \details{
  Used in conjunction with other interative plots.
 }
-\value{
-
-}
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 

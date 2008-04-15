@@ -19,7 +19,5 @@ selAPX(APX, ista = NULL, icomp = c("V", "N", "E"))
  returns subset list 
 }
 \author{Jonathan M. Lees<jonathan.lees.edu>}
-\examples{
 
-}
 \keyword{misc}

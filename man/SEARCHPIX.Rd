@@ -24,7 +24,7 @@ index vector
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{}
+
 \examples{
 
 \dontrun{SEARCHPIX(KPX, IPX, tol = 0.5) }

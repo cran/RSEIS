@@ -25,7 +25,7 @@ Mmorlet(UB = -4, LB = 4, N = 256, plot = FALSE)
  \item{morl}{y-output}
   
 }
-\references{}
+
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
 \seealso{scal2freqs, Rwave }

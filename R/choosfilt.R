@@ -58,7 +58,9 @@ if( length(thefilts$type) != length(thefilts$flo ) &   length(thefilts$type)  !=
 
      thecols =  colrgb[mcol]
           
-    get(getOption("device"))()  
+   ### get(getOption("device"))()
+    dev.new()
+    
    ### X11()
     
 

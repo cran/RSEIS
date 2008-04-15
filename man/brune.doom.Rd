@@ -28,10 +28,13 @@ brune.doom(amp, dt = 1, f1 = 0.01, f2 = 15, PLOTB = FALSE, tit = "")
   \item{alpha}{alpha}
    
 }
-\references{}
+\references{
+  Lees, J. M. and G. T. Lindley  (1994): Three-dimensional Attenuation
+  Tomography at Loma Prieta:Inverting t* for Q, J. Geophys. Res., 99(B4), 6843-6863.
+}
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{}
+
 \examples{
 
 data(CE1)
