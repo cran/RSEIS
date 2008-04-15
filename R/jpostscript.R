@@ -9,7 +9,7 @@ function(name, P=NULL)
 
   if(is.null(P))
     {
-      P = par('pin')
+      P = par('din')
       P = round(P, digits=2)
       
     }

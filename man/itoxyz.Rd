@@ -15,9 +15,7 @@ itoxyz(i, nx, ny, nlay)
   \item{ny}{number of blocks in y axis}
   \item{nlay}{number of blocks in z axis (layers) }
 }
-\details{
- 
-}
+
 \value{
   \item{ix}{Index of X-array}
   \item{iy}{Index of Y-array}

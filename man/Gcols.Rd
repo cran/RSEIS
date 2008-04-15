@@ -16,9 +16,7 @@ Gcols(plow = 10, phi = 10, N = 100, pal = "rainbow", mingray = 0.5)
   \item{pal}{color palette name}
   \item{mingray}{lower end is blanked out and replaced by gray}
 }
-\details{
 
-}
 \value{
   c(LOW  , Z, HI)
   color palette

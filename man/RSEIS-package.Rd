@@ -13,8 +13,8 @@ Seismic Analysis and Display
 \tabular{ll}{
 Package: \tab RSEIS\cr
 Type: \tab Package\cr
-Version: \tab 1.0-6\cr
-Date: \tab 2008-02-11\cr
+Version: \tab 1.0-9\cr
+Date: \tab 2008-04-15\cr
 License: \tab GPL\cr
 }
 

@@ -21,8 +21,8 @@ YRsecdif(jd1, hr1, mi1, sec1, jd2, hr2, mi2, sec2, yr1 = 0, yr2 = 0)
   \item{yr1}{year 1}
   \item{yr2}{ year 2}
 }
-\details{Returns T2-T1, year is used.
-  
+\details{
+  Returns T2-T1, year is used.
 }
 \value{
   \item{numeric}{seconds}

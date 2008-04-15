@@ -25,8 +25,7 @@ BKpfile2ypx(P)
 
   }
 }
-\details{
-}
+
 \value{
   List of PICKS:
  \item{tag}{tag for unique identification of trace}

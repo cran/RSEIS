@@ -18,9 +18,7 @@ addtix(side = 3, pos = 0, tck = 0.005, at =c(0, 1), labels = FALSE, col = 2, ...
   \item{col}{color for ticks}
   \item{\dots}{graphical parameters, par}
 }
-\details{
- 
-}
+
 \value{
  Graphical Side Effect
 }

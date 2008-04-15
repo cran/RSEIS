@@ -13,9 +13,7 @@ tomo.colors(n, alpha = 1)
   \item{n}{number of colors }
   \item{alpha}{hsv color parameter}
 }
-\details{
 
-}
 \value{
 color palette
 }

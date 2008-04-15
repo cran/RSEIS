@@ -32,9 +32,7 @@ PLOT.TTCURVE(GH, STAXY = NULL, DIST = c(0, 10), DY = 0.1, tim = 1, dt = 1, sel =
   \item{UNITS}{character, units of traces }
   \item{MARK}{character marking for earthquake }
 }
-\details{
-  
-}
+
 \value{
  Graphical Side effect.
 

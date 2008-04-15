@@ -15,9 +15,7 @@ FRWDft(g, n, tstart, dt)
   \item{tstart}{start of trace }
   \item{dt}{sample interval, s }
 }
-\details{
 
-}
 \value{
    \item{G}{fourier compnents}
    \item{f}{frequency vector}

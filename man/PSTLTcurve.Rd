@@ -19,9 +19,7 @@ PSTLTcurve(y, dt = 0.008, fwlen = 125, bwlen = 125, perc = 0.05, stretch = 1000,
   \item{MED}{Median smoothing parameter }
   \item{PLOT}{logical, TRUE=PLOT}
 }
-\details{
-  
-}
+
 \value{
 
   list(flag=1, ind=ix, eye=eye, mix=mix, SNR=SNR,  s2=s2, rat=therat)

@@ -13,9 +13,7 @@ GLUE.GET.seis(GG)
 \arguments{
   \item{GG}{list of seismograms with headers}
 }
-\details{
- 
-}
+
 \value{
  structure of seismograms glued together
 }

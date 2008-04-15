@@ -18,9 +18,7 @@ autoreg(a, numf = 1024, pord = 100, PLOT = FALSE, f1 = 0.01, f2 = 50)
   \item{f1}{low frequency }
   \item{f2}{high frequency }
 }
-\details{
- 
-}
+
 \value{
   LIST:
   \item{amp}{amplitudes}

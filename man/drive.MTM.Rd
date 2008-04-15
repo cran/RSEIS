@@ -18,9 +18,7 @@ drive.MTM(a, f1 = f1, f2 = f2, len2 = 1024, COL = 2, PLOT = FALSE, PADDLAB = NUL
   \item{PADDLAB}{vector of buttons}
   \item{GUI}{Whether to be in GUI (interactive) mode}
 }
-\details{
- 
-}
+
 \value{
  Graphical Side effect
 }

@@ -16,9 +16,7 @@ hodogram(nbaz, dt = dt, labs = c("Vertical", "North", "East"), COL =rainbow(140)
   \item{COL}{color palette}
   \item{STAMP}{character stamp for identification }
 }
-\details{
- 
-}
+
 \value{
   sx = list
   graphical side effect

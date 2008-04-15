@@ -17,9 +17,7 @@ brune.doom(amp, dt = 1, f1 = 0.01, f2 = 15, PLOTB = FALSE, tit = "")
   \item{PLOTB}{logical, TRUE=show diagnostic plots }
   \item{tit}{title for plot}
 }
-\details{
- 
-}
+
 \value{
 \item{ SUCCESS}{(0,1) for success or failure of modeling}
  \item{ WARN }{flag = "OK"}

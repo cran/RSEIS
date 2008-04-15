@@ -21,9 +21,7 @@ plt.MTM0(frange, prange, plxy, M, freqs, amp, a, dof = dof, Fv = Fv, COL = 2)
   \item{Fv}{F-values }
   \item{COL}{ color }
 }
-\details{
-  
-}
+
 \value{
  Graphical Side Effect
 }

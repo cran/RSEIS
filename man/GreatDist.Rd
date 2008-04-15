@@ -17,9 +17,7 @@ GreatDist(LON1, LAT1, LON2, LAT2, EARTHRAD= 6371)
   \item{EARTHRAD}{optional earth radius,  default  = 6371}
   
 }
-\details{
-  
-}
+
 \value{
   LIST:
   \item{drad}{distance in radians}

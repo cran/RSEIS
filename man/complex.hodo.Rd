@@ -16,9 +16,7 @@ complex.hodo(nbaz, dt = dt, labs = c("Vertical", "North", "East"), COL = rainbow
   \item{COL}{color palette}
   \item{STAMP}{character stamp for identification }
 }
-\details{
- 
-}
+
 \value{
   sx = list
   graphical side effect
