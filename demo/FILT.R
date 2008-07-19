@@ -17,19 +17,19 @@ y =  KH$JSTR[[1]]
 x =  seq(from=0, by=dt, length=length(y))
 
 ##########  plot the data:
-plot(x,y, type='l', xlab='s', ylab='amp')
+plot(x,y, type='l', xlab='s', ylab='amp', main="Vertical Comp Seismic Volcano Explosion")
 
 readline("To Continue Hit Enter Key\n")
 
 
 ################    filter the data
 
-#######  us a band pass, butterworth filter from 10 s to 1 Hz
+#######  use a band pass, butterworth filter from 10 s to 1 Hz
 
 fy = butfilt(y, .1, 1, dt, "BP", "BU" )
 
 
-plot(x,fy, type='l', xlab='s', ylab='amp')
+plot(x,fy, type='l', xlab='s', ylab='amp', main="Bandpass filter  10 s to 1 Hz" )
 
 readline("To Continue Hit Enter Key\n")
 
@@ -42,7 +42,7 @@ readline("To Continue Hit Enter Key\n")
 ################ zoom in on part of the plot
 ## could use locator here as in win=locator(2); win=win$x
 
-win =c(1000, 2000)
+win =c(100, 200)
 
 
 PLOT.MATN(cbind(y, fy), tim=x, dt=dt , WIN=win, notes=c("raw", "filtered" ) , COL=c('brown', 'blue'))
@@ -57,11 +57,15 @@ By = y  - mean(y)
 ####
 #### taper the data
 By = applytaper(By, p=0.05)
-
-fy = butfilt(By, .01, .1, dt, "BP", "BU" )
+flow =1/100
+fhi = 1
+fy = butfilt(By, flow, fhi, dt, "BP", "BU" )
 fy = applytaper(fy, p=0.05)
 
-PLOT.MATN(cbind(y, fy), tim=x, dt=dt , notes=c("raw", "filtered" ) , COL=c('brown', 'blue'))
+flab =paste(sep=" ", "BP filtered:", flow, "to", fhi, "Hz" )
+
+  
+PLOT.MATN(cbind(y, fy), tim=x, dt=dt , notes=c("raw", flab) , COL=c('brown', 'blue'))
 
 
 readline("To Continue Hit Enter Key\n")

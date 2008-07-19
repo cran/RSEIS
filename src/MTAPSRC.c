@@ -2206,6 +2206,47 @@ c  set tolerance for iterative scheme exit */
 }
 
 
+/** FUNC DEF */ void  CALL_slepian(int *anpoints,int *inwin, double *dnpi, double *tapers)
+{
+  int k;
+  double         *lambda;
+  double           *tapsum;
+  int len_taps;
+  double npi;
+  int nwin;
+  int npoints;
+
+
+   npoints=(double)(*anpoints);
+   nwin =(int)(*inwin);
+   npi = (double)(*dnpi);
+
+
+  lambda = djector((long)0, (long)nwin);
+  tapsum=djector((long)0,(long)nwin);
+  len_taps = npoints * nwin;
+
+
+  /* tapers = djector((long)0,(long) len_taps); */
+  k = multitap(npoints, nwin, lambda,  npi, tapers, tapsum);
+#if 0
+
+  tap_file = fopen("taper_file", "w");
+  /* print out tapers for curiosity  */
+  for(i=0; i<npoints; i++){
+    for(j=0; j<nwin; j++)fprintf(tap_file,"%15.10f ",tapers[i+j*npoints]);
+    fprintf(tap_file,"\n");
+  }
+  fclose(tap_file);
+#endif
+
+  free_djector(lambda,(long) 0,(long) nwin);
+
+  /* 	free_djector(tapers,(long) 0, (long)len_taps); */
+  free_djector(tapsum,(long) 0, (long)nwin);
+
+}
+
 #if 0
 /** FUNC DEF */ void  CALL_FINDWFREQ(double *data, int *anpoints, double *adt, int   *JOUT)
 {

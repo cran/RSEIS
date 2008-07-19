@@ -6,7 +6,7 @@
  Plot Spectrogram
 }
 \usage{
-plotevol(DEVOL, log = 0, fl = 0, fh = 10, col = col, ylog = FALSE, ygrid = FALSE, AXE = c(1, 2, 3, 4), CSCALE = FALSE, STAMP = NULL)
+plotevol(DEVOL, log = 0, fl = 0, fh = 10, col = col, ylog = FALSE, ygrid = FALSE, AXE = c(1, 2, 3, 4), CSCALE = FALSE, WUNITS = "Volts", STAMP = NULL, STYLE = "fft")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,10 +19,19 @@ plotevol(DEVOL, log = 0, fl = 0, fh = 10, col = col, ylog = FALSE, ygrid = FALSE
   \item{ygrid}{logical, TRUE=add grid}
   \item{AXE}{sides to add axis}
   \item{CSCALE}{logical}
+  \item{WUNITS}{character string for units}
   \item{STAMP}{character string for identification }
+  \item{STYLE}{Plotting style.  Default, "fft"=plot half the spectrum
+    image , else plot whole spectrum}
+  
 }
 \details{
- Plot Spectrogram
+  Plot Spectrogram.
+  Because the fft function returns positive and negative frequencies,
+  ff STYLE="fft" then
+  the image matrix is reduced IMAT = t(DSPEC[1:(numfreqs/2),])  otherwise
+  IMAT = t(DSPEC).
+  
 }
 \value{
  Graphical Side Effects
@@ -62,7 +71,7 @@ scale.def = 1
    DEV = evolfft(Xamp,DT , Nfft=Nfft, Ns=NS , Nov=NOV,  fl=fl, fh=fh  )
 
   PE =  plotevol(DEV, log=scale.def, fl=flshow, fh=fhshow,
-                 col=pal, ygrid=FALSE, STAMP="HITHERE")
+                 col=pal, ygrid=FALSE, STAMP="HITHERE", STYLE="fft")
 
 
 

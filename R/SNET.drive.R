@@ -44,20 +44,39 @@ function(intempmat, pmolabs=c("Vertical", "North", "East"), STAMP="")
 
 
 
- iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=-1)
-  zloc = iloc
-   Nclick = length(iloc$x)
-  zenclick =  length(zloc$x)
-  if(is.null(zloc$x)) { return(NULL) }
-      K = whichbutt(iloc ,buttons)
-      sloc = zloc
-   
 
 
-    
+        zloc = list(x=NULL, y=NULL)
+    sloc = zloc
+
     
     while(TRUE)
       {
+
+
+iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=-1)
+ Nclick = length(iloc$x)
+           
+          if(Nclick>0)
+            {
+              zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
+              zenclick = length(zloc$x)
+              K =  whichbutt(iloc ,buttons)
+              sloc = zloc
+            }
+          else
+            {
+              Nclick = 0
+              K = 0
+              buttons = rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
+              title("Return to Calling Program")
+              break;
+            }
+     
+       
+
+
+        
         if(K[Nclick] == match("DONE", labs, nomatch = NOLAB))
           {
            
@@ -128,23 +147,7 @@ function(intempmat, pmolabs=c("Vertical", "North", "East"), STAMP="")
 
        
          
-          iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=-1)
-          Nclick = length(iloc$x)
-
-          if(Nclick>0)
-            {
-              zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
-              zenclick = length(zloc$x)
-              K =  whichbutt(iloc ,buttons)
-            }
-          else
-            {
-              Nclick = 0
-
-              K = 0
-
-            }
-     
+         
 
 
       }

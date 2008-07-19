@@ -52,7 +52,7 @@ function(a, dt=0, Nfft=0,  Ns=0, Nov=0, fl=0, fh=10 )
     if(kcol<1)
       {
         print(paste(sep=' ', "error in evolfft kcol=", kcol, "krow=", krow, "NT", NT, "Ns", Ns, "Nov", Nov))
-        return()
+        return(NULL)
       }
           
     DMAT = matrix(rep(0,krow*kcol), ncol=kcol, nrow=krow)

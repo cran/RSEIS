@@ -10,7 +10,7 @@ function(stafile)
     {
       sta =stafile
     }
-  if(any(abs(sta$z))>100) { print("BEWARE: STATIONS are in meters!, dividing by 1000") ; sta$z = sta$z/1000 }
+  if(any(abs(sta$z)>100)) { print("BEWARE: STATIONS are in meters!, dividing by 1000") ; sta$z = sta$z/1000 }
   
   invisible(sta)
 }

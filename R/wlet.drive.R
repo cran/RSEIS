@@ -2,7 +2,12 @@
 function(Xamp, DT=0.008, STAMP=NULL)
   {
 
-       require("Rwave")
+       if(require("Rwave")==FALSE)
+         {
+           return
+         }
+
+       
  
     if(missing(DT)) { DT=1 }
      if(missing(STAMP)) { STAMP=NULL }
@@ -47,20 +52,35 @@ function(Xamp, DT=0.008, STAMP=NULL)
     
    
     PEAXBoxes = NULL
-    iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=NSEL, style=1)
-    zloc = iloc
-    Nclick = length(iloc$x)
-    zenclick =  length(zloc$x)
-    if(is.null(zloc$x)) { return(NULL) }
-    K = whichbutt(iloc ,buttons)
-    sloc = zloc
+ ####    iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=NSEL, style=1)
     
+       zloc = list(x=NULL, y=NULL)
+       sloc = zloc 
+####   print(paste("Button",K, Nclick,K[Nclick] ))
+       while(TRUE)
+         {
+           
+           iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=0)
+           Nclick = length(iloc$x)
+           
+          if(Nclick>0)
+            {
+              zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
+              zenclick = length(zloc$x)
+              K =  whichbutt(iloc ,buttons)
+              sloc = zloc
+            }
+          else
+            {
+              Nclick = 0
+              K = 0
+              buttons = rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
+              title("Return to Calling Program")
+              break;
+            }
+     
 
-  ####   print(paste("Button",K, Nclick,K[Nclick] ))
-    while(TRUE)
-      {
-
-
+        
         if(K[Nclick] == match("DONE", labs, nomatch = NOLAB))
           {
            #### PE =plotwlet(faha, Xamp, DT, zscale=scale.def,  col=pal, STAMP=STAMP)
@@ -331,24 +351,7 @@ function(Xamp, DT=0.008, STAMP=NULL)
           }
 
 
-          iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=0)
-          Nclick = length(iloc$x)
-
-          if(Nclick>0)
-            {
-              zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
-              zenclick = length(zloc$x)
-              K =  whichbutt(iloc ,buttons)
-            }
-          else
-            {
-              Nclick = 0
-
-              K = 0
-
-            }
-     
-
+         
         
         
       }

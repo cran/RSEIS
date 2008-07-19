@@ -13,8 +13,8 @@ Seismic Analysis and Display
 \tabular{ll}{
 Package: \tab RSEIS\cr
 Type: \tab Package\cr
-Version: \tab 1.1-1\cr
-Date: \tab 2008-04-15\cr
+Version: \tab 1.1-3\cr
+Date: \tab 2008-07-19\cr
 License: \tab GPL\cr
 }
 
@@ -102,7 +102,7 @@ Maintainer:Jonathan M. Lees<jonathan.lees.edu>
     autoreg
     butfilt
     choosfilt
-    drive.MTM
+    MTM.drive
   }
 
   \item{Date-Time Functions:}{

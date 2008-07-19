@@ -1,5 +1,5 @@
 `plotevol` <-
-function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,2,3,4), CSCALE=FALSE, STAMP=NULL  )
+function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,2,3,4), CSCALE=FALSE, WUNITS="Volts", STAMP=NULL, STYLE="fft"  )
   {
     if(missing(log)) { log = 0 }
     if(missing(fl)) { fl=DEVOL$wpars$fl}
@@ -11,7 +11,13 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
     if(missing(AXE)) { AXE=c(1,2,3,4) }
     if(missing(CSCALE)) { CSCALE=TRUE  }
     if(missing(STAMP)) {  STAMP=NULL  }
-     
+    if(missing(WUNITS)) {   WUNITS=NULL  }
+    if(missing(STYLE)) {  STYLE="fft"   }
+
+   ## if(!exists(col))  {  col=rainbow(50) }
+    if(length(col)<1) {  col=rainbow(50) }
+
+    
     perc = 0.85
     a = DEVOL$sig
     dt = DEVOL$dt
@@ -20,7 +26,7 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
     y = DEVOL$freqs
     x = DEVOL$tims
     
-    
+
     yflag = (y>=fl&y<=fh)
     
     
@@ -33,8 +39,14 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
 
    ##   print("in plotevol...")
     
-    
-    IMAT = t(DSPEC[1:(numfreqs/2),])
+    if(identical(STYLE, "fft"))
+       {
+         IMAT = t(DSPEC[1:(numfreqs/2),])
+       }
+       else
+       {
+         IMAT = t(DSPEC)
+       }
     
     if(ylog==TRUE)
       {
@@ -45,12 +57,15 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
         why   = RESCALE( (y[yflag]), 0 , perc , min(y[yflag], na.rm=TRUE), max(y[yflag], na.rm=TRUE) )
 
       }
+
+    subI = IMAT[ , yflag]
     
-    if(log<=0){ ImPlot = IMAT[ , yflag]; units="Amp" } 
-    if(log==1){ ImPlot =     log10(IMAT[ , yflag]) ; units="Log Amp"}
-    if(log==2){ ImPlot = sqrt(IMAT[ , yflag] ) ; units="SQRT Amp"}
-    if(log==3){ ImPlot = 20*log10( IMAT[ , yflag]/ max( IMAT[ , yflag]) ) ; units="DB"}
-    if(log>3){ ImPlot = IMAT[ , yflag]; units="Amp" }  
+    if(log<=0){ ImPlot = subI; units="Amp" } 
+    if(log==1){ ImPlot =     log10(subI) ; units="Log Amp"}
+    if(log==2){ ImPlot = sqrt(subI) ; units="SQRT Amp"}
+    if(log==3){ ImPlot = 20*log10(subI/ max(subI) ) ; units="DB"}
+    if(log>3){ ImPlot = subI; units="Amp" }  
+
 
     ##   par(mfrow=c(1,1))
     par(xaxs='i', yaxs='i')
@@ -147,6 +162,13 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
       {
         raxtrace= RESCALE( axtrace, perc , 1.0 , axtrace[1],  axtrace[2])
         axis(4, at=raxtrace, labels=format.default(axtrace, digits=3), pos=max(tim, na.rm=TRUE))
+
+        if( !is.null(WUNITS)  )
+          {
+            axis(4, at=raxtrace, labels=format.default(axtrace, digits=3), pos=max(tim, na.rm=TRUE))
+            mtext(side=4, at=mean(raxtrace), text=WUNITS)
+          }
+        
       }
     else
       {

@@ -3,3 +3,4 @@ SUNrs	Analysis of the sunspot data
 REVENT  Data from Reventador Volcano, Ecuador
 FILT	Filtering using butterworth bandpass
 SPECT	Spectrum estimation
+MTM	Multi-Taper Method, Examples from Lees and Park, 1995

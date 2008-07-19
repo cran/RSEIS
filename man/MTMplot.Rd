@@ -37,7 +37,7 @@ MTMplot(a, f1 = f1, f2 = f2, len2 = 1024, PLOT = FALSE, PADDLAB = NULL, GUI = TR
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{drive.MTM, MTMdisp, plt.MTM0}
+\seealso{MTM.drive, MTMdisp, plt.MTM0}
 
 \keyword{misc}
 \keyword{hplot}

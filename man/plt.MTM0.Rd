@@ -28,7 +28,7 @@ plt.MTM0(frange, prange, plxy, M, freqs, amp, a, dof = dof, Fv = Fv, COL = 2)
 \references{Lees, J. M. and Park, J., 1995: Multiple-taper spectral analysis: A stand-alone C-subroutine, {\emph Computers & Geology}, 21(2), 199-236.}
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{drive.MTM}
+\seealso{MTM.drive}
 \examples{
 
 data(CE1)

@@ -75,14 +75,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL)
 
     pstyle=3
    
-     iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=pstyle)
-  zloc = iloc
-   Nclick = length(iloc$x)
-  zenclick =  length(zloc$x)
-  if(is.null(zloc$x)) { return(NULL) }
-      K = whichbutt(iloc ,buttons)
-
-
+     zloc = list(x=NULL, y=NULL)
     sloc = zloc
 
   ####   print(paste("Button",K, Nclick,K[Nclick] ))
@@ -96,15 +89,26 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL)
       {
 
 
-
-        if(zenclick==0 & Nclick<1 )
-        { 
-         break;
-          #### next
-        }
-   
-      
-
+    iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=0)
+           Nclick = length(iloc$x)
+           
+          if(Nclick>0)
+            {
+              zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
+              zenclick = length(zloc$x)
+              K =  whichbutt(iloc ,buttons)
+              sloc = zloc
+            }
+          else
+            {
+              Nclick = 0
+              K = 0
+              buttons = rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
+              title("Return to Calling Program")
+              break;
+            }
+     
+       
         
         if(K[Nclick] == match("DONE", labs, nomatch = NOLAB))
           {
@@ -222,9 +226,13 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL)
              fh = RL[5]
              flshow = RL[6]
              fhshow = RL[7]
-             DEV = evolfft(Xamp,DT , Nfft=Nfft, Ns=NS , Nov=NOV,  fl=fl, fh=fh  )
+
              
-            PE =  plotevol(DEV, log=scale.def, fl=flshow, fh=fhshow, col=pal, ygrid=gridon, STAMP=STAMP)
+             DEV = evolfft(Xamp,DT , Nfft=Nfft, Ns=NS , Nov=NOV,  fl=fl, fh=fh  )
+             if(!is.null(DEV))
+               {
+                 PE =  plotevol(DEV, log=scale.def, fl=flshow, fh=fhshow, col=pal, ygrid=gridon, STAMP=STAMP)
+               }
              buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
               zloc = list(x=NULL, y=NULL) 
         }
@@ -263,22 +271,6 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL)
       
       
         ###  print(paste(sep=' ', "scale.def=", scale.def))
-        iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=NSEL, style=pstyle)
-        Nclick = length(iloc$x)
-        
-        if(Nclick>0)
-          {
-            zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
-            zenclick = length(zloc$x)
-            K =  whichbutt(iloc ,buttons)
-          }
-        else
-          {
-            Nclick = 0
-
-            K = 0
-
-          }
      
 
       }

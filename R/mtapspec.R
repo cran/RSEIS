@@ -10,7 +10,7 @@ function(a, dt, klen=length(a), MTP=NULL)
       kind=2;  
       nwin=5;  
       npi=3; 
-      inorm=0;
+      inorm=1;
     }
   else
     {
@@ -23,6 +23,15 @@ function(a, dt, klen=length(a), MTP=NULL)
 
 
   len = length(a)
+
+  if(len<2)
+    {
+      return(0)
+
+    }
+
+
+  
   if(missing(klen))
     {
       klen=2*next2(len)

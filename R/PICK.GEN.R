@@ -1,5 +1,4 @@
-`PICK.GEN` <-
-function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  STDLAB=NULL,
+`PICK.GEN` <-function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  STDLAB=NULL,
                    PADDLAB=NULL, TEMPBUT=NULL, SHOWONLY=FALSE, CHOP=FALSE, TIT="", pts=FALSE, forcepix=FALSE, SCALE=1,
          velfile="", stafile="", LOC=NULL, FILT=list(fl=.2, fh=15,  type="HP", proto="BU") )
 {
@@ -18,8 +17,8 @@ function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  ST
   if(missing(SHOWONLY)) { SHOWONLY=FALSE}
   if(missing(CHOP)) { CHOP=FALSE }
    if(missing(STDLAB)) { STDLAB = c("DONE", "QUIT","zoom out", "zoom in", "Left", "Right", "restore", "Pinfo",
-                           "AUTOP", "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "SCALE")}
-  if(missing(PADDLAB)) { PADDLAB=c( "PPIK", "AccPIK", "XPIK", "NOPIX", "REPIX", "Postscript") }
+                           "AUTOP", "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "SCALE", "Postscript")}
+  if(missing(PADDLAB)) { PADDLAB=c( "NOPIX", "REPIX") }
 
   if(missing(TEMPBUT)) { TEMPBUT=NULL } 
   
@@ -66,6 +65,19 @@ function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  ST
     }
   
 
+  YNreplot<-function()
+    {
+      
+      YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+      if(NPX>0)
+        {
+          PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix)
+##### PLOT.WPX(Torigin, STNS, COMPS, WPX, FORCE=forcepix)
+        }
+      invisible(YN)
+    }
+  
+  
   SEL.ORIG = sel
   
   mark = FALSE
@@ -188,13 +200,19 @@ fixedbuttons = c("DONE",
   ##  match("", BLABS)
 
   RETX =  NULL
+somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
+        "tan3", "lightseagreen", "deeppink", "cyan3", "bisque3",
+        "magenta1", "lightsalmon3", "darkcyan", "darkslateblue",
+        "chocolate4", "goldenrod4", "mediumseagreen")
 
-  pnos = grep("PIX", BLABS)
-  
+##   pnos = grep("PIX", BLABS)
+   pnos = c( grep("PIX", BLABS), grep("pik", BLABS))
   colabs = rep(1,length(BLABS))
   colabs[BLABS=="PickWin"] = 'red'
-  colabs[pnos] = seq(from=2, length=length(pnos))
-  colpix = seq(from=2, length=length(pnos))
+  colabs[pnos] = somecolors[seq(from=2, length=length(pnos))]
+  
+  colpix = somecolors[seq(from=2, length=length(pnos))]
+  
   pchlabs = rep(4,length(BLABS))
   pchlabs[pnos] = seq(from=15, length=length(pnos))
 
@@ -280,10 +298,6 @@ fixedbuttons = c("DONE",
   
 
   ###  print(pcols)
-  
- ###   for Tung_04 use this mapping 
-###   ords = match(STNS,c("MAS", "JUI" ,"RUN",   "OVT"))
-###   ordc = match(COMPS, c("I", "J", "K", "V", "N",  "E"))
 
 
 ###   want the sorting of comps to be Vertical North East always
@@ -353,31 +367,21 @@ fixedbuttons = c("DONE",
 ###  print(pcols[sel])
   LASTwin = WIN
   
-  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel , sfact=ScaleFACT, notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+###  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel , sfact=ScaleFACT, notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
 
   
+  YN = YNreplot()
+##################################  determine if we need to plot the pix.
+  ###   they must have numeric seconds
+#####  TE = TRUE
+#####  if(exists("WPX") & length(WPX$sec)>0 )
+#####    {
+#####      TE = !is.na(WPX$sec[1])
+#####    }
   
-##  buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
-## return(0)
-##   NPX = 0 
-  TE = TRUE
-  if(exists("WPX") & length(WPX$sec)>0 )
-    {
-      TE = !is.na(WPX$sec[1])
-    }
   
-       
-     if(NPX>0 & TE[1])
-       { 
-         
-          PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix)
-
-         ##   print(length(WPX))
-          
-        ##   segments(xpix, ypixA, xpix, ypixB, col=colpix)
-         ##  text(xpix, ypixB, labels=cpixa, col=colpix, pos=4)
-        }
-      
+ 
+  
   if(is.numeric(SHOWONLY)) { Sys.sleep(SHOWONLY); return(list(but=NULL, zloc=0, pix=0)) }
   if(SHOWONLY==TRUE) { return(list(but=NULL, zloc=0, pix=0)) }
 
@@ -401,6 +405,7 @@ fixedbuttons = c("DONE",
   
   u = par("usr")
   sloc = list(x=c(u[1],u[2]))
+  zloc =list(x=NULL, y=NULL)
   ppick  = NA
   spick  = NA
   xpick = NA
@@ -412,68 +417,82 @@ fixedbuttons = c("DONE",
 ####  NV = LabelBAR(BLABS)
  ###   zloc = plocator(COL=rgb(1,0.8, 0.8))
 
-  iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=NSEL, style=1)
-  zloc = iloc
+###  print("START new.gen")
   
-  Nclick = length(iloc$x)
-  zenclick =  length(zloc$x)
-  if(is.null(zloc$x)) { return(list(but="None", zloc=0, pix=0)) }
-  K = whichbutt(iloc ,buttons)
-  
-  sloc = zloc
+ zenclick = length(zloc$x)
   
   while(TRUE)
     {
-
-   ####   print(iloc)
-   ####   print(zloc)
-      if(zenclick>=2 & Nclick<1)        {
-          
-          WIN  = sort(zloc$x[c(zenclick-1, zenclick)])
-          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
-          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
-
-          Nclick=1
-          K = 0
-            zloc = list(x=NULL, y=NULL)
-          zenclick = 0
-              }
-
-        if(zenclick==1 & Nclick<1 )
-        {
-          WIN = NULL
-          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
-          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
-          u = par("usr")
-          
-          sloc = list(x=c(u[1],u[2]))
-             
-           Nclick=1
-          K = 0
-        zloc = list(x=NULL, y=NULL)
-          zenclick = 0
-
-          #### next
-        }
+   iloc = ilocator(1, COL=rgb(1,0.6, 0.6), NUM=FALSE , YN=length(sel), style=1)
+      Nclick = length(iloc$x)
+  ####  cat(paste(sep=" ", zenclick, Nclick), sep="\n")
    
-        if(zenclick==0 & Nclick<1 )
+      if(Nclick>0)
         {
+          zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
+          zenclick = length(zloc$x)
+          K =  whichbutt(iloc ,buttons)
+          sloc = zloc
 
           
-         break;
-          #### next
         }
-   
-      
+      else
+        {
+         ###  Right button was clicked
+          Nclick = 0
+        ###  zenclick=zenclick+1
+        ###   print(zenclick)
+          K = 0
+          zenclick = length(zloc$x)
+          if(zenclick<1)
+            {
+              buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)))
+              title("Done, Return to Calling Program")
+              
+              return(list(but="None", zloc=0, pix=0))
+            }
+          if(zenclick==1)
+            {
+
+              WIN = NULL
+              YN = YNreplot()
+             # YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+              buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+              u = par("usr")
+              
+              sloc = list(x=c(u[1],u[2]))
+              
+              Nclick=1
+              K = 0
+              zloc = list(x=NULL, y=NULL)
+              zenclick = 0
+              
+            }
+          if(zenclick>=2)
+            {
+              WIN  = sort(zloc$x[c(zenclick-1, zenclick)])
+             YN = YNreplot()
+              # YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+              buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+              
+              Nclick=1
+              K = 0
+              zloc = list(x=NULL, y=NULL)
+              zenclick = 0
+            }
+
+        }
+     
+  
       
 ###  print(paste(sep=' ',  Nclick , zenclick) )
 ############   button actions
       if(K[Nclick] == match("DONE", BLABS, nomatch = NOLAB))
         {
-          
             buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)))
             title("Return to Calling Program")
-          
+           rd = getrdpix(zloc, zenclick, sel, NH)
+          invisible(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
           break;
         }
 
@@ -482,29 +501,37 @@ fixedbuttons = c("DONE",
            buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)))
             title("Return to Calling Program")
           rd = getrdpix(zloc, zenclick, sel, NH)
-          return(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
+          invisible(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
+           break;
         }
      if(K[Nclick] == match("NEXT", BLABS, nomatch = NOLAB))
         {
+           buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)))
+            title("Return to Calling Program")
+       
           rd = getrdpix(zloc, zenclick, sel, NH)
-          return(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
+          invisible(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
+          break;
           
         }
      if(K[Nclick] == match("PREV", BLABS, nomatch = NOLAB))
         {
+           buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)))
+            title("Return to Calling Program")
+       
            rd = getrdpix(zloc, zenclick, sel, NH)
-          return(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
+          invisible(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
+           break;
         }
-
-      
-  
 
       if(K[Nclick] == match("MARK", BLABS, nomatch = NOLAB))
         {
-
+          buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)))
+          title("Return to Calling Program")
+       
           rd = getrdpix(zloc, zenclick, sel, NH)
           return(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
-         
+         break;
           
         }
       
@@ -524,7 +551,9 @@ fixedbuttons = c("DONE",
       if(K[Nclick]==match("restore", BLABS, nomatch = NOLAB))
         {
           WIN = NULL
-          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+
+          YN = YNreplot()
+        ##  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
           u = par("usr")
           L = length(sloc$x)
@@ -539,7 +568,11 @@ fixedbuttons = c("DONE",
        ###################   REfresh  ###########################      
       if(K[Nclick]==match("refresh", BLABS, nomatch = NOLAB))
         {
-          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          YN = YNreplot()
+         # YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+
+
+
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
           u = par("usr")
           L = length(sloc$x)
@@ -561,7 +594,8 @@ fixedbuttons = c("DONE",
           DX = (u[2]-u[1])*0.3
           zloc = list(x= c(u[1]-DX, u[2]+DX))
           WIN  = zloc$x
-          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          YN = YNreplot()
+          ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
          #### ftime = Zdate(NH$info, sel[1], WIN[1])
          ####  mtext( ftime, side = 3, at = WIN[1], line=0.5, adj=0)
@@ -572,12 +606,23 @@ fixedbuttons = c("DONE",
       ###################   ZOOM IN   ###########################      
        if(K[Nclick]==match("zoom in", BLABS, nomatch = NOLAB))
         {
-          u = par("usr")
-          DX = (u[2]-u[1])*0.3
-        ####  zloc = list(x= c(u[1]+DX, u[2]-DX))
-          WIN  =list(x= c(u[1]+DX, u[2]-DX))
-         
-          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+
+          if(zenclick>=3)
+            {
+
+              pwin = range(zloc$x[1:(length(zloc$x)-1)])
+              WIN = pwin
+            }
+          else
+            {
+              u = par("usr")
+              DX = (u[2]-u[1])*0.3
+####  zloc = list(x= c(u[1]+DX, u[2]-DX))
+              WIN  =list(x= c(u[1]+DX, u[2]-DX))
+            }
+
+          YN = YNreplot()
+          ##  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
          #### ftime = Zdate(NH$info, sel[1], WIN[1])
          ####  mtext( ftime, side = 3, at = WIN[1], line=0.5, adj=0)
@@ -592,8 +637,8 @@ fixedbuttons = c("DONE",
           DX = (u[2]-u[1])*0.3
         ####  zloc = list(x= c(u[1]+DX, u[2]+DX))
           WIN  =list(x= c(u[1]+DX, u[2]+DX))
-         
-          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+         YN = YNreplot()
+          ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
          #### ftime = Zdate(NH$info, sel[1], WIN[1])
          ####  mtext( ftime, side = 3, at = WIN[1], line=0.5, adj=0)
@@ -608,8 +653,8 @@ fixedbuttons = c("DONE",
           DX = (u[2]-u[1])*0.3
         ###  zloc = list(x= c(u[1]-DX, u[2]-DX))
           WIN  =list(x= c(u[1]-DX, u[2]-DX))
-         
-          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+         YN = YNreplot()
+          ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
          #### ftime = Zdate(NH$info, sel[1], WIN[1])
          ####  mtext( ftime, side = 3, at = WIN[1], line=0.5, adj=0)
@@ -635,7 +680,9 @@ fixedbuttons = c("DONE",
               ScaleFACT=1
 
             }
-          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+
+          YN = YNreplot()
+          ##  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
          #### ftime = Zdate(NH$info, sel[1], WIN[1])
          ####  mtext( ftime, side = 3, at = WIN[1], line=0.5, adj=0)
@@ -657,7 +704,10 @@ fixedbuttons = c("DONE",
           isel = sel[1]
           
           Torigin = list(jd=NH$info$jd[isel], hr=NH$info$hr[isel], mi=NH$info$mi[isel], sec=(NH$info$sec[isel]+NH$info$msec[isel]/1000+NH$info$t1[isel]-NH$info$off[isel]))
-          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+
+           YN = YNreplot()
+  
+   #       YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
              zloc = list(x=NULL, y=NULL)
           
@@ -676,7 +726,9 @@ fixedbuttons = c("DONE",
           isel = sel[1]
           
           Torigin = list(jd=NH$info$jd[isel], hr=NH$info$hr[isel], mi=NH$info$mi[isel], sec=(NH$info$sec[isel]+NH$info$msec[isel]/1000+NH$info$t1[isel]-NH$info$off[isel]))
-          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+
+           YN = YNreplot()
+          ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
              zloc = list(x=NULL, y=NULL)
           
@@ -709,8 +761,8 @@ fixedbuttons = c("DONE",
           
           for(JJ in ipick) { NH$JSTR[[JJ]] = (-1)*NH$JSTR[[JJ]] }
 
-          
-           YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+           YN = YNreplot()
+           ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
              zloc = list(x=NULL, y=NULL)
  
@@ -746,7 +798,8 @@ fixedbuttons = c("DONE",
 
           ### par(OPAR)
           print(paste(sep=' ' ,"Doing postscript", plfname))
-          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+           YN = YNreplot()
+          ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
 
 
  
@@ -1217,30 +1270,44 @@ fixedbuttons = c("DONE",
       
       ###################   XTRACT PART of A trace   ###########################      
  
-      if(K[Nclick]==match("XTR", BLABS, nomatch = NOLAB) & zenclick>1)
+      if(K[Nclick]==match("XTR", BLABS, nomatch = NOLAB) )
         {
          ###  u = par("usr")
-          ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
-          ipick = sel[ypick]
-          print(paste(sep=' ',"EXTRACT", ypick, NH$info$name[ ipick]))
 
-          famp = NH$JSTR[[ipick]]
+             if(zenclick>=3)
+               {
+                 
+                 ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+                 ipick = sel[ypick]
+                 print(paste(sep=' ',"EXTRACT", ypick, NH$info$name[ ipick]))
 
-          pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
+                 famp = NH$JSTR[[ipick]]
 
-          ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
-          temp =  famp[ ex > pwin[1] & ex <pwin[2]]
-          Xamp =  -1*temp
-          smallex = ex[ ex > pwin[1] & ex <pwin[2]]
+                 pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
 
-          asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+pwin[1]
+                 ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=length(famp) )
+                 temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+                #### Xamp =  -1*temp
+                 smallex = ex[ ex > pwin[1] & ex <pwin[2]]
 
-          
-          TP = list(yr=NH$info$yr[ipick], jd=NH$info$jd[ipick], hr=NH$info$hr[ipick], mi=NH$info$mi[ipick], sec=asec )
+                 asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+pwin[1]
+
+                 
+                 TP = list(yr=NH$info$yr[ipick], jd=NH$info$jd[ipick], hr=NH$info$hr[ipick], mi=NH$info$mi[ipick], sec=asec )
 
 
-          RETX = list(but="RET", x=smallex, y=temp, dt=NH$dt[ipick],   name=NH$info$name[ipick] , Tpick=TP, mark=mark, deltat=NH$dt[ipick] )
-         invisible(RETX)
+                 RETX = list(but="RET", x=smallex, y=temp, dt=NH$dt[ipick],   name=NH$info$name[ipick] , Tpick=TP, mark=mark, deltat=NH$dt[ipick] )
+                 return(RETX)
+
+
+               }
+             else
+               {
+               cat("XTR WARNING: no window or trace has been selected:", sep="\n")
+             }
+
+
+             
           zloc = list(x=NULL, y=NULL)
         }
       
@@ -1262,7 +1329,7 @@ fixedbuttons = c("DONE",
           pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
 
 
-          ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+          ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=length(famp) )
           temp =  famp[ ex > pwin[1] & ex <pwin[2]]
           Xamp =  -1*temp
           smallex = ex[ ex > pwin[1] & ex <pwin[2]]
@@ -1286,7 +1353,7 @@ fixedbuttons = c("DONE",
                     WPX$comp[NPX]=NH$COMPS[i1]
                     WPX$c3[NPX]=NH$OCOMPS[i1]
                     WPX$phase[NPX]="P"
-                      WPX$err[NPX]=1
+                      WPX$err[NPX]=0.05
                       WPX$pol[NPX]=0
                       WPX$flg[NPX]=999
                       WPX$res[NPX]=0
@@ -1331,6 +1398,8 @@ fixedbuttons = c("DONE",
           
           if(zenclick==1)
             {
+              ypick =1
+              ipick = sel[ypick]
               pwin = LASTwin
             }
           
@@ -1341,7 +1410,7 @@ fixedbuttons = c("DONE",
           famp = NH$JSTR[[ipick]]
           ###  need to flip the accoustic trace?
 
-       ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+       ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=length(famp) )
           
           temp =  famp[ ex > pwin[1] & ex <pwin[2]]
           
@@ -1401,10 +1470,12 @@ fixedbuttons = c("DONE",
                   pwin = sort(c(zloc$x[ipix], zloc$x[ipix+1]))
                   print(c(ipix, pwin))
 
-                  famp = NH$JSTR[[ipick[ipix]]]
-	          dsec=NH$dt[ipick[ipix]]
+                  kpix = ipick[ipix]
 
-                  ex = seq(from=NH$info$t1[ipick[ipix]], by=NH$info$dt[ipick[ipix]], length.out=NH$info$n1[ipick[ipix]])
+                  famp = NH$JSTR[[kpix]]
+	          dsec=NH$dt[kpix]
+
+                  ex = seq(from=NH$info$t1[kpix], by=NH$info$dt[kpix], length.out=length(famp) )
 
                   
                   temp =  famp[ ex > pwin[1] & ex <pwin[2]]
@@ -1413,9 +1484,9 @@ fixedbuttons = c("DONE",
                   amp = temp-mean(temp)
 
                   
-                  ftime = Zdate(NH$info, ipick[ipix], pwin[1])
-                  psta = NH$STNS[ipick[ipix]]
-                  pcomp =  NH$COMPS[ipick[ipix]]
+                  ftime = Zdate(NH$info, kpix, pwin[1])
+                  psta = NH$STNS[kpix]
+                  pcomp =  NH$COMPS[kpix]
 
                   ampfn = paste(sep=".", ftime,psta,pcomp, "asc")
                   
@@ -1439,6 +1510,8 @@ fixedbuttons = c("DONE",
           
           if(zenclick==1)
             {
+              ypick =1
+              ipick = sel[ypick]
               pwin = LASTwin
             }
           
@@ -1498,11 +1571,11 @@ fixedbuttons = c("DONE",
                 {
                   pwin = sort(c(zloc$x[ipix], zloc$x[ipix+1]))
                   print(c(ipix, pwin))
+                  kpix = ipick[ipix]
+                  famp = NH$JSTR[[kpix]]
                   
-                  famp = NH$JSTR[[ipick[ipix]]]
                   
-                  
-                  ex = seq(from=NH$info$t1[ipick[ipix]], by=NH$info$dt[ipick[ipix]], length.out=NH$info$n1[ipick[ipix]])
+                  ex = seq(from=NH$info$t1[kpix], by=NH$info$dt[kpix], length.out=length(famp))
                   temp =  famp[ ex > pwin[1] & ex <pwin[2]]
                   
                   ni = ni +1
@@ -1515,9 +1588,9 @@ fixedbuttons = c("DONE",
                   
                   
                   
-                  ftime = Zdate(NH$info, ipick[ipix], pwin[1])
-                  psta = NH$STNS[ipick[ipix]]
-                  pcomp =  NH$COMPS[ipick[ipix]]
+                  ftime = Zdate(NH$info, kpix, pwin[1])
+                  psta = NH$STNS[kpix]
+                  pcomp =  NH$COMPS[kpix]
                   STAMP = paste(sep=" ", psta, pcomp, ftime, MSSA)
                   stamps[ni] = STAMP
                   
@@ -1537,6 +1610,8 @@ fixedbuttons = c("DONE",
           
           if(zenclick==1)
             {
+              ypick =1
+              ipick = sel[ypick]
               pwin = LASTwin
             }
           
@@ -1589,11 +1664,11 @@ fixedbuttons = c("DONE",
                 {
                   pwin = sort(c(zloc$x[ipix], zloc$x[ipix+1]))
                   print(c(ipix, pwin))
+                  kpix = ipick[ipix]
+                  famp = NH$JSTR[[kpix]]
+	          dsec=NH$dt[kpix]
 
-                  famp = NH$JSTR[[ipick[ipix]]]
-	          dsec=NH$dt[ipick[ipix]]
-
-                  ex = seq(from=NH$info$t1[ipick[ipix]], by=NH$info$dt[ipick[ipix]], length.out=NH$info$n1[ipick[ipix]])
+                  ex = seq(from=NH$info$t1[kpix], by=NH$info$dt[kpix], length.out=length(famp))
 
                   
                   temp =  famp[ ex > pwin[1] & ex <pwin[2]]
@@ -1639,9 +1714,9 @@ fixedbuttons = c("DONE",
 
 
 
-                  ftime = Zdate(NH$info, ipick[ipix], pwin[1])
-                  psta = NH$STNS[ipick[ipix]]
-                  pcomp =  NH$COMPS[ipick[ipix]]
+                  ftime = Zdate(NH$info, kpix, pwin[1])
+                  psta = NH$STNS[kpix]
+                  pcomp =  NH$COMPS[kpix]
 
          
 
@@ -1666,6 +1741,8 @@ fixedbuttons = c("DONE",
           
           if(zenclick==1)
             {
+              ypick =1
+              ipick = sel[ypick]
               pwin = LASTwin
             }
           
@@ -1704,28 +1781,36 @@ fixedbuttons = c("DONE",
               speccol = vector()
               ni = 0
 
-              
               for(ipix in i1)
                 {
                   pwin = sort(c(zloc$x[ipix], zloc$x[ipix+1]))
                   print(c(ipix, pwin))
 
-                  famp = NH$JSTR[[ipick[ipix]]]
+                  kpix = ipick[ipix]
+
+                  famp = NH$JSTR[[kpix]]
 
 
-                  ex = seq(from=NH$info$t1[ipick[ipix]], by=NH$info$dt[ipick[ipix]], length.out=NH$info$n1[ipick[ipix]])
+                  ex = seq(from=NH$info$t1[kpix], by=NH$info$dt[kpix], length.out=length(famp) )
                   temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+
+
+                  if(any(is.na(temp)))
+                    {
+                      print(paste("getting NA in trace",kpix, NH$STNS[kpix],NH$COMPS[kpix],pwin[1],  pwin[2]  ))
+                      next
+                    }
                   
                   ni = ni +1
 
                   amp[[ni]] = temp-mean(temp)
-                  dees[ni] = NH$dt[ipick[ipix]]
+                  dees[ni] = NH$dt[kpix]
 
-                  speccol[ni] = pcols[ipick[ipix]]
+                  speccol[ni] = pcols[kpix]
 
-                  ftime = Zdate(NH$info, ipick[ipix], pwin[1])
-                  psta = NH$STNS[ipick[ipix]]
-                  pcomp =  NH$COMPS[ipick[ipix]]
+                  ftime = Zdate(NH$info, kpix, pwin[1])
+                  psta = NH$STNS[kpix]
+                  pcomp =  NH$COMPS[kpix]
                   STAMP = paste(sep=" ", psta, pcomp, ftime)
                   stamps[ni] = STAMP
                   
@@ -1734,29 +1819,37 @@ fixedbuttons = c("DONE",
               print(stamps)
               a = list(y=amp, dt=dees, stamps=stamps)
 
-             ### get(getOption("device"))(width=10, height=10)
-              dev.new()
-
-             ### X11(width=10, height=10)
-              f1 = 0.1
-              f2 = floor(0.33*(1/NH$dt[ipick]))
-              
-              
-              drive.MTM(a, f1, f2[1], COL=speccol, PLOT=TRUE)
-              
-              dev.set( MAINdev)
-            }
-          if(zenclick==2)
+              if(length(a$y)>0)
+                 {
+### get(getOption("device"))(width=10, height=10)
+                   dev.new()
+                   
+### X11(width=10, height=10)
+                   f1 = 0.1
+                   f2 = floor(0.33*(1/NH$dt[ipick]))
+                   
+###  length(a$y)
+                   
+                 ###  oop=par(no.readonly = TRUE)
+                 ###  par(mfrow=c(length(a$y), 1) )
+                 ###  for(io in 1:length(a$y)) plot(a$y[[io]], type='l')
+                 ###  par(oop)
+                 ###  readline("type in something")
+                   
+                   MTM.drive(a, f1, f2[1], COL=speccol, PLOT=TRUE)
+                 }
+                 dev.set( MAINdev)
+               }
+              else
             {
+          
+         
+              cat("SPEC WARNING: no window or trace has been selected:", sep="\n")
               ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
               ipick = sel[ypick]
-            ###  print(paste(sep=' ',ypick, NH$info$name[ipick]))
+###  print(paste(sep=' ',ypick, NH$info$name[ipick]))
               pwin = WIN
-            }
-          
-          if(zenclick==1)
-            {
-              pwin = LASTwin
+              
             }
           
           LASTwin = pwin
@@ -1768,35 +1861,33 @@ fixedbuttons = c("DONE",
  
       if(K[Nclick]==match("SGRAM", BLABS, nomatch = NOLAB) & zenclick>=1)
         {
-         ###  u = par("usr")
+###  u = par("usr")
 
-          if(zenclick>=3)
+          if(zenclick>=2)
             {
-              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
-              ipick = sel[ypick]
-             ### print(paste(sep=' ',ypick, NH$info$name[ ipick]))
-              pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
-            }
-          if(zenclick==2)
-            {
-              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
-              ipick = sel[ypick]
-            ###  print(paste(sep=' ',ypick, NH$info$name[ipick]))
-              pwin = WIN
-            }
-
-          if(zenclick==1)
-            {
-              pwin = LASTwin
-            }
-
+              if(zenclick==2)
+                {
+                  ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+                  ipick = sel[ypick]
+###  print(paste(sep=' ',ypick, NH$info$name[ipick]))
+                  pwin = WIN
+                }
+              else
+                {
+                  
+                  ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+                  ipick = sel[ypick]
+### print(paste(sep=' ',ypick, NH$info$name[ ipick]))
+                  pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
+                }
+           
           LASTwin = pwin
    
           ### print(paste(sep=" ", "DOING SGRAM  Nclick, ipick, pwin", Nclick, ipick, pwin))
           
           famp = NH$JSTR[[ipick]]
          
-          ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+          ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=length(famp))
          
           temp =  famp[ ex > pwin[1] & ex <pwin[2]]
 
@@ -1809,8 +1900,6 @@ fixedbuttons = c("DONE",
 	
           print(paste(sep=" ", ipick, length(famp),length(temp),length(Xamp), NH$dt[ipick],ftime)) 
 
-
-
           SPECT.drive(Xamp, DT=NH$dt[ipick], STAMP=ftime)
 
         ###  DEV = evolfft(Xamp,NH$dt[ipick] , Nfft=4096, Ns=250 , Nov=240,  fl=0, fh=15  )
@@ -1818,7 +1907,15 @@ fixedbuttons = c("DONE",
         
          ###  X11()
         ###   plotevol(DEV, log=1, fl=0, fh=15, col=rainbow(50))
-          
+           }
+           else
+             {
+              pwin = LASTwin
+              ypick = 1
+              ipick = sel[1]
+              cat("SGRAM WARNING: no window or trace has been selected:" , sep="\n")
+            }
+
           dev.set(MAINdev)
             zloc = list(x=NULL, y=NULL) 
         }
@@ -1828,25 +1925,25 @@ fixedbuttons = c("DONE",
       if(K[Nclick]==match("WLET", BLABS, nomatch = NOLAB) & zenclick>=1)
         {
         print(zenclick-1)
-          if(zenclick>=3)
+          if(zenclick>=2)
             {
-              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
-              ipick = sel[ypick]
-          ###    print(paste(sep=' ',ypick, NH$info$name[ ipick]))
-              pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
-            }
-          if(zenclick==1)
+
+          if(zenclick==2)
             {
               ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
               ipick = sel[ypick]
             ###  print(paste(sep=' ',ypick, NH$info$name[ipick]))
               pwin = WIN
             }
-
-          if(zenclick==0)
+          else
             {
-              pwin = LASTwin
+              
+              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              ipick = sel[ypick]
+          ###    print(paste(sep=' ',ypick, NH$info$name[ ipick]))
+              pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
             }
+
             print(NH$info$name[ipick])
           
           LASTwin = pwin
@@ -1854,7 +1951,7 @@ fixedbuttons = c("DONE",
            
           famp = NH$JSTR[[ipick]]
          
-          ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+          ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=length(famp))
           temp =  famp[ ex > pwin[1] & ex <pwin[2]]
           Xamp =   temp-mean(temp)
 
@@ -1866,12 +1963,36 @@ fixedbuttons = c("DONE",
           ###X11()
           ###  plot.ts(Xamp)
           ### wlet.do(Xamp, NH$dt[ipick], noctave=7, zscale=3,  col=terrain.colors(100))
-          wlet.drive(Xamp, NH$dt[ipick], STAMP=ftime)
 
+          if(require("Rwave")==TRUE)
+            {
+              
+              
+              wlet.drive(Xamp, NH$dt[ipick], STAMP=ftime)
+            }
+          else
+            {
+              
+              cat("WLET WARNING: NEED package RWAVE to do wavelet analysis (not available on MAC", sep="\n")
+              
+            }
+          
           
           dev.set( MAINdev)
- #######  source("/home/lees/Progs/R_stuff/PICK.R"); save.image()
+#######  source("/home/lees/Progs/R_stuff/PICK.R"); save.image()
+        }
+          else
+            {
+              
+              pwin = LASTwin
+              ypick = 1
+              ipick = sel[1]
+              cat("WLET WARNING: no window or trace has been selected:", sep="\n")
+              
+            }
 
+
+        
           zloc = list(x=NULL, y=NULL) 
         }
             ###################   filter stuff  ANALYSIS   ###########################      
@@ -1899,8 +2020,10 @@ fixedbuttons = c("DONE",
              }
            ###  X11()
          }
-           dev.set( MAINdev)  
-           YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel , sfact=ScaleFACT, notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+           dev.set( MAINdev)
+
+            YN = YNreplot()
+         ###  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel , sfact=ScaleFACT, notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
            buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
           ###  dev.set( MAINdev)  
           zloc = list(x=NULL, y=NULL) 
@@ -1912,8 +2035,10 @@ fixedbuttons = c("DONE",
 
          
           if(exists("OLDH"))NH = OLDH
-          dev.set( MAINdev)  
-           YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel , sfact=ScaleFACT, notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          dev.set( MAINdev)
+
+            YN = YNreplot()
+      ###     YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel , sfact=ScaleFACT, notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
            buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
           ###  dev.set( MAINdev)  
         zloc = list(x=NULL, y=NULL) 
@@ -1938,7 +2063,7 @@ fixedbuttons = c("DONE",
           pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
 
 
-           ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+           ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=length(famp) )
           temp =  famp[ ex > pwin[1] & ex <pwin[2]]
           Xamp =   temp-mean(temp)
 
@@ -1975,7 +2100,7 @@ fixedbuttons = c("DONE",
           
           pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
 
-          ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+          ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=length(famp))
           
           temp =  famp[ ex > pwin[1] & ex <pwin[2]]
 
@@ -2028,7 +2153,9 @@ fixedbuttons = c("DONE",
       if(K[Nclick]==match("PTS", BLABS, nomatch = NOLAB))
         {
          pts=!pts
-          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+
+           YN = YNreplot()
+         ##  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
           zloc = list(x=NULL, y=NULL) 
         }
@@ -2071,9 +2198,9 @@ fixedbuttons = c("DONE",
 
 
         
-          ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=NH$info$n1[Iv])
-          ex2 = seq(from=NH$info$t1[In], by=NH$info$dt[In], length.out=NH$info$n1[In])
-          ex3 = seq(from=NH$info$t1[Ie], by=NH$info$dt[Ie], length.out=NH$info$n1[Ie])
+          ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv]]) )
+          ex2 = seq(from=NH$info$t1[In], by=NH$info$dt[In], length.out=length(NH$JSTR[[In]]))
+          ex3 = seq(from=NH$info$t1[Ie], by=NH$info$dt[Ie], length.out=length(NH$JSTR[[Ie]]))
          
        
           temp =  cbind(NH$JSTR[[Iv]][ex1 > pwin[1] & ex1 <pwin[2]],
@@ -2123,11 +2250,11 @@ fixedbuttons = c("DONE",
         
           pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
 
+    ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv]]) )
+          ex2 = seq(from=NH$info$t1[In], by=NH$info$dt[In], length.out=length(NH$JSTR[[In]]))
+          ex3 = seq(from=NH$info$t1[Ie], by=NH$info$dt[Ie], length.out=length(NH$JSTR[[Ie]]))
+         
 
-
-           ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=NH$info$n1[Iv])
-          ex2 = seq(from=NH$info$t1[In], by=NH$info$dt[In], length.out=NH$info$n1[In])
-          ex3 = seq(from=NH$info$t1[Ie], by=NH$info$dt[Ie], length.out=NH$info$n1[Ie])
          
         
          
@@ -2175,10 +2302,12 @@ fixedbuttons = c("DONE",
           pwin = sort(c(zloc$x[zenclick-2], zloc$x[zenclick-1]))
 
 
- ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=NH$info$n1[Iv])
-          ex2 = seq(from=NH$info$t1[In], by=NH$info$dt[In], length.out=NH$info$n1[In])
-          ex3 = seq(from=NH$info$t1[Ie], by=NH$info$dt[Ie], length.out=NH$info$n1[Ie])
-         
+ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv]]) )
+          ex2 = seq(from=NH$info$t1[In], by=NH$info$dt[In], length.out=length(NH$JSTR[[In]]))
+          ex3 = seq(from=NH$info$t1[Ie], by=NH$info$dt[Ie], length.out=length(NH$JSTR[[Ie]]))
+        
+          
+     
         
          
           temp =  cbind(NH$JSTR[[Iv]][ex1 > pwin[1] & ex1 <pwin[2]],
@@ -2217,7 +2346,7 @@ fixedbuttons = c("DONE",
           pwin = WIN
           print(pwin)
           
-           ex1 = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+           ex1 = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=length(NH$JSTR[[ipick]]) )
           ex  =  NH$ex[ex1 > pwin[1] & ex1 <pwin[2]]
 
           
@@ -2280,7 +2409,7 @@ fixedbuttons = c("DONE",
               rd$dt[i] = NH$info$dt[ipick]
 
               
-              ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=NH$info$n1[ipick])
+              ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=length(NH$JSTR[[ipick]]))
               
               a = NH$JSTR[[ipick]][ex>=pwin[1]&ex<=pwin[2]]
               rd$min[i] = min(a,  na.rm=TRUE)
@@ -2297,43 +2426,55 @@ fixedbuttons = c("DONE",
  
       if(K[Nclick]==match("Pinfo", BLABS, nomatch = NOLAB))
         {
-          ppick = zloc$x[1:(zenclick-1)]
-          dpick = c(0, diff(ppick))
-           ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+
+          if(zenclick>=2)
+            {
+              
+              
+              ppick = zloc$x[1:(zenclick-1)]
+              dpick = c(0, diff(ppick))
+              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
               ipick = sel[ypick]
-          
+              
               m = match(STNS[ipick],UNIsta)
-          jj = floor((zloc$y[zenclick-1])/du)
-               asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick[zenclick-1]
+              jj = floor((zloc$y[zenclick-1])/du)
+              asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick[zenclick-1]
 
-          print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], asec, "sta=", NH$STNS[ipick], "comp=", NH$COMPS[ipick] ))
-          print(ppick)
-          cat("", sep="\n")
-          cat("Time Differences between picks:", sep="\n")
-          
-          cat(paste(dpick), sep="\n")
+              print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], asec, "sta=", NH$STNS[ipick], "comp=", NH$COMPS[ipick] ))
+              print(ppick)
+              cat("", sep="\n")
+              cat("Time Differences between picks:", sep="\n")
+              
+              cat(paste(dpick), sep="\n")
 
-          cat("", sep="\n")
-        ####  print(zloc$y[1:(zenclick-1)])
-          
-           ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
+              cat("", sep="\n")
+####  print(zloc$y[1:(zenclick-1)])
+              
+              ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
 
-        ####  print(ypick)
-          
-           secpick = ppick[1:(zenclick-1)]
-          
+####  print(ypick)
+              
+              secpick = ppick[1:(zenclick-1)]
+              
               ipick = sel[ypick]
 
-         ####  print(ipick)
+####  print(ipick)
 
-         rd =getrdpix(zloc,zenclick,sel,NH   )
-          
-          print(data.frame(rd))
+              rd =getrdpix(zloc,zenclick,sel,NH   )
+              
+              print(data.frame(rd))
 
-          PAS = paste(sep=" ", "Jtim(", rd$jd, ", hr=" , rd$hr , ", mi=", rd$mi, ",sec=", rd$sec, ")")
-          
-          print(PAS)
-             zloc = list(x=NULL, y=NULL) 
+              PAS = paste(sep=" ", "Jtim(", rd$jd, ", hr=" , rd$hr , ", mi=", rd$mi, ",sec=", rd$sec, ")")
+              cat("", sep="\n")
+              cat(PAS, sep="\n")
+            }
+          else
+            {
+              cat("Pinfo WARNING: no pick or trace has been selected:", sep="\n")
+              
+            }
+          K[Nclick] = 0
+          zloc = list(x=NULL, y=NULL) 
         }
 
 #############################################################################
@@ -2353,14 +2494,14 @@ fixedbuttons = c("DONE",
 
               famp = NH$JSTR[[ipick[1]]]
 
-                 ex = seq(from=NH$info$t1[ipick[1]], by=NH$info$dt[ipick[1]], length.out=NH$info$n1[ipick[1]])
+                 ex = seq(from=NH$info$t1[ipick[1]], by=NH$info$dt[ipick[1]], length.out=length(famp))
               
               temp =  famp[ ex > pwin[1] & ex <pwin[2]]
               Xamp1 =  temp
               
           
               famp = NH$JSTR[[ipick[2]]]
-                 ex = seq(from=NH$info$t1[ipick[2]], by=NH$info$dt[ipick[2]], length.out=NH$info$n1[ipick[2]])
+                 ex = seq(from=NH$info$t1[ipick[2]], by=NH$info$dt[ipick[2]], length.out=length(famp))
               
               temp =  famp[ ex > pwin[1] & ex <pwin[2]]
               Xamp2 =  temp
@@ -2397,14 +2538,14 @@ fixedbuttons = c("DONE",
             {
 
               famp = NH$JSTR[[ipick[1]]]
-               ex = seq(from=NH$info$t1[ipick[1]], by=NH$info$dt[ipick[1]], length.out=NH$info$n1[ipick[1]])
+               ex = seq(from=NH$info$t1[ipick[1]], by=NH$info$dt[ipick[1]], length.out=length(famp))
               
               temp =  famp[ ex > pwin[1] & ex <pwin[2]]
               Xamp1 =  temp
               
           
               famp = NH$JSTR[[ipick[2]]]
-                 ex = seq(from=NH$info$t1[ipick[2]], by=NH$info$dt[ipick[2]], length.out=NH$info$n1[ipick[2]])
+                 ex = seq(from=NH$info$t1[ipick[2]], by=NH$info$dt[ipick[2]], length.out=length(famp))
            
               temp =  famp[ ex > pwin[1] & ex <pwin[2]]
               Xamp2 =  temp
@@ -2421,7 +2562,8 @@ fixedbuttons = c("DONE",
               print(paste(sep=' ' , "Shift = ", pshift))
                dev.set( MAINdev)
               
-            } 
+            }
+          K[Nclick] = 0
           zloc = list(x=NULL, y=NULL) 
         }
 
@@ -2429,37 +2571,53 @@ fixedbuttons = c("DONE",
         ################### 
       if(K[Nclick]==match("3COMP", BLABS, nomatch = NOLAB))
         {
-          ppick = zloc$x[(zenclick-1)]
-          
-          ypick = length(sel)-floor(length(sel)*zloc$y[(zenclick-1)])
-          ipick = sel[ypick]
-          cat(paste(sep=" ", ypick, ipick), sep="\n")
-          print(ipick)
-          ##
-          print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], "sta=", NH$STNS[ipick], "comp=", NH$COMPS[ipick] ))
-
-          ma = which(!is.na(match( NH$STNS, NH$STNS[ipick])))
-          
-          print(cbind(NH$STNS[ma], NH$COMPS[ma]))
-
-          if(length(ma==3))
+          if(zenclick>=2)
             {
-              ##### X11(width = 12, height = 7)
-              #####get(getOption("device"))(width = 12, height = 7)
-              dev.new()
+              ppick = zloc$x[(zenclick-1)]
+              
+              ypick = length(sel)-floor(length(sel)*zloc$y[(zenclick-1)])
+              ipick = sel[ypick]
+              cat(paste(sep=" ", ypick, ipick), sep="\n")
+              print(ipick)
+              ##
+              print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], "sta=", NH$STNS[ipick], "comp=", NH$COMPS[ipick] ))
+
+              ma = which(!is.na(match( NH$STNS, NH$STNS[ipick])))
+              
+              print(cbind(NH$STNS[ma], NH$COMPS[ma]))
 
               
-              PICK.GEN(NH, APIX=WPX, sel=ma, STDLAB=STDLAB ,SHOWONLY = FALSE, TIT=TIT)
-              dev.set( MAINdev)
+              if(length(ma==3))
+                {
+##### X11(width = 12, height = 7)
+#####get(getOption("device"))(width = 12, height = 7)
+                  dev.new()
+                  if(length(zloc$x)>=3)
+                    {
+                      pwin = range(zloc$x[1:(length(zloc$x)-1)])
+                    }
+                  else
+                    {
+                      pwin = NULL
+                    }
+                  
+                  PICK.GEN(NH, APIX=WPX, sel=ma, WIN=pwin, STDLAB=STDLAB ,SHOWONLY = FALSE, TIT=TIT)
+                  dev.set( MAINdev)
+                }
+              
+
+              
+              ## X11()
+              
+              ## dev.set( MAINdev)
+            }
+          else
+            {
+              cat("3COMP WARNING: no trace has been selected:", sep="\n")
             }
 
-
-          
-          ## X11()
-          
-          ## dev.set( MAINdev)
-              
-           zloc = list(x=NULL, y=NULL) 
+          K[Nclick] = 0
+          zloc = list(x=NULL, y=NULL) 
         }
       
       
@@ -2511,7 +2669,7 @@ fixedbuttons = c("DONE",
                     WPX$comp[NPX]=NH$COMPS[i1]
                     WPX$c3[NPX]=NH$OCOMPS[i1]
                     WPX$phase[NPX]="P"
-                      WPX$err[NPX]=1
+                      WPX$err[NPX]=0.05
                       WPX$pol[NPX]=0
                       WPX$flg[NPX]=999
                       WPX$res[NPX]=0
@@ -2538,7 +2696,7 @@ fixedbuttons = c("DONE",
                     WPX$comp[NPX]=NH$COMPS[i1]
                     WPX$c3[NPX]=NH$OCOMPS[i1]
                     WPX$phase[NPX]="S"
-                      WPX$err[NPX]=1
+                      WPX$err[NPX]=0.05
                       WPX$pol[NPX]=0
                       WPX$flg[NPX]=999
                       WPX$res[NPX]=0
@@ -2559,7 +2717,7 @@ fixedbuttons = c("DONE",
             }
 
 
-              
+            K[Nclick] = 0  
           zloc = list(x=NULL, y=NULL) 
 
         }
@@ -2646,6 +2804,7 @@ fixedbuttons = c("DONE",
 
           print(paste("getting ready to overwrite the GH file", GH$RFilename))
           save(file=GH$RFilename, GH)
+          K[Nclick] = 0
           zloc = list(x=NULL, y=NULL) 
         }
 
@@ -2674,7 +2833,7 @@ fixedbuttons = c("DONE",
 
            fout = paste(sep=".", UWFILEID,"WPX")
            write.table(A, file =  fout)
-        
+        K[Nclick] = 0
           zloc = list(x=NULL, y=NULL) 
         }
 
@@ -2733,6 +2892,7 @@ fixedbuttons = c("DONE",
           P = getpfile(output)
           WPX=uwpfile2ypx(P)
           NH$pickfile = P
+          K[Nclick] = 0
           zloc = list(x=NULL, y=NULL) 
         }
 
@@ -2832,11 +2992,12 @@ fixedbuttons = c("DONE",
               
               print(paste(sep=' ', "DONE with PICKWIN", NPX))
               dev.set( MAINdev)
-              
-              YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+               YN = YNreplot()
+           ###   YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
               buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
               PLOT.ALLPX(Torigin, STNS, COMPS, PHASE=PHASE, WPX, FORCE=forcepix)
             }
+          K[Nclick] = 0
           zloc = list(x=NULL, y=NULL) 
           
         }
@@ -2931,12 +3092,14 @@ fixedbuttons = c("DONE",
                   WPX$res[wNPX] = NA
 
                 }
-              
-              YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+              YN = YNreplot()
+             ### YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
               buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
               
               NADDPIX = 3
-### 
+###
+
+              K[Nclick] = 0
               zloc = list(x=NULL, y=NULL) 
             }
 
@@ -3033,12 +3196,13 @@ fixedbuttons = c("DONE",
                   WPX$res[wNPX] = NA
 
             }
-          
-             YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          YN = YNreplot()
+             ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
               buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
               
           NADDPIX = 3
-### 
+###
+          K[Nclick] = 0
           zloc = list(x=NULL, y=NULL) 
         }
 
@@ -3127,12 +3291,15 @@ fixedbuttons = c("DONE",
                   
                   
                 }
-              
-          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+              YN = YNreplot()
+         ##  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
               
               NADDPIX = 3
-### 
+###
+          K[Nclick] = 0
+
+          
               zloc = list(x=NULL, y=NULL) 
             }
       
@@ -3169,11 +3336,12 @@ fixedbuttons = c("DONE",
                   WPX$pol[wNPX]="U"
                   
                 }
-              
-              YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+              YN = YNreplot()
+              ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
               buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
               
               NADDPIX = 3
+              K[Nclick] = 0
               zloc = list(x=NULL, y=NULL) 
             }
 
@@ -3208,11 +3376,12 @@ fixedbuttons = c("DONE",
                   WPX$pol[wNPX]="D"
                   
                 }
-              
-              YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+              YN = YNreplot()
+             ##  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
               buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
               
               NADDPIX = 3
+              K[Nclick] = 0
               zloc = list(x=NULL, y=NULL) 
             }
 
@@ -3247,25 +3416,21 @@ fixedbuttons = c("DONE",
                   WPX$pol[wNPX]=NA
                   
                 }
-              
-              YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+              YN = YNreplot()
+              ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
               buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
               
               NADDPIX = 3
+          K[Nclick] = 0
           zloc = list(x=NULL, y=NULL) 
             }
-
-
-
-      
-
-
       ################### 
-    ########  source("PICK.R") ; save.image()
- 
+    ########  
       if(K[Nclick]==match("YPIX", BLABS, nomatch = NOLAB))
         {
 
+          if(zenclick>=2)
+            {
           zappa = match(BLABS[K[Nclick]], BLABS)
           col = colpix[which(pnos=="YPIX")]
           
@@ -3284,7 +3449,7 @@ fixedbuttons = c("DONE",
           #### print(STNS)
           #### print(COMPS)
 
-          print(paste(sep=" ", "DUMP YPIX", zappa, col, azap, kzap , ppick , ypick,ipick)) 
+         #### print(paste(sep=" ", "DUMP YPIX", zappa, col, azap, kzap , ppick , ypick,ipick)) 
           
           for(iz in 1:(zenclick-1))
             {
@@ -3296,51 +3461,31 @@ fixedbuttons = c("DONE",
               i1 = ipick[iz]
               i2 = ypick[iz]
 
-              asec = NH$info$sec[i1]+NH$info$msec[i1]/1000+NH$info$t1[i1]-NH$info$off[i1]+ppick[iz]
-           ####   print("############################")
-           ####  print(paste(' ', "ypix diag", NPX, iz, i1, i2, STNS[i2], COMPS[i2], asec))
-
-              
-              pic1 = recdate(NH$info$jd[i1], NH$info$hr[i1], NH$info$mi[i1], asec)
               ycol = colpix[zappa]
               if(is.na(ycol)) { ycol = rgb(0,0,1) }
+              err = NA
+             WPX =  pickhandler(i1=i1, ppick=ppick[iz], kzap=kzap, err=NA, ycol=ycol, NPX=NPX, WPX, NH)
 
-
-
-              WPX$tag[NPX]=paste(sep=".",NH$STNS[i1],  NH$COMPS[i1])
-              WPX$name[NPX]=NH$STNS[i1]
-              WPX$comp[NPX]=NH$COMPS[i1]
-              WPX$c3[NPX]=NH$OCOMPS[i1]
-              WPX$phase[NPX]=kzap
-            
-              WPX$err[NPX]=1
-              WPX$pol[NPX]=0
-              WPX$flg[NPX]=0
-              WPX$res[NPX]=1
-              WPX$yr[NPX]=NH$info$yr[i1]
-              WPX$mo[NPX]= NH$info$mo[i1]
-              WPX$dom[NPX]=NH$info$dom[i1]
-              WPX$jd[NPX]=pic1$jd
-              WPX$hr[NPX]=pic1$hr
-              WPX$mi[NPX]=pic1$mi
-              WPX$sec[NPX]=pic1$sec
-              WPX$col[NPX]=ycol
-              WPX$onoff[NPX] = 1 
-              
+             
               NADDPIX = NADDPIX+1
              ## 
 
              ## 
             }
+          PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix)
           
-          zloc = list(x=NULL, y=NULL) 
+        }
           K[Nclick] = 0
+          zloc = list(x=NULL, y=NULL) 
+         
         }
 #############################################################################
        ################### 
       if(K[Nclick]==match("WPIX", BLABS, nomatch = NOLAB))
         {
 
+          if(zenclick>=2)
+            {
           zappa = match(BLABS[K[Nclick]], BLABS)
           col = colpix[which(pnos=="WPIX")]
           
@@ -3415,7 +3560,7 @@ fixedbuttons = c("DONE",
                       WPX$c3[NPX]=NH$OCOMPS[i1]
                       WPX$phase[NPX]=kzap
                   
-                      WPX$err[NPX]=1
+                      WPX$err[NPX]=0.05
                       WPX$pol[NPX]=0
                       WPX$flg[NPX]=0
                       WPX$res[NPX]=dur
@@ -3436,7 +3581,7 @@ fixedbuttons = c("DONE",
               
             ##   
             }
-          
+        }
           zloc = list(x=NULL, y=NULL) 
           K[Nclick] = 0
         }
@@ -3446,6 +3591,8 @@ fixedbuttons = c("DONE",
       if(K[Nclick]==match("EDIX", BLABS, nomatch = NOLAB))
         {
 
+          if(zenclick>=2)
+            {
           PTOL = 0.1
           zappa = match(BLABS[K[Nclick]], PADDLAB)
           col = colpix[which(pnos=="EDIX")]
@@ -3491,95 +3638,70 @@ fixedbuttons = c("DONE",
                 }
 
             }
-      
-          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+      YN = YNreplot()
+         ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
-              
+        }
           K[Nclick] = 0
           zloc = list(x=NULL, y=NULL) 
         }
 #############################################################################
       
-                #############################################################################
-                    ########  source("PICK.R") ; save.image()
-
-
       ###################   generic  PICK   ###########################      
 
-      if(K[Nclick]>0)
-        {
-          ###   restrict search to only labs that have PIX in them
-          pnos = BLABS[grep("PIK", BLABS)]
+   if(Nclick>0 & length(grep("pik", BLABS))>0  )
+     {
+###   restrict search to only labels that have PIX in them
+       if(zenclick>=2)
+         {
+           glabs = grep("pik", BLABS[K[Nclick]])
+           
+           if(length(glabs)>0)
+             {
+               ##    zappa = match(BLABS[K[Nclick]], PADDLAB)
+               
+               azap = BLABS[K[Nclick]]
+               zappa=match(azap, PADDLAB)
+               
+               kzap = substr(azap, 1, nchar(azap)-3 )
+               print(paste(sep=" ", "My PICKIN", azap, kzap,zappa ))
+               ppick = zloc$x[1:(zenclick-1)]
 
-          ###   print(pnos)
-          ###   print(BLABS)
+               
+               ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
+               ipick = sel[ypick]
+               
+               for(iz in 1:(zenclick-1))
+                 {
+                   
+                   NPX = NPX+1
+                   Nn = names(WPX)
+                   WPX =rbind(WPX, rep(NA, length(Nn)))
+                   i1 = ipick[iz]
+                   ycol = colpix[zappa]
+                   if(is.na(ycol)) { ycol = rgb(0,0,1) }
+                   err = NA
+                   WPX =  pickhandler(i1=i1, ppick=ppick[iz], kzap=kzap, err=NA, ycol=ycol, NPX=NPX, WPX, NH)
+                   NADDPIX = NADDPIX+1
+                   ## 
+                   
+                   ## 
+                 }
+               
+               PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix)
+               
+#### print(paste(" ", azap, kzap))
+              
+               K[Nclick] = 0
+               zloc = list(x=NULL, y=NULL) 
+               
           
-          ###   print(paste(sep=" ", "PICKIN", pnos, Nclick,  "MATCH", match(BLABS[K[Nclick]], pnos)))
-          
-          if(!is.na(match(BLABS[K[Nclick]], pnos)) & BLABS[K[Nclick]]!="YPIX" &   zenclick>1)
-            {
-
-              
-              
-              zappa = match(BLABS[K[Nclick]], PADDLAB)
-              azap = PADDLAB[zappa]
-
-
-              print(paste(sep=" ", "My PICKIN", azap, zappa))
-
-              
-              kzap = substr(azap, 1, 1)
-              
-              
-###   print(paste(sep=" " , "WIN=",sloc$x))
-              ppick = zloc$x[1:(zenclick-1)]
-###        abline(v=ppick, col=4)
-              
-              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
-              ipick = sel[ypick]
-              
-              m = match(STNS[ypick],UNIsta)
-###  Upix[[m]]$x  = ppick
-              
-###   PPIX(list(x=zloc$x[zenclick-1], y=zloc$y[zenclick-1]), YN=NSEL, col=3, lab="P")
-              jj = floor((zloc$y[zenclick-1])/du)
-              
-              
-              NPX = NPX+1
-              Nn = names(WPX)
-              WPX =rbind(WPX, rep(NA, length(Nn)))
-  
-              asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick[zenclick-1]
-
-              i1 = ipick
-              WPX$tag[NPX]=paste(sep=".",NH$STNS[i1],  NH$COMPS[i1])
-              WPX$name[NPX]=NH$STNS[i1]
-              WPX$comp[NPX]=NH$COMPS[i1]
-              WPX$c3[NPX]=NH$OCOMPS[i1]
-              WPX$phase[NPX]=kzap
-              
-              WPX$err[NPX]=1
-              WPX$pol[NPX]=0
-              WPX$flg[NPX]=0
-              WPX$res[NPX]=0
-              WPX$yr[NPX]=NH$info$yr[i1]
-              WPX$mo[NPX]= NH$info$mo[i1]
-              WPX$dom[NPX]=NH$info$dom[i1]
-              WPX$jd[NPX]=NH$info$jd[i1]
-              WPX$hr[NPX]=NH$info$hr[i1]
-              WPX$mi[NPX]=NH$info$mi[i1]
-              WPX$sec[NPX]=asec
-              WPX$col[NPX]=colpix[zappa]
-              WPX$onoff[NPX] = 1 
-              
-              
-            
-              #### print(paste(" ", azap, kzap))
-
-              zloc = list(x=NULL, y=NULL) 
-            }
-          
-        }
+             }
+         
+         }
+      
+       
+     }
 ###################   REMOVE  PICKs   ###########################      
       
       
@@ -3593,8 +3715,8 @@ fixedbuttons = c("DONE",
           
           
           WPX$onoff = rep(-1, length(WPX$onoff))
-          
-          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          YN = YNreplot()
+          ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
 
           
@@ -3607,8 +3729,8 @@ fixedbuttons = c("DONE",
         #######  NPX = ONPX
        #######   WPX = OWPX
           WPX$onoff[WPX$onoff==(-1)] = 0
-          
-          YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          YN = YNreplot()
+         ##  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
 
           zloc = list(x=NULL, y=NULL) 
@@ -3634,11 +3756,13 @@ fixedbuttons = c("DONE",
             
             RETX =  NULL
 
-            pnos = grep("PIX", BLABS)
+            pnos = c( grep("PIX", BLABS), grep("pik", BLABS))
             
             colabs = rep(1,length(BLABS))
             colabs[pnos] = seq(from=2, length=length(pnos))
             colpix = seq(from=2, length=length(pnos))
+
+          
             pchlabs = rep(4,length(BLABS))
             pchlabs[pnos] = seq(from=15, length=length(pnos))
             
@@ -3658,61 +3782,14 @@ fixedbuttons = c("DONE",
 
      ##### doMYBUTTS(butt=BLABS[K[Nclick]], click=zloc, NH=NH, sel=sel, APIX=WPX)
 #########################################################################  
-      if(K[Nclick] > 0)
-        {
-          if(   K[Nclick] == match(BLABS[K[Nclick]]   , BLABS, nomatch = NOLAB) &
-             is.na( match(BLABS[K[Nclick]] , fixedbuttons) )        )
-            {
-              ###print(zenclick)
-              ###print(zloc)
-              
-              rd = getrdpix(zloc, zenclick, sel, NH)
-              return( list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd) )
-            }
-          
-        }
-     
+
       ####################  END BUTTON DEFINITIONS    ###########################      
             ###################   WRAP UP and PLOT AGAIN   ###########################      
- 
-      if(NPX>0)
-        {
-          
-         ## PLOT.WPX(Torigin, STNS, COMPS, WPX, FORCE=forcepix)
-          PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix)
-         ##  segments(xpix, ypixA, xpix, ypixB, col=colpix)
-         ##  text(xpix, ypixB, labels=cpixa, col=colpix, pos=4)
-        }
-      
-      
-       ##   buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
- 
+
 ###  NV = LabelBAR(BLABS)
-      iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=length(sel), style=1)
-      Nclick = length(iloc$x)
-
-      if(Nclick>0)
-        {
-          zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
-          zenclick = length(zloc$x)
-          K =  whichbutt(iloc ,buttons)
-
-       
-        }
-      else
-        {
-          Nclick = 0
-        ###  zenclick=zenclick+1
-        ###   print(zenclick)
-          K = 0
-         ### break;
-        }
-     
-      
-    ###  if(is.null(zloc$x)) { invisible(list(sloc=sloc, WPX=WPX, BRUNINFO=BRUNINFO, DETLINFO=DETLINFO, mark=mark))  }
-  
 ### K = ValBAR(NV, zloc)
-###  print(paste(sep=" ", "K=",K))
+
+### print(paste(sep=" ", "K=",K))
       
     }
 
