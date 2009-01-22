@@ -24,10 +24,10 @@ function(at1, at2, DB, grepsta, grepcomp, kind=1)
 ##
 ##  }
   
-  w1 = which( at1[1]>DB$t1 & at1[1]<DB$t2 )
-  w2 = which( at2[1]>DB$t1 & at2[1]<DB$t2 )
-  w3 = which( DB$t1>at1[1] & DB$t1<at2[1] )
-  w4 = which( DB$t2>at1[1] & DB$t2<at2[1] )
+  w1 = which( at1[1]>=DB$t1 & at1[1]<DB$t2 )
+  w2 = which( at2[1]>=DB$t1 & at2[1]<DB$t2 )
+  w3 = which( DB$t1>=at1[1] & DB$t1<at2[1] )
+  w4 = which( DB$t2>=at1[1] & DB$t2<at2[1] )
 
     if(length(c(w1, w2, w3, w4) )<1)
       {
@@ -72,21 +72,27 @@ function(at1, at2, DB, grepsta, grepcomp, kind=1)
   GH=prepSEIS(RR)
   
   ##  the window is seconds from the begining of the traces
-  ##   at1 and at2 are in julian days	
+  ##   at1 and at2 are in julian days
+
+
+
+ eday = EPOCHday(GH$info$yr, jd=GH$info$jd)
+
   
-  ss1 = secdif(GH$info$jd, GH$info$hr, GH$info$mi, GH$info$sec-GH$info$off,
+  
+  ss1 = secdif(eday$jday, GH$info$hr, GH$info$mi, GH$info$sec-GH$info$off,
     at1,0, 0, 0)
   
-  ss2 = secdif(GH$info$jd, GH$info$hr, GH$info$mi, GH$info$sec-GH$info$off,
+  ss2 = secdif(eday$jday, GH$info$hr, GH$info$mi, GH$info$sec-GH$info$off,
     at2,0, 0, 0)
   
   
-  win = c(ss1[1], ss2[1])
+  win = c(min(ss1), max(ss2))
   
   
-  GH = CHOP.SEISN(GH, WIN=win)
+   HH = CHOP.SEISN(GH, WIN=win)
 
-  return(GH)
+  return(HH)
   
 }
 

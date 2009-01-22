@@ -7,7 +7,7 @@
 convert JD, HR, MIN SEC to Decimal Julian Day
 }
 \usage{
-Jtim(jj, hr = hr, mi = mi, sec = sec)
+Jtim(jj, hr = hr, mi = mi, sec = sec, yr=NULL)
 JtimL(j)
 }
 
@@ -17,6 +17,7 @@ JtimL(j)
   \item{hr}{Hour}
   \item{mi}{Minute}
   \item{sec}{Second}
+  \item{yr}{year, default = NULL}
 
   or
     \item{j}{list of the above}
@@ -27,7 +28,12 @@ JtimL(j)
 \value{
  Julian day
 }
+\details{
+  Using a NULL value for yr gives the fractional julian day
+  in a year.  If yr is a legitimate year, then the EPOCH number of days
+  from 1972 are added onto the fractional julian day.
 
+  }
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}
 
 \seealso{secdif}

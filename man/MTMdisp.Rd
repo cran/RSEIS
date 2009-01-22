@@ -25,7 +25,7 @@ MTMdisp(a, f1 = f1, f2 = f2, len2 = 1024, PLOT = FALSE)
   Returns displacement spectrum.
   Graphical Side effect.
 }
-\references{Lees, J. M. and Park, J., 1995: Multiple-taper spectral analysis: A stand-alone C-subroutine, {\emph Computers & Geology}, 21(2), 199-236. }
+\references{Lees, J. M. and Park, J., 1995: Multiple-taper spectral analysis: A stand-alone C-subroutine, \emph{Computers \& Geology}, 21(2), 199-236.}
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
 \seealso{mtapspec  }

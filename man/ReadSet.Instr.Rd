@@ -8,7 +8,6 @@
 \usage{
 ReadSet.Instr(file)
 }
-
 \arguments{
   \item{file}{name of file to read, or vector of character strings from
     the file }
@@ -20,22 +19,17 @@ ReadSet.Instr(file)
 }
 \value{
   list:
-  \item{np}{ NUmber of poles}
-  \item{poles} {complex vector of poles}
+  \item{np}{NUmber of poles}
+  \item{poles}{complex vector of poles}
   \item{nz}{number of zeros}
   \item{zeros}{complex vector of zeros}
   \item{Knorm}{normalization factor}
-  \item{Sense}{ sensitivity factor }
-
+  \item{Sense}{sensitivity factor}
 }
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
-
-
 \examples{
-
 ###  in this case a file has already been read in:
-
 CMG=c(
       "ZEROS 2",
       "0.0000E+00 0.0000E+00",

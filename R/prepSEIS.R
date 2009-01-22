@@ -20,7 +20,10 @@ function(GG)
       dt = round(100000*GG[[i]]$DATTIM$dt)/100000
       n = length(GG[[i]]$amp)
       GG[[i]]$DATTIM$dt = dt
-      gtim1[i]  = GG[[i]]$DATTIM$jd+GG[[i]]$DATTIM$hr/24+GG[[i]]$DATTIM$mi/(24*60)+GG[[i]]$DATTIM$sec/(24*3600)
+
+      eday = EPOCHday(GG[[i]]$DATTIM$yr, jd=GG[[i]]$DATTIM$jd)
+      
+      gtim1[i]  = eday$jday+GG[[i]]$DATTIM$hr/24+GG[[i]]$DATTIM$mi/(24*60)+GG[[i]]$DATTIM$sec/(24*3600)
       gtim2[i]  = gtim1[i]+GG[[i]]$N*GG[[i]]$DATTIM$dt/(24*3600)
       gn[i] = n
       gdt[i] = dt

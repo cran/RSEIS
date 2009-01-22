@@ -366,7 +366,9 @@ same code introduced above.
 <<fig=TRUE, echo=TRUE, results=HIDE>>=
 data(sunspots)
 
-ES = prep1wig(wig=sunspots, dt=1/12, sta="STA", comp="CMP", units="UNITS"    )
+AA = attributes(sunspots)
+starttime=list(yr=AA$tsp[1], jd=1,mo=1,dom=1,hr=0,mi=0,sec=0)
+ES = prep1wig(wig=sunspots, dt=1/12, sta="STA", comp="CMP", units="UNITS", starttime=starttime    )
 
 EH=prepSEIS(ES)
 

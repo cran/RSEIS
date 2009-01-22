@@ -11,14 +11,12 @@ PreSet.Instr()
 
 \value{
   List of instrument responses. Each is a list:
- \item{np}{ Number of poles}
-  \item{poles} {complex vector of poles}
+ \item{np}{Number of poles}
+  \item{poles}{complex vector of poles}
   \item{nz}{number of zeros}
   \item{zeros}{complex vector of zeros}
   \item{Knorm}{normalization factor}
-  \item{Sense}{ sensitivity factor }
-
-  
+  \item{Sense}{sensitivity factor }
 }
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}

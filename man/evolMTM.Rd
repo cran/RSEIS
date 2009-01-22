@@ -38,7 +38,7 @@ evolMTM(a, dt = 0, numf = 1024, Ns = 0, Nov = 0, fl = 0, fh = 10)
 }
 \references{Lees, J. M. and Park, J., 1995: Multiple-taper spectral
   analysis: A stand-alone C-subroutine,
-  {\emph Computers & Geology}, 21(2), 199-236.}
+  \emph{Computers \& Geology}, 21(2), 199-236.}
 
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}
 

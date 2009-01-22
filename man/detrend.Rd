@@ -10,7 +10,7 @@ detrend(x)
 }
 
 \arguments{
-  \item{x}{}
+  \item{x}{vector}
 }
 \details{
  Removes the trend from a signal.

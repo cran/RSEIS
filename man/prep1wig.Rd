@@ -7,7 +7,7 @@
   for analysis in RSEIS
 }
 \usage{
-prep1wig(wig=vector(), dt=1, sta="STA", comp="CMP", units="UNITS")
+prep1wig(wig=vector(), dt=1, sta="STA", comp="CMP", units="UNITS", starttime=list(yr=0, jd=1,mo=1,dom=1,hr=1,mi=1,sec=0) )
 }
 
 \arguments{
@@ -16,6 +16,7 @@ prep1wig(wig=vector(), dt=1, sta="STA", comp="CMP", units="UNITS")
  \item{sta}{character, station name}
  \item{comp}{character,component name}
  \item{units}{character, units of signal}
+  \item{starttime}{list(yr=1972, jd=1,mo=1,dom=1,hr=1,mi=1,sec=0)}
 }
 \details{
   prep1wig is offered to reformat a time series
@@ -49,8 +50,9 @@ prep1wig(wig=vector(), dt=1, sta="STA", comp="CMP", units="UNITS")
 \examples{
 
 data(sunspots)
-
-ES = prep1wig(wig=sunspots, dt=1/12, sta="STA", comp="CMP", units="UNITS"    )
+AA = attributes(sunspots)
+starttime=list(yr=AA$tsp[1], jd=1,mo=1,dom=1,hr=0,mi=0,sec=0)
+ES = prep1wig(wig=sunspots, dt=1/12, sta="STA", comp="CMP", units="UNITS", starttime=starttime     )
 
 EH=prepSEIS(ES)
 
@@ -84,12 +86,12 @@ d = dim(x)
 mysta=c("R1", "R2", "R3", "R4")
 
 MYLIST = list()
-
+starttime=list(yr=2008, jd=1,mo=1,dom=1,hr=0,mi=0,sec=0)
 ############  set up the initial list of wiggles
 for(i in 1:d[2])
 {
 
-A = prep1wig(wig =x[,i], sta=mysta[i], dt=dt, comp="DO", units="amp") 
+A = prep1wig(wig =x[,i], sta=mysta[i], dt=dt, comp="DO", units="amp", starttime=starttime) 
 A[[1]]$DATTIM$yr=2000
 MYLIST = c(MYLIST, A)
 

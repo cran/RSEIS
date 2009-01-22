@@ -1,6 +1,5 @@
 \name{plt.MTM0}
 \alias{plt.MTM0}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{Plot MTM structure}
 \description{
  Plot MTM structure
@@ -8,7 +7,6 @@
 \usage{
 plt.MTM0(frange, prange, plxy, M, freqs, amp, a, dof = dof, Fv = Fv, COL = 2)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{frange}{frequency range}
   \item{prange}{point range }
@@ -16,7 +14,7 @@ plt.MTM0(frange, prange, plxy, M, freqs, amp, a, dof = dof, Fv = Fv, COL = 2)
   \item{M}{structure from MTM}
   \item{freqs}{frequencies }
   \item{amp}{ amplitude }
-  \item{a}{}
+  \item{a}{list(y=original data, dt=deltat)}
   \item{dof}{degrees of freedom }
   \item{Fv}{F-values }
   \item{COL}{ color }
@@ -25,7 +23,7 @@ plt.MTM0(frange, prange, plxy, M, freqs, amp, a, dof = dof, Fv = Fv, COL = 2)
 \value{
  Graphical Side Effect
 }
-\references{Lees, J. M. and Park, J., 1995: Multiple-taper spectral analysis: A stand-alone C-subroutine, {\emph Computers & Geology}, 21(2), 199-236.}
+\references{Lees, J. M. and Park, J., 1995: Multiple-taper spectral analysis: A stand-alone C-subroutine, \emph{Computers \& Geology}, 21(2), 199-236.}
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
 \seealso{MTM.drive}

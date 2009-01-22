@@ -35,8 +35,14 @@ function(GH, sel=1:4, WIN=NULL)
       n1 = length(amp)
       NEWH$JSTR[[ii]] = amp
       NEWH$dt[ii] =   GH$dt[ii]
-      RDATE = recdate(NEWH$info$jd[ii], NEWH$info$hr[ii], NEWH$info$mi[ii],
-        NEWH$info$sec[ii]+NEWH$info$t1[ii]+NEWH$info$msec[ii]/1000+ zloc$x[1]- NEWH$info$off[ii] ) 
+      
+      RDATE = recdate(NEWH$info$jd[ii],
+        NEWH$info$hr[ii],
+        NEWH$info$mi[ii],
+        NEWH$info$sec[ii]+NEWH$info$t1[ii]+NEWH$info$msec[ii]/1000+ zloc$x[1]- NEWH$info$off[ii],
+        NEWH$info$yr[ii])
+
+      
       GDOM = getmoday(RDATE$jd, NEWH$info$yr[ii])
       NEWH$info$yr[ii] =NEWH$info$yr[ii]
       NEWH$info$jd[ii] =RDATE$jd

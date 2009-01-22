@@ -10,20 +10,7 @@
 BKpfile2ypx(P)
 }
 \arguments{
-  \item{P}{output of TTteles:
-
-\item{num}{phase arrival index}
-\item{phase}{phase name}
-\item{sec}{seconds}
-\item{tmin}{minutes}
-\item{tsec}{fractional seconds after minutes}
-\item{dtdd}{derivative of time w.r.t distance dt/dd }
-\item{dtdh}{derivative of time w.r.t depth dt/dh }
-\item{dddp}{derivative of distance w.r.t ray parameter dd/dp }
-
-
-
-  }
+  \item{P}{output of TTteles}
 }
 
 \value{
@@ -47,9 +34,21 @@ BKpfile2ypx(P)
 \item{col}{color for plotting}
 \item{onoff}{logical, flag whether to plot or not}
 \item{cat}{category (usually equal to phase)}
-
 }
-
+\details{
+  The output of TTteles
+  includes:
+  \describe{
+    \item{num}{phase arrival index}
+    \item{phase}{phase name}
+    \item{sec}{seconds}
+    \item{tmin}{minutes}
+    \item{tsec}{fractional seconds after minutes}
+    \item{dtdd}{derivative of time w.r.t distance dt/dd }
+    \item{dtdh}{derivative of time w.r.t depth dt/dh }
+    \item{dddp}{derivative of distance w.r.t ray parameter dd/dp }
+    }
+}
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}
 \note{
   This routine assumes you have a program called ttimes,

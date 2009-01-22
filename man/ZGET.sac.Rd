@@ -16,15 +16,15 @@ ZGET.sac(infile, PLOT = FALSE)
   
 }
 \value{
-  item{x}{vector of amplitudes}
-item{mints}{vector if integer SAC header values}
-item{dubs}{vector if float(double) SAC header values}
-item{mchars}{vector if 8-character SAC header values}
-item{echars}{vector if 16-character  SAC header values}
-item{dubnames}{names of float values}
-item{mintnames}{names of integer values}
-item{charnames}{names of char values}
-
+ LIST:
+    \item{x}{vector of amplitudes}
+    \item{mints}{vector if integer SAC header values}
+    \item{dubs}{vector if float(double) SAC header values}
+    \item{mchars}{vector if 8-character SAC header values}
+    \item{echars}{vector if 16-character  SAC header values}
+    \item{dubnames}{names of float values}
+    \item{mintnames}{names of integer values}
+    \item{charnames}{names of char values}
 }
 
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}

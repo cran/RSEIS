@@ -9,7 +9,7 @@ MTM.drive(a, f1 = f1, f2 = f2, len2 = 1024, COL = 2, PLOT = FALSE, PADDLAB = NUL
 }
 
 \arguments{
-  \item{a}{ }
+  \item{a}{list(y=time series amp, dt=delta-ts, stamps=text stamps) }
   \item{f1}{low frequency }
   \item{f2}{high frequency }
   \item{len2}{power of two length }
@@ -22,7 +22,7 @@ MTM.drive(a, f1 = f1, f2 = f2, len2 = 1024, COL = 2, PLOT = FALSE, PADDLAB = NUL
 \value{
  Graphical Side effect
 }
-\references{Lees, J. M. and Park, J., 1995: Multiple-taper spectral analysis: A stand-alone C-subroutine, {\emph Computers & Geology}, 21(2), 199-236.}
+\references{Lees, J. M. and Park, J., 1995: Multiple-taper spectral analysis: A stand-alone C-subroutine, \emph{Computers \& Geology}, 21(2), 199-236.}
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
 \seealso{plt.MTM0}

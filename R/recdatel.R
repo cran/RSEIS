@@ -1,6 +1,6 @@
 `recdatel` <-
 function(X)
 {
-recdate(X$jd, X$hr, X$mi, X$sec)
+recdate(jd=X$jd, hr=X$hr, mi=X$mi, sec=X$sec, yr=X$yr)
 }
 

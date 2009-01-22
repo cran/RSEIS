@@ -17,7 +17,7 @@
   if(missing(SHOWONLY)) { SHOWONLY=FALSE}
   if(missing(CHOP)) { CHOP=FALSE }
    if(missing(STDLAB)) { STDLAB = c("DONE", "QUIT","zoom out", "zoom in", "Left", "Right", "restore", "Pinfo",
-                           "AUTOP", "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "SCALE", "Postscript")}
+                           "AUTOP", "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "SCALE", 2)}
   if(missing(PADDLAB)) { PADDLAB=c( "NOPIX", "REPIX") }
 
   if(missing(TEMPBUT)) { TEMPBUT=NULL } 
@@ -56,9 +56,9 @@
       
       asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick
       
-      rd = recdate( NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], asec)
+      rd = recdate( NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], asec, yr=NH$info$yr[ipick])
       
-      rd$yr =   NH$info$yr[ipick]
+      
       rd$stn =  NH$STNS[ipick]
       rd$comp = NH$COMPS[ipick]
       invisible(rd) 
@@ -116,7 +116,8 @@
 fixedbuttons = c("DONE",
 "QUIT", 
 "NEXT", 
-"PREV", 
+"PREV",
+"HALF",
 "S1", 
 "S2", 
 "MARK", 
@@ -455,6 +456,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
             {
 
               WIN = NULL
+              
               YN = YNreplot()
              # YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
               buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
@@ -491,7 +493,16 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
         {
             buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)))
             title("Return to Calling Program")
-           rd = getrdpix(zloc, zenclick, sel, NH)
+
+            if(zenclick>1)
+              {
+                rd = getrdpix(zloc, zenclick, sel, NH)
+              }
+            else
+              {
+                rd=NULL
+              }
+            
           invisible(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
           break;
         }
@@ -500,7 +511,18 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
         {
            buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)))
             title("Return to Calling Program")
-          rd = getrdpix(zloc, zenclick, sel, NH)
+
+
+           if(zenclick>1)
+             {
+               rd = getrdpix(zloc, zenclick, sel, NH)
+             }
+           else
+             {
+               rd=NULL
+             }
+           
+         
           invisible(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
            break;
         }
@@ -508,8 +530,16 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
         {
            buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)))
             title("Return to Calling Program")
-       
-          rd = getrdpix(zloc, zenclick, sel, NH)
+         if(zenclick>1)
+             {
+               rd = getrdpix(zloc, zenclick, sel, NH)
+             }
+           else
+             {
+               rd=NULL
+             }
+           
+        
           invisible(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
           break;
           
@@ -518,8 +548,33 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
         {
            buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)))
             title("Return to Calling Program")
-       
-           rd = getrdpix(zloc, zenclick, sel, NH)
+
+           if(zenclick>1)
+             {
+               rd = getrdpix(zloc, zenclick, sel, NH)
+             }
+           else
+             {
+               rd=NULL
+             }
+           
+          invisible(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
+           break;
+        }
+     if(K[Nclick] == match("HALF", BLABS, nomatch = NOLAB))
+        {
+           buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)))
+            title("Return to Calling Program")
+                 if(zenclick>1)
+             {
+               rd = getrdpix(zloc, zenclick, sel, NH)
+             }
+           else
+             {
+               rd=NULL
+             }
+           
+          
           invisible(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
            break;
         }
@@ -528,8 +583,16 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
         {
           buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)))
           title("Return to Calling Program")
-       
-          rd = getrdpix(zloc, zenclick, sel, NH)
+             if(zenclick>1)
+             {
+               rd = getrdpix(zloc, zenclick, sel, NH)
+             }
+           else
+             {
+               rd=NULL
+             }
+           
+         
           return(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
          break;
           
@@ -1112,7 +1175,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
                       
                       asec = NH$info$sec[i1]+NH$info$msec[i1]/1000+NH$info$t1[i1]-NH$info$off[i1]+t1                      
               
-                      pic1 = recdate(NH$info$jd[i1], NH$info$hr[i1], NH$info$mi[i1], asec)
+                      pic1 = recdate(NH$info$jd[i1], NH$info$hr[i1], NH$info$mi[i1], asec, yr=NH$info$yr[i1])
                       
                     
 
@@ -2387,7 +2450,14 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
         {
           
           ###   print out information on all traces in the window
+          if(is.null(WIN))
+            {
+              u = par('usr')
+              WIN = c(u[1], u[2])
+            }
           pwin = WIN
+          
+          
           print(pwin)
 
           rd = list(stn='', comp='', yr=0, jd=0, hr=0, mi=0, sec=0,  dt=0, min=0, max=0 , blank=FALSE)
@@ -2398,7 +2468,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
               ipick = sel[i]
               
               asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+pwin[1]
-              spaz = recdate( NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], asec)
+              spaz = recdate( NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], asec,  NH$info$yr[ipick] )
 
                rd$jd[i]=spaz$jd;  rd$hr[i]= spaz$hr ;  rd$mi[i]=spaz$mi ;  rd$sec[i]=spaz$sec;
 
@@ -2459,14 +2529,35 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
               ipick = sel[ypick]
 
 ####  print(ipick)
-
-              rd =getrdpix(zloc,zenclick,sel,NH   )
+ 
+                  rd = getrdpix(zloc, zenclick, sel, NH)
               
-              print(data.frame(rd))
+              
+              write.table(file="", data.frame(rd), row.names =FALSE)
+              cat("GMT TIME: ", sep="\n")
+              showdatetime(rd)
 
+              cat(" ", sep="\n")
+              
               PAS = paste(sep=" ", "Jtim(", rd$jd, ", hr=" , rd$hr , ", mi=", rd$mi, ",sec=", rd$sec, ")")
               cat("", sep="\n")
               cat(PAS, sep="\n")
+
+
+              if(!is.null(GH$TZ))
+                {
+                  rdlocal = recdate(jd=rd$jd, hr=rd$hr+GH$TZ, mi=rd$mi, sec=rd$sec , yr=rd$yr)
+                  cat(" ", sep="\n")
+                  
+                  cat(paste(sep=" ", "LOCAL TIMES, SHIFT=", GH$TZ) , sep="\n")
+                  showdatetime(rdlocal, AMPM=TRUE)
+                  
+                }
+
+
+
+
+              
             }
           else
             {
@@ -2737,7 +2828,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
           #############   make modifications to the pickfile here
 
           sex1 = WPX$sec[WPX$onoff>=0]
-          sexrec = recdate(WPX$jd[WPX$onoff>=0], WPX$hr[WPX$onoff>=0],  WPX$mi[WPX$onoff>=0] , sex1)
+          sexrec = recdate(WPX$jd[WPX$onoff>=0], WPX$hr[WPX$onoff>=0],  WPX$mi[WPX$onoff>=0] , sex1, WPX$yr[WPX$onoff>=0])
           sex2 = sexrec$sec
          #### print(data.frame(list(sta=WPX$tag[WPX$onoff>=0], min=WPX$mi[WPX$onoff>=0], sec1=sex1, sec2=sex2)))
 
@@ -3522,7 +3613,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
 
               asec = NH$info$sec[i1]+NH$info$msec[i1]/1000+NH$info$t1[i1]-NH$info$off[i1]+ppick[iz]
 
-              if(Nclick<3)
+              if(npick<2)
                 {
                   bsec = asec+5
                 }
@@ -3806,8 +3897,8 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
     }
 #### print(pwin)
 #### print(WIN)
-  
-  RETP = list(but="RET", sloc=sloc, WPX=WPX, BRUNINFO=BRUNINFO, DETLINFO=DETLINFO,  mark=mark)
+  but=BLABS[K[Nclick]]
+  RETP = list(but=but, sloc=sloc, WPX=WPX, BRUNINFO=BRUNINFO, DETLINFO=DETLINFO,  mark=mark)
   
   
   if(!is.null(RETX))

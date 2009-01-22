@@ -25,7 +25,7 @@ FILT.spread(x, y, dt, fl = fl, fh = fh, sfact = 1, WIN = NULL, PLOT = TRUE, TIT 
     
 }
 \details{
-  Use the TAPER and POSTTAPER to lin=mit the edge effects
+  Use the TAPER and POSTTAPER to reduce the edge effects
   prior to and after filtering.
   
 }

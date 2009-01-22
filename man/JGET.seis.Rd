@@ -12,12 +12,11 @@ getseisinfo(fnames, kind = 1)
 }
 \arguments{
   \item{fnames}{list of file names.}
-  \item{kind}{an integer {1, 2, 3}; 1 = segy, 2 = sac, 3 = AH.}
+  \item{kind}{an integer 1, 2, 3; 1 = segy, 2 = sac, 3 = AH.}
   \item{PLOT}{logical, for if the traces should be plotted.}
 }
 \value{
-  
-  a list containing the seismic data and header information.
+  List containing the seismic data and header information.
   Each trace consists of a list with:
 \item{fn}{original file name}
 \item{sta}{station name}
@@ -41,13 +40,26 @@ getseisinfo(fnames, kind = 1)
    \item{amp}{vector of trace values}
    
  }
- 
-\seealso{Package:Rsac}
+ \details{
+   JGET.seis  extracts digital seismic data from binary files
+   stored in the file system.  The program uses C-code for I/O
+   and passes data back to R.  Currently SAC, SEGY formats
+   are installed but it is easy to extend.  AH format
+   is available for LINUX systems, but there were problems compiling in
+   WINDOWS and MACOS so this feature was removed.
+   A filter for mseed format is currently being developed.
+   
+   }
+\seealso{Mine.seis, Package:Rsac}
 \note{
 
   getseisinfo gets only the header information from the trace.
+  Information in the file names is ignored, so be sure to modify headers
+  prior to using this method of extracting meta-data. (Or modify
+  the meta data from the file names after reading in the data.)
   
-
+   For SEGY files, in LINUX-UNIX, use:
+    rename,    segymod (PASSCAL) to modify the headers
 }
 
 

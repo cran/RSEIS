@@ -7,7 +7,8 @@
 }
 \usage{data(VELMOD1D)}
 \format{
- LIST:
+  LIST:
+  \describe{
   \item{zp}{vector of Tops of Layers, P-wave, (km)}
   \item{vp}{vector of velocities of Layers, P-wave,(km/s)}
    \item{ep}{errors for velocities, P-wave,(km/s) }
@@ -16,6 +17,7 @@
    \item{es}{errors for velocities, S-wave,(km/s) }
  \item{name}{character, name of model }
  \item{descriptor}{character vector description of model }
+ }
 
 
 }

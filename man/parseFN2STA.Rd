@@ -23,7 +23,7 @@ parseFN2STA(fn)
 \value{
  list(sta='text station name', comp='compname')
 }
-\references{ ~put references to the literature/web site here ~ }
+
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}
 
 \examples{

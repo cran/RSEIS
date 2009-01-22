@@ -38,7 +38,11 @@ FILT=list(fl=.2, fh=15,  type="HP", proto="BU"))
   
 }
 \details{
-  This is hte main program that drives the other analysis in RSEIS.
+  This is the main program that drives the other analysis in RSEIS.
+  GH is a list consisting of header (meta-data) and time series
+  information.  See documentation on GH to get complete description.
+  
+  
 }
 \value{
   various strucutres are returned
@@ -47,7 +51,7 @@ FILT=list(fl=.2, fh=15,  type="HP", proto="BU"))
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{RPGM}
+\seealso{GH, RPGM}
 \examples{
 data("GH")
 ###  This loads a structure

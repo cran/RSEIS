@@ -18,14 +18,17 @@ butfilt(a, fl, fh, deltat, type, proto)
   \item{proto}{prototype, c("BU", "BE" , "C1" ,"C2")  }
 }
 \details{
-      \item{LP}{ for low pass  }
-     \item{ HP}{  for high pass }
-    \item{ BP}{  for band pass }
-      \item{ BR}{  for band reject }
-   \item{ BU}{  for Butterworth }
-   \item{BE}{  for Bessel }
-    \item{ C1}{  for Chebyshev type 1 }
-               \item{ C2}{ for Chebyshev type 2 }
+  creation of butfilt is a described by the following arguments:
+  \describe{
+    \item{LP}{low pass  }
+    \item{HP}{high pass }
+    \item{BP}{band pass }
+    \item{BR}{band reject }
+    \item{BU}{Butterworth }
+    \item{BE}{Bessel }
+    \item{C1}{Chebyshev type 1 }
+    \item{C2}{Chebyshev type 2 }
+  }
 
 }
 \value{
