@@ -33,7 +33,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL)
     if(NEW==TRUE)
       {
        ### get(getOption("device"))(width=15, height=10)
-        dev.new()
+        dev.new(width=15, height=10)
        ### X11(width=15, height=10)
       }
 ###  

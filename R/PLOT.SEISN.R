@@ -1,5 +1,5 @@
 `PLOT.SEISN` <-
-function(GH, tim=1, dt=1,  sel=c(1:4), WIN=c(1,0), labs=c("CE1"), notes="CE1.V", tags="CE1.V", sfact=1, LOG="", COL='red', add=1, pts=FALSE, YAX=FALSE, TIT=NULL, SHIFT=NULL , rm.mean=TRUE, UNITS="volts", MARK=TRUE)
+function(GH, tim=1, dt=1,  sel=c(1:4), WIN=c(1,0), labs=c("CE1"), notes="CE1.V", tags="CE1.V", sfact=1, LOG="", COL='red', add=1, pts=FALSE, YAX=1, TIT=NULL, SHIFT=NULL , rm.mean=TRUE, UNITS="volts", MARK=TRUE)
 {
   ### plot a matrix of seismograms on a simple panel display
   ###   GH = structure of traces
@@ -19,7 +19,7 @@ function(GH, tim=1, dt=1,  sel=c(1:4), WIN=c(1,0), labs=c("CE1"), notes="CE1.V",
   
   if(missing(add)) { add=1 }
   if(missing(pts)) {  pts=FALSE  }
-  if(missing(YAX)) {  YAX=FALSE  }
+  if(missing(YAX)) {  YAX=1  }   ######  should be 1,2,3,4....different options
   if(missing(TIT)) { TIT=NULL }
   if(missing(SHIFT)) { SHIFT=NULL }
   if(missing(UNITS)) { UNITS="volts" }
@@ -84,6 +84,17 @@ function(GH, tim=1, dt=1,  sel=c(1:4), WIN=c(1,0), labs=c("CE1"), notes="CE1.V",
   
   if(missing(COL)) { COL=rep(1, nn)  }
 if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
+
+  if(length(COL)< length(GH$JSTR))
+    {
+
+      ncol = rep("black", times=length(GH$JSTR))
+      ncol[sel] = COL
+      COL = ncol
+
+    }
+
+  
   
     if(missing(labs)) { labs=rep(NA, nn) }
   
@@ -246,33 +257,87 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
        ### print(paste(sep =  ' ' ,minamp,maxamp,  paste(collapse=" ", yt) ))
                                         #
 
-      if(YAX == TRUE) axis(2, pos= upar[1] ,tck=-0.005 , at=yts, labels=yt, las=2 , line=0.1 )
-
+      #########  plot all the mini axes on the y-axis if YAX == 2
+      axis.side = 2
+      axis.pos = upar[1]
       
-      if(i==KDIFF)
+      ylab = labs[i]
+      vfonts=c("serif", "plain" )
+      lab.pos = 1.2
+      if(YAX == 2)
+        {
+
+          axis(axis.side, pos=axis.pos   ,tck=-0.005 , at=yts, labels=yt, las=2 , line=0.1 )
+          if( any( !is.na(UNITS) ) )
+            {
+              ##   mtext(side=axis.side, at=y3+dy/2, text=ylab , line=-1)
+             ## text(x=axis.pos, y=y3+dy/2, labels=ylab , vfont=vfonts , srt=90,  pos=4)
+              text(x=axis.pos, y=y3+dy/2, labels=ylab , vfont=vfonts, srt=90  , adj=c(.5, lab.pos  ), xpd=TRUE )
+
+              
+            }
+          
+
+        }
+
+
+
+      #####################  alternate axis side if YAX == 3
+      if(YAX == 3) {
+
+
+         if( (i%%2)==0 )
+        {
+          axis.side = 2
+          axis.pos = upar[1]
+          lab.pos = 1.2
+        }
+      else
+        {
+          axis.side = 4
+          axis.pos = upar[2]
+          lab.pos = -1
+        }
+
+         
+      
+        axis(axis.side, pos=axis.pos   ,tck=-0.005 , at=yts, labels=yt, las=2 , line=0.1 )
+         if( any( !is.na(UNITS) ) )
+           {
+            
+             ##    mtext(side=axis.side, at=y3+dy/2, text=ylab , line=-1, font=vfonts)
+             text(x=axis.pos, y=y3+dy/2, labels=ylab , vfont=vfonts, srt=90  , adj=c(.5,  lab.pos ), xpd=TRUE )
+
+             
+           }
+         
+
+      }
+      
+      
+      if(i==KDIFF & YAX <2 )
         {
           if(add!=3)
            if(!is.na(UNITS) )  axis(2, pos= upar[1] ,tck=-0.005 , at=yts, labels=yt, las=2 , line=0.1 )
         }
       else
         {
-          bnum = paste(sep='', "X", format.default(diffS[KDIFF]/diffS[i], digits=4))
-          blab=bnum 
-          if(add!=3)text(min(tim[tflag]), y3+0.75*dy, labels=blab, adj=0)
+
+           labstring= paste(sep="", "\\mu",format.default(diffS[KDIFF]/diffS[i], digits=4) )
+
+          ##  bnum = paste(sep='', "X", format.default(diffS[KDIFF]/diffS[i], digits=4))
+          ##  blab=bnum 
+          if(add!=3)text(min(tim[tflag]), y3+0.75*dy, labels=labstring , adj=0, vfont=c("sans serif", "plain"))
         }
 
       
       
       # axis(side=3, pos=y3+dy,   tck=0.005, at=ttics, labels=FALSE, col=2 )
       
-      ylab = labs[i]
+      
       ##  mtext(side=2, at=y3+dy/2, text=ylab , line=1)
 
-      if(!is.na(UNITS) )
-        {
-          mtext(side=2, at=y3+dy/2, text=ylab , line=-1)
-        }
-
+      
       
                                         #    print( paste(sep=' ', "IN PLOT.SEISN",note.flag))
       

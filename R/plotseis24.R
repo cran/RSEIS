@@ -34,6 +34,62 @@ plotseis24<-function(JJ, dy=1/6, FIX=24, SCALE=0, FILT=list(ON=FALSE, fl=0.05 , 
   altcol = length(RCOLS)
 
     cols = rep(1:altcol, length=24)
+
+
+    miny = rep(NA, length(24))
+    maxy = rep(NA, length(24))
+
+    
+    
+    for(i in 1:24 )
+      {
+        
+        zed = JJ$sigs[[i]]
+        
+        fy = zed
+        
+        if(FILT$ON==TRUE)
+          {
+            
+            L = length(zed)
+            ipad = ceiling(L*0.02)
+            
+            if(ipad>10)
+              {
+                
+###  in this case we pad each end with the time reversed
+                ##      parts of the signals
+                ibeg = zed[1:ipad]
+                iend = zed[(L-ipad+1):L]
+                
+                
+                ked = c(rev(ibeg), zed, rev(iend))
+                print("filtering")
+                fy = butfilt(ked,FILT$fl, FILT$fh , adt, FILT$type , FILT$proto )
+                
+                jed =  fy[(ipad+1):(ipad+L)    ]
+                
+                
+                fy = jed
+                
+                
+                
+              }
+            
+          }
+        fy = fy-mean(fy, na.rm=TRUE)
+        miny[i] = min(fy, na.rm=TRUE)
+        maxy[i]  = max(fy, na.rm=TRUE)
+        JJ$sigs[[i]] = fy
+            
+      }
+  
+
+
+bigmax = max(maxy, na.rm=TRUE)
+bigmin = min(miny, na.rm=TRUE)
+
+ if(SCALE>0) rat = abs(bigmax-bigmin)/SCALE
     
     for(i in 1:24 )
       {
@@ -41,39 +97,26 @@ plotseis24<-function(JJ, dy=1/6, FIX=24, SCALE=0, FILT=list(ON=FALSE, fl=0.05 , 
         a1 = m1 + (i-1)/24
         a2 = m1 + (i)/24
         y1 = -a1
-        zed = JJ$sigs[[i]]
+        fy = JJ$sigs[[i]]
+        
         zna = JJ$zna[[i]]
         icol = RCOLS[cols[i]]
-        if(length(zed)>2)
+        if(length(fy)>2)
           {
-            if(FILT$ON==TRUE)
-              {
-                fy = butfilt(zed,FILT$fl, FILT$fh , adt, FILT$type , FILT$proto )
-                fy = fy-mean(fy)
-              }
-            else
-              {
-                fy = zed
-                fy = fy-mean(fy, na.rm=TRUE)
-              }
+           
+              
             
             if(SCALE==0)
               {
-                zee  = RESCALE(fy,  -1,   1, min(fy, na.rm=TRUE), max(fy, na.rm=TRUE))
+                zee  = RESCALE(fy,  -1,   1, miny[i], maxy[i])
               }
             else
               {
-                rat = abs(max(fy, na.rm=TRUE)-min(fy, na.rm=TRUE))/SCALE
-####  print(paste(sep=' ', i, rat))
-####  safeguard against a signal being too big
-###  make ratio small and paint it a different color
-#### if(rat>10)
-####   {
-####     rat = 1
-####     icol = rgb(0.7, 1, 0.7)
-####   } 
+                ##    w
+
+             
                 
-                zee  = RESCALE(fy,  -rat,   rat, min(fy, na.rm=TRUE), max(fy, na.rm=TRUE))       
+                zee  = RESCALE(fy, -1 ,  1, bigmin, bigmax)       
               }
             tmean = mean(zee, na.rm=TRUE)
             
@@ -124,5 +167,48 @@ idate = ISOdate(JJ$yr[1], modays$mo, modays$dom, hour = 0, min = 0, sec = 0, tz 
   adate =   format(idate,  format = "%Y-%b-%d GMT",   tz = "GMT" )
    
     mtext(adate, 3, line=1, at=0, adj=0)
+
+if(FILT$ON==TRUE)
+  {
+
+    fl = FILT$fl
+    unitlow = "Hz"
+    fh = FILT$fh
+    unithi = "Hz"
+    ftype= FILT$type
+
+    if(fl<1)
+      {
+        fl = 1/fl
+        unitlow = "s"
+
+      }
+
+    if(fh<1)
+      {
+        fh = 1/fh
+        unithi = "s"
+
+      }
+
+
+    
+    filttag =  paste(sep= " ", ftype,fl, unitlow, fh, unithi  )
+    
+    mtext(filttag, 3, line=1, at=mx2, adj=1)
+    
+  }
+
+
+    if(SCALE>0)
+      {
+
+           mtext("Scaled by window", 1, line=3, at=0, adj=0)
+
+      }
+
+
+    
+    
     invisible(list( x=xa, y=tix,  yr=JJ$yr[1],  jd=JJ$jd[1] ))
   }

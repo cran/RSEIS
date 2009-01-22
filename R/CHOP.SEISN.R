@@ -30,7 +30,12 @@ function(GH, sel=1:4, WIN=NULL)
     {
       ii = i
       tim = GH$dt[ii]*seq(from=0,to=length(GH$JSTR[[ii]])-1)
+
+    ##   print(paste(sep=" ", min(tim), max(tim), zloc$x[1], zloc$x[2]))
+      
       tflag = tim>=zloc$x[1]&tim<=zloc$x[2]
+
+      
       amp = GH$JSTR[[ii]][tflag]
       n1 = length(amp)
       NEWH$JSTR[[ii]] = amp
@@ -43,8 +48,11 @@ function(GH, sel=1:4, WIN=NULL)
         NEWH$info$yr[ii])
 
       
-      GDOM = getmoday(RDATE$jd, NEWH$info$yr[ii])
-      NEWH$info$yr[ii] =NEWH$info$yr[ii]
+      GDOM = getmoday(RDATE$jd, RDATE$yr)
+
+
+      
+      NEWH$info$yr[ii] = RDATE$yr
       NEWH$info$jd[ii] =RDATE$jd
       NEWH$info$mo[ii] = GDOM$mo
       NEWH$info$dom[ii] =GDOM$dom

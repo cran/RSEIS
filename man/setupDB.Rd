@@ -8,7 +8,7 @@
   and times for a set of seismic data.
 }
 \usage{
-setupDB(DB, token = TRUE, split = "\\\.")
+setupDB(DB, token = TRUE, split = "\\\\.")
 }
 \arguments{
   \item{DB}{

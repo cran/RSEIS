@@ -88,9 +88,18 @@ function(at1, at2, DB, grepsta, grepcomp, kind=1)
   
   
   win = c(min(ss1), max(ss2))
+
   
-  
+
+ ##  print(win)
+ ##  print("GH")
+  ##  for(i in 1:length(GH$JSTR)) { print(paste(i, length(GH$JSTR[[i]]))) }
+
    HH = CHOP.SEISN(GH, WIN=win)
+
+ ## print("HH")
+ ##  for(i in 1:length(HH$JSTR)) { print(paste(i, length(HH$JSTR[[i]]))) }
+
 
   return(HH)
   

@@ -16,8 +16,8 @@
   
   if(missing(SHOWONLY)) { SHOWONLY=FALSE}
   if(missing(CHOP)) { CHOP=FALSE }
-   if(missing(STDLAB)) { STDLAB = c("DONE", "QUIT","zoom out", "zoom in", "Left", "Right", "restore", "Pinfo",
-                           "AUTOP", "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "SCALE", "Postscript")}
+   if(missing(STDLAB)) { STDLAB = c("DONE", "QUIT","zoom out", "zoom in", "Left", "Right", "restore", "Pinfo","WINFO",
+                           "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "UNFILT", "SCALE", "Postscript")}
   if(missing(PADDLAB)) { PADDLAB=c( "NOPIX", "REPIX") }
 
   if(missing(TEMPBUT)) { TEMPBUT=NULL } 
@@ -370,8 +370,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
 ###  print(pcols[sel])
   LASTwin = WIN
   
-###  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel , sfact=ScaleFACT, notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
-
+###  
   
   YN = YNreplot()
 ##################################  determine if we need to plot the pix.
@@ -460,7 +459,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
               WIN = NULL
               
               YN = YNreplot()
-             # YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+             
               buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
               u = par("usr")
               
@@ -476,7 +475,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
             {
               WIN  = sort(zloc$x[c(zenclick-1, zenclick)])
              YN = YNreplot()
-              # YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+             
               buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
               
               Nclick=1
@@ -618,7 +617,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
           WIN = NULL
 
           YN = YNreplot()
-        ##  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+        
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
           u = par("usr")
           L = length(sloc$x)
@@ -634,7 +633,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
       if(K[Nclick]==match("refresh", BLABS, nomatch = NOLAB))
         {
           YN = YNreplot()
-         # YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+        
 
 
 
@@ -660,7 +659,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
           zloc = list(x= c(u[1]-DX, u[2]+DX))
           WIN  = zloc$x
           YN = YNreplot()
-          ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
          #### ftime = Zdate(NH$info, sel[1], WIN[1])
          ####  mtext( ftime, side = 3, at = WIN[1], line=0.5, adj=0)
@@ -687,7 +686,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
             }
 
           YN = YNreplot()
-          ##  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+         
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
          #### ftime = Zdate(NH$info, sel[1], WIN[1])
          ####  mtext( ftime, side = 3, at = WIN[1], line=0.5, adj=0)
@@ -703,7 +702,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
         ####  zloc = list(x= c(u[1]+DX, u[2]+DX))
           WIN  =list(x= c(u[1]+DX, u[2]+DX))
          YN = YNreplot()
-          ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
          #### ftime = Zdate(NH$info, sel[1], WIN[1])
          ####  mtext( ftime, side = 3, at = WIN[1], line=0.5, adj=0)
@@ -719,7 +718,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
         ###  zloc = list(x= c(u[1]-DX, u[2]-DX))
           WIN  =list(x= c(u[1]-DX, u[2]-DX))
          YN = YNreplot()
-          ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
          #### ftime = Zdate(NH$info, sel[1], WIN[1])
          ####  mtext( ftime, side = 3, at = WIN[1], line=0.5, adj=0)
@@ -747,7 +746,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
             }
 
           YN = YNreplot()
-          ##  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
          #### ftime = Zdate(NH$info, sel[1], WIN[1])
          ####  mtext( ftime, side = 3, at = WIN[1], line=0.5, adj=0)
@@ -772,7 +771,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
 
            YN = YNreplot()
   
-   #       YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+   
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
              zloc = list(x=NULL, y=NULL)
           
@@ -793,7 +792,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
           Torigin = list(jd=NH$info$jd[isel], hr=NH$info$hr[isel], mi=NH$info$mi[isel], sec=(NH$info$sec[isel]+NH$info$msec[isel]/1000+NH$info$t1[isel]-NH$info$off[isel]))
 
            YN = YNreplot()
-          ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
              zloc = list(x=NULL, y=NULL)
           
@@ -827,7 +826,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
           for(JJ in ipick) { NH$JSTR[[JJ]] = (-1)*NH$JSTR[[JJ]] }
 
            YN = YNreplot()
-           ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+           
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
              zloc = list(x=NULL, y=NULL)
  
@@ -864,7 +863,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
           ### par(OPAR)
           print(paste(sep=' ' ,"Doing postscript", plfname))
            YN = YNreplot()
-          ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          
 
 
  
@@ -904,7 +903,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
           ### par(OPAR)
           print(paste(sep=' ' ,"Doing png", plfname))
            YN = YNreplot()
-          ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+         
 
           if(NPX>0)
             {
@@ -976,7 +975,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
 
          ### get(options("device")$device)(width=15, height=10)
 
-         dev.new()
+         dev.new(width=15, height=10)
            ### dev.new(width=15, height=10)
 
           
@@ -1328,7 +1327,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
               if(is.null(Mapdev))
                 {
                  ### get(getOption("device"))(width = 12, height = 7)
-                  dev.new()
+                  dev.new(width = 12, height = 7)
  
                   ###
                  ###  X11(width = 12, height = 7)
@@ -1352,7 +1351,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
                   
                   if(jsc>0) {
                     ##get(getOption("device"))(width = 12, height = 7)
-                    dev.new()
+                    dev.new(width = 12, height = 7)
                     ##X11(width = 12, height = 7);
                     Mapdev = dev.cur()
                             }
@@ -1928,7 +1927,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
               if(length(a$y)>0)
                  {
 ### get(getOption("device"))(width=10, height=10)
-                   dev.new()
+                   dev.new(width=10, height=10)
                    
 ### X11(width=10, height=10)
                    f1 = 0.1
@@ -2129,7 +2128,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
            dev.set( MAINdev)
 
             YN = YNreplot()
-         ###  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel , sfact=ScaleFACT, notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+         
            buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
           ###  dev.set( MAINdev)  
           zloc = list(x=NULL, y=NULL) 
@@ -2144,7 +2143,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
           dev.set( MAINdev)
 
             YN = YNreplot()
-      ###     YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel , sfact=ScaleFACT, notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+      
            buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
           ###  dev.set( MAINdev)  
         zloc = list(x=NULL, y=NULL) 
@@ -2261,7 +2260,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
          pts=!pts
 
            YN = YNreplot()
-         ##  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+         
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
           zloc = list(x=NULL, y=NULL) 
         }
@@ -2319,7 +2318,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
           pmolabs=NH$COMPS[c(Iv, In, Ie)]
 
          ### get(getOption("device"))(width=15, height=10)
-          dev.new()
+          dev.new(width=15, height=10)
         ###  X11(width=15, height=10)
           
           ###########    PMOtrace(temp, WIN=NULL, labs=pmolabs, PS=FALSE, ID="")
@@ -2373,7 +2372,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
           pmolabs=NH$COMPS[c(Iv, In, Ie)]
 
           ###get(getOption("device"))(width=6, height=6)
-          dev.new()
+          dev.new(width=6, height=6)
          ###  X11(width=6, height=6)
           
           ###########    PMOtrace(temp, WIN=NULL, labs=pmolabs, PS=FALSE, ID="")
@@ -2473,7 +2472,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
 
 
          ### get(getOption("device"))(width=6, height=6)
-          dev.new()
+          dev.new(width=6, height=6)
          ###  X11(width=6, height=6)
           
           ###########   
@@ -2503,7 +2502,8 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
           
           print(pwin)
 
-          rd = list(stn='', comp='', yr=0, jd=0, hr=0, mi=0, sec=0,  dt=0, min=0, max=0 , blank=FALSE)
+          rd = list(stn='', comp='', yr=0, jd=0, hr=0, mi=0, sec=0,  dt=0, N=0, min=0, max=0 ,var=0, mean=0, oct1=0, qrt1=0,
+            med=0, qrt2=0, oct2=0, blank=FALSE)
           
           for(i  in  1:length(sel))
             {
@@ -2525,11 +2525,31 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
               ex = seq(from=NH$info$t1[ipick], by=NH$info$dt[ipick], length.out=length(NH$JSTR[[ipick]]))
               
               a = NH$JSTR[[ipick]][ex>=pwin[1]&ex<=pwin[2]]
+              
+              rd$N[i] = length(a)
               rd$min[i] = min(a,  na.rm=TRUE)
               rd$max[i] = max(a,  na.rm=TRUE)
+              rd$mean[i] = mean(a,  na.rm=TRUE)
+
+              
+
+              bbox = boxplot(a, plot=FALSE)
+              
+              rd$med[i] = bbox$stats[3]
+              rd$oct1[i] = bbox$stats[1]
+              rd$oct2[i] = bbox$stats[5]
+              rd$qrt1[i] = bbox$stats[2]
+              rd$qrt2[i] = bbox$stats[4]
+              
+              
+              rd$var[i] = var(a,   na.rm=TRUE)
+              
               rd$blank[i] = any(is.na(a))
               
             }
+
+          options(width=180)
+
             print(data.frame(rd))
            zloc = list(x=NULL, y=NULL) 
         }
@@ -2555,27 +2575,67 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
 
               print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], asec, "sta=", NH$STNS[ipick], "comp=", NH$COMPS[ipick] ))
               print(ppick)
+
+
+              
+            
+              
+              ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
+              ipick = sel[ypick]
+              ##  pstas = paste(NH$STNS[ipick], NH$COMPS[ipick], sep=".")
+
+              
+              rd = getrdpix(zloc, zenclick, sel, NH)
+             
+
+              RDtmes = rd$yr+rd$jd/366+rd$hr/(366*24)+rd$mi/(366*24*60)+rd$sec/(366*24*3600)
+              
+               wearliest = which.min(RDtmes)
+              PAS = paste(sep="_", "Jtim(", rd$jd[wearliest], ", hr=" , rd$hr[wearliest] ,
+                ", mi=", rd$mi[wearliest], ",sec=", rd$sec[wearliest], ")")
+
+              
+              DEEtimes = YRsecdif(
+                rd$jd[wearliest],rd$hr[wearliest],rd$mi[wearliest], rd$sec[wearliest],
+                rd$jd,  rd$hr, rd$mi, rd$sec, rd$yr[wearliest],  rd$yr) 
+
+
+              apickorg = paste(sep=",", rd$yr[wearliest], rd$jd[wearliest],rd$hr[wearliest],rd$mi[wearliest], rd$sec[wearliest])
+              
+              ##  pstas =  NH$STNS[ipick]
+
+              apstas = paste(sep="", '"', paste(rd$stn, collapse='","'), '"')
+
+
+              ##    pcomps =NH$COMPS[ipick]
+
+              apcomps = paste(sep="", '"', paste(rd$comp, collapse='","'), '"')
+
+              cat("", sep="\n")
+              cat("", sep="\n")
+              cat("##################", sep="\n")
+              cat( paste(sep=" ", "orgtim=c(", apickorg , ")") , sep="\n")
+              
+              cat("", sep="\n")
+             cat( paste(sep=" ", "stns=c(", apstas, ")") , sep="\n")
+             cat( paste(sep=" ", "comps=c(", apcomps, ")") , sep="\n")
+
+              
+              
+             cat( paste(sep=" ", "tims=c(", paste(DEEtimes, collapse=","), ")") , sep="\n")
+
+              cat("", sep="\n")
+              cat("##################", sep="\n")
               cat("", sep="\n")
               cat("Time Differences between picks:", sep="\n")
               
               cat(paste(dpick), sep="\n")
 
               cat("", sep="\n")
-####  print(zloc$y[1:(zenclick-1)])
-              
-              ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
-
-####  print(ypick)
-              
-              secpick = ppick[1:(zenclick-1)]
-              
-              ipick = sel[ypick]
-
+####  print(zloc$y[1:(zenclick-1)])  
+####  print(ypick)     
 ####  print(ipick)
- 
-                  rd = getrdpix(zloc, zenclick, sel, NH)
-              
-              
+      
               write.table(file="", data.frame(rd), row.names =FALSE)
               cat("GMT TIME: ", sep="\n")
               showdatetime(rd)
@@ -2725,7 +2785,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
                 {
 ##### X11(width = 12, height = 7)
 #####get(getOption("device"))(width = 12, height = 7)
-                  dev.new()
+                  dev.new(width = 12, height = 7)
                   if(length(zloc$x)>=3)
                     {
                       pwin = range(zloc$x[1:(length(zloc$x)-1)])
@@ -3127,7 +3187,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
               print(paste(sep=' ', "DONE with PICKWIN", NPX))
               dev.set( MAINdev)
                YN = YNreplot()
-           ###   YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+           
               buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
               PLOT.ALLPX(Torigin, STNS, COMPS, PHASE=PHASE, WPX, FORCE=forcepix)
             }
@@ -3227,7 +3287,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
 
                 }
               YN = YNreplot()
-             ### YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+             
               buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
               
               NADDPIX = 3
@@ -3331,7 +3391,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
 
             }
           YN = YNreplot()
-             ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+             
               buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
               
           NADDPIX = 3
@@ -3426,7 +3486,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
                   
                 }
               YN = YNreplot()
-         ##  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+         
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
               
               NADDPIX = 3
@@ -3471,7 +3531,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
                   
                 }
               YN = YNreplot()
-              ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+              
               buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
               
               NADDPIX = 3
@@ -3511,7 +3571,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
                   
                 }
               YN = YNreplot()
-             ##  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+            
               buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
               
               NADDPIX = 3
@@ -3551,7 +3611,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
                   
                 }
               YN = YNreplot()
-              ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+             
               buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
               
               NADDPIX = 3
@@ -3773,7 +3833,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
 
             }
       YN = YNreplot()
-         ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+         
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
         }
           K[Nclick] = 0
@@ -3850,7 +3910,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
           
           WPX$onoff = rep(-1, length(WPX$onoff))
           YN = YNreplot()
-          ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+          
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
 
           
@@ -3864,7 +3924,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
        #######   WPX = OWPX
           WPX$onoff[WPX$onoff==(-1)] = 0
           YN = YNreplot()
-         ##  YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+         
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
 
           zloc = list(x=NULL, y=NULL) 

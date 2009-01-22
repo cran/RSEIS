@@ -25,18 +25,26 @@ EPOCHyear<-function(iday,  origyr=1972)
         
         ii = seq(from=origyr, to=origyr+itemp, by=1)
     
-        YRDAYS =  c(0, DAYSperYEAR(ii))
+        YRDAYS =  c(1, DAYSperYEAR(ii))
         
         csi = cumsum(YRDAYS)
 
         
         i2 = findInterval(iday[i], csi)
 
+        if(iday[i]==DAYSperYEAR(origyr))
+          {
+            i2=1
+          }
+        
+
         IYEARS[i] = ii[i2]
 
         theday = EPOCHday(IYEARS[i] ,jd=1, origyr=origyr)
 
-        IJD[i]  =  iday[i] -theday$jday  +1
+        IJD[i]  =  iday[i] - theday$jday +1 
+
+        
       }
     
    
