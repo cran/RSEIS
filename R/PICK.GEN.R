@@ -17,7 +17,7 @@
   if(missing(SHOWONLY)) { SHOWONLY=FALSE}
   if(missing(CHOP)) { CHOP=FALSE }
    if(missing(STDLAB)) { STDLAB = c("DONE", "QUIT","zoom out", "zoom in", "Left", "Right", "restore", "Pinfo",
-                           "AUTOP", "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "SCALE", 2)}
+                           "AUTOP", "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "SCALE", "Postscript")}
   if(missing(PADDLAB)) { PADDLAB=c( "NOPIX", "REPIX") }
 
   if(missing(TEMPBUT)) { TEMPBUT=NULL } 
@@ -134,7 +134,9 @@ fixedbuttons = c("DONE",
 "saveFN", 
 "FLIP", 
 "TR_INFO", 
-"Postscript", 
+"Postscript",
+"PNG",
+  
 "AUTOP",
 "AUTOPALL", 
 "DETECT", 
@@ -881,6 +883,47 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
         }
 
 
+       ###################   PNG output   ###########################  
+      if(K[Nclick] == match("PNG", BLABS, nomatch = NOLAB))
+        {
+          print(paste(sep=' ' ,"Start PNG PLOT.SEISN"))
+          jdev = dev.cur()
+          plfname = local.file("pick_gen","png")
+          
+          ### 
+          opar = par(no.readonly = TRUE)
+
+       
+          Pin = round(par('pin'))
+          PIXX =  Pin[1]*72
+          PIXY = round(Pin[2]*72)
+           png(file=plfname ,
+         width = PIXX, height = PIXY, units = "px",
+         pointsize = 12, bg = opar$bg)
+
+          ### par(OPAR)
+          print(paste(sep=' ' ,"Doing png", plfname))
+           YN = YNreplot()
+          ## YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+
+          if(NPX>0)
+            {
+
+              PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix)
+             ##### PLOT.WPX(Torigin, STNS, COMPS, WPX, FORCE=forcepix)
+            }
+          
+          
+          print(paste(sep=' ' ,"Done creating png  file: ", plfname))
+          dev.off()
+          dev.set(jdev)
+             zloc = list(x=NULL, y=NULL)
+        }
+
+
+
+
+   
       ###################   AUTO  PICKs   ###########################      
  
       if(K[Nclick]==match("AUTOP", BLABS, nomatch = NOLAB) & zenclick>=3)

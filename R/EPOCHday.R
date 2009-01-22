@@ -21,7 +21,7 @@ EPOCHday<-function(yr, mo=0, dom=0, jd=1, origyr=1972)
     if(is.null(myr)) { return(list(jday=1, origyr=origyr)) }
     if( myr<origyr ){ origyr  = myr  }
     
-    jj =tojul(yr, moday$mo, moday$dom)- tojul(origyr, 1, 1)
+    jj =tojul(yr, moday$mo, moday$dom)- tojul(origyr, 1, 1)+1
 
 
     #######   alternative way based on unix time codes

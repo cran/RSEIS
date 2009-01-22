@@ -4,7 +4,7 @@ function()
     ## set up a list of instruments from passcal Guralp
 ###  usage    Kal = PreSet.Instr()
 
-    types = c("40T", "3T", "L28", "LE3D20s", "GEOSP1")
+    types = c("40T", "3T", "L28", "LE3D20s", "GEOSP1", "60T")
     
     K = as.list(types)
 
@@ -31,6 +31,23 @@ function()
       "-50.0 0.0",
       "CONSTANT -1.97292",
       "SENSE 800")
+
+   CMG60T=c(
+      "ZEROS 2",
+      "0 0",
+      "0 0",
+      "POLES 5",
+      "-0.0740159 0.0740159",
+      "-0.0740159 -0.0740159",
+      "-1005.31 0",
+      "-502.655 0",
+      "-1130.97 0",
+      "CONSTANT 1.115583e+12",
+      "SENSE 2000")
+
+    
+
+    
 
     L28=c(   
       "ZEROS 2",
@@ -114,6 +131,7 @@ function()
     K[[3]] = ReadSet.Instr(L28)
     K[[4]] = ReadSet.Instr(LE3D20s)
     K[[5]] = ReadSet.Instr(GEOSP1)
+    K[[6]] = ReadSet.Instr(CMG60T)
 
     names(K) = types
     ##  Others?

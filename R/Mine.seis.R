@@ -76,7 +76,7 @@ function(at1, at2, DB, grepsta, grepcomp, kind=1)
 
 
 
- eday = EPOCHday(GH$info$yr, jd=GH$info$jd)
+ eday = EPOCHday(GH$info$yr, jd=GH$info$jd, origyr = DB$origyr)
 
   
   

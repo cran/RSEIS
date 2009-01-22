@@ -14,6 +14,11 @@ function(GG)
 
 
   ####  prepare some of the stats on the times of the waveforms
+  oyears = rep(1972, length(GG))
+  
+  for(i in 1:length(GG)) {  oyears[i] = GG[[i]]$DATTIM$yr  }
+  eyear  =min(oyears, na.rm=TRUE)
+  
   for(i in 1:length(GG))
     {
       ### gstas[i] = GG[[i]]$sta
@@ -21,7 +26,7 @@ function(GG)
       n = length(GG[[i]]$amp)
       GG[[i]]$DATTIM$dt = dt
 
-      eday = EPOCHday(GG[[i]]$DATTIM$yr, jd=GG[[i]]$DATTIM$jd)
+      eday = EPOCHday(GG[[i]]$DATTIM$yr, jd=GG[[i]]$DATTIM$jd, origyr = eyear )
       
       gtim1[i]  = eday$jday+GG[[i]]$DATTIM$hr/24+GG[[i]]$DATTIM$mi/(24*60)+GG[[i]]$DATTIM$sec/(24*3600)
       gtim2[i]  = gtim1[i]+GG[[i]]$N*GG[[i]]$DATTIM$dt/(24*3600)
