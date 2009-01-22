@@ -1,6 +1,6 @@
 `PICK.GEN` <-function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  STDLAB=NULL,
                    PADDLAB=NULL, TEMPBUT=NULL, SHOWONLY=FALSE, CHOP=FALSE, TIT="", pts=FALSE, forcepix=FALSE, SCALE=1,
-         velfile="", stafile="", LOC=NULL, FILT=list(fl=.2, fh=15,  type="HP", proto="BU") )
+         velfile="", stafile="", LOC=NULL, FILT=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL  )
 {
 ###  a = PICK.MARIO(GH,  sel, WIN=twin)
   #########  velfile is a 1D velocity file
@@ -42,6 +42,9 @@
   if(missing(SCALE)) {  ScaleFACT = 1 } else {  ScaleFACT = SCALE }
   if(missing(FILT)) {  FILT = list(fl=.2, fh=15,  type="HP", proto="BU") }
 
+  if(missing(filters)) { filters = NULL }
+
+if(is.logical(sel)) { sel = which(sel) } 
   
  if( is.null(sel) ) { sel = 1:length(GH$dt) }
 
@@ -2105,7 +2108,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
       if(K[Nclick]==match("FILT", BLABS, nomatch = NOLAB))
         {####FILT
 
-           Fdef = choosfilt()
+           Fdef = choosfilt(filters)
 
            if(!is.null(Fdef))
              {

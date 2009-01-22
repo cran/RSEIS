@@ -3,6 +3,8 @@ function(GH, sel=1:length(GH$dt), WIN=NULL)
 {
   if(missing(WIN)) { WIN = NULL }
   if(missing(sel)) { sel = 1:length(GH$dt)}
+
+  if(is.logical(sel)) { sel= which(sel)  }
   
   labs = c("STOP", "zoom out", "zoom in", "restore", "saveWIN")
   

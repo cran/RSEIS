@@ -1,7 +1,7 @@
 Package: RSEIS
 Type: Package
 Title: Seismic Time Series Analysis Tools
-Version: 2.1-4
+Version: 2.1-6
 Date: 2009-01-22
 Depends: RPMG
 Suggests: Rwave
@@ -11,6 +11,6 @@ Description: Multiple interactive codes to analyze seismic data, via,
         spectrum analysis, wavelet transforms, particle motion,
         hodograms.
 License: GPL
-Packaged: Mon Mar 16 02:58:48 2009; lees
+Packaged: Tue May 26 08:48:00 2009; lees
 Repository: CRAN
-Date/Publication: 2009-03-16 08:50:26
+Date/Publication: 2009-06-02 17:55:17

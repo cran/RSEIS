@@ -6,7 +6,7 @@
  Mine a seismic data base to extract secions of time limited data
 }
 \usage{
-Mine.seis(at1, at2, DB, grepsta, grepcomp, kind = 1)
+Mine.seis(at1, at2, DB, grepsta, grepcomp, kind = 1, CHOP=TRUE)
 }
 
 \arguments{
@@ -17,6 +17,8 @@ Mine.seis(at1, at2, DB, grepsta, grepcomp, kind = 1)
   \item{grepsta}{which stations to extract}
   \item{grepcomp}{which components to extract}
   \item{kind}{kind of data, segy=1, sac=2}
+  \item{CHOP}{cut the data to a window using CHOP.SEISN }
+  
 }
 \details{
   The data base is a list or dataframe containing the files names, the

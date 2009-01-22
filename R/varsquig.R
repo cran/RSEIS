@@ -1,8 +1,10 @@
-varsquig<-function(x,y, L=locator(2) , FLIP=FALSE, col="blue", var=0)
+varsquig<-function(x,y, L=locator(2) , FLIP=FALSE, filcol="blue", tracecol="red" , var=0)
 {
   if(missing(FLIP) ) { FLIP=FALSE  }
   if(missing(L) ) { L=locator(2)  }
-  if(missing(col) ) { col="red"  }
+  if(missing(filcol) ) { filcol="red"  }
+  if(missing(tracecol) ) { tracecol="red"  }
+  
   if(missing(var) ) {  var=TRUE }
   ##  plot(x, y , type='n')
 
@@ -27,7 +29,7 @@ varsquig<-function(x,y, L=locator(2) , FLIP=FALSE, col="blue", var=0)
       g[!yup] = zer 
       g[1] = zer
       g[length(rx)] = zer
-      if(var) polygon(g, ry, col=col, border=NA)
+      if(var) polygon(g, ry, col=filcol, border=NA)
 
     }
   else
@@ -41,12 +43,12 @@ varsquig<-function(x,y, L=locator(2) , FLIP=FALSE, col="blue", var=0)
       g[!yup] = zer 
       g[1] = zer
       g[length(ry)] = zer
-      if(var)  polygon(rx, g , col=col, border=NA, xpd=TRUE)
+      if(var)  polygon(rx, g , col=filcol, border=NA, xpd=TRUE)
 
     }
 
 
-  lines(rx, ry, col=col, xpd=TRUE)
+  lines(rx, ry, col=tracecol, xpd=TRUE)
 
 ### lines(g, ry, col=col)
 

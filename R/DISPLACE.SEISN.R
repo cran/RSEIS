@@ -11,6 +11,9 @@ function(TH, sel=1:length(TH$JSTR), inst=1, Kal=Kal, FILT=list(ON=TRUE, fl=1/30,
   Calibnew = c(1,1.0, 0.0 )
 
   
+if(is.logical(sel)) { sel = which(sel) }
+
+  
  for(i in 1:length(sel))
    {
      ii = sel[i]

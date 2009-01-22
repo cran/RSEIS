@@ -25,7 +25,8 @@ pickhandler<-function(i1=1, ppick=0, kzap="Y", err=NA, ycol=rgb(0,0,1) , NPX=1, 
           hr=0,
           mi=0,
           sec=0,
-          col='red',  onoff =0  )
+          col='red',
+          onoff =0  )
         WPX = data.frame(WPX, stringsAsFactors = FALSE)
       }
     

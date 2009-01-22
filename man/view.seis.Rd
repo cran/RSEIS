@@ -40,6 +40,9 @@ view.seis(aday, ihour, inkhour, SAVEFILE, days, DB, usta, acomp,  STDLAB =c("QUI
 \examples{
 
 \dontrun{
+
+
+##############  method one:
 #######  read in data base from files:
 DB  = scan(file="/home/lees/Site/Santiaguito/SG09/segyDB", list(fn="",
 yr=0, jd=0, hr=0, mi=0, sec=0, dur=0))
@@ -58,17 +61,55 @@ comp1 = substr(DB$fn, 62,62))
  DB$t1 = DB$jd + DB$hr/24 + DB$mi/(24*60) + DB$sec/(24*3600)
 DB$t2 = DB$t1 + DB$dur/(24*3600)
 
+
+#######   method 2:
+
+DB = makeDB("/Users/lees/Site/Santiaguito/SG09", pattern = "R", kind = 1)
+udays = unique(paste(DB$yr, DB$jd))
+sdays =  as.numeric( unlist( strsplit(udays, split=" ") ) )
+
+
+ye = sdays[seq(from=1, to=length(sdays), by=2)]
+d  = sdays[seq(from=2, to=length(sdays), by=2)]
+o = order(ye+d/366)
+
+days = list(yr = ye[o], jd=d[o])
+
+
+
+ das1  = DB$sta
+  comp1 =  DB$comp
+
 #######   get unique stations from list:
 usta = unique(das1)
 
 ###########   choose the desired components 
 acomp = c('I','V')
 
+####   aday refers to one of the days listed in the days structure
+
+
+###  days is a list of days (and associated years) that are in teh DB
+days = list(jd=c(365,366, 1,2,3,4), yr=c(2008, 2008, rep(2009, times=4)))
+
+
+#### extract days from the DB list:
+udays = unique(paste(DB$yr, DB$jd))
+sdays =  as.numeric( unlist( strsplit(udays, split=" ") ) )
+ye = sdays[seq(from=1, to=length(sdays), by=2)]
+d  = sdays[seq(from=2, to=length(sdays), by=2)]
+o = order(ye+d/366)
+
+days = list(yr = ye[o], jd=d[o])
+
+####
 
 aday = 3
 SAVEFILE = 'wpix.out'
 ihour = 15
 inkhour = .5
+
+####   aday refers to one of the days listed in the days structure
 
 
 view.seis(aday, ihour, inkhour, SAVEFILE, days, DB, usta, acomp, TZ=(-6))

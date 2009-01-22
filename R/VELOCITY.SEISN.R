@@ -11,6 +11,9 @@ function(TH, sel=1:length(TH$JSTR), inst=1, Kal=Kal, FILT=list(ON=TRUE, fl=1/30,
   if(missing(inst)) {   inst = rep(1,length=length(TH$JSTR))  }
 
   if(missing(sel)) { sel = 1:length(TH$JSTR) }
+
+if(is.logical(sel)) { sel = which(sel) }
+  
     if(missing(FILT)) { FILT = list(ON=TRUE, fl=1/30, fh=7.0, type="HP", proto="BU")  }
  
   Calibnew = c(1,1.0, 0.0 )

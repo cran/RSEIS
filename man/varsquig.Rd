@@ -6,14 +6,15 @@
   section with half the wiggled shaded.
 }
 \usage{
-varsquig(x, y, L = locator(2), FLIP = FALSE, col = "blue", var = 0)
+varsquig(x, y, L = locator(2), FLIP = FALSE, filcol="blue", tracecol="red", var = 0)
 }
 \arguments{
   \item{x}{X (time axis) coordinates}
   \item{y}{Y amplitudes}
   \item{L}{rectangular region on plot where plotting occurs}
   \item{FLIP}{logical - whether to flip the amplitudes by -1}
-  \item{col}{color for shading}
+  \item{filcol}{color for shading}
+  \item{tracecol}{color for trace}
   \item{var}{logical, whether to shade}
 }
 \details{
@@ -47,9 +48,9 @@ u = par('usr')
 L = list(x=c(u[1], u[2]), y = c(u[3], u[4]))
 
 plot(L$x, L$y, type='n')
- varsquig(x, y, L=L , FLIP=FALSE, col="blue", var=TRUE)
-
- varsquig(x, y, L=L , FLIP=FALSE, col="black", var=FALSE)
+ varsquig(x, y, L=L , FLIP=FALSE, filcol="blue", tracecol="blue", var=TRUE)
+plot(L$x, L$y, type='n')
+ varsquig(x, y, L=L , FLIP=FALSE, filcol="red", tracecol="blue",   var=FALSE)
 
 
 

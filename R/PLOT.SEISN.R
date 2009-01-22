@@ -79,6 +79,8 @@ function(GH, tim=1, dt=1,  sel=c(1:4), WIN=c(1,0), labs=c("CE1"), notes="CE1.V",
 
  ###  print("plot.seisn sel")
   ### print(sel)
+
+  if(is.logical(sel)) { sel = which(sel)  } 
   
   nn = length(sel)
   

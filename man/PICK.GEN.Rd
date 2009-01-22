@@ -12,7 +12,7 @@ STDLAB = NULL, PADDLAB = NULL, TEMPBUT=NULL,
 SHOWONLY = FALSE, CHOP = FALSE, TIT = "",
 pts = FALSE, forcepix = FALSE, SCALE = 1,
 velfile = "", stafile = "", LOC = NULL,
-FILT=list(fl=.2, fh=15,  type="HP", proto="BU"))
+FILT=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL)
 }
 
 \arguments{
@@ -34,13 +34,18 @@ FILT=list(fl=.2, fh=15,  type="HP", proto="BU"))
   \item{velfile}{velocity structure or file name }
   \item{stafile}{station structure or file name }
   \item{LOC}{source location structure (lat, lon, depth) }
-  \item{FILT}{default filter definition list(fl=.2, fh=15,  type="HP", proto="BU")}
+  \item{FILT}{default filter definition list(fl=.2, fh=15,  type="HP",
+    proto="BU")}
+  \item{filters}{ a list of filters for choosfilt }
+
   
 }
 \details{
   This is the main program that drives the other analysis in RSEIS.
   GH is a list consisting of header (meta-data) and time series
   information.  See documentation on GH to get complete description.
+
+  A set of filters can be defined by the user, see choosfilt
   
   
 }
@@ -51,7 +56,7 @@ FILT=list(fl=.2, fh=15,  type="HP", proto="BU"))
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{GH, RPGM}
+\seealso{GH, RPGM, choosfilt}
 \examples{
 data("GH")
 ###  This loads a structure

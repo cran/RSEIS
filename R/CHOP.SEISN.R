@@ -3,7 +3,11 @@ function(GH, sel=1:4, WIN=NULL)
 {
 
   if(missing(sel)) { sel = 1:length(GH$dt)}
- 
+
+
+  
+  if(is.logical(sel)) { sel = which(sel) }
+
   NEWH = GH
 
 

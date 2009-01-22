@@ -4,10 +4,12 @@ view.seis<-function(aday, ihour, inkhour, SAVEFILE, days, DB, usta, acomp,  STDL
     ####     ihour     = hour to start
     ####     inkhour   = increment in hours for viewing panel
     ####     SAVEFILE  = file to save window picks in
-    ####     days   =list of years and days to select from
+    ####     days   =list of years and days to select from days=list()
+    ########## for example: days = list(jd=c(365,366, 1,2,3,4), yr=c(2008, 2008, rep(2009, times=4)))
+
     ####     DB     = data base list of file names and start-times and durations
     ####     usta   = stations to select
-    ####     acomp  =  compnents to select
+    ####     acomp  =  components to select
     ####     STDLAB  labels for prescribed buttons
 
    if(missing(STDLAB ))
@@ -20,6 +22,54 @@ view.seis<-function(aday, ihour, inkhour, SAVEFILE, days, DB, usta, acomp,  STDL
    if(missing(TZ)) { TZ=NULL }
 
    if(is.null(DB$origyr))  DB$origyr = min(DB$yr, na.rm=TRUE)
+
+   if(!is.list(days) )
+     {
+
+
+       
+       print("NO days list")
+       print("using:")
+       
+       
+       udays = unique(paste(DB$yr, DB$jd))
+       sdays =  as.numeric( unlist( strsplit(udays, split=" ") ) )
+
+
+       ye = sdays[seq(from=1, to=length(sdays), by=2)]
+       d  = sdays[seq(from=2, to=length(sdays), by=2)]
+       o = order(ye+d/366)
+
+       days = list(yr = ye[o], jd=d[o])
+
+       print("using:")
+       print(days)
+
+     }
+   else{
+     if(length(days$jd)<1 | length(days$yr)<1 )
+       {
+
+         udays = unique(paste(DB$yr, DB$jd))
+         sdays =  as.numeric( unlist( strsplit(udays, split=" ") ) )
+         
+         
+         ye = sdays[seq(from=1, to=length(sdays), by=2)]
+         d  = sdays[seq(from=2, to=length(sdays), by=2)]
+         o = order(ye+d/366)
+         
+         days = list(yr = ye[o], jd=d[o])
+         
+         
+       }
+
+
+     
+
+   }
+
+
+   
    
    eday = EPOCHday(days$yr[aday], jd=days$jd[aday], origyr = DB$origyr)
            

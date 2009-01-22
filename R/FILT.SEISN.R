@@ -19,6 +19,9 @@ function(TH, sel=1:length(TH$JSTR), FILT=list(ON=FALSE, fl=0.5, fh=7.0, type="HP
     if(missing(POSTTAPER)) { POSTTAPER = NULL }
     
     NEWH = TH
+
+    if(is.logical(sel)) { sel = which(sel) }
+
     
     for(i in 1:length(sel))
       {
@@ -29,7 +32,10 @@ function(TH, sel=1:length(TH$JSTR), FILT=list(ON=FALSE, fl=0.5, fh=7.0, type="HP
         ny = is.na(y)
         ry = y[!ny]
         if(!is.null(TAPER)) { ry = applytaper(ry, p=TAPER) }
-        fy = butfilt(ry,FILT$fl, FILT$fh , dt, FILT$type , FILT$proto )
+
+        if(is.null(FILT$npoles)) { FILT$npoles = 4 }
+        
+        fy = butfilt(ry, fl=FILT$fl, fh=FILT$fh , deltat=dt, type=FILT$type , proto=FILT$proto, npoles=FILT$npoles )
         ## ex = dt*0:(length(y)-1)
         ##  plot(ex, fy, type='l')
         if(!is.null(POSTTAPER)) { fy = applytaper(fy, p=POSTTAPER) }

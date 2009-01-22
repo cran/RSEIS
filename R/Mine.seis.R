@@ -1,7 +1,7 @@
 `Mine.seis` <-
-function(at1, at2, DB, grepsta, grepcomp, kind=1)
+function(at1, at2, DB, grepsta, grepcomp, kind=1, CHOP=TRUE)
 {
-  ##  find all the file that overlap the times times
+  ##  find all the files that overlap the times times
   #########   at1 and at2 should be single times in julian days
   #######      if they are vectors, the first element will be used
 
@@ -11,6 +11,7 @@ function(at1, at2, DB, grepsta, grepcomp, kind=1)
   
   
   if(missing(kind)) { kind = 1 }
+  if(missing(CHOP)) { CHOP=TRUE }
 
   if(is.null(DB$t1))
     {
@@ -95,7 +96,12 @@ function(at1, at2, DB, grepsta, grepcomp, kind=1)
  ##  print("GH")
   ##  for(i in 1:length(GH$JSTR)) { print(paste(i, length(GH$JSTR[[i]]))) }
 
-   HH = CHOP.SEISN(GH, WIN=win)
+  if(CHOP) {  HH = CHOP.SEISN(GH, WIN=win) }
+  else
+    {
+      HH =GH
+
+    }
 
  ## print("HH")
  ##  for(i in 1:length(HH$JSTR)) { print(paste(i, length(HH$JSTR[[i]]))) }

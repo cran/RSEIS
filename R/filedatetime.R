@@ -1,9 +1,15 @@
 filedatetime<-function (orgtim, tims) 
 {
  ###   orgtime is a vector c(yr, jd, hr, mi, sec)
-  
+  if(is.list(orgtim))
+    {
+      rd = list(yr=orgtim$yr[1],  jd=orgtim$jd[1], hr=orgtim$hr[1], mi=orgtim$mi[1], sec=orgtim$sec[1]+tims)
+    }
+  else
+    {
   rd = list(yr=orgtim[1],  jd=orgtim[2], hr=orgtim[3], mi=orgtim[4], sec=orgtim[5]+tims)
-
+}
+  
   rd = recdate(jd = rd$jd, hr = rd$hr, mi = rd$mi, sec = rd$sec, 
     yr = rd$yr)
   MODAY = getmoday(rd$jd, rd$yr)
@@ -19,7 +25,7 @@ filedatetime<-function (orgtim, tims)
   amcrsec = formatC(as.integer(mymcrsec), wid = 6, flag = "0")
   charvec = paste(sep="_", gdates, gtimes, amcrsec)
   cat(charvec, sep = "\n")
-
+  
   return( charvec[which.min(tims)] )
 }
 

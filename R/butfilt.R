@@ -1,5 +1,5 @@
 `butfilt` <-
-function(a, fl, fh, deltat, type, proto)
+function(a, fl=0, fh=50, deltat=1, type="BP", proto="BU", npoles=5, chebstop=30.0, trbndw=0.3 )
 {
 #####  comments from the C code in /home/lees/Progs/Rc/LLNfilt.c
    #####  int iord:      number of poles for filter (< 10; preferably < 5)
@@ -21,9 +21,18 @@ function(a, fl, fh, deltat, type, proto)
    #####                 (SAC default = 5.0)
    #####  float ts:      time sample interval in secs (e.g.,0.01 = 100 samp/sec)
    #####                (SAC default = 0.01)
-
-
   ###    checks to avoid problems
+
+  if(missing(npoles)) { npoles=5 }
+  if(missing(proto)) { proto="BU" }
+  if(missing(type)) { type="BP" }
+  if(missing(deltat)) { deltat = 1 }
+  if(missing(fh)) { fh = 1/(2*deltat) }
+  if(missing(fl)) { fl = 0.01 }
+  if(missing(trbndw)) { trbndw=0.3 }
+    if(missing(chebstop)) { chebstop=30.0 }
+
+  
 
   if(any(is.na(a))){ print("ERROR in BUTFILT: NA in data"); return(NULL)      }
   if(any(is.null(a))){ print("ERROR in BUTFILT: NULL in data"); return(NULL)      }
@@ -38,11 +47,11 @@ function(a, fl, fh, deltat, type, proto)
 .C("CALL_JFILT", PACKAGE = "RSEIS",
 as.single(a),
 as.integer(length(a)),
-as.integer(8),
+as.integer(npoles),
 as.character(type) ,
 as.character(proto) ,
-as.double(30.0) ,
-as.double(0.3) ,
+as.double(chebstop) ,
+as.double(trbndw) ,
 as.double(fl) ,
 as.double(fh) ,
 as.double(deltat) ,

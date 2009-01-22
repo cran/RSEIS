@@ -1,7 +1,7 @@
-makeDB<-function(path, pattern="R*", kind =1)
+makeDB<-function(path, pattern="R", kind =1)
   {
     if(missing(kind)) { kind =1 }
-    if(missing(pattern)) {pattern="R*"  }
+    if(missing(pattern)) {pattern="R"  }
     
     LF1 = list.files(path =path, pattern=pattern)
 
