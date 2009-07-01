@@ -21,7 +21,11 @@ PLOT.MATN(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost
    \item{shift}{vector, shift each trace by these time}
   \item{LOG}{log x-axis}
   \item{COL}{vector of colors or indexes to colors}
-  \item{add}{logical, TRUE=add to existing plot}
+  \item{add}{numeric, to existing plot.
+    add = 1,2,3  if add=1 plot and add traces,
+    add =2 plot, but no traces,
+    add = 3 no plot, but add traces.  DEFAULT=1
+  }
   \item{AXES}{numeric, 0,1,2,3,4; default=1}
   \item{units}{label for units of Y-axis}
   \item{VS}{ var-squiggle display}

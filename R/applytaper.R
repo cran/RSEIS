@@ -1,23 +1,28 @@
 `applytaper` <-
 function(f, p=0.05)
   {
-
-    if(missing(p)) { p = 0.05 }
+    ##################  apply a cosine taper to a time series
+    if(missing(p)) { p = 0.1 }
+    ###################################   default is a 10 percent taper
     n = length(f)
     
-    l=round((n-2)*p);
+    L=round((n)*p)
 
-    s = seq(1,n)
+    s = seq(from=1, to=n, by=1)
 
-    vwin=rep(1,n)
-
-    bend = seq(1,round(l) )
+    vwin=rep(1,times=n)
     
-    vwin[s<=round(l)] = 0.5*(1.0-cos(bend*pi/(l+1)));
+    bend = seq(1,  L )
 
-    bend = seq(n-l-2, n )
+    nx = pi + (pi) * (bend - 1)/(L-1)
     
-    vwin[s>= n-l-2] = 0.5*(1.0-cos(bend*pi/(l+1)));
+    vwin[s<=L] = 0.5*cos(nx)+0.5
+
+    bend = seq(n-L+1, n )
+
+    nx = 0 + (pi) * (bend - ( n-L+1  ) )/(L-1)
+    
+    vwin[s>= n-L+1] = 0.5*cos(nx)+0.5
 
     newf = vwin*f
     return(newf)

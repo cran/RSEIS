@@ -33,8 +33,8 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 
 \dontrun{
 
-X11(width=8, height=12)
-X11(width=12, height=8)
+dev.new(width=8, height=12)
+dev.new(width=12, height=8)
 
 dev.set(2)
 usta = "CAL"

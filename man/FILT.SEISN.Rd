@@ -6,7 +6,7 @@
  Filter Traces in a seismic structure
 }
 \usage{
-FILT.SEISN(TH, sel = 1:length(TH$JSTR), FILT = list(ON = FALSE, fl = 0.5, fh = 7, type = "HP", proto = "BU"), TAPER = 0.1, POSTTAPER = 0.1)
+FILT.SEISN(TH, sel = 1:length(TH$JSTR), FILT = list(ON = TRUE, fl = 0.5, fh = 7, type = "HP", proto = "BU"), TAPER = 0.1, POSTTAPER = 0.1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

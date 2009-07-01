@@ -7,7 +7,7 @@
  seismoc instrument, returning units of m/s rather than volts.
 }
 \usage{
-VELOCITY.SEISN(TH, sel = 1:length(TH$JSTR), inst = 1, Kal = Kal, FILT = list(ON = TRUE, fl = 1/30, fh = 7, type = "HP", proto = "BU"))
+VELOCITY.SEISN(TH, sel = 1:length(TH$JSTR), inst = 1, Kal = Kal, FILT = list(ON = FALSE, fl = 1/30, fh = 7, type = "HP", proto = "BU"))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

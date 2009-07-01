@@ -1,5 +1,5 @@
 `evolfft` <-
-function(a, dt=0, Nfft=0,  Ns=0, Nov=0, fl=0, fh=10 )
+function(a, dt=0, Nfft=0,  Ns=0, Nov=0, fl=0, fh=10, pcttap = 0.05 )
   {
     ###  Nfft=1024;Ns=250;Nov=240;fl=0; fh=10
     if(missing(dt)) { dt=1;}
@@ -8,6 +8,7 @@ function(a, dt=0, Nfft=0,  Ns=0, Nov=0, fl=0, fh=10 )
     if(missing(Nov)) { Nov=240;}
     if(missing(fl)) { fl=0;}
     if(missing(fh)) { fh=1/(2*dt);}
+    if(missing(pcttap)) { pcttap = 0.05  }
 
     NT = length(a);
     nyquistf = 1/(2*dt);
@@ -72,7 +73,7 @@ function(a, dt=0, Nfft=0,  Ns=0, Nov=0, fl=0, fh=10 )
        ###  print(paste(sep=" ", m, ibeg, iend, NT))
         tem = a[ibeg[i]:iend[i]]
         tem = tem-mean(tem, na.rm=TRUE)
-        tem = spec.taper(tem, p=0.05)
+        tem = rsspec.taper(tem, p=pcttap)
         tem =  c(tem,rep(0,krow-Ns))
         if(length(tem)<krow)
           {

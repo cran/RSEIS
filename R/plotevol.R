@@ -50,11 +50,16 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
     
     if(ylog==TRUE)
       {
-        why   = RESCALE( log10(y[yflag]), 0 , perc , min(log10(y[yflag])), max(log10(y[yflag])) )
+        Yplmin = min(log10(y[yflag]))
+        Yplmax = max(log10(y[yflag])) 
+        why   = RESCALE( log10(y[yflag]), 0 , perc ,Yplmin ,  Yplmax )
       }
     else
       {
-        why   = RESCALE( (y[yflag]), 0 , perc , min(y[yflag], na.rm=TRUE), max(y[yflag], na.rm=TRUE) )
+
+        Yplmin =min(y[yflag], na.rm=TRUE)
+        Yplmax =max(y[yflag], na.rm=TRUE)
+        why   = RESCALE( (y[yflag]), 0 , perc , Yplmin ,  Yplmax  )
 
       }
 
@@ -184,7 +189,7 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
         
       }
     
-    invisible(list(y=y[yflag], why=why, yBounds=c(0,perc), x=x, yat=raxspec))
+    invisible(list(y=y[yflag], why=why, yBounds=c(0,perc, Yplmin ,  Yplmax ), x=x, yat=raxspec))
 
   }
 

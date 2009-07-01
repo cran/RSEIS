@@ -35,7 +35,7 @@ function(GH, sel=1:4, WIN=NULL)
       ii = i
       tim = GH$dt[ii]*seq(from=0,to=length(GH$JSTR[[ii]])-1)
 
-    ##   print(paste(sep=" ", min(tim), max(tim), zloc$x[1], zloc$x[2]))
+       print(paste(sep=" ", min(tim), max(tim), zloc$x[1], zloc$x[2]))
       
       tflag = tim>=zloc$x[1]&tim<=zloc$x[2]
 

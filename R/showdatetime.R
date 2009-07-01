@@ -34,7 +34,8 @@ showdatetime<-function(rd, AMPM=FALSE)
   charvec = paste(gdates, gtimes, amcrsec, A)
 
   cat(charvec, sep="\n")
-  
+
+  invisible(charvec)
 
 }
 

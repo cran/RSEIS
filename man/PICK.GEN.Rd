@@ -47,20 +47,47 @@ FILT=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL)
 
   A set of filters can be defined by the user, see choosfilt
   
+  Default Buttons, can be created by:
+  STDLAB = c("DONE", "QUIT","zoom out", "zoom in", "Left", "Right", "restore", "Pinfo","WINFO",
+                           "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "UNFILT", "SCALE", "Postscript")
+
+
   
 }
 \value{
-  various strucutres are returned
+  Various strucutres are returned
   based on interactive selections of the user.
+
+  Howeverr, the default return list:
+  \item{but}{last button pushed}
+  \item{sloc}{location of last set of clicks}
+  \item{WPX}{set of saved WPIX (window picks}
+  \item{BRUNINFO}{Brune Model information}
+  \item{DETLINFO}{Detailed information about traces}
+  \item{mark}{mark (MARK button was pressed}
+  \item{PUSHED}{list of all buttons pressed prior to exit}
+
 }
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{GH, RPGM, choosfilt}
+\seealso{PICK.DOC, GH, RPGM, choosfilt}
 \examples{
 data("GH")
 ###  This loads a structure
-PICK.GEN(GH)
+
+
+  STDLAB = c("DONE", "QUIT","zoom out", "zoom in", "Left", "Right", "restore", "Pinfo","WINFO",
+                           "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "UNFILT", "SCALE", "Postscript")
+
+sel=GH$COMPS=="V" 
+p = PICK.GEN(GH, sel=sel, STDLAB=STDLAB)
+print(p)
+
+ p = PICK.GEN(GH, sel=sel, WIN=c(4,14) , STDLAB=c("DONE", "LAME", "DAME"))
+print(p)
+
+
 }
 
 \keyword{iplot}

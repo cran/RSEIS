@@ -65,7 +65,7 @@ function(a, dt=0, numf=1024,  pord = 100, Ns=0, Nov=0, fl=0, fh=10 )
 
 ### plot(aem$freq, aem$amp, type='l', log='y')
         
-      ### spem = spec.taper(tem, p=0.05)
+      ### spem = rsspec.taper(tem, p=0.05)
     
         DMAT[,i] = aem$amp
       }

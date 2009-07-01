@@ -49,12 +49,37 @@ if(is.logical(sel)) { sel = which(sel) }
  if( is.null(sel) ) { sel = 1:length(GH$dt) }
 
 
+   legitpix<-function(sel, zloc, zenclick)
+    {
+      legpick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
+      ileg = which(legpick>=1 & legpick<=length(sel))
+      
+      ypick  = legpick[ ileg ]
+      ppick  = zloc$x[ ileg ]
+     
+      return( list(ypick=ypick, ppick=ppick) )
+      
+    }
+
   getrdpix<-function(zloc,zenclick,sel,NH   )
     {
 
-      ppick = zloc$x[1:(zenclick-1)]
       
-      ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
+      kix = legitpix(sel, zloc, zenclick)
+
+     ##  print(kix$ypick)
+      
+      if(length(kix$ypick)<1) {
+
+        ## print("No legit picks")
+        return(NULL)
+
+
+      }
+      
+      ypick =  kix$ypick
+      ppick = kix$ppick
+      
       ipick = sel[ypick]
       
       asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+ppick
@@ -409,7 +434,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
       
   
   u = par("usr")
-  sloc = list(x=c(u[1],u[2]))
+  sloc = list(x=c(u[1],u[2]), y=c(u[3],u[4]))
   zloc =list(x=NULL, y=NULL)
   ppick  = NA
   spick  = NA
@@ -466,7 +491,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
               buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
               u = par("usr")
               
-              sloc = list(x=c(u[1],u[2]))
+              sloc = list(x=c(u[1],u[2]), y=c(u[3],u[4]))
               
               Nclick=1
               K = 0
@@ -504,10 +529,13 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
               }
             else
               {
-                rd=NULL
+                rd=list(PUSHED="DONE")
               }
+
+
+          
             
-          invisible(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
+          invisible(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd ))
           break;
         }
 
@@ -523,7 +551,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
              }
            else
              {
-               rd=NULL
+               rd=list(PUSHED="QUIT")
              }
            
          
@@ -540,7 +568,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
              }
            else
              {
-               rd=NULL
+               rd=list(PUSHED="NEXT")
              }
            
         
@@ -559,7 +587,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
              }
            else
              {
-               rd=NULL
+               rd=list(PUSHED="PREV")
              }
            
           invisible(list(but=BLABS[K[Nclick]], zloc=zloc, pix=rd))
@@ -575,7 +603,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
              }
            else
              {
-               rd=NULL
+               rd=list(PUSHED="HALF")
              }
            
           
@@ -593,7 +621,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
              }
            else
              {
-               rd=NULL
+               rd=list(PUSHED="MARK")
              }
            
          
@@ -628,7 +656,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
             {
               abline(v=sloc$x[c(L-1,L)], col=gray(0.8), lty=2)
             }
-          sloc = list(x=c(u[1],u[2]))
+          sloc = list(x=c(u[1],u[2]), y=c(u[3],u[4]))
            zloc = list(x=NULL, y=NULL)
         }
 
@@ -647,7 +675,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
             {
               abline(v=sloc$x[c(L-1,L)], col=gray(0.8), lty=2)
             }
-          sloc = list(x=c(u[1],u[2]))
+          sloc = list(x=c(u[1],u[2]), y=c(u[3],u[4]))
              zloc = list(x=NULL, y=NULL)
           
         }
@@ -932,11 +960,12 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
         {
          ###  u = par("usr")
 
-          
-          ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+          kix = legitpix(sel, zloc, zenclick)
+              ypick =  kix$ypick
+              ppick = kix$ppick
+              ipick = sel[ypick]
+              
         
-          
-          ipick = sel[ypick]
           print(paste(sep=' ',"start autopick:", ypick, ipick, NH$info$name[ ipick]))
           if(identical(WIN,NULL))
             {
@@ -1076,8 +1105,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
               
             }
               ##################################################
-               ########  source("PICK.R") ; save.image()
-
+               ########  
           
           dev.set( MAINdev)
           
@@ -2566,10 +2594,13 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
           if(zenclick>=2)
             {
               
+              kix = legitpix(sel, zloc, zenclick)
+
               
-              ppick = zloc$x[1:(zenclick-1)]
+              ypick =  kix$ypick
+              ppick = kix$ppick
+      
               dpick = c(0, diff(ppick))
-              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
               ipick = sel[ypick]
               
               m = match(STNS[ipick],UNIsta)
@@ -2580,11 +2611,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
               print(ppick)
 
 
-              
-            
-              
-              ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
-              ipick = sel[ypick]
+          
               ##  pstas = paste(NH$STNS[ipick], NH$COMPS[ipick], sep=".")
 
               
@@ -2678,9 +2705,15 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
        ################### 
       if(K[Nclick]==match("XCOR", BLABS, nomatch = NOLAB))
         {
-          ppick = zloc$x[1:(zenclick-1)]
+
+      kix = legitpix(sel, zloc, zenclick)
+      ypick =  kix$ypick
+      ppick = kix$ppick
+      
+          
+          
           dpick = c(0, diff(ppick))
-           ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
+           
               ipick = sel[ypick]
           print(ypick)
           print(ipick)
@@ -2723,9 +2756,15 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
         ################### 
       if(K[Nclick]==match("PHLAG", BLABS, nomatch = NOLAB))
         {
-          ppick = zloc$x[1:(zenclick-1)]
+          
+  kix = legitpix(sel, zloc, zenclick)
+      ypick =  kix$ypick
+      ppick = kix$ppick
+      
+
+          
           dpick = c(0, diff(ppick))
-           ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
+           
               ipick = sel[ypick]
           print(ypick)
           print(ipick)
@@ -2770,9 +2809,11 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
         {
           if(zenclick>=2)
             {
-              ppick = zloc$x[(zenclick-1)]
-              
-              ypick = length(sel)-floor(length(sel)*zloc$y[(zenclick-1)])
+
+              kix = legitpix(sel, zloc, zenclick)
+              ypick =  kix$ypick
+              ppick = kix$ppick
+      
               ipick = sel[ypick]
               cat(paste(sep=" ", ypick, ipick), sep="\n")
               print(ipick)
@@ -3102,10 +3143,17 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
       if(K[Nclick]==match("PickWin", BLABS, nomatch = NOLAB))
         {
           
-          ppick = zloc$x[(zenclick-1)]
+         
+
+  kix = legitpix(sel, zloc, zenclick)
+      ypick =  kix$ypick
+      ppick = kix$ppick
+      
+
+          
           if(length(ppick)>0)
             {
-              ypick = length(sel)-floor(length(sel)*zloc$y[(zenclick-1)])
+            
               ipick = sel[ypick]
               cat(paste(sep=" ", ypick, ipick), sep="\n")
               print(ipick)
@@ -3209,12 +3257,15 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
               azap = PADDLAB[zappa]
               print(paste(sep=" ", "My PICKIN", azap, zappa))
 
-             
+              kix = legitpix(sel, zloc, zenclick)
+              ypick =  kix$ypick
+              ppick = kix$ppick
+ 
 ###   print(paste(sep=" " , "WIN=",sloc$x))
-              ppick = zloc$x[1:(zenclick-1)]
+              
 ###        abline(v=ppick, col=4)
               
-              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+            
               ipick = sel[ypick]
               
                print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick],
@@ -3311,12 +3362,15 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
           azap = PADDLAB[zappa]
           print(paste(sep=" ", "My PICKIN", azap, zappa))
           
-          
+               kix = legitpix(sel, zloc, zenclick)
+      ypick =  kix$ypick
+      ppick = kix$ppick
+  
 ###   print(paste(sep=" " , "WIN=",sloc$x))
-          ppick = zloc$x[1:(zenclick-1)]
+          
 ###        abline(v=ppick, col=4)
           
-          ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+          
           ipick = sel[ypick]
           
           print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick],
@@ -3410,12 +3464,15 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
           azap = PADDLAB[zappa]
           print(paste(sep=" ", "My PICKIN", azap, zappa))
 
+          kix = legitpix(sel, zloc, zenclick)
+          ypick =  kix$ypick
+          ppick = kix$ppick
           
 ###   print(paste(sep=" " , "WIN=",sloc$x))
-          ppick = zloc$x[1:(zenclick-1)]
+          
 ###        abline(v=ppick, col=4)
           
-          ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+         
           ipick = sel[ypick]
               
           print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick],
@@ -3511,9 +3568,12 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
               azap = PADDLAB[zappa]
               print(paste(sep=" ", "My PICK up", azap, zappa))
 
-              ppick = zloc$x[1:(zenclick-1)]
-
-              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              kix = legitpix(sel, zloc, zenclick)
+              ypick =  kix$ypick
+              ppick = kix$ppick
+              
+              
+              
               ipick = sel[ypick]
               
                print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick],
@@ -3550,10 +3610,11 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
               zappa = match(BLABS[K[Nclick]], PADDLAB)
               azap = PADDLAB[zappa]
               print(paste(sep=" ", "My PICK down", azap, zappa))
-
-              ppick = zloc$x[1:(zenclick-1)]
-
-              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+              kix = legitpix(sel, zloc, zenclick)
+              ypick =  kix$ypick
+              ppick = kix$ppick
+              
+              
               ipick = sel[ypick]
               
                print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick],
@@ -3590,10 +3651,11 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
           zappa = match(BLABS[K[Nclick]], PADDLAB)
               azap = PADDLAB[zappa]
               print(paste(sep=" ", "My PICK down", azap, zappa))
-
-              ppick = zloc$x[1:(zenclick-1)]
-
-              ypick = length(sel)-floor(length(sel)*zloc$y[zenclick-1])
+          kix = legitpix(sel, zloc, zenclick)
+          ypick =  kix$ypick
+          ppick = kix$ppick
+          
+            
               ipick = sel[ypick]
               
                print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick],
@@ -3630,47 +3692,47 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
             {
           zappa = match(BLABS[K[Nclick]], BLABS)
           col = colpix[which(pnos=="YPIX")]
-          
-          azap = "YPIX"
-          kzap = "Y"
-          
-          ppick = zloc$x[1:(zenclick-1)]
-          
-           ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
-              ipick = sel[ypick]
-         
-          ####### print(ppick)
-         #######  print(ypick)
-         #######  print(ipick)
-          ### print(paste(' ', "Nclick=", Nclick))
-          #### print(STNS)
-          #### print(COMPS)
+          kix = legitpix(sel, zloc, zenclick)
+          ypick =  kix$ypick
+          ppick = kix$ppick
 
-         #### print(paste(sep=" ", "DUMP YPIX", zappa, col, azap, kzap , ppick , ypick,ipick)) 
-          
-          for(iz in 1:(zenclick-1))
+          ############   proceed only if have legitimate picks
+          if(length(ypick)>0)
             {
               
-              NPX = NPX+1
-               Nn = names(WPX)
+              azap = "YPIX"
+              kzap = "Y"
+              
+              
+              ipick = sel[ypick]
+              
+              
+#### print(paste(sep=" ", "DUMP YPIX", zappa, col, azap, kzap , ppick , ypick,ipick)) 
+              
+              for(iz in 1:length(ypick))
+                {
+                  
+                  NPX = NPX+1
+                  Nn = names(WPX)
                   WPX =rbind(WPX, rep(NA, length(Nn)))
-  
-              i1 = ipick[iz]
-              i2 = ypick[iz]
+                  
+                  i1 = ipick[iz]
+                  i2 = ypick[iz]
 
-              ycol = colpix[zappa]
-              if(is.na(ycol)) { ycol = rgb(0,0,1) }
-              err = NA
-             WPX =  pickhandler(i1=i1, ppick=ppick[iz], kzap=kzap, err=NA, ycol=ycol, NPX=NPX, WPX, NH)
+                  ycol = colpix[zappa]
+                  if(is.na(ycol)) { ycol = rgb(0,0,1) }
+                  err = NA
+                  WPX =  pickhandler(i1=i1, ppick=ppick[iz], kzap=kzap, err=NA, ycol=ycol, NPX=NPX, WPX, NH)
 
-             
-              NADDPIX = NADDPIX+1
-             ## 
+                  
+                  NADDPIX = NADDPIX+1
+                  ## 
 
-             ## 
+                  ## 
+                }
+              PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix)
+              
             }
-          PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix)
-          
         }
           K[Nclick] = 0
           zloc = list(x=NULL, y=NULL) 
@@ -3680,7 +3742,9 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
        ################### 
       if(K[Nclick]==match("WPIX", BLABS, nomatch = NOLAB))
         {
-
+##############  window picks - these must be done in pairs.
+          ###   the first click determines the station comp,
+          ########    the second the window length
           if(zenclick>=2)
             {
           zappa = match(BLABS[K[Nclick]], BLABS)
@@ -3688,75 +3752,84 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
           
           azap = "WPIX"
           kzap = substr(azap, 1, 1)
-          
-          ppick = zloc$x[1:(zenclick-1)]
-          
-           ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
-              ipick = sel[ypick]
-         
-          ####### print(ppick)
-         #######  print(ypick)
-         #######  print(ipick)
-          ### print(paste(' ', "Nclick=", Nclick))
-          #### print(STNS)
-          #### print(COMPS)
 
-          print(paste(sep=" ", "zappa" ,zappa, col, azap, kzap , ppick , ypick,ipick))
 
-          ######### WPIX must come in pairs, for a pick plus a duration
+          kix = legitpix(sel, zloc, zenclick)
+          ypick =  kix$ypick
+          ppick = kix$ppick
 
-          npick = zenclick
           
- 
-          for(iz in seq(from=1, to=npick-1, by=2))
+          ############   proceed only if have legitimate picks
+          if(length(ypick)>0)
             {
-
-             
-    
+              ipick = sel[ypick]
               
-              i1 = ipick[iz]
-              i2 = ypick[iz]
+####### print(ppick)
+#######  print(ypick)
+#######  print(ipick)
+### print(paste(' ', "Nclick=", Nclick))
+#### print(STNS)
+#### print(COMPS)
 
-              asec = NH$info$sec[i1]+NH$info$msec[i1]/1000+NH$info$t1[i1]-NH$info$off[i1]+ppick[iz]
+              print(paste(sep=" ", "zappa" ,zappa, col, azap, kzap , ppick , ypick,ipick))
 
-              if(npick<2)
-                {
-                  bsec = asec+5
-                }
-              else
-                {
+######### WPIX must come in pairs, for a pick plus a duration
 
-              iz1 = ipick[iz+1]
-              bsec = NH$info$sec[iz1]+NH$info$msec[iz1]/1000+NH$info$t1[iz1]-NH$info$off[iz1]+ppick[iz+1]
+              npick = length(ypick)
+      #####        
+       #####       if( (npick%% 2)!=0 & npick>2 )
+      #####         {
+      #####           npick = npick - 1
+       #####       }
 
-            }
-           ####   print("############################")
-           ####  print(paste(' ', "wpix diag", NPX, iz, i1, i2, STNS[i2], COMPS[i2], asec))
-              print(paste(' ', "wpix diag", NPX, iz, i1, i2, STNS[i2], COMPS[i2], asec, bsec))
-
-              dur = diff(c(asec, bsec) )
-              print(paste(' ', "wpix diag", NPX, iz, i1, i2, STNS[i2], COMPS[i2], asec, bsec, dur))
 
               
-              if(is.null(dur)) dur = 0
-            ####  if(dur<=0) dur=1
+                  for(iz in seq(from=1, to=npick-1, by=2))
+                    {
 
-              
-              NPX = NPX+1
-              ycol = colpix[zappa]
-              if(is.na(ycol)) { ycol = rgb(0,0,1) }
+                      i1 = ipick[iz]
+                      i2 = ypick[iz]
+
+                      asec = NH$info$sec[i1]+NH$info$msec[i1]/1000+NH$info$t1[i1]-NH$info$off[i1]+ppick[iz]
+
+                      if(npick<2)
+                        {
+                          bsec = asec+5
+                        }
+                      else
+                        {
+
+                          iz1 = ipick[iz+1]
+                          bsec = NH$info$sec[iz1]+NH$info$msec[iz1]/1000+NH$info$t1[iz1]-NH$info$off[iz1]+ppick[iz+1]
+
+                        }
+####   print("############################")
+####  print(paste(' ', "wpix diag", NPX, iz, i1, i2, STNS[i2], COMPS[i2], asec))
+                      print(paste(' ', "wpix diag", NPX, iz, i1, i2, STNS[i2], COMPS[i2], asec, bsec))
+
+                      dur = diff(c(asec, bsec) )
+                      print(paste(' ', "wpix diag", NPX, iz, i1, i2, STNS[i2], COMPS[i2], asec, bsec, dur))
+
+                      
+                      if(is.null(dur)) dur = 0
+####  if(dur<=0) dur=1
+
+                      
+                      NPX = NPX+1
+                      ycol = colpix[zappa]
+                      if(is.na(ycol)) { ycol = rgb(0,0,1) }
 
 
-              Nn = names(WPX)
-              WPX =rbind(WPX, rep(NA, length(Nn)))
-  
+                      Nn = names(WPX)
+                      WPX =rbind(WPX, rep(NA, length(Nn)))
+                      
 
-              WPX$tag[NPX]=paste(sep=".",NH$STNS[i1],  NH$COMPS[i1])
+                      WPX$tag[NPX]=paste(sep=".",NH$STNS[i1],  NH$COMPS[i1])
                       WPX$name[NPX]=NH$STNS[i1]
                       WPX$comp[NPX]=NH$COMPS[i1]
                       WPX$c3[NPX]=NH$OCOMPS[i1]
                       WPX$phase[NPX]=kzap
-                  
+                      
                       WPX$err[NPX]=0.05
                       WPX$pol[NPX]=0
                       WPX$flg[NPX]=0
@@ -3771,13 +3844,21 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
                       WPX$col[NPX]=ycol
                       WPX$onoff[NPX] = 1 
 
-              
+                      
                       NADDPIX = NADDPIX+1
-            
+                      
 
-              
-            ##   
+                      
+                      ##   
+                    }
+                
             }
+          else
+            {
+              print("not enough legitimate picks, need at least 2 or more")
+
+            }
+
         }
           zloc = list(x=NULL, y=NULL) 
           K[Nclick] = 0
@@ -3796,10 +3877,11 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
           
           azap = PADDLAB[zappa]
           kzap = substr(azap, 1, 1)
-          
-          ppick = zloc$x[1:(zenclick-1)]
-          
-           ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
+           kix = legitpix(sel, zloc, zenclick)
+      ypick =  kix$ypick
+      ppick = kix$ppick
+     
+         
               ipick = sel[ypick]
          
          ####################################  this is not finished yet
@@ -3862,10 +3944,11 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
                
                kzap = substr(azap, 1, nchar(azap)-3 )
                print(paste(sep=" ", "My PICKIN", azap, kzap,zappa ))
-               ppick = zloc$x[1:(zenclick-1)]
 
+               kix = legitpix(sel, zloc, zenclick)
+               ypick =  kix$ypick
+               ppick = kix$ppick
                
-               ypick = length(sel)-floor(length(sel)*zloc$y[1:(zenclick-1)])
                ipick = sel[ypick]
                
                for(iz in 1:(zenclick-1))
@@ -4003,8 +4086,24 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
     }
 #### print(pwin)
 #### print(WIN)
+
+  
+  PushI =  whichbutt(zloc ,buttons)
+####  print(zloc)
+####  print(sloc)
+####  print(PushI)
+  
+  
+  PushK=NULL
+  if(length(PushI)>=1)
+    {
+      PushK=NULL
+      if(any(PushI>0)) PushK =BLABS[PushI[PushI>0]]
+    }
+  
+  
   but=BLABS[K[Nclick]]
-  RETP = list(but=but, sloc=sloc, WPX=WPX, BRUNINFO=BRUNINFO, DETLINFO=DETLINFO,  mark=mark)
+  RETP = list(but=but, sloc=sloc, WPX=WPX, BRUNINFO=BRUNINFO, DETLINFO=DETLINFO,  mark=mark, PUSHED=PushK)
   
   
   if(!is.null(RETX))

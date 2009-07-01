@@ -43,7 +43,7 @@ singleTaper<-function(y, dt, tappercent=0.1 )
     if(missing(tappercent)) tappercent=0.1
     N= length(y)	
     fn = 1/(2*dt)
-    tapy = spec.taper(y, p=tappercent)
+    tapy = rsspec.taper(y, p=tappercent)
     ##tapy = tapy-mean(tapy)
     
     Y = fft(tapy)

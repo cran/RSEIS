@@ -6,7 +6,8 @@
   Spectrogram using simple fft (Gabor Transform)
 }
 \usage{
-evolfft(a, dt = 0, Nfft = 0, Ns = 0, Nov = 0, fl = 0, fh = 10)
+evolfft(a, dt = 0, Nfft = 0, Ns = 0, Nov = 0, fl = 0, fh = 10, pcttap =
+0.05 )
 }
 
 \arguments{
@@ -17,10 +18,14 @@ evolfft(a, dt = 0, Nfft = 0, Ns = 0, Nov = 0, fl = 0, fh = 10)
   \item{Nov}{number of sample to overlap }
   \item{fl}{ low frequency to display }
   \item{fh}{high frequency to display  }
+  \item{pcttap}{Percent cosine taper for each window  }
+
+  
 }
 \details{
   This is a duplication of the spectrogram function in matlab  which
   applies Welsh's Method.
+  Each mini-window is tapered with a cosine window.
 }
 \value{
   List

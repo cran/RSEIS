@@ -65,7 +65,7 @@ function(a, dt=0, numf=1024, Ns=0, Nov=0, fl=0, fh=10 )
         tem = a[ibeg[i]:iend[i]]
         tem = tem-mean(tem, na.rm=TRUE)
 
-  Mspec =   mtapspec(tem,dt, klen=len2,  MTP=list(kind=2,nwin=7, npi=5,inorm=1)  )
+  Mspec =   mtapspec(tem,dt, klen=len2,  MTP=list(kind=2,nwin=5, npi=5,inorm=1)  )
 
   f=Mspec$freq
 

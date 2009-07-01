@@ -1,12 +1,12 @@
 `DISPLACE.SEISN`<-
-function(TH, sel=1:length(TH$JSTR), inst=1, Kal=Kal, FILT=list(ON=TRUE, fl=1/30, fh=7.0, type="HP", proto="BU") )
+function(TH, sel=1:length(TH$JSTR), inst=1, Kal=Kal, FILT=list(ON=FALSE, fl=1/30, fh=7.0, type="HP", proto="BU") )
 {
   ########  convert the seismic to displacement
   if(missing(Kal)) {   Kal = PreSet.Instr() }
   if(missing(inst)) {   inst = rep(1,length=length(TH$JSTR))  }
 
   if(missing(sel)) { sel = 1:length(TH$JSTR) }
-    if(missing(FILT)) { FILT = list(ON=TRUE, fl=1/30, fh=7.0, type="HP", proto="BU")  }
+    if(missing(FILT)) { FILT = list(ON=FALSE, fl=1/30, fh=7.0, type="HP", proto="BU")  }
  
   Calibnew = c(1,1.0, 0.0 )
 
@@ -23,25 +23,53 @@ if(is.logical(sel)) { sel = which(sel) }
      
      y = TH$JSTR[[ii]]
 
+   
+##############################    for now, do not analyse wigs  that have NA's
+    if(any(is.na(y)))
+       {
+
+      ####  since some of the data does not
+         ####    need to fill in and/delete
+
+         TH$units[ii] = "NA"
+         next
+
+       }
+     
 
      
-     y = y-mean(y)
+     y = y-mean(y, na.rm =TRUE)
      y = detrend(y)
      y = applytaper(y)
      dy  = deconinst(y, dt, Kal, ins, Calibnew, waterlevel=1.e-8)
      
-     ty = applytaper(dy-mean(dy), p=0.05)
+     ty = applytaper(dy-mean(dy, na.rm =TRUE), p=0.05)
      tapy = detrend(ty)
-     fy = tapy-mean(tapy)
+     fy = tapy-mean(tapy, na.rm =TRUE)
 
      #####  use this to get micro meters
      ## amp = fy*1000000
      amp = fy
      damp  = trapz(amp, dt)
-     fy = butfilt(damp, FILT$fl, FILT$fh , dt, FILT$type , FILT$proto )
+
+     if(is.null(damp)) { TH$units[ii] = "NA"; next }
+
+     if(FILT$ON==TRUE)
+       {
+         fy = butfilt(damp, FILT$fl, FILT$fh , dt, FILT$type , FILT$proto )
+       }
+     else
+       {
+         fy =damp
+       }
+     
      TH$JSTR[[ii]] = fy
       TH$units[ii] = "m"
    }
+
+    proc = paste(sep=" ", "DISPLACE.SEISN", "FILT", FILT$ON, FILT$fl, FILT$fh, FILT$type, FILT$proto) 
+
+  TH$process = c(TH$process, proc)
  invisible(TH)
 }
 

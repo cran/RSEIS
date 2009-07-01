@@ -13,8 +13,8 @@ Seismic Analysis and Display
 \tabular{ll}{
 Package: \tab RSEIS\cr
 Type: \tab Package\cr
-Version: \tab 2.1-6\cr
-Date: \tab 2009-05-26\cr
+Version: \tab 2.2-0\cr
+Date: \tab 2009-07-01\cr
 License: \tab GPL\cr
 }
 
@@ -91,7 +91,7 @@ Maintainer:Jonathan M. Lees<jonathan.lees.edu>
       plotwlet
       STLTcurve
       SPECT.drive
-      spec.taper
+      rsspec.taper
       evolfft
       GETARAIC
       PSTLTcurve

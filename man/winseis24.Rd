@@ -6,11 +6,13 @@
 \description{Locator for plotseis24
 }
 \usage{
-winseis24(pjj)
+winseis24(pjj, pch = 3, col = "red")
 }
 \arguments{
-  \item{pjj}{out put of plotseis24
-}
+  \item{pjj}{out put of plotseis24}
+  \item{pch}{plotting character when clicking}
+  \item{col}{color for plotting when clicking}
+  
 }
 \details{
   After extracting 24 hours and plotting with

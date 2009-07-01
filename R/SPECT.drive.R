@@ -9,7 +9,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL)
     
     TPALS = c("rainbow", "topo.colors", "terrain.colors", "heat.colors", "tomo.colors")
     APALS = c("rainbow", "topo",           "terrain",      "heat",       "tomo")
-    ADDBUTS = c("RAW", "LOG", "SQRT", "Grid", "INFO", "DOT",  "WLEN", "PARMS" )
+    ADDBUTS = c("RAW", "LOG", "SQRT", "Grid", "INFO", "DOT",  "WLEN", "PARMS" , "SAVE" )
     
     NCOL = 100
     
@@ -117,6 +117,18 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL)
             
             break;
           }
+
+        if(K[Nclick] == match("SAVE", labs, nomatch = NOLAB))
+          {
+            buttons = rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
+            title("Return to Calling Program")
+            invisible(DEV)
+            break;
+          }
+
+
+
+    
       
       ####################   POSTSCRIPT  ##################
         if(K[Nclick] == match("Postscript", labs, nomatch = NOLAB))
