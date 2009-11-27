@@ -37,6 +37,16 @@
   for(j  in 1:length(ista))
     {
 
+
+      if(file.exists("ttBK.tempoutput"))
+        {
+
+           file.remove("ttBK.tempoutput")
+
+        }
+
+      
+
       GD1 = GreatDist( EQ$lon, EQ$lat , staLLZ$lon[ista[j]], staLLZ$lat[ista[j]])
 
 

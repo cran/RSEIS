@@ -7,7 +7,7 @@
 }
 \usage{
 doGABOR.AR(Xamp, DT = 0.008, multi = 1, scale.def = 0, TWIN = 2, TSKIP =
-0.2, PCTTAP = 0.05, PLOT=TRUE)
+0.2, PCTTAP = 0.05, pord=100, PLOT=TRUE)
 }
 \arguments{
 \item{Xamp}{signal
@@ -24,6 +24,9 @@ doGABOR.AR(Xamp, DT = 0.008, multi = 1, scale.def = 0, TWIN = 2, TSKIP =
 }
   \item{PCTTAP}{percent of taper to apply to individual windows
   }
+  \item{pord}{ order for the AR process (default=100) }
+
+  
   \item{PLOT}{ logical, TRUE=plot to device } 
 }
 \details{

@@ -1,3 +1,4 @@
+
 \name{GETARAIC}
 \alias{GETARAIC}
 
@@ -6,12 +7,12 @@
  Auto-Regressive AIC for arrival estimate, signal detection
 }
 \usage{
-GETARAIC(z4, deltat = 0.008, Mar = 8, O1 = 2, O2 = 0.2, WW = 2, T1 = 1, PLOT = FALSE)
+GETARAIC(z4, DT = 0.008, Mar = 8, O1 = 2, O2 = 0.2, WW = 2, T1 = 1, PLOT = FALSE)
 }
 
 \arguments{
   \item{z4}{signal time series}
-  \item{deltat}{sample rate,s}
+  \item{DT}{sample rate,s}
   \item{Mar}{AR Model Order}
   \item{O1}{window before}
   \item{O2}{window after}
@@ -40,7 +41,7 @@ plot(CE1$x, CE1$y, type='l')
 Xamp = CE1$y[CE1$x>4.443754 & CE1$x<6.615951]
 
 
-araict = GETARAIC(Xamp, deltat=CE1$dt, T1=1, Mar=8, O1=2, O2=0.2, WW=2,   PLOT=TRUE)
+araict = GETARAIC(Xamp, DT=CE1$dt, T1=1, Mar=8, O1=2, O2=0.2, WW=2,   PLOT=TRUE)
 
 }
 

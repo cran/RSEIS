@@ -62,7 +62,7 @@ function(phase=NULL, col=NULL, yr=NULL, jd=NULL, hr=NULL,  mi=NULL, sec=NULL, du
 
   pix$tag=rep(0, times=N)
 
-  
+    pix$col  = col
   
   ##   pix = SORT.pix(pix)
   

@@ -1,3 +1,8 @@
+
+
+
+
+
 #include <stdio.h>
 
 #include <assert.h>
@@ -1261,8 +1266,11 @@ int xdr_ahhead(XDR *xdrsp, ahhed *ahheadp)
 
 int gblank(char *cha)
 {
-   int kk, kchar;
-   for(kk=0; kk< strlen(cha); kk++)
+  int i, kk, kchar;
+
+  i = strlen(cha);
+  kchar = i;
+   for(kk=0; kk<i; kk++)
    {
       /* fprintf(stderr,"<%c>", head.station.code[kk]); */ 
       if(cha[kk]==' ')
@@ -1270,6 +1278,15 @@ int gblank(char *cha)
 	 kchar =kk;
 	 break;
       }
+      if(cha[kk]=='\0')
+      {
+	 kchar =kk;
+	 break;
+      }
+
+
+
+
    }
    return(kchar);
 
@@ -1329,6 +1346,33 @@ if(( fp = fopen(file,"r")) == NULL) {
   fread((*p), sizeof(float), sh->npts, fp);
   fclose(fp);
 }
+
+
+
+
+
+/** FUNC DEF **/ void read_sac_head(char *file ,SacHeader *sh )
+ 
+{
+  FILE *fp, *fopen();
+
+if(( fp = fopen(file,"r")) == NULL) {
+ fprintf(stderr, "Can't Open file %s, aborting\n", file);
+ exit(0);
+ 
+}
+  /* fprintf(stderr, "read_sac: \n"); */
+  fread(sh, SACLEN, 1, fp);  /* header */
+ 
+  fclose(fp);
+}
+
+
+
+
+
+
+
 
 /*****************/
 /** FUNC DEF **/ SEGYTrace *read_segy(char *fn)
@@ -1607,7 +1651,7 @@ if( ts->numsamp != sh.npts)
 
      for (i = 0; i < ts->numsamp; i++) 
       {
-     if( (i%1000)==0) fprintf(stderr,"%d %g\n", i, sacd[i]); 
+    /*  if( (i%1000)==0) fprintf(stderr,"%d %g\n", i, sacd[i]);  */
       ts->amp[i] = sacd[i];
       /* ts->ampbak[i] = sacd[i]; */
       
@@ -1622,6 +1666,8 @@ if( ts->numsamp != sh.npts)
 	ts->min = ts->max-1;
 
      }
+
+
 
 
      kchar = gblank(sh.kstnm);

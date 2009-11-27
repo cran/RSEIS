@@ -21,8 +21,25 @@ getseisinfo<-function(fnames, kind = 1)
       print(paste(sep = " ", "file does not exist", fn))
       next
     }
-    else {
-    }
+    else
+      {
+      }
+
+
+    if(kind==0)
+      {
+        DAT  = list()
+        load(fn)
+        aunits = "volts"
+        DAT$units = aunits
+        
+        GIVE[[i]] = DAT
+        
+        next
+
+      }
+    
+    
     barfa = .C("CALL_JSETSEIS", PACKAGE = "RSEIS", infile,
       as.integer(kind), as.integer(n), as.double(dt), as.integer(DATIM),
       as.double(sec), thesta, thecomp)

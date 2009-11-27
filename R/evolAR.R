@@ -13,17 +13,24 @@ function(a, dt=0, numf=1024,  pord = 100, Ns=0, Nov=0, fl=0, fh=10 )
 
 ##  numf=1024;  pord = 100 ;   Ns=250; Nov=240; fl=0; fh=1/(2*dt);
 
-       
+    Ns = floor(Ns)  
     NT = length(a);
     nyquistf = 1/(2*dt)
-
     Nfft =  numf
+
     if(Nov<1)
       {
         Nov = floor(Ns - 0.1*Ns);
       }
-      kcol = floor( (NT-Nov)/(Ns-Nov));
-   
+    kcol =floor( (NT-floor(Nov) )/(Ns-floor(Nov)))
+
+    if(kcol<Ns)
+      {
+        Ns = kcol
+        Nov = floor(Ns-0.1*Ns)
+         kcol =floor( (NT-floor(Nov) )/(Ns-floor(Nov)))
+      }
+ 
     min1 = Nfft%%2;
     if(min1 == 0)
       {
@@ -61,7 +68,7 @@ function(a, dt=0, numf=1024,  pord = 100, Ns=0, Nov=0, fl=0, fh=10 )
         tem = a[ibeg[i]:iend[i]]
         tem = tem-mean(tem, na.rm=TRUE)
 
- aem =autoreg(tem, numf=numf , pord = 100, PLOT=FALSE,  f1=fl, f2=fh)
+ aem =autoreg(tem, numf=numf , pord = pord, PLOT=FALSE,  f1=fl, f2=fh)
 
 ### plot(aem$freq, aem$amp, type='l', log='y')
         
@@ -99,7 +106,7 @@ function(a, dt=0, numf=1024,  pord = 100, Ns=0, Nov=0, fl=0, fh=10 )
 
 
        
-    RET = list(sig=a, dt=dt, numfreqs=numfreqs, wpars=list(Nfft=numfreqs,  Ns=Ns, Nov=Nov, fl=fl, fh=fh), DSPEC=DSPEC, freqs=y, tims=x)
+    RET = list(sig=a, dt=dt, numfreqs=numfreqs, wpars=list(Nfft=numfreqs,  Ns=Ns, Nov=Nov, fl=fl, fh=fh), DSPEC=DSPEC, freqs=y, tims=x, pord=pord)
 
     ## plotevol(RET)
     

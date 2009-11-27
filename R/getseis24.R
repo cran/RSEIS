@@ -21,16 +21,22 @@ getseis24<-function(DB, iyear=2009, iday=1, usta="", acomp="", kind = 1)
     w4 = which(DB$t2 >= at1 & DB$t2 < at2)
 
     if (length(c(w1, w2, w3, w4)) < 1) {
-      print("No Match in DataBase")
+      print("getseis24: No Match in DataBase")
       return()
     }
     wi = unique(c(w1, w2, w3, w4))
     
-    wi = unique(c(w1, w2, w3, w4))
+##     wi = unique(c(w1, w2, w3, w4))
     if (length(wi) < 1) {
+      print("getseis24: No times match this call")
       return()
     }
-    fn1 = DB$fn[wi]
+    fnloc = DB$fn[wi]
+
+    fn1 = paste(sep=".", DB$fn[wi], DB$sta[wi], DB$comp[wi])
+
+
+    
     
     nsta = length(usta)
     if (is.null(acomp))
@@ -44,9 +50,13 @@ getseis24<-function(DB, iyear=2009, iday=1, usta="", acomp="", kind = 1)
       }
     }
     if (length(gi) < 1) {
+
+      print("getseis24: length(gi) < 1")
       return()
     }
-    fn2 = fn1[gi]
+
+    
+    fn2 = fnloc[gi]
 
     ###   read in the data from the SEGY data base and store
     GG = JGET.seis(fn2, kind = kind, PLOT = FALSE)

@@ -1,6 +1,6 @@
 #define SACLEN 632
 #define SAC_DUMMY -12456.
-#define SACLONG long 
+#define SACLONG  int
 
 
 typedef struct {                    

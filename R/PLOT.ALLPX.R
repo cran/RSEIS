@@ -134,6 +134,9 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
       }
 
 
+  ###   print(paste(sep=" ", "PLOT.ALLPX", pcol))
+
+
     #############  plot main pick
     if(FILL==TRUE)
       {

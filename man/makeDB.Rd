@@ -5,19 +5,44 @@
 \description{Create a seismic Waveform Database}
 
 \usage{
-makeDB(path, pattern, kind = 1)
+makeDB(path, pattern, kind = 1, Iendian=1, BIGLONG=FALSE)
 }
 \arguments{
   \item{path}{Path to directory where files and directories exist}
   \item{pattern}{pattern for listing of files}
-  \item{kind}{kind of data: segy=1; sac=2}
+  \item{kind}{kind of data: R(DAT)=0, segy=1; sac=2}
+  \item{Iendian}{default=1Endian-ness of the data: 1,2,3: "little", "big", "swap".
+    Default = 1 (little)}
+  \item{BIGLONG}{ logical, TRUE means long=8 bytes
+}
+
+
+  
 }
 \details{
+
+
+  
   The files are typically located in a directory structure
   created by programs like ref2segy, a PASSCAL program for
   downloading data in the field.  Each file contains one seismogram,
   with a header.  makeDB reads in all the headers and
   creates a list of meta-data for later use in RSEIS.
+
+  Uses readBin to extract data in SAC format.
+  user must know what kind of machine the data
+  was created on for I/O purposes.
+  
+
+  If data was created on a little endian machine but
+  is being read on big endian machine, need to call
+  the endian "swap" for swapping.
+
+  If data was created on a machine with LONG=4 bytes,
+  be sure to call the program with BIGLONG=FALSE.
+
+
+  
 }
 \value{
   list:

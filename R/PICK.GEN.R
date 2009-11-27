@@ -205,7 +205,7 @@ fixedbuttons = c("DONE",
      "Pdown", 
      "Pnil", 
      "YPIX", 
-     "WPIX", 
+     "WPIX", "RMS",
      "EDIX", 
  "NOPIX", 
       "REPIX", 
@@ -1097,7 +1097,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
               
               if(is.na(RAT$eye) | is.null(RAT$eye) ) RAT$eye=Kaol/2
               
-              araict = GETARAIC(fy, deltat=deltat, T1=RAT$eye, Mar=8, O1=2, O2=0.2, WW=2,   PLOT=FALSE)
+              araict = GETARAIC(fy, DT=deltat, T1=RAT$eye, Mar=8, O1=2, O2=0.2, WW=2,   PLOT=FALSE)
               print(araict)
               
               
@@ -1231,7 +1231,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
               
               if(is.na(RAT$eye) | is.null(RAT$eye) ) RAT$eye=Kaol/2
               
-              araict = GETARAIC(Xamp, deltat=deltat, T1=RAT$eye, Mar=8, O1=2, O2=0.2, WW=2,   PLOT=FALSE)
+              araict = GETARAIC(Xamp, DT=deltat, T1=RAT$eye, Mar=8, O1=2, O2=0.2, WW=2,   PLOT=FALSE)
 
 
               if(length(araict)>0 )
@@ -2702,6 +2702,33 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
         }
 
 #############################################################################
+
+
+      if(K[Nclick]==match("Plines", BLABS, nomatch = NOLAB))
+        {  #########Plines
+
+          if(zenclick>=2)
+            {
+              
+              kix = legitpix(sel, zloc, zenclick)
+
+              
+              ypick =  kix$ypick
+              ppick = kix$ppick
+
+              segments(ppick, rep(0, length(ppick)) , ppick, rep(1, length(ppick))  , col="red")
+              
+            }
+          else
+            {
+              cat("Pinfo WARNING: no pick or trace has been selected:", sep="\n")
+              
+            }
+          K[Nclick] = 0
+          zloc = list(x=NULL, y=NULL) 
+        }
+
+   
        ################### 
       if(K[Nclick]==match("XCOR", BLABS, nomatch = NOLAB))
         {
@@ -3860,6 +3887,174 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
             }
 
         }
+          zloc = list(x=NULL, y=NULL) 
+          K[Nclick] = 0
+        }
+
+
+
+
+
+
+       ################### 
+      if(K[Nclick]==match("RMS", BLABS, nomatch = NOLAB))
+        {   ###  RMS button
+##############  rms window picks - these must be done in pairs.
+###   the first click determines the station comp,
+########    the second the window length
+          if(zenclick>=2)
+            {
+              zappa = match(BLABS[K[Nclick]], BLABS)
+              col = colpix[which(pnos=="WPIX")]
+              
+              azap = "WPIX"
+              kzap = substr(azap, 1, 1)
+
+
+              kix = legitpix(sel, zloc, zenclick)
+              ypick =  kix$ypick
+              ppick = kix$ppick
+
+              myinfo = list(yr=NH$info$yr, jd=NH$info$jd, hr=NH$info$hr, mi=NH$info$mi, sec=rep(0, times=length(NH$info$mi)))
+
+              if(length(ypick)>0)
+                {   ############   length(ypick) proceed only if have legitimate picks
+
+                  ipick = sel[ypick]
+                  
+######### WPIX must come in pairs, for a pick plus a duration
+
+                  npick = length(ypick)
+#####        
+                  
+                  pairseq = seq(from=1, to=npick-1, by=2)
+                  
+#####    Output1 = vector(length=length(pairseq))
+                  Output2 = vector(length=length(pairseq))
+                  for(iz in  pairseq)
+                    {   ###############   loop over pairs of picks
+
+                      i1 = ipick[iz]
+                      i2 = ypick[iz]
+
+                      ################  this is the time in sec from the beginning of the trace
+                      asec = NH$info$sec[i1]+NH$info$msec[i1]/1000+NH$info$t1[i1]-NH$info$off[i1]+ppick[iz]
+                      if(npick<2)
+                        {
+                          bsec = asec+5
+                        }
+                      else
+                        {
+
+                          iz1 = ipick[iz+1]
+                          bsec = NH$info$sec[iz1]+NH$info$msec[iz1]/1000+NH$info$t1[iz1]-NH$info$off[iz1]+ppick[iz+1]
+
+                        }
+
+                      
+                      rsig1 = NH$JSTR[[i1]]
+                      
+                      t1 = seq(from=0, length=length(rsig1), by=NH$dt[i1])
+
+                      which.time = which( t1>ppick[iz]  & t1< ppick[iz+1] )
+                      rwhich = range(which.time)
+                      
+                      rsig  = rsig1[ which.time ]
+                      
+                      rsig = rsig-mean(rsig)
+                        
+                      rms = sqrt( mean( rsig^2 ))
+
+                      cat(paste(sep=" ", "#########", iz, i1, format(ppick[iz]), format(ppick[iz+1]),
+                                format(asec) , format(bsec), length(rsig), format(rms) ), sep="\n" )
+
+                      Output2[iz] = paste(sep=" ",
+                               NH$STNS[i1],
+                               NH$COMPS[i1] ,
+                               myinfo$yr[i1],
+                               myinfo$jd[i1],
+                               myinfo$hr[i1],
+                               myinfo$mi[i1],
+                               format(asec),
+                               format(bsec),
+                               format(rms))
+                      
+                      
+                     ####### if(FALSE)
+                     #######   {
+                     #######     cat(paste(sep=" ","#########   To check this calculation, try this:"), sep="\n" )
+                     #######     cat(paste(sep=" ", "gsel=", i1), sep="\n")
+                     #######     cat(paste(sep=" ", "pXindex=c(", rwhich[1], ",", rwhich[2], ")"), sep="\n")
+                     #######     cat(paste(sep=" ", "TEMPsig1=GH$JSTR[[gsel]]"), sep="\n")
+                     #######     cat(paste(sep=" ", "TEMPsig1=TEMPsig1[pXindex[1]:pXindex[2]]"), sep="\n")
+                     #######     cat(paste(sep=" ", "TEMPsig1=TEMPsig1-mean(TEMPsig1)"), sep="\n")
+                     #######     cat(paste(sep=" ", "test=sqrt(mean(TEMPsig1^2))"), sep="\n")
+                     #######     cat(paste(sep=" ", "pwin=c(", ppick[iz], ",", ppick[iz+1], ")"), sep="\n")
+                     #######   }
+                                       
+                      dur = diff(c(asec, bsec) )
+                 ###     print(paste(' ', "wpix diag", NPX, iz, i1, i2, STNS[i2], COMPS[i2], asec, bsec, dur))
+
+                      
+                      if(is.null(dur)) dur = 0
+####  if(dur<=0) dur=1
+
+                      
+                      NPX = NPX+1
+                      ycol = colpix[zappa]
+                      if(is.na(ycol)) { ycol = rgb(0,0,1) }
+
+
+                      Nn = names(WPX)
+                      WPX =rbind(WPX, rep(NA, length(Nn)))
+                      
+
+                      WPX$tag[NPX]=paste(sep=".",NH$STNS[i1],  NH$COMPS[i1])
+                      WPX$name[NPX]=NH$STNS[i1]
+                      WPX$comp[NPX]=NH$COMPS[i1]
+                      WPX$c3[NPX]=NH$OCOMPS[i1]
+                      WPX$phase[NPX]=kzap
+                      
+                      WPX$err[NPX]=0.05
+                      WPX$pol[NPX]=0
+                      WPX$flg[NPX]=0
+                      WPX$res[NPX]=dur
+                      WPX$yr[NPX]=NH$info$yr[i1]
+                      WPX$mo[NPX]= NH$info$mo[i1]
+                      WPX$dom[NPX]=NH$info$dom[i1]
+                      WPX$jd[NPX]=NH$info$jd[i1]
+                      WPX$hr[NPX]=NH$info$hr[i1]
+                      WPX$mi[NPX]=NH$info$mi[i1]
+                      WPX$sec[NPX]=asec
+                      WPX$col[NPX]=ycol
+                      WPX$onoff[NPX] = 1 
+
+                      
+                      NADDPIX = NADDPIX+1
+                      
+                      ##   
+                    }
+
+
+                  PLOT.ALLPX(Torigin, STNS, COMPS, WPX,  FILL=FALSE,  PHASE="V", FORCE=FALSE)
+
+                  #######################   done with loop:  print results
+                  cat("############", sep="\n")
+                  cat( "OUTrms =scan(file=\"\", what=list(stn=\"\", comp=\"\", yr=0, jd=0, hr=0, mi=0, t1=0, t2=0, rms=0))", sep="\n" ) 
+                  for(iz in  pairseq)
+                    {
+                      cat(Output2[iz], sep="\n")
+                    }
+                  cat("\n" )
+                  cat("######", sep="\n")
+                }
+              else
+                {
+                  print("not enough legitimate picks, need at least 2 or more")
+
+                }
+
+            }
           zloc = list(x=NULL, y=NULL) 
           K[Nclick] = 0
         }

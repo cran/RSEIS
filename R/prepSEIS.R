@@ -24,6 +24,24 @@ function(GG)
       ### gstas[i] = GG[[i]]$sta
       dt = round(100000*GG[[i]]$DATTIM$dt)/100000
       n = length(GG[[i]]$amp)
+
+      if(is.null(GG[[i]]$DATTIM$jd))
+         {
+           jd =getjul(GG[[i]]$DATTIM$yr, GG[[i]]$DATTIM$mo,GG[[i]]$DATTIM$dom )
+           GG[[i]]$DATTIM$jd = jd
+
+         }
+      if(is.null(GG[[i]]$DATTIM$mo))
+         {
+           md = getmoday(GG[[i]]$DATTIM$jd, GG[[i]]$DATTIM$yr)
+
+           GG[[i]]$DATTIM$mo = md[1]
+           GG[[i]]$DATTIM$dom = md[2]
+                    
+         }
+
+
+         
       GG[[i]]$DATTIM$dt = dt
 
       eday = EPOCHday(GG[[i]]$DATTIM$yr, jd=GG[[i]]$DATTIM$jd, origyr = eyear )

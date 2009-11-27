@@ -39,7 +39,7 @@ DOsgram<-function(Xamp, DT = 0.008, multi = 1, scale.def =0, TWIN=2, TSKIP=.2, P
 
   Kcol  = seq(from=Nhalf, to=N-Nhalf, by=Nskip)
 
-  print(paste(sep=" ", "Len Kcol=", length(Kcol) ))
+##  print(paste(sep=" ", "Len Kcol=", length(Kcol) ))
   
   if(FALSE)
     {

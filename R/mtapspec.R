@@ -76,6 +76,8 @@ function(a, dt, klen=length(a), MTP=NULL)
 
   
   Rspec=   matrix(unlist(barf[12]), byrow=FALSE, nrow=numfreqs,  ncol=nwin)
+
+  
   invisible(list(dat=a, dt=dt, spec=unlist(barf[8]), dof=unlist(barf[9]),Fv=unlist(barf[10]),Rspec=Rspec, Ispec=Ispec, freq=freq, df=df, numfreqs=numfreqs, klen=klen,   mtm=list(kind=kind, nwin=nwin, npi=npi, inorm=inorm)))
 
 

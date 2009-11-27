@@ -1,12 +1,23 @@
 \name{plotevol}
 \alias{plotevol}
+\alias{blankevol}
+\alias{plotevol2}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Plot Spectrogram}
 \description{
  Plot Spectrogram
 }
 \usage{
-plotevol(DEVOL, log = 0, fl = 0, fh = 10, col = col, ylog = FALSE, ygrid = FALSE, AXE = c(1, 2, 3, 4), CSCALE = FALSE, WUNITS = "Volts", STAMP = NULL, STYLE = "fft")
+plotevol(DEVOL, log = 0, fl = 0, fh = 10, col = col, ylog = FALSE, ygrid
+= FALSE, AXE = c(1, 2, 3, 4), CSCALE = FALSE, WUNITS = "Volts", STAMP =
+NULL, STYLE = "fft")
+
+plotevol2(DEVOL, log = 0, fl = 0, fh = 10, col = col, ylog = FALSE, ygrid
+= FALSE, AXE = c(1, 2, 3, 4), CSCALE = FALSE, WUNITS = "Volts", STAMP =
+NULL, STYLE = "fft", add=FALSE)
+
+
+
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -18,11 +29,16 @@ plotevol(DEVOL, log = 0, fl = 0, fh = 10, col = col, ylog = FALSE, ygrid = FALSE
   \item{ylog}{scale Y-axis by log}
   \item{ygrid}{logical, TRUE=add grid}
   \item{AXE}{sides to add axis}
-  \item{CSCALE}{logical}
+  \item{CSCALE}{logical, TRUE=add color scale}
   \item{WUNITS}{character string for units}
   \item{STAMP}{character string for identification }
   \item{STYLE}{Plotting style.  Default, "fft"=plot half the spectrum
     image , else plot whole spectrum}
+
+  \item{add}{logical, add to existing plot, default=FALSE}
+
+
+  
   
 }
 \details{

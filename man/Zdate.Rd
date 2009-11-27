@@ -1,5 +1,8 @@
 \name{Zdate}
 \alias{Zdate}
+\alias{dateList}
+\alias{dateStamp}
+
 
 \title{Date functions}
 \description{
@@ -7,12 +10,18 @@
 }
 \usage{
 Zdate(info, sel, t1)
+dateList(datevec)
+dateStamp(datelist)
 }
 
 \arguments{
   \item{info}{info structure from trace structure}
   \item{sel}{selection of which ones to extract}
   \item{t1}{ time offset, seconds }
+
+  \item{datevec}{ vector with yr, jd, mo, day, hr, mi, sec  }
+   \item{ datelist}{ output of dateList }
+
 }
 \details{
  Format date stamp for plotting and identification. Used for STAMP.
@@ -30,6 +39,10 @@ data("GH")
 sel= which(GH$COMPS == "V")
 
 ftime = Zdate(GH$info, sel[1:5], 1)
+
+dvec = c(2009, 134, 5, 14, 10, 32, 24.5, 0)
+A = dateList(dvec)
+dateStamp(A)
 
 }
 

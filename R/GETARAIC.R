@@ -1,7 +1,7 @@
 `GETARAIC` <-
-function(z4, deltat=0.008, Mar=8, O1=2, O2=0.2, WW= 2, T1=1 , PLOT=FALSE   )
+function(z4, DT=0.008, Mar=8, O1=2, O2=0.2, WW= 2, T1=1 , PLOT=FALSE   )
   {
-    if(missing(deltat)) {  deltat=0.008 }
+    if(missing(DT)) {  DT=0.008 }
     if(missing(Mar)) {  Mar = 8 }
     if(missing(O1)) { O1=2; }
     if(missing(O2)) { O2=0.2; }
@@ -17,7 +17,7 @@ function(z4, deltat=0.008, Mar=8, O1=2, O2=0.2, WW= 2, T1=1 , PLOT=FALSE   )
       
              
               ary = .C("CALL_ARAIC",  PACKAGE = "RSEIS",
-                as.double(z4), as.integer(Nz4),as.double(deltat), as.integer(Mar),
+                as.double(z4), as.integer(Nz4),as.double(DT), as.integer(Mar),
                 as.integer(T1), as.double(O1), as.double(O2), as.double(WW), as.double(aout)) 
 
               kaic = ary[[9]]

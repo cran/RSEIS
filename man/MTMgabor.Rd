@@ -7,11 +7,13 @@
   Time varying Auto-Regressive Spectrum (Gabor Transform) using MTM
 }
 \usage{
-MTMgabor(a, dt = 0, numf = 1024, Ns = 0, Nov = 0, fl = 0, fh = 10)
+MTMgabor(a, dt = 0, ppoint=95 , numf = 1024, Ns = 0, Nov = 0, fl = 0, fh = 10)
 }
 \arguments{
   \item{a}{signal}
   \item{dt}{sample rate interval (s)}
+  \item{ppoint}{percent confidence for F-test (default=95) }
+  
   \item{numf}{Number of frequencies}
   \item{Ns}{Number of sample in sub-window }
   \item{Nov}{Number of sample to overlap}
@@ -37,15 +39,17 @@ List
 \item{numfreqs}{Number of frequencies output}
 \item{wpars}{input parameters list(Nfft=numfreqs,  Ns=Ns, Nov=Nov, fl=fl, fh=fh)}
 \item{DSPEC}{spectrum image}
-\item{HIMAT}{matrix with high values of F-test at 90 percent confidence }
+\item{HIMAT}{matrix with high values of F-test at 90 percent confidence
+}
+\item{DOFMAT}{Matrix image of degrees of freedom}
+\item{FVMAT}{Matrix image of F-test values}
+\item{kdof}{test degrees of freedom=2*nwin-2}
+
+\item{ppoint}{percentage point for confidence bounds}
+
 \item{freqs}{output frequencies (y axis)}
 \item{tims}{output times (x-axis) }
 
-
-
-
-
-  
 }
 \references{Percival and Walden;
 

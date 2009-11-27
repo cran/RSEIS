@@ -1,10 +1,13 @@
-doGABOR.AR<-function(Xamp, DT = 0.008, multi = 1, scale.def =0, TWIN=2, TSKIP=.2, PCTTAP=0.05, PLOT=TRUE)
+doGABOR.AR<-function(Xamp, DT = 0.008, multi = 1, scale.def =0, TWIN=2, TSKIP=.2, PCTTAP=0.05, pord=100, PLOT=TRUE)
 {
   if(missing(multi)) { multi= 1 }
   if(missing(scale.def)) { scale.def =0 }
   if(missing(TWIN)) { TWIN=2 }
   if(missing( TSKIP)) {TSKIP=.2}
   if(missing(PCTTAP)) {PCTTAP=0.05}
+
+  if(missing(pord))  { pord = 100}
+  
   if(missing(PLOT)) {PLOT=TRUE   }
 
   STAMP = NULL
@@ -40,7 +43,7 @@ doGABOR.AR<-function(Xamp, DT = 0.008, multi = 1, scale.def =0, TWIN=2, TSKIP=.2
 
   Kcol  = seq(from=Nhalf, to=N-Nhalf, by=Nskip)
 
-  print(paste(sep=" ", "Len Kcol=", length(Kcol) ))
+  ##  print(paste(sep=" ", "Len Kcol=", length(Kcol) ))
   
   if(FALSE)
     {
@@ -57,7 +60,7 @@ doGABOR.AR<-function(Xamp, DT = 0.008, multi = 1, scale.def =0, TWIN=2, TSKIP=.2
   Nfft=4096
 
   ##   DEV = evolfft(Xamp, DT , Nfft=Nfft, Ns=NS , Nov=NOV,  fl=fl, fh=fh, pcttap=PCTTAP  )
-  MDEV = evolAR(Xamp, DT , numf =Nfft , Ns = NS, Nov = NOV, fl = fl, fh = fh)
+  MDEV = evolAR(Xamp, DT , numf =Nfft ,  pord = pord, Ns = NS, Nov = NOV, fl = fl, fh = fh)
 
 
   if(PLOT) PE = plotevol(MDEV, log=scale.def, fl=flshow, fh=fhshow, col=pal, ygrid=gridon, STAMP=STAMP, STYLE="ar")

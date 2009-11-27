@@ -1,4 +1,4 @@
-doGABOR.MTM<-function(Xamp, DT = 0.008, multi = 1, scale.def =0, TWIN=2, TSKIP=.2, PCTTAP=0.05, PLOT=TRUE)
+doGABOR.MTM<-function(Xamp, DT = 0.008, ppoint=95, multi = 1, scale.def =0, TWIN=2, TSKIP=.2, PCTTAP=0.05, PLOT=TRUE)
 {
   if(missing(multi)) { multi= 1 }
   if(missing(scale.def)) { scale.def =0 }
@@ -6,6 +6,7 @@ doGABOR.MTM<-function(Xamp, DT = 0.008, multi = 1, scale.def =0, TWIN=2, TSKIP=.
   if(missing( TSKIP)) {TSKIP=.2}
   if(missing(PCTTAP)) {PCTTAP=0.05}
   if(missing(PLOT)) {PLOT=TRUE   }
+  if(missing(ppoint)) {  ppoint=95 }
 
   STAMP = NULL
   
@@ -40,7 +41,7 @@ doGABOR.MTM<-function(Xamp, DT = 0.008, multi = 1, scale.def =0, TWIN=2, TSKIP=.
 
   Kcol  = seq(from=Nhalf, to=N-Nhalf, by=Nskip)
 
-  print(paste(sep=" ", "Len Kcol=", length(Kcol) ))
+ ##  print(paste(sep=" ", "Len Kcol=", length(Kcol) ))
   
   if(FALSE)
     {
@@ -57,7 +58,7 @@ doGABOR.MTM<-function(Xamp, DT = 0.008, multi = 1, scale.def =0, TWIN=2, TSKIP=.
   Nfft=4096
 
   ##   DEV = evolfft(Xamp, DT , Nfft=Nfft, Ns=NS , Nov=NOV,  fl=fl, fh=fh, pcttap=PCTTAP  )
-  MDEV = MTMgabor(Xamp, DT , numf =Nfft , Ns = NS, Nov = NOV, fl = fl, fh = fh)
+  MDEV = MTMgabor(Xamp, DT , ppoint=ppoint,  numf =Nfft , Ns = NS, Nov = NOV, fl = fl, fh = fh)
 
 ###     MDEV$DSPEC[]
 
