@@ -21,7 +21,7 @@ D2 = showdatetime(RD[[2]])
    ##  print(D1)
    ##  print(D2)
    
-    invisible(list(usta=usta, ucomp=ucomp, start=D1, end=D2))
+    invisible(list(usta=usta, ucomp=ucomp, start=D1, end=D2, at1=times[1], at2=times[2] ))
 
 
   }

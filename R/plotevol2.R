@@ -1,5 +1,5 @@
 `plotevol2` <-
-function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,2,3,4), CSCALE=FALSE, WUNITS="Volts", STAMP=NULL, STYLE="fft",  add=FALSE  )
+function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,2,3,4), CSCALE=FALSE, WUNITS="Volts", STAMP=NULL, STYLE="fft",  add=FALSE, IMAGE=TRUE, WIG=TRUE  )
   {
     if(missing(log)) { log = 0 }
     if(missing(fl)) { fl=DEVOL$wpars$fl}
@@ -14,6 +14,8 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
     if(missing(STYLE)) {  STYLE="fft"   }
 
     if(missing(add)) { add=FALSE  }
+   if(missing(IMAGE)) { IMAGE=TRUE }
+   if(missing(WIG)) { WIG=TRUE  }
 
    ## if(!exists(col))  {  col=rainbow(50) }
     if(length(col)<1) {  col=rainbow(50) }
@@ -81,8 +83,11 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
         plot(range(tim), c(0,1), axes=FALSE, type='n', xlab='', ylab='')
       }
     print(range( why))
-    
+
+    if(IMAGE)
+      {
     image(x,why,ImPlot, add = TRUE , col = col, xlab='time', ylab='freq', axes=FALSE)
+  }
 
     if(add==TRUE) { return(NULL) }
     
@@ -91,7 +96,7 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
      print(paste(sep=" ", "in plotevol...2  ADD=", add))
     print(range( trace))
        
-    lines(tim, trace)
+    if(WIG) lines(tim, trace)
 
     ##  sy = RESCALE( a, perc , 1.0  , min(a), max(a) )
     Tdiff = max(tim, na.rm=TRUE)-min(tim, na.rm=TRUE)
@@ -192,8 +197,10 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
 
     if(CSCALE==TRUE)
       {
-        
-        HOZscale( ImPlot, col, units=units, s1=0.4, s2=0.95)
+        if(IMAGE)
+          { 
+            HOZscale( ImPlot, col, units=units, s1=0.4, s2=0.95)
+          }
         
       }
     

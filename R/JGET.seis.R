@@ -47,7 +47,8 @@ function(fnames, kind=1, Iendian=1, BIGLONG=FALSE , HEADONLY=FALSE , PLOT=FALSE)
       if(kind==0)
         {
           DAT = list()
-          load(fn)
+          GED  = load(fn)
+          assign("DAT", get(GED))
           GIVE[[i]] = DAT
           next
         }

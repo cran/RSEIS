@@ -14,7 +14,7 @@ NULL, STYLE = "fft")
 
 plotevol2(DEVOL, log = 0, fl = 0, fh = 10, col = col, ylog = FALSE, ygrid
 = FALSE, AXE = c(1, 2, 3, 4), CSCALE = FALSE, WUNITS = "Volts", STAMP =
-NULL, STYLE = "fft", add=FALSE)
+NULL, STYLE = "fft", add=FALSE, IMAGE=TRUE, WIG=TRUE )
 
 
 
@@ -37,7 +37,9 @@ NULL, STYLE = "fft", add=FALSE)
 
   \item{add}{logical, add to existing plot, default=FALSE}
 
-
+  \item{IMAGE}{logical, whether to plot the image or not}
+  \item{WIG}{logical, whether to plot the wiggle or not}
+   
   
   
 }
@@ -47,6 +49,12 @@ NULL, STYLE = "fft", add=FALSE)
   ff STYLE="fft" then
   the image matrix is reduced IMAT = t(DSPEC[1:(numfreqs/2),])  otherwise
   IMAT = t(DSPEC).
+
+  
+  plotevol2  is used to add secondary spectra to ones already plotted,
+  or to manage graphical paramters, or create other plots that match
+  the graphical presentation of the spectrogram (plots of frequency
+  versus time, but not images)
   
 }
 \value{
