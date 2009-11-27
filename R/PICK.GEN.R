@@ -97,6 +97,11 @@ if(is.logical(sel)) { sel = which(sel) }
     {
       
       YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+
+      YN$STNS = NH$STNS[sel]
+      YN$COMPS = NH$COMPS[sel]
+      YN$notes = NH$KNOTES[sel]
+      
       if(NPX>0)
         {
           PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix)
@@ -142,79 +147,20 @@ if(is.logical(sel)) { sel = which(sel) }
 
 
 fixedbuttons = c("DONE",
-"QUIT", 
-"NEXT", 
-"PREV",
-"HALF",
-"S1", 
-"S2", 
-"MARK", 
-"DOC", 
-"restore", 
-"refresh", 
-"zoom out", 
-"zoom in", 
-"Left", 
- "Right", 
-"SCALE", 
- "SHOWALL", 
-"SHOWSEL", 
-"saveFN", 
-"FLIP", 
-"TR_INFO", 
-"Postscript",
-"PNG",
-  
-"AUTOP",
-"AUTOPALL", 
-"DETECT", 
- "MAP", 
-"XTR", 
- "SIG", 
-"SPEC.old", 
- "ASCII", 
- "AMPL", 
-  "TRNAMPL",
-  "SPEC", 
-"SGRAM", 
- "WLET", 
-"FILT", 
-"UNFILT", 
- "BRUNE", 
-  "DETAIL", 
-   "PTS", 
-"MMARKS", 
-  "PMOT", 
- "STERNET", 
- "GTAZI", 
-"ENVLP", 
-   "WINFO", 
-   "Pinfo", 
-     "XCOR", 
-"PHLAG", 
-   "3COMP", 
- "Predict1D", 
-   "SavePF", 
-     "SavePIX", 
-   "LQUAKE", 
-    "PickWin", 
-     "Ppic", 
-    "Spic", 
-   "Apic", 
-     "Pup",   
-     "Pdown", 
+"QUIT", "NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "restore", 
+"refresh", "zoom out", "zoom in", "Left",  "Right", "SCALE",  "SHOWALL",
+  "SHOWSEL", "saveFN", "FLIP", "TR_INFO", "Postscript","PNG",
+  "AUTOP","AUTOPALL", "DETECT",  "MAP", "XTR",  "SIG", 
+"SPEC.old",  "ASCII",  "AMPL",   "TRNAMPL",  "SPEC", "SGRAM",  "WLET",
+  "FILT","UNFILT",  "BRUNE",   "DETAIL",   "PTS", "MMARKS",   "PMOT",
+  "STERNET", "GTAZI", "ENVLP", "WINFO", "Pinfo", "XCOR", 
+"PHLAG", "3COMP", "Predict1D",   "SavePF", "SavePIX", "LQUAKE", 
+ "PickWin", "Ppic", "Spic", "Apic", "Pup",   "Pdown", 
      "Pnil", 
-     "YPIX", 
-     "WPIX", "RMS",
-     "EDIX", 
- "NOPIX", 
-      "REPIX", 
+"YPIX", "WPIX", "RMS","EDIX", 
+ "NOPIX", "REPIX", 
        "ADDBUTTS")
      
-
-
-  
-
     
   stdlab =  STDLAB
 
@@ -236,6 +182,18 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
         "magenta1", "lightsalmon3", "darkcyan", "darkslateblue",
         "chocolate4", "goldenrod4", "mediumseagreen")
 
+
+APAL=c("black","darkmagenta","forestgreen","blueviolet",
+  "tan3","lightseagreen","deeppink","cyan3","bisque3",
+  "darkcyan","darkred","firebrick3","rosybrown4","royalblue3",
+  "darkblue","red2","violetred3","springgreen3","darkorange4",
+  "palevioletred3","mediumpurple3","tomato","dodgerblue1",
+  "olivedrab4","yellow4","pink4")
+
+  
+
+  
+
 ##   pnos = grep("PIX", BLABS)
    pnos = c( grep("PIX", BLABS), grep("pik", BLABS))
   colabs = rep(1,length(BLABS))
@@ -256,11 +214,11 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
   if(is.null(APIX)==TRUE)
     {
       WPX = list(
-        tag="",
-        name="",
-        comp="",
-        c3="",
-        phase="",
+        tag=NA,
+        name=NA,
+        comp=NA,
+        c3=NA,
+        phase=NA,
         err=0,
         pol=0,
         flg=0,
@@ -310,8 +268,14 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
   
   NUNI = length( UNIsta)
 
+
+
+  
+
   if( identical(NH$pcol , "AUTO") |  is.null( NH$pcol )  )
     {
+
+      
       pcols = rep(rgb(0,0,0), length(NH$dt) )
       pcols[c(grep("1", COMPS), grep("I", COMPS), grep("LD", COMPS) )] = rgb(0,.4,0)
       pcols[c(grep("4", COMPS), grep("V", COMPS), grep("Z", COMPS), grep("v", COMPS), grep("z", COMPS)   )] = rgb(0.4,0,0)
@@ -323,6 +287,13 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
     {
 
      pcols = NH$pcol
+
+     if(is.numeric(pcols))
+       {
+
+         pcols =APAL[pcols] 
+
+       }
 
     }
 
@@ -401,19 +372,20 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
 ###  
   
   YN = YNreplot()
-##################################  determine if we need to plot the pix.
-  ###   they must have numeric seconds
-#####  TE = TRUE
-#####  if(exists("WPX") & length(WPX$sec)>0 )
-#####    {
-#####      TE = !is.na(WPX$sec[1])
-#####    }
-  
-  
- 
-  
-  if(is.numeric(SHOWONLY)) { Sys.sleep(SHOWONLY); return(list(but=NULL, zloc=0, pix=0)) }
-  if(SHOWONLY==TRUE) { return(list(but=NULL, zloc=0, pix=0)) }
+
+  if(is.numeric(SHOWONLY)) {
+
+    
+    Sys.sleep(SHOWONLY);
+    return(list(but=NULL, zloc=0, pix=0, YN=YN))
+
+  }
+  if(SHOWONLY==TRUE) {
+
+    
+    return(list(but=NULL, zloc=0, pix=0, YN=YN))
+
+  }
 
   
   buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
@@ -424,31 +396,13 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
   ###  Get.Screens(2)
   dev.set( MAINdev)
   
-###   if(NPX>0)
- ###       {
-
-  ###        PLOT.WPX(Torigin, STNS, COMPS, WPX, FORCE=forcepix)
-        ##   segments(xpix, ypixA, xpix, ypixB, col=colpix)
-         ##  text(xpix, ypixB, labels=cpixa, col=colpix, pos=4)
-   ###     }
-      
-  
   u = par("usr")
   sloc = list(x=c(u[1],u[2]), y=c(u[3],u[4]))
   zloc =list(x=NULL, y=NULL)
   ppick  = NA
   spick  = NA
   xpick = NA
-#### ftime = Zdate(NH$info, sel[1],0)
-#### mtext( ftime, side = 3, at = 0, line=0.5, adj=0)
-  
-####  title("LEFT 0 Click = done; 1 Click=replot;   2 Click=zoom")
- 
-####  NV = LabelBAR(BLABS)
- ###   zloc = plocator(COL=rgb(1,0.8, 0.8))
 
-###  print("START new.gen")
-  
  zenclick = length(zloc$x)
   
   while(TRUE)
@@ -514,8 +468,6 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
 
         }
      
-  
-      
 ###  print(paste(sep=' ',  Nclick , zenclick) )
 ############   button actions
       if(K[Nclick] == match("DONE", BLABS, nomatch = NOLAB))
@@ -665,9 +617,6 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
         {
           YN = YNreplot()
         
-
-
-
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
           u = par("usr")
           L = length(sloc$x)
@@ -680,8 +629,6 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
           
         }
 
-    
-      
       ###################   ZOOM  OUT  ###########################      
       if(K[Nclick]==match("zoom out", BLABS, nomatch = NOLAB))
         {
@@ -782,6 +729,12 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
          #### ftime = Zdate(NH$info, sel[1], WIN[1])
          ####  mtext( ftime, side = 3, at = WIN[1], line=0.5, adj=0)
 
+             zloc = list(x=NULL, y=NULL)
+        }
+
+      ###################   ZOOM IN   ###########################      
+       if(K[Nclick]==match("ZERO", BLABS, nomatch = NOLAB))
+        {
              zloc = list(x=NULL, y=NULL)
         }
 ###################   button to save in file the names of special files (either to reject or save )
@@ -1025,23 +978,9 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
             }
           else
             {
-             ##   if(exists("FILT") )
-               ##   {
-                  
-               ##     fy = butfilt(Xamp, fl=FILT$fl, fh=FILT$fh, deltat, FILT$type, FILT$proto )
-             ##     }
-            ##    else
-             ##     {
-              
+
                   fy = butfilt(Xamp, fl=FILT$fl, fh=FILT$fh, deltat, FILT$type, FILT$proto )
-                ##   fy = butfilt(Xamp, fl=.2, fh=15, deltat, "HP", "BU" )
-             ##     }
-
-
-              
-              ##     RAT = ratcurve(fy, dt=deltat, fwlen =  175,  bwlen  = 175, PLOT=TRUE)
-
-
+          
               Kaol = length(fy)
               vim = round(pretty(c(100,  Kaol*0.15), n=10))
               
@@ -1108,15 +1047,6 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
                ########  
           
           dev.set( MAINdev)
-          
-          
-          ### print(KPIX)
-         ### dev.set(dev.next())
-          
-          ### plot.ts(Xamp)
-          ### abline(v=KPIX$ind, col=2)
-           ###  dev.set(dev.next())
-
           
           autpix = c(pwin[1]+RAT$ind*NH$dt[ipick], pwin[1]+RAT$eye*NH$dt[ipick], pwin[1]+RAT$mix*NH$dt[ipick], pwin[1]+araict*NH$dt[ipick])
          ###   print(autpix*NH$dt[ipick])
@@ -1250,18 +1180,10 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
               
                       pic1 = recdate(NH$info$jd[i1], NH$info$hr[i1], NH$info$mi[i1], asec, yr=NH$info$yr[i1])
                       
-                    
-
-                      
                       NADDPIX = NADDPIX+1
-                      ##  
-                      
-                      
-                      
+                      #
                     }
                 }
-              
-              
               
               print(araict)
               
@@ -1271,12 +1193,6 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
        zloc = list(x=NULL, y=NULL)
         }
 
-
-
-
-
-
-      
       ###################   AUTO  PICKs   ###########################      
  
       if(K[Nclick]==match("DETECT", BLABS, nomatch = NOLAB) & zenclick>=3)
@@ -1573,10 +1489,6 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
         }
 
 ######################################################################
-######################################################################
-######################################################################
-####### 
-#######  source("PICK.R"); save.image()
 
       if(K[Nclick]==match("ASCII", BLABS, nomatch = NOLAB) & zenclick>=1)
         {  ########ascii
@@ -1656,19 +1568,10 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
          zloc = list(x=NULL, y=NULL) 
         }
 
-    
-      
-######################################################################
-######################################################################
-######################################################################
-
 ######################################################################
 ########  FUJITA-SAN: here  I added inb code for amplitude analysis
 
-
-      ###################   AMPLITUDE ANALYSIS   ###########################      
- ####### 
-#######  source("PICK.R"); save.image()
+      ###################   AMPLITUDE ANALYSIS   ###########################   
 
   if(K[Nclick]==match("AMPL", BLABS, nomatch = NOLAB) & zenclick>=1)
         {  #####AMPL
@@ -1757,11 +1660,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
         }
 
 ################################################
-################################################
-################################################
 ###################   ternary filtered AMPLITUDE ANALYSIS   ###########################      
- ####### 
-#######  source("PICK.R"); save.image()
 
   if(K[Nclick]==match("TRNAMPL", BLABS, nomatch = NOLAB) & zenclick>=1)
     {
@@ -1890,9 +1789,6 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
 ################################################
 ################################################
 ################################################
-
-
-
       if(K[Nclick]==match("SPEC", BLABS, nomatch = NOLAB) & zenclick>=1)
         {
          ###  u = par("usr")
@@ -1957,14 +1853,10 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
 
               if(length(a$y)>0)
                  {
-### get(getOption("device"))(width=10, height=10)
                    dev.new(width=10, height=10)
                    
-### X11(width=10, height=10)
                    f1 = 0.1
                    f2 = floor(0.33*(1/NH$dt[ipick]))
-                   
-###  length(a$y)
                    
                  ###  oop=par(no.readonly = TRUE)
                  ###  par(mfrow=c(length(a$y), 1) )
@@ -2038,10 +1930,6 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
 
           SPECT.drive(Xamp, DT=NH$dt[ipick], STAMP=ftime)
 
-        ###  DEV = evolfft(Xamp,NH$dt[ipick] , Nfft=4096, Ns=250 , Nov=240,  fl=0, fh=15  )
-
-        
-         ###  X11()
         ###   plotevol(DEV, log=1, fl=0, fh=15, col=rainbow(50))
            }
            else
@@ -2096,14 +1984,9 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
 
          ###  smallex = NH$ex[ NH$ex > pwin[1] & NH$ex <pwin[2]]
           
-          ###X11()
-          ###  plot.ts(Xamp)
-          ### wlet.do(Xamp, NH$dt[ipick], noctave=7, zscale=3,  col=terrain.colors(100))
-
           if(require("Rwave")==TRUE)
             {
-              
-              
+            
               wlet.drive(Xamp, NH$dt[ipick], STAMP=ftime)
             }
           else
@@ -2140,8 +2023,6 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
 
            if(!is.null(Fdef))
              {
-
-             
 
            if(Fdef$type=="None")
              {
@@ -2278,7 +2159,7 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
           ##  dev.off()
           NH$KNOTES[ipick] = paste(sep=" ", "DT", NH$KNOTES[ipick])
           dev.set( MAINdev)
-#######  source("/home/lees/Progs/R_stuff/PICK.R")
+
            zloc = list(x=NULL, y=NULL) 
         }
  ###########################      
@@ -2516,8 +2397,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
           
         }
 
-
-                        ###################   Window Information   ###########################      
+###################   Window Information   ###########################      
  
       if(K[Nclick]==match("WINFO", BLABS, nomatch = NOLAB))
         {
@@ -2763,8 +2643,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
               temp =  famp[ ex > pwin[1] & ex <pwin[2]]
               Xamp2 =  temp
               
-             ### X11()
-              ###get(getOption("device"))()
+             
               dev.new()
 
               ########## pshift = getphaselag2(Xamp1, Xamp2, NH$info$dt[ipick[1]] , PLOT=TRUE)
@@ -2813,9 +2692,6 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
               temp =  famp[ ex > pwin[1] & ex <pwin[2]]
               Xamp2 =  temp
               
-              ###X11()
-              ###
-             ### get(getOption("device"))()
               ###
               dev.new()
               pshift = getphaselag2(Xamp1, Xamp2,  DT=NH$info$dt[ipick[1]],  frange=c(5, 15),  PLOT=TRUE)
@@ -2854,8 +2730,8 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
               
               if(length(ma==3))
                 {
-##### X11(width = 12, height = 7)
-#####get(getOption("device"))(width = 12, height = 7)
+##### 
+#####
                   dev.new(width = 12, height = 7)
                   if(length(zloc$x)>=3)
                     {
@@ -2869,12 +2745,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
                   PICK.GEN(NH, APIX=WPX, sel=ma, WIN=pwin, STDLAB=STDLAB ,SHOWONLY = FALSE, TIT=TIT)
                   dev.set( MAINdev)
                 }
-              
-
-              
-              ## X11()
-              
-              ## dev.set( MAINdev)
+             
             }
           else
             {
@@ -2884,12 +2755,6 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
           K[Nclick] = 0
           zloc = list(x=NULL, y=NULL) 
         }
-      
-      
-
-            ########  source("PICK.R") ; save.image()
-#############################################################################
-       ###################
 
 
        if(K[Nclick]==match("Predict1D", BLABS, nomatch = NOLAB))
@@ -3169,21 +3034,19 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
         ################### 
       if(K[Nclick]==match("PickWin", BLABS, nomatch = NOLAB))
         {
-          
-         
-
-  kix = legitpix(sel, zloc, zenclick)
-      ypick =  kix$ypick
-      ppick = kix$ppick
-      
-
-          
+          kix = legitpix(sel, zloc, zenclick)
+          ypick =  kix$ypick
+          ppick = kix$ppick
+                
           if(length(ppick)>0)
             {
             
               ipick = sel[ypick]
-              cat(paste(sep=" ", ypick, ipick), sep="\n")
-              print(ipick)
+
+              ipick = ipick[length(ipick)]
+              
+             ## cat(paste(sep=" ", ypick, ipick), sep="\n")
+             ## print(ipick)
               ##
               
               ma = which(!is.na(match( NH$STNS, NH$STNS[ipick])))
@@ -3237,7 +3100,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
               
               
               PLAB=c( "Ppic", "Spic", "Apic",  "Pup", "Pdown", "Pnil", "AUTOP", "NOPIX", "EDIX", "REPIX")
-              PICKLAB = c("DONE", "zoom out", "refresh", "restore", "FILT", "UNFILT", "Pinfo", "WINFO")
+              PICKLAB = c("DONE", "zoom out","zoom in", "refresh", "restore", "FILT", "UNFILT", "Pinfo", "WINFO")
               
               stit = NH$STNS[ma[1]]
               ##  SWP = selAPX(WPX,  NH$STNS[ma[1]], icomp=NULL )
@@ -3261,13 +3124,19 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
               
               ##
 ####    print(cbind(WPX$name, WPX$comp, WPX$phase, WPX$onoff))
-              
+              NPX = length(WPX$name)
               print(paste(sep=' ', "DONE with PICKWIN", NPX))
               dev.set( MAINdev)
+
+              
                YN = YNreplot()
            
               buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
-              PLOT.ALLPX(Torigin, STNS, COMPS, PHASE=PHASE, WPX, FORCE=forcepix)
+              ## PLOT.ALLPX(Torigin, STNS, COMPS, PHASE=PHASE, WPX, FORCE=forcepix)
+
+              ## NPX = length(WPX$name)
+
+              
             }
           K[Nclick] = 0
           zloc = list(x=NULL, y=NULL) 
@@ -3292,9 +3161,11 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
               
 ###        abline(v=ppick, col=4)
               
-            
               ipick = sel[ypick]
-              
+
+              ipick = ipick[1]
+
+            
                print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick],
                       NH$info$mi[ipick], "sta=", NH$STNS[ipick], "comp=", NH$COMPS[ipick] ))
 
@@ -3319,7 +3190,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
               ###########   this looks like a bug./....
                
               iseek = which(WPX$phase=="P" & WPX$name==NH$STNS[ipick] &  WPX$comp==NH$COMPS[ipick])
-            ####  print(paste(sep=" ", "ISEEK",  iseek, length(iseek) ))
+            ###  print(paste(sep=" ", "ISEEK",  iseek, length(iseek) ))
               
               if(length(iseek)==1)
                 {
@@ -3399,7 +3270,10 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
           
           
           ipick = sel[ypick]
+          ipick = ipick[1]
+        
           
+
           print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick],
                       NH$info$mi[ipick], "sta=", NH$STNS[ipick], "comp=", NH$COMPS[ipick] ))
           
@@ -3501,7 +3375,10 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
           
          
           ipick = sel[ypick]
-              
+          ipick = ipick[1]
+         
+
+          
           print(paste(sep=" ", "PICK=", NH$info$yr[ipick], NH$info$jd[ipick], NH$info$hr[ipick],
                       NH$info$mi[ipick], "sta=", NH$STNS[ipick], "comp=", NH$COMPS[ipick] ))
           
@@ -4298,6 +4175,10 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
   
   
   but=BLABS[K[Nclick]]
+
+
+  whirid = which( WPX$name==NA & WPX$comp==NA & WPX$phase==NA )
+  WPX = WPX[-whirid, ]
   RETP = list(but=but, sloc=sloc, WPX=WPX, BRUNINFO=BRUNINFO, DETLINFO=DETLINFO,  mark=mark, PUSHED=PushK)
   
   

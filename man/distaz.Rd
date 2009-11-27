@@ -1,49 +1,82 @@
 \name{distaz}
 \alias{distaz}
-
-\title{Distance-Azimuth from event source to receiver station}
+\title{Distance and Azimuth from two points }
 \description{
-  Calculates the distance in km, degrees and the azimuth and back
-  azimuth from station to source
+  Calculate distance, Azimuth and Back-Azimuth from two points on Globe.
 }
 \usage{
 distaz(olat, olon, tlat, tlon)
 }
-
 \arguments{
-  \item{olat}{Source (origin) latitude}
-  \item{olon}{Source (origin) longitude}
-  \item{tlat}{Station (receiver) latitude}
-  \item{tlon}{Station (receiver) longitude}
+  \item{olat}{origin latitude, degrees }
+  \item{olon}{origin longitude, degrees }
+  \item{tlat}{target latitude, degrees }
+  \item{tlon}{target longitude, degrees  }
 }
 
 \value{
-  \item{del}{Delta (degrees)}
-  \item{az}{azimuth, degrees}
-  \item{baz}{back-azimuth, degrees}
-  \item{dist}{distance, km}
-  \item{err}{ error flag, 0=failure, 1=success }
+  List:
+  \item{del}{Delta, angle in degrees}
+  \item{az}{Azimuth, angle in degrees}
+  \item{baz}{back Azimuth, (az+180) in degrees}
+  \item{dist}{distance in km}
+  \item{err}{0 or 1, error flag.  0=error, 1=no error, see details}
   
 }
+\details{
+
+  
+  Program is set up for one origin (olat, olon) pair and many
+  target (tlat, tlon) pairs given as vectors.
+
+  If multiple olat and olon are given, the program returns a list
+  of outputs for each.
+
+  If olat or any tlat is greater than 90 or less than -90 NA is returned
+  and error flag is 0.
+
+  If any tlat and tlon is equal to olat and olon, the points are
+  coincident.
+  In that case the distances are set to zero, but the az and baz are NA,
+  and the error flag is set to 0.
+  
+  }
 
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}
-\note{
 
-  Earth radius is fixed at 6378.2064 km.
-  
-  
-}
-\seealso{GreatDist}
+\seealso{along.great, getgreatarc}
 \examples{
 
-london = c(51.53333, -0.08333333)
-     santiago = c(-33.46667, -70.75)
 
-     distaz(london[2], london[1], santiago[2], santiago[1])
+####  one point
+d = distaz(12, 23, -32,    -65)
+d
+
+####  many random target points
+org = c(80.222, -100.940)
+targ = cbind(runif(10, 10, 50), runif(10, 20, 100))
 
 
+distaz(org[1], org[2], targ[,1], targ[,2])
+
+############  if origin and target are identical
+#####  the distance is zero, but the az and baz are not defined
+distaz(80.222, -100.940, 80.222, -100.940)
+
+
+########################   set one of the targets equal to the origin
+targ[7,1] = org[1]
+targ[7,2] = org[2]
+
+distaz(org[1], org[2], targ[,1], targ[,2])
+
+####  put in erroneous latitude data
+
+targ[3,1] = -91.3
+
+
+distaz(org[1], org[2], targ[,1], targ[,2])
 
 
 }
-
 \keyword{misc}

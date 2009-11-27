@@ -67,14 +67,21 @@ getseisinfo(fnames, kind = 1)
   If data was created on a machine with LONG=4 bytes,
   be sure to call the program with BIGLONG=FALSE.
 
+  The data returned is a list of lists, each element is one
+  trace not necessarily related to the other traces in the list.
+  
+  Once the data is read in, use prepSEIS to reformat
+  the data into a list more amenable to further analysis in RSEIS.
+
   See examples below for different cases.
   
 
+  
 
 
    
    }
-\seealso{JSAC.seis , Mine.seis}
+\seealso{plotJGET, JSAC.seis , prepSEIS, Mine.seis}
 \note{
 
 
@@ -98,7 +105,7 @@ getseisinfo(fnames, kind = 1)
    A filter for mseed format is currently being developed.
 
    getseisinfo is an older  (superceded) C-coded version to get the
-   headers.
+   headers.  This code is now defunct.
 
 
 
@@ -135,8 +142,25 @@ S1  = JGET.seis(Lname, kind = 1, Iendian="little", BIGLONG=TRUE, PLOT = FALSE)
 S1  = JGET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = FALSE)
 
 
+##################   
 
 
+
+##########    to use other parts of the seismic
+############               analysis package convert to rseis format:
+
+
+####  prepare the data for further processing:
+
+S1  = JGET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = FALSE)
+
+ GH=prepSEIS(S1)
+####   plot the data, and interact with the data
+PICK.GEN(GH)
+
+###  or simply:
+
+plotJGET(S1)
 
 }
 

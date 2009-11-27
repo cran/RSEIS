@@ -9,15 +9,16 @@
  Make character vector from dates
 }
 \usage{
-Zdate(info, sel, t1)
+Zdate(info, sel=1, t1=0)
 dateList(datevec)
 dateStamp(datelist)
 }
 
 \arguments{
   \item{info}{info structure from trace structure}
-  \item{sel}{selection of which ones to extract}
-  \item{t1}{ time offset, seconds }
+  \item{sel}{selection of which ones to extract,
+    default=1:length(info$jd) }
+  \item{t1}{ time offset, seconds, default=0 }
 
   \item{datevec}{ vector with yr, jd, mo, day, hr, mi, sec  }
    \item{ datelist}{ output of dateList }

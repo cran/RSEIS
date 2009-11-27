@@ -434,9 +434,15 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
 
               plt.MTM0(frange,prange, plxy, M, freqs, amp, a, dof=mydof, Fv=myFv, COL=COL )
               buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
-          
+
+
+              
               abline(v=selef, col=rgb(.6,.6,1.0) )
-              mtext(alabs, at=selef, side=3, line=0, col=rgb(.6,.6,1.0))
+             ##   u=par("usr")
+            ##    ytop = rep(u[4], times=length(selef))
+             ##   textrect(selef, ytop, alabs, textcol=rgb(.6,.6,1.0))
+              
+               mtext(alabs, at=selef, side=3, line=0, col=rgb(.6,.6,1.0))
               zloc = list(x=NULL, y=NULL) 
         
             }

@@ -1,9 +1,11 @@
-getseis24<-function(DB, iyear=2009, iday=1, usta="", acomp="", kind = 1)
+getseis24<-function(DB, iyear=2009, iday=1, usta="", acomp="", kind = 1,  Iendian=1, BIGLONG=FALSE )
   {
     if (missing(kind)) {
       kind = 1
     }
-    
+      if(missing(Iendian)) { Iendian=1 }
+     if(missing(BIGLONG)) { BIGLONG=FALSE}
+
     DB$origyr = min(DB$yr, na.rm = TRUE)
     
     eday = EPOCHday(iyear, jd = iday, origyr = DB$origyr)
@@ -59,7 +61,7 @@ getseis24<-function(DB, iyear=2009, iday=1, usta="", acomp="", kind = 1)
     fn2 = fnloc[gi]
 
     ###   read in the data from the SEGY data base and store
-    GG = JGET.seis(fn2, kind = kind, PLOT = FALSE)
+    GG = JGET.seis(fn2, kind = kind, PLOT = FALSE, Iendian=Iendian, BIGLONG=BIGLONG )
 ###  this set of data should have only one station and one component
 
     ###  set up some information from each of the traces in the data set

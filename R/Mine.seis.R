@@ -80,7 +80,16 @@
   
   KG4 = JGET.seis(fn2, kind = kind,  Iendian=Iendian, BIGLONG= BIGLONG, HEADONLY=FALSE ,PLOT = FALSE)
 
-  
+   if(verbose)
+    {
+      print("LENGTHS Retrieved:")
+    for(ib in 1:length(KG4))
+      {
+        print(paste(ib, length(KG4[[ib]]$amp)))
+
+
+      }
+  }
   
   RR = GLUE.GET.seis(KG4)
   
@@ -135,9 +144,14 @@
       print(eday)
 
 
+      print("Mine.seis ss1=")
       
       print(ss1)
+
+        print("Mine.seis ss2=")
       print(ss2)
+
+          print("Mine.seis win=")
       
       print(win)
       print("GH")

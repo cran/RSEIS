@@ -17,9 +17,9 @@ GAZI(ADAT, dt = 1, ex = seq(0, 100), comp = c(4, 5, 6), sta = "ZZZ", az = 0, len
   \item{sta}{station name}
   \item{az}{azimuth of station orientation}
   \item{len}{length of time series}
-  \item{shift}{}
-  \item{prev}{ }
-  \item{fileid}{}
+  \item{shift}{amount to shift per window}
+  \item{prev}{length of buffer at beginning of trace}
+  \item{fileid}{character string to put on plot}
   \item{picks}{arrival times for annotation}
   \item{labs}{labels for arrival times for annotation}
 }

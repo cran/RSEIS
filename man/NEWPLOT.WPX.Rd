@@ -17,7 +17,7 @@ NEWPLOT.WPX(t0, STNS, COMPS, YPX, FILL = FALSE, FORCE = TRUE, cex = cex, srt = s
   \item{FILL}{fill color}
   \item{FORCE}{logical, TRUE=plot picks on all traces}
   \item{cex}{character expansion}
-  \item{srt}{}
+  \item{srt}{string rotation angle}
 }
 \details{
   Used in conjunction with PICK.GEN program

@@ -32,6 +32,12 @@ JSEGY.seis(fnames, Iendian = 1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT = FALSE)
   Uses readBin to extract data in SAC format.
   user must know what kind of machine the data
   was created on for I/O purposes.
+
+  For SEGY data the program is the same, although SEGY data
+  does not have the problem of the BIGLONG so that is ignored.
+
+  For either code, a full header is returned, although the
+  header for each format may be different.
   
 }
 \value{
@@ -57,7 +63,14 @@ JSEGY.seis(fnames, Iendian = 1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT = FALSE)
    \item{N}{number of points in trace}
    \item{units}{units}
    \item{amp}{vector of trace values}
+   
+   \item{HEAD}{Full header as a data-frame of values (mixture of float
+     and character strings) }
 
+   \item{N}{Number of samples in trace }
+   \item{units}{Units of samples, possibly: counts, volts, s, m/s, Pa, etc }
+
+   \item{IO}{list: kind, Iendian, BIGLONG flags for I/O }
 
 
   
@@ -70,30 +83,55 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 
   SAC created on PC (windows) or LINUX machines typically will be
   in little endian format.
-  SAC created on a SUN will be in big format.
+  SAC created on a SUN will be in big endian format.
   If you want to swap endian-ness , choose swap.
 
   MAC uses different convention.
 
-  There are other issues regardin the size of long.
-  These will be dealt with in future implementations.
+  SAC inserts -12345  for no data.
 
+  There are other issues regarding the size of long.
+
+  The units are often questionable and depend on the processing.
+  The user should be careful and check to see that the
+  proper conversions and multipliers have been applied.
   
 
   
 }
 
 
-\seealso{Mine.seis, Package:Rsac
+\seealso{Mine.seis
 }
 \examples{
 
 \dontrun{
 
+
+####  this will return a list of traces
 Lname = list.files(path='/data/wadati/bourbon/LaurelCanNC/R005.01' , pattern="08.005.01.41.23.9024", full.names=TRUE)
 
 S1  = JSAC.seis(Lname, Iendian = 1, PLOT = FALSE)
 
+
+#####################   from a data base example: this will return one
+#####                    trace header
+f1 = DB$fn[200]
+
+j1 = JSAC.seis(f1, Iendian=1, HEADONLY=TRUE , BIGLONG=FALSE, PLOT=FALSE)
+
+print( j1[[1]]$HEAD )
+
+
+#############   example for SEGY data: one SEGY  header
+
+dir = "/data/wadati/soju/SEISMIC_DATA/Reventador2005/rev05/SEGY/R251.01"
+lf = list.files(path=dir, pat="05.251", full.names=TRUE)
+f1 = lf[1]
+j1 = JSEGY.seis(f1, Iendian=1, HEADONLY=TRUE , BIGLONG=FALSE, PLOT=FALSE)
+
+
+print( j1[[1]]$HEAD )
 
 }
 

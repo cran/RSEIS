@@ -1,5 +1,5 @@
 `blankevol` <-
-function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,2,3,4), CSCALE=FALSE, WUNITS="Volts", STAMP=NULL, STYLE="fft"  )
+function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,2,3,4), CSCALE=FALSE, WUNITS="Volts", STAMP=NULL, STYLE="fft", WIG=TRUE  )
   {
     if(missing(log)) { log = 0 }
     if(missing(fl)) { fl=DEVOL$wpars$fl}
@@ -13,6 +13,7 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
     if(missing(STAMP)) {  STAMP=NULL  }
     if(missing(WUNITS)) {   WUNITS=NULL  }
     if(missing(STYLE)) {  STYLE="fft"   }
+    if(missing(WIG)) {  WIG=TRUE   }
 
    ## if(!exists(col))  {  col=rainbow(50) }
     if(length(col)<1) {  col=rainbow(50) }
@@ -31,8 +32,11 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
     
     
     tim = dt*seq(0, length=length(a))
+      par(xaxs='i', yaxs='i')
+
+    plot(range(tim), c(0,1), axes=FALSE, type='n', xlab='', ylab='')
     
-    
+   
     ##   image(x,why,t(DSPEC[1:(numfreqs/2),]), add=TRUE, col = col,xlab='time', ylab='freq', axes=FALSE)
     
     ##   image(x,why,log10(t(DSPEC[1:(numfreqs/2),])), add=TRUE, col = col,xlab='time', ylab='freq', axes=FALSE)
@@ -73,10 +77,7 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
 
 
     ##   par(mfrow=c(1,1))
-    par(xaxs='i', yaxs='i')
-
-    plot(range(tim), c(0,1), axes=FALSE, type='n', xlab='', ylab='')
-    
+  
    ##   image(x,why,ImPlot , add=TRUE, col = col, xlab='time', ylab='freq', axes=FALSE)
     
     trace = RESCALE( a, perc , 1.0  , min(a, na.rm=TRUE), max(a, na.rm=TRUE) )
@@ -111,8 +112,10 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
 
    
                                         #  title(xlab="Time, s")
-    mtext(side=1, at=max(x), text="Time, s" , line=1.5, adj=1)
+    mtext(side=1, at=max(x), text="Time, s" , line=.25)
 
+
+    
     if(ylog==TRUE)
       {
         axspec = pretty(log10(y[yflag]), n=10)

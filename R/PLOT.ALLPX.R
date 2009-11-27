@@ -114,6 +114,9 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
     pols = YPX$pol[ mpicks]
     
     ypixB =  ypixA+du
+
+    
+    
     
     x1 = secdif(   t0$jd, t0$hr, t0$mi, t0$sec, YPX$jd[ mpicks], YPX$hr[mpicks ],YPX$mi[mpicks ], YPX$sec[mpicks ])
     
@@ -148,7 +151,44 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
         
         segments(x1, ypixA, x1, ypixB, col=pcol)
         
-        text(x1, ypixB, labels=LABS, col=pcol, pos=4, cex=cex, srt=srt)
+      ####  text(x1, ypixB, labels=LABS, col=pcol, pos=4, cex=cex, srt=srt)
+
+
+#################  introduction of jittered labels
+
+
+        print(cbind(ypixB, LABS))
+
+
+        tx1 =  split(x1,ypixB)
+        tLABS = split(LABS,ypixB)
+        typixB  = split(ypixB,ypixB)
+        tpcol  = split(pcol,ypixB)
+
+
+        for(ipixB in 1:length(typixB))
+          {
+
+          gx1 =   tx1[[ipixB]]
+          gypixB = typixB[[ipixB]]
+          gLABS = tLABS[[ipixB]]
+          gpcol = tpcol[[ipixB]]
+          
+      RMAT =   textrect( gx1, gypixB,
+         gLABS , textcol=gpcol   ,xpd=TRUE, add=FALSE, font=1, cex=.5, brd = 0.03 )
+
+        newjitx = jitter.lab(RMAT[,1]  , RMAT[,3]-RMAT[,1])
+        newy = (gypixB)-newjitx*(RMAT[,4]-RMAT[,2])        
+
+        
+        RMAT =   textrect(gx1 , newy,gLABS , textcol=gpcol,
+          xpd=TRUE, add=TRUE, font=1, cex=.5, brd = 0.03 )
+        
+
+        }
+
+
+        
         
       }
     

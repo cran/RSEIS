@@ -1,6 +1,9 @@
 `Zdate` <-
-function(info, sel, t1)
+function(info, sel=1, t1=0)
   {
+    if(missing(sel)) { sel = 1:length(info$jd) }
+    if(missing(t1)) { t1 = 0 }
+    
     if(is.null(t1)) { t1 = 0 }
     rd = recdate(info$jd[sel], info$hr[sel], info$mi[sel], info$sec[sel]+info$msec[sel]/1000+info$t1[sel]-info$off[sel]+t1, yr=info$yr[sel])
     sec = floor(rd$sec)

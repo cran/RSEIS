@@ -16,6 +16,9 @@ plotevol2(DEVOL, log = 0, fl = 0, fh = 10, col = col, ylog = FALSE, ygrid
 = FALSE, AXE = c(1, 2, 3, 4), CSCALE = FALSE, WUNITS = "Volts", STAMP =
 NULL, STYLE = "fft", add=FALSE, IMAGE=TRUE, WIG=TRUE )
 
+blankevol(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE,
+AXE=c(1,2,3,4),
+CSCALE=FALSE, WUNITS="Volts", STAMP=NULL, STYLE="fft", WIG=TRUE  )
 
 
 }

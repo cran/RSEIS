@@ -72,7 +72,58 @@
 
         }
 
+      SEGYhead.names = c("lineSeq", "reelSeq", "event_number", "channel_number",
+        "energySourcePt", "cdpEns", "traceInEnsemble",
+        "traceID", "vertSum", "horSum", "dataUse",
+        "sourceToRecDist", "recElevation", "sourceSurfaceElevation", "sourceDepth",
+        "datumElevRec", "datumElevSource", "sourceWaterDepth","recWaterDepth",
+        
+        "elevationScale", "coordScale",
 
+        "sourceLongOrX", "sourceLatOrY","recLongOrX", "recLatOrY",
+        
+        "coordUnits", "weatheringVelocity", "subWeatheringVelocity",
+        "sourceUpholeTime", "recUpholeTime",  "sourceStaticCor",
+        "recStaticCor", "totalStatic", "lagTimeA", "lagTimeB", "delay", 
+        "muteStart", "muteEnd",
+        
+        "sampleLength",
+        "deltaSample",
+        "gainType",
+        "gainConst", 
+        "initialGain",
+        
+        "correlated", "sweepStart", "sweepEnd", "sweepLength", "sweepType", 
+        "sweepTaperAtStart", "sweepTaperAtEnd", "taperType", "aliasFreq", "aliasSlope",
+        "notchFreq","notchSlope", "lowCutFreq", "hiCutFreq", "lowCutSlope", "hiCutSlope",
+        
+        "year", 
+        "day",
+        "hour",
+        "minute",
+        "second",
+        "timeBasisCode",
+        
+        "traceWeightingFactor", "phoneRollPos1", "phoneFirstTrace",
+        "phoneLastTrace", "gapSize", "taperOvertravel",
+        
+        "station_name", 
+        "sensor_serial",
+        "channel_name",
+        "totalStaticHi",
+        "samp_rate",
+        "data_form",
+        "m_secs", 
+        "trigyear", "trigday", "trighour", "trigminute", "trigsecond", "trigmills", 
+        "scale_fac",
+        "inst_no",
+        "not_to_be_used",
+        "num_samps",
+        "max", "min")
+
+
+
+      
       zz <- file(fn, "rb")
 
       A1 =  readBin(zz, integer() , n = 7, size = iint, signed = TRUE,
@@ -84,7 +135,7 @@
       A3 =  readBin(zz, integer() , n = 8, size = iint, signed = TRUE,
         endian = theENDIAN)
 
-      
+     
  ###  short elevationScale;    /*  68 Elevation Scaler: scale = 1 */
  ###   short coordScale;        /*  70 Coordinate Scaler: scale = 1 */
       A4 = readBin(zz, integer() , n = 2 , size =ishort,  endian =theENDIAN, signed = TRUE)
@@ -92,6 +143,34 @@
 
       A5 = readBin(zz, integer() , n = 4 , size =iint,  endian = theENDIAN, signed = TRUE)
 
+      coordScale= A4[2]
+      
+      scfc = 1
+      scfe = 1
+      
+      if (coordScale < 0)
+        {
+          scfc = -1. / coordScale;
+        }
+      recLongOrX= scfc* A5[3]
+      recLatOrY=scfc*A5[4]
+      
+      elevationScale=A4[1]
+      scfe = elevationScale
+      if (elevationScale < 0){ scfe = -1. / elevationScale }
+      
+      recElevation=scfe*A3[2]
+
+      sourceLongOrX=A5[1]/10000
+      sourceLatOrY=A5[2]/10000
+      
+      
+      sourceDepth=scfe*A3[4]
+      
+      
+      coords = list(reclat=recLatOrY, reclon=recLongOrX, recel =recElevation, srclat= sourceLatOrY,
+        srclon=sourceLongOrX, srcdep=sourceDepth)
+     
       A6 = readBin(zz, integer() , n =13  , size =ishort,  endian = theENDIAN, signed = TRUE)
       coordUnits = A6[1]
 
@@ -110,8 +189,7 @@
 
       B6 = readBin(zz, integer() , n =16  , size =ishort,  endian = theENDIAN, signed = TRUE)
 
-
-      
+   
       year=readBin(zz, integer() , n = 1 , size =ishort,  endian =theENDIAN, signed = TRUE)
       day=readBin(zz, integer() , n = 1 , size =ishort,  endian =theENDIAN, signed = TRUE);
       hour=readBin(zz, integer() , n = 1 , size =ishort,  endian =theENDIAN, signed = TRUE); 
@@ -132,7 +210,7 @@
       ##  print(paste(sep="", "<",channelname,">"))
 
 ##  close(zz)
-          
+   ##       cat(paste(sep=" ",paste(sep="", "<",stationname,">"), paste(sep="", "<",channelname,">")), sep="\n") 
       
  ## print(paste(sep=" ", "Name=", stationname,sensorserial,channelname))  
 
@@ -188,6 +266,25 @@
  ##  print(paste(sep=" ", "numsamps=", numsamps, "sampleLength=", sampleLength  ))
   ##  print(paste(sep=" ",  "scalefac=",   scalefac ))
       ####################################      done reading header
+       #####    count = 7+4+8+2+4+13+5+16+6+6+4+7+5
+
+
+SEGYall = c(A1, A2, A3, A4, A5, A6, sampleLength,
+  deltaSample,gainType,gainConst,initialGain,B6,
+  year, day, hour, minute, second,timeBasisCode,
+  B7,stationname,sensorserial,channelname,
+  totalStaticHi, samprate, dataform,
+  msecs ,trigyear, trigday,trighour,
+  trigminute, trigsecond, trigmills,scalefac,
+  instno, nottobeused, numsamps, max, min)
+
+      
+  
+  SEGYH = data.frame(names=SEGYhead.names, values=SEGYall)
+  
+  
+
+
       
       N = numsamps
 
@@ -248,7 +345,7 @@
 
 
       
-      GIVE[[i]] = list(fn=fn, sta=thesta,  comp=thecomp, dt=dt, DATTIM=tstart, N=N, units=aunits , amp=x)
+      GIVE[[i]] = list(fn=fn, sta=thesta,  comp=thecomp, dt=dt, DATTIM=tstart, N=N, units=aunits , coords=coords ,  amp=x, HEAD=SEGYH, IO=list(kind=1, Iendian=Iendian,  BIGLONG=BIGLONG) )
 
       
       if(PLOT==TRUE)

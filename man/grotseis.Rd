@@ -67,7 +67,7 @@ sguitoXY$'lat'=c(14.7397535236)
 sguitoXY$'lon'=c(268.4314147874)
 sguitoXY$'z'=c(2.501)
 
-DAZ = distaz(STAXY$lat, STAXY$lon, sguitoXY$lat, sguitoXY$lon)
+DAZ = distaz( sguitoXY$lat, sguitoXY$lon ,       STAXY$lat, STAXY$lon)
 
 STAXY$az = DAZ$baz
 
@@ -90,7 +90,8 @@ bvec  = vecs %*%  rbaz
 ########  red is radial positive away from source, blue is transverse
 ##########   blue is positive to the right, if facing away from source
 ## arrows(STAXY$x[i],STAXY$y[i], STAXY$x[i]+vecs[,2], STAXY$y[i]+vecs[,3], col=c("red", "blue"), lty=2)
-arrows(STAXY$x[i],STAXY$y[i], STAXY$x[i]+bvec[,2], STAXY$y[i]+bvec[,3], col=c("red", "blue"))
+arrows(STAXY$x[i],STAXY$y[i], STAXY$x[i]+bvec[,2], STAXY$y[i]+bvec[,3],
+col=c("red", "blue"), length=.08)
 
 }
 

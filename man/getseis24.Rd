@@ -6,7 +6,7 @@
 \description{Get 24 Hours of Seismic Data
 }
 \usage{
-getseis24(DB, iyear = 2009, iday = 1, usta = "", acomp = "", kind = 1)
+getseis24(DB, iyear = 2009, iday = 1, usta = "", acomp = "", kind = 1,  Iendian=1, BIGLONG=FALSE)
 }
 \arguments{
   \item{DB}{
@@ -21,7 +21,14 @@ getseis24(DB, iyear = 2009, iday = 1, usta = "", acomp = "", kind = 1)
   \item{acomp}{component to show
 }
   \item{kind}{kind of data, default=1, SEGY data
-}
+  }
+ \item{Iendian}{ Endian-ness of the data: 1,2,3: "little", "big", "swap".
+    Default = 1 (little)
+  }
+  \item{BIGLONG}{ logical, TRUE=long=8 bytes
+  }
+  
+  
 }
 \details{
   The DB file consists of a list of information on

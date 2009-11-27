@@ -13,7 +13,7 @@ Seismic Analysis and Display
 \tabular{ll}{
 Package: \tab RSEIS\cr
 Type: \tab Package\cr
-Version: \tab 2.3-3\cr
+Version: \tab 2.4-1\cr
 Date: \tab 2009-11-27\cr
 License: \tab GPL\cr
 }
@@ -66,7 +66,6 @@ Maintainer:Jonathan M. Lees<jonathan.lees.edu>
       Comp1Dvel
       Comp1Dvels
       travel.time1D
-      TTteles
     }
 
     \item{Particle Motion:}{

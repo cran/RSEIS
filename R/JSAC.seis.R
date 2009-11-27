@@ -74,7 +74,30 @@ isign = TRUE
 ###  print(paste(sep=' ', "file exists", fn) );
 
         }
-   
+   sacheadnames = c("delta", "depmin", "depmax", "scale", "odelta", "b", 
+     "e", "o", "a", "internal1", "t0", "t1", 
+     "t2", "t3", "t4", "t5", "t6", "t7", 
+     "t8", "t9", "f", "resp0", "resp1", "resp2", 
+     "resp3", "resp4", "resp5", "resp6", "resp7", "resp8", 
+     "resp9", "stla", "stlo", "stel", "stdp", "evla", 
+     "evlo", "evel", "evdp", "unused1", "user0", "user1", 
+     "user2", "user3", "user4", "user5", "user6", "user7", 
+     "user8", "user9", "dist", "az", "baz", "gcarc", 
+     "internal2", "internal3", "depmen", "cmpaz", "cmpinc", "unused2", 
+     "unused3", "unused4", "unused5", "unused6", "unused7", "unused8", 
+     "unused9", "unused10", "unused11", "unused12", "nzyear", "nzjday", 
+     "nzhour", "nzmin", "nzsec", "nzmsec", "internal4", "internal5", 
+     "internal6", "npts", "internal7", "internal8", "unused13", "unused14", 
+     "unused15", "iftype", "idep", "iztype", "unused16", "iinst", 
+     "istreg", "ievreg", "ievtyp", "iqual", "isynth", "unused17", 
+     "unused18", "unused19", "unused20", "unused21", "unused22", "unused23", 
+     "unused24", "unused25", "unused26", "leven", "lpspol", "lovrok", 
+     "lcalda", "unused27", "kstnm", "kevnm[16]", "khole", "ko", 
+     "ka", "kt0", "kt1", "kt2", "kt3", "kt4", 
+     "kt5", "kt6", "kt7", "kt8", "kt9", "kf", 
+     "kuser0", "kuser1", "kuser2", "kcmpnm", "knetwk", "kdatrd", 
+     "kinst")
+      
       zz <- file(fn, "rb")
 
 
@@ -95,8 +118,7 @@ isign = TRUE
 
    ## close(zz)
 
-
-      
+   ##  70+40+1+1+21
      ##  A4 =  getBINstr(zz, 8,  endian =theENDIAN)
 
      A4 = readChar(zz, 8, useBytes = FALSE)
@@ -107,7 +129,10 @@ isign = TRUE
       for(k in 1:21) B4[k] = readChar(zz, 8, useBytes = FALSE)
 
 
-      
+      ALLHEAD = c(A1, A2, A4, A5, B4)
+
+
+      SACH = data.frame(names=sacheadnames, values=ALLHEAD)
 
       N = A2[10]
       
@@ -173,7 +198,7 @@ isign = TRUE
       
       close(zz)
       
-      GIVE[[i]] = list(fn=fn, sta=thesta,  comp=thecomp, dt=dt, DATTIM=tstart, N=N, units=aunits , amp=x)
+      GIVE[[i]] = list(fn=fn, sta=thesta,  comp=thecomp, dt=dt, DATTIM=tstart, N=N, units=aunits , amp=x, HEAD=SACH, IO=list(kind=2, Iendian=Iendian,  BIGLONG=BIGLONG)   )
 
       
       if(PLOT==TRUE)

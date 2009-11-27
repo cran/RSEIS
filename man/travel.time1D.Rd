@@ -1,10 +1,9 @@
 \name{travel.time1D}
 \alias{travel.time1D}
-\alias{Ray.time1D}
 
 \title{Seismic Travel Time 1D}
 \description{
- travel time from source to reciever in 1D local model.
+ Travel time from source to reciever in 1D local model.
 }
 \usage{
 travel.time1D(indelta, inhpz, instaz, inlay, ztop, vel)
@@ -19,12 +18,13 @@ travel.time1D(indelta, inhpz, instaz, inlay, ztop, vel)
   \item{vel}{vector, velocities in layers}
 }
 \details{
- Uses local  1D velocity model, not appropriate for spherical earth.
+  Uses local  1D velocity model, not appropriate for spherical earth.
+  
 }
 \value{
   list:
-\item{ dtdr}{derivative of t w.r.t. horizontal distance}
-\item{dtdz}{derivative of t w.r.t. z, depth}
+\item{dtdr}{derivative of t   w.r.t. horizontal distance}
+\item{dtdz}{derivative of t  w.r.t. z, depth}
 \item{angle}{incidence angle, degrees}
 \item{tt}{travel time, s}
      
@@ -32,7 +32,7 @@ travel.time1D(indelta, inhpz, instaz, inlay, ztop, vel)
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{Get1Dvel}
+\seealso{Ray.time1D, Get1Dvel}
 \examples{
 
 
@@ -40,7 +40,10 @@ data(VELMOD1D)
 
 v= VELMOD1D
 
-travel.time1D(23, 7, 0, length(v$zs) , v$zp , v$vp)
+tees = travel.time1D(23, 7, 0, length(v$zs) , v$zp , v$vp)
+
+print(tees)
+
 }
 
 \keyword{misc}
