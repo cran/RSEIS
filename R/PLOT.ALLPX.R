@@ -157,7 +157,7 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
 #################  introduction of jittered labels
 
 
-        print(cbind(ypixB, LABS))
+        ######   print(cbind(ypixB, LABS))
 
 
         tx1 =  split(x1,ypixB)
@@ -175,14 +175,14 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
           gpcol = tpcol[[ipixB]]
           
       RMAT =   textrect( gx1, gypixB,
-         gLABS , textcol=gpcol   ,xpd=TRUE, add=FALSE, font=1, cex=.5, brd = 0.03 )
+         gLABS , textcol=gpcol   ,xpd=TRUE, add=FALSE, font=1, cex=cex, brd = 0.03 )
 
         newjitx = jitter.lab(RMAT[,1]  , RMAT[,3]-RMAT[,1])
         newy = (gypixB)-newjitx*(RMAT[,4]-RMAT[,2])        
 
         
         RMAT =   textrect(gx1 , newy,gLABS , textcol=gpcol,
-          xpd=TRUE, add=TRUE, font=1, cex=.5, brd = 0.03 )
+          xpd=TRUE, add=TRUE, font=1, cex=cex, brd = 0.03 )
         
 
         }
@@ -218,8 +218,8 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
     if(POLS)
       {
         
-        points(x1[pols=="U"], ypixB[pols=="U"]-.25*du, pch=2, col=pcol[pols=="U"], cex=.7)
-        points(x1[pols=="D"], ypixB[pols=="D"]-.25*du, pch=6, col=pcol[pols=="D"], cex=.7)
+        points(x1[pols=="U"], ypixB[pols=="U"]-.25*du, pch=2, col=pcol[pols=="U"], cex=cex)
+        points(x1[pols=="D"], ypixB[pols=="D"]-.25*du, pch=6, col=pcol[pols=="D"], cex=cex)
         
 
       }

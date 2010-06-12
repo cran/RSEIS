@@ -1,5 +1,5 @@
 `PICK.GEN` <-function(GH, sel=1:length(GH$dt), ORD=NULL, WIN=NULL, APIX=NULL, PHASE=NULL,  STDLAB=NULL,
-                   PADDLAB=NULL, TEMPBUT=NULL, SHOWONLY=FALSE, CHOP=FALSE, TIT="", pts=FALSE, forcepix=FALSE, SCALE=1,
+                   PADDLAB=NULL, TEMPBUT=NULL, SHOWONLY=FALSE, CHOP=FALSE, TIT="", pts=FALSE, forcepix=FALSE, pcex=0.7, SCALE=1,
          velfile="", stafile="", LOC=NULL, FILT=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL  )
 {
 ###  a = PICK.MARIO(GH,  sel, WIN=twin)
@@ -25,7 +25,8 @@
   if(missing(TIT)) { TIT=NULL }
   if(missing(pts)) { pts=FALSE }
   if(missing(forcepix)) { forcepix=FALSE }
-  
+ if(missing(pcex)) { pcex = 0.7 }
+    
   if(missing(velfile)) {
     if(!is.null(GH$velfile)) {velfile=GH$velfile } else { 
     velfile=NULL }
@@ -104,7 +105,7 @@ if(is.logical(sel)) { sel = which(sel) }
       
       if(NPX>0)
         {
-          PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix)
+          PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix, cex=pcex)
 ##### PLOT.WPX(Torigin, STNS, COMPS, WPX, FORCE=forcepix)
         }
       invisible(YN)
@@ -114,6 +115,9 @@ if(is.logical(sel)) { sel = which(sel) }
   SEL.ORIG = sel
   
   mark = FALSE
+
+
+  ###################   copy of GH file ..... do I need this?
   if(CHOP==TRUE)
     {
       if(!is.null(WIN))
@@ -129,10 +133,11 @@ if(is.logical(sel)) { sel = which(sel) }
       WIN = c(0, NH$dt*length(NH$JSTR[[1]]))
       
     }
-  else{
-    
-    NH = GH
-  }
+  else
+    {
+      
+      NH = GH
+    }
 
 
   if( identical(is.na(match("NOPIX",  PADDLAB)), TRUE)) { PADDLAB = c(PADDLAB, "NOPIX") }
@@ -353,6 +358,7 @@ APAL=c("black","darkmagenta","forestgreen","blueviolet",
   
   du = 1/NSEL
 
+  ###  pix label size
   
   isel = sel[1]
   
@@ -796,24 +802,44 @@ APAL=c("black","darkmagenta","forestgreen","blueviolet",
          cat( NH$info$fn[1]  , file=ampfn,sep="\n", append=CAPP)
    zloc = list(x=NULL, y=NULL)
         }
-###################   time pick analysis   ###########################      
+
+   
+###################   FLIP polarity of trace  ###########################      
  
       if(K[Nclick]==match("FLIP", BLABS, nomatch = NOLAB))
         {
           zenclick = length(zloc$x)
-          nc = 1:(zenclick-1)
-          lnc = length(nc)
-          
-          ypick = length(sel)-floor(length(sel)*zloc$y[nc])
-          ipick = sel[ypick]
-          
-          for(JJ in ipick) { NH$JSTR[[JJ]] = (-1)*NH$JSTR[[JJ]] }
 
-           YN = YNreplot()
-           
+          if(zenclick>1)
+            {
+              nc = 1:(zenclick-1)
+              lnc = length(nc)
+              
+              ypick = length(sel)-floor(length(sel)*zloc$y[nc])
+              ipick = unique( sel[ypick] )
+
+              cat("FLIP: PICK.GEN POLARITY REVERSED: "); cat(ipick, sep=" " ); cat("\n")
+              
+              for(JJ in 1:length(ipick) )
+                {
+                  jtr  = ipick[JJ]
+                  NH$JSTR[[jtr]] = (-1)*NH$JSTR[[jtr]]
+                }
+      
+
+          YN = YNreplot()
+          
           buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
-             zloc = list(x=NULL, y=NULL)
- 
+                  }
+          else
+            {
+              cat("FLIP: No traces selected: Try Again"); cat("\n")
+
+            }
+
+          
+          zloc = list(x=NULL, y=NULL)
+          
         }
 ###################  Trace Info output   ###########################  
 
@@ -854,7 +880,7 @@ APAL=c("black","darkmagenta","forestgreen","blueviolet",
           if(NPX>0)
             {
 
-              PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix)
+              PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix, cex=pcex)
              ##### PLOT.WPX(Torigin, STNS, COMPS, WPX, FORCE=forcepix)
             }
           
@@ -892,7 +918,7 @@ APAL=c("black","darkmagenta","forestgreen","blueviolet",
           if(NPX>0)
             {
 
-              PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix)
+              PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix, cex=pcex)
              ##### PLOT.WPX(Torigin, STNS, COMPS, WPX, FORCE=forcepix)
             }
           
@@ -3634,7 +3660,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
 
                   ## 
                 }
-              PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix)
+              PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix, cex=pcex)
               
             }
         }
@@ -3913,7 +3939,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
                     }
 
 
-                  PLOT.ALLPX(Torigin, STNS, COMPS, WPX,  FILL=FALSE,  PHASE="V", FORCE=FALSE)
+                  PLOT.ALLPX(Torigin, STNS, COMPS, WPX,  FILL=FALSE,  PHASE="V", FORCE=FALSE, cex=pcex)
 
                   #######################   done with loop:  print results
                   cat("############", sep="\n")
@@ -4040,7 +4066,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
                    ## 
                  }
                
-               PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix)
+               PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix, cex=pcex)
                
 #### print(paste(" ", azap, kzap))
               

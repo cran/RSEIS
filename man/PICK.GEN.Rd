@@ -10,7 +10,7 @@ PICK.GEN(GH, sel = 1:length(GH$dt), ORD = NULL, WIN = NULL, APIX = NULL,
 PHASE = NULL,
 STDLAB = NULL, PADDLAB = NULL, TEMPBUT=NULL,
 SHOWONLY = FALSE, CHOP = FALSE, TIT = "",
-pts = FALSE, forcepix = FALSE, SCALE = 1,
+pts = FALSE, forcepix = FALSE, pcex=0.7, SCALE = 1,
 velfile = "", stafile = "", LOC = NULL,
 FILT=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL)
 }
@@ -29,7 +29,9 @@ FILT=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL)
   \item{CHOP}{whether to chop the signal }
   \item{TIT}{title for the top of plot}
   \item{pts}{whether to plot specific points on the plot}
-  \item{forcepix}{logical, force all phase picks to be shown on all traces }
+  \item{forcepix}{logical, force all phase picks to be shown on all
+    traces }
+  \item{pcex}{ Pick label size expansion (cex), default=0.7 }
   \item{SCALE}{flag, 1,0= scale according to window or trace }
   \item{velfile}{velocity structure or file name }
   \item{stafile}{station structure or file name }
