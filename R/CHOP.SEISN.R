@@ -30,6 +30,11 @@ function(GH, sel=1:4, WIN=NULL)
       zloc = list(x=zloc)
     }
 
+
+
+
+  
+
   for(i in 1:length(GH$dt))
     {
       ii = i

@@ -197,7 +197,7 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
       tflag = tim>=WIN[1]&tim<=WIN[2]
       if(!is.null(SHIFT)==TRUE)
         {
-          print(paste(sep=" ", i, ii, SHIFT[ii]))
+       ###   print(paste(sep=" ", i, ii, SHIFT[ii]))
           tim = tim-SHIFT[ii]
         }
       tflag = tim>=WIN[1]&tim<=WIN[2]      

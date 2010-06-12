@@ -136,6 +136,9 @@
   
   win = c(min(ss1), max(ss2))
 
+
+   if(win[1]<0) { win[1] = 0 }
+
   
   if(verbose)
     {

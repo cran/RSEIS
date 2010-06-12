@@ -97,7 +97,7 @@ if(is.logical(sel)) { sel = which(sel) }
   YNreplot<-function()
     {
       
-      YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, pts=pts)
+      YN = PLOT.SEISN(NH, WIN=WIN, dt=NH$dt[sel], sel=sel, sfact=ScaleFACT , notes=NH$KNOTES[sel], COL=pcols, TIT=TIT, SHIFT=ASHIFT , pts=pts)
 
       YN$STNS = NH$STNS[sel]
       YN$COMPS = NH$COMPS[sel]
@@ -113,6 +113,9 @@ if(is.logical(sel)) { sel = which(sel) }
   
   
   SEL.ORIG = sel
+
+  SHIFT.ORIG = NULL
+  ASHIFT = SHIFT.ORIG  
   
   mark = FALSE
 
@@ -295,8 +298,8 @@ APAL=c("black","darkmagenta","forestgreen","blueviolet",
 
      if(is.numeric(pcols))
        {
-
-         pcols =APAL[pcols] 
+     pcols = APAL[1+((pcols-1) %% length(APAL))]
+        
 
        }
 
@@ -694,7 +697,7 @@ APAL=c("black","darkmagenta","forestgreen","blueviolet",
           sloc = zloc
              zloc = list(x=NULL, y=NULL)
         }
-      ###################   Shift Left   ###########################      
+      ###################   Shift Right   ###########################      
        if(K[Nclick]==match("Right", BLABS, nomatch = NOLAB))
         {
           u = par("usr")
@@ -1369,12 +1372,25 @@ APAL=c("black","darkmagenta","forestgreen","blueviolet",
                  smallex = ex[ ex > pwin[1] & ex <pwin[2]]
 
                  asec = NH$info$sec[ipick]+NH$info$msec[ipick]/1000+NH$info$t1[ipick]-NH$info$off[ipick]+pwin[1]
+                 
+                 spaz = recdate( NH$info$jd[ipick], NH$info$hr[ipick], NH$info$mi[ipick], asec,  NH$info$yr[ipick] )
+                 
+                 
+                 
+                 spaz$yr =   as.integer(NH$info$yr[ipick])
+              
+                 MODAY = getmoday(spaz$jd,  spaz$yr)
 
                  
-                 TP = list(yr=NH$info$yr[ipick], jd=NH$info$jd[ipick], hr=NH$info$hr[ipick], mi=NH$info$mi[ipick], sec=asec )
+                 
+                 TP = list(yr=spaz$yr, jd=spaz$jd, mo=MODAY$mo,
+                   dom= MODAY$dom  ,hr=spaz$hr, mi=spaz$mi, sec=spaz$sec )
 
 
-                 RETX = list(but="RET", x=smallex, y=temp, dt=NH$dt[ipick],   name=NH$info$name[ipick] , Tpick=TP, mark=mark, deltat=NH$dt[ipick] )
+                 RETX = list(but="RET", x=smallex, y=temp, dt=NH$dt[ipick], STNS=NH$STNS[ipick],
+                   COMPS=NH$COMPS[ipick],  fname=NH$info$name[ipick] , TIMEpick=TP, mark=TRUE, deltat=NH$dt[ipick] )
+
+                 
                  return(RETX)
 
 
@@ -2490,8 +2506,55 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
             print(data.frame(rd))
            zloc = list(x=NULL, y=NULL) 
         }
+   
+            ################### TINE SHIFT = TSHIFT or aline or align traces  ###########################      
+ 
+     if(K[Nclick]==match("TSHIFT", BLABS, nomatch = NOLAB))
+        {
 
+          if(zenclick>=2)
+            {
+              
+              kix = legitpix(sel, zloc, zenclick)
 
+              
+              ypick =  kix$ypick
+              ppick = kix$ppick
+      
+              dpick = c(0, diff(ppick))
+              ipick = sel[ypick]
+
+              print(paste(NH$STNS[ipick], NH$COMPS[ipick]))
+
+              
+              tshft = rep(0,times=length(NH$STNS))
+
+              
+              tshft[ipick] = ppick-ppick[1]
+              
+              ## print(data.frame(list(sta=NH$STNS, comp=NH$COMPS, tshft=tshft)))
+              
+              ASHIFT = tshft
+            }
+          else
+            {
+
+              ASHIFT = SHIFT.ORIG
+
+            }
+
+          YN = YNreplot()
+          
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+
+          sloc = zloc
+          zloc = list(x=NULL, y=NULL)
+        
+          
+
+        }
+
+   
             ###################   time pick analysis   ###########################      
  
       if(K[Nclick]==match("Pinfo", BLABS, nomatch = NOLAB))
@@ -2508,6 +2571,9 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
       
               dpick = c(0, diff(ppick))
               ipick = sel[ypick]
+
+
+              
               
               m = match(STNS[ipick],UNIsta)
               jj = floor((zloc$y[zenclick-1])/du)
