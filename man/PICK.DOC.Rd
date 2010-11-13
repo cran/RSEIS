@@ -1,9 +1,9 @@
 \name{PICK.DOC}
 \alias{PICK.DOC}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Documentation for PICK.GEN}
+\title{Documentation for swig}
 \description{
-Prints brief documentation for buttons in PICK.GEN
+Prints brief documentation for buttons in swig
 }
 \usage{
 PICK.DOC(w)
@@ -21,7 +21,7 @@ printed side effect
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{PICK.GEN}
+\seealso{swig}
 \examples{
 PICK.DOC(6:23)
 }

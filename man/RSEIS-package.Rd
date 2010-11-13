@@ -13,12 +13,12 @@ Seismic Analysis and Display
 \tabular{ll}{
 Package: \tab RSEIS\cr
 Type: \tab Package\cr
-Version: \tab 2.4-5\cr
-Date: \tab 2010-06-12\cr
+Version: \tab 2.5-5\cr
+Date: \tab 2010-11-13\cr
 License: \tab GPL\cr
 }
 
-PICK.GEN is general all pupose code that uses interaction for seismic analysis.
+swig is general all pupose code that uses interaction for seismic analysis.
 }
 \author{
 Jonathan M. Lees<jonathan.lees.edu>
@@ -30,7 +30,7 @@ Maintainer:Jonathan M. Lees<jonathan.lees.edu>
     \item{Seismic Sections}{
       JGET.seis
       view.seis
-      PICK.GEN
+      swig
       Mine.seis
       VELOCITY.SEISN  
       DISPLACE.SEISN
@@ -217,7 +217,7 @@ RPGM, RFOC
 }
 \examples{
 data("GH")
-PICK.GEN(GH)
+swig(GH)
 
 }
 

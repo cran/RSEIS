@@ -40,7 +40,7 @@ This is a spectrogram function similar to the Gabor Transform
 \seealso{evolfft, evolMTM, MTM.drive, GETARAIC }
 \examples{
 data(KH)
-###   PICK.GEN(KH)
+###   swig(KH)
 
 Xamp = KH$JSTR[[1]]
 

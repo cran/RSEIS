@@ -30,7 +30,7 @@ PLOT.ALLPX(t0, STNS, COMPS, YPX, PHASE = NULL, POLS = TRUE, FILL = FALSE, FORCE 
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{PLOT.SEISN, PICK.GEN}
+\seealso{PLOT.SEISN, swig}
 \examples{
 
 

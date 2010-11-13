@@ -1,5 +1,5 @@
 `PLOT.SEISN` <-
-function(GH, tim=1, dt=1,  sel=c(1:4), WIN=c(1,0), labs=c("CE1"), notes="CE1.V", tags="CE1.V", sfact=1, LOG="", COL='red', add=1, pts=FALSE, YAX=1, TIT=NULL, SHIFT=NULL , rm.mean=TRUE, UNITS="volts", MARK=TRUE)
+function(GH, tim=1, dt=1,  sel=c(1:4), WIN=c(1,0), labs=c("CE1"), notes="CE1.V", subnotes=NA, tags="CE1.V", sfact=1, LOG="", COL='red', add=1, pts=FALSE, YAX=1, TIT=NULL, SHIFT=NULL , rm.mean=TRUE, UNITS="volts", MARK=TRUE)
 {
   ### plot a matrix of seismograms on a simple panel display
   ###   GH = structure of traces
@@ -50,6 +50,19 @@ function(GH, tim=1, dt=1,  sel=c(1:4), WIN=c(1,0), labs=c("CE1"), notes="CE1.V",
     {
       note.flag = TRUE
     }
+
+   if(missing(subnotes))
+    {
+      subnote.flag = FALSE
+    }
+  else
+    {
+      subnote.flag = TRUE
+    }
+
+ 
+
+  
   if(missing(tags))
     {
       tag.flag = FALSE
@@ -98,7 +111,15 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
 
   
   
-    if(missing(labs)) { labs=rep(NA, nn) }
+    if(missing(labs)) {
+      labs=rep(NA, nn)
+      lab.flag = FALSE
+    }
+    else
+      {
+        lab.flag = TRUE
+      }
+
   
   ttics = pretty(tim[tflag], n=10 )
   atics = ttics
@@ -348,6 +369,14 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
                                         #  print( paste(sep=' ', "IN PLOT.MATN", notes[i]))
           
           if(add!=3)text(max(tim[tflag]), y3+dy-dy*0.1, notes[i], adj=1)
+          
+        }
+
+      if(subnote.flag==TRUE)
+        {
+                                        #  print( paste(sep=' ', "IN PLOT.MATN", notes[i]))
+          
+          if(add!=3)text(max(tim[tflag]), y3+dy*0.1, subnotes[i], adj=0)
           
         }
 

@@ -1,5 +1,7 @@
 \name{editDB}
 \alias{editDB}
+\alias{pathDB}
+
 \title{Edit Data Base
 }
 \description{Edit, or remove items from
@@ -7,12 +9,25 @@
 }
 \usage{
 editDB(DB, w)
+pathDB(DB,  path1="", path2="")
+
 }
 \arguments{
   \item{DB}{RSEIS data base
 }
   \item{w}{vector of index items to remove
-}
+  }
+
+
+  \item{path1}{character for old path 
+  }
+
+  \item{path2}{character for new path to replace old path 
+  }
+
+
+
+  
 }
 \details{
   The DB is a list.  The program cycles through the elements of the list
@@ -46,6 +61,23 @@ sw = which(DB$yr>2011)
 ##########   remove the bad lines from the DB
 DDB = editDB(DB, -sw)
 infoDB(DB)
+
+#############  to change the path names if the data
+##   moves to a different server:
+
+for example: 
+###  "/data/wadati/soju/SEISMIC_DATA/Reventador2005/rev05/SEGY/R256.01/05.256.12.24.06.9024.6"
+    ###  change to:
+ ###  "/mnt/SEISMIC_DATA/Reventador2005/rev05/SEGY/R256.01/05.256.12.24.06.9024.6"
+ 
+path1="/data/wadati/soju"
+path2="/mnt"
+
+newDB = pathDB(DB, path1, path2 )
+
+
+
+
 
 
 }

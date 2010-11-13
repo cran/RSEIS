@@ -42,7 +42,7 @@ staf$dist=d1$dkm
 sorder = seisorder(GH, staf, VNE= c("V", "N", "E"))
 
 \dontrun{
-PICK.GEN(GH, sel=sorder)
+swig(GH, sel=sorder)
 }
 
 }

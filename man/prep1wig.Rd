@@ -21,7 +21,7 @@ prep1wig(wig=vector(), dt=1, sta="STA", comp="CMP", units="UNITS", starttime=lis
 \details{
   prep1wig is offered to reformat a time series
  
-  for input to program PICK.GEN()
+  for input to program swig()
 }
 \value{
   Rsac output list
@@ -46,7 +46,7 @@ prep1wig(wig=vector(), dt=1, sta="STA", comp="CMP", units="UNITS", starttime=lis
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{PICK.GEN, prepSEIS}
+\seealso{swig, prepSEIS}
 \examples{
 
 data(sunspots)
@@ -58,7 +58,7 @@ EH=prepSEIS(ES)
 
 STDLAB = c("DONE",  "zoom out", "refresh", "restore", "XTR", "SPEC", "SGRAM" ,"WLET")
 
-xx =  PICK.GEN( EH, STDLAB = STDLAB)
+xx =  swig( EH, STDLAB = STDLAB)
 ####################
 ####################
 ####################   example with multiple signals
@@ -102,7 +102,7 @@ PH1=prepSEIS(MYLIST)
 
 STDLAB = c("DONE",  "zoom out", "refresh", "restore", "XTR", "SPEC", "SGRAM" ,"WLET")
 
-PICK.GEN(PH1, STDLAB = STDLAB)
+swig(PH1, STDLAB = STDLAB)
 
 
 

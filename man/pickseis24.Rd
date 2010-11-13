@@ -19,7 +19,7 @@ pickseis24(pjj, DB, usta, ucomp)
   Use only 2 clicks on the plotseis24 display.
 }
 \value{
-  Graphical Side effects.  Program starts PICK.GEN
+  Graphical Side effects.  Program starts swig
 }
 
 \author{
@@ -27,7 +27,7 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 }
 
 
-\seealso{PICK.GEN, winseis24 , plotseis24 , getseis24
+\seealso{swig, winseis24 , plotseis24 , getseis24
 }
 \examples{
 

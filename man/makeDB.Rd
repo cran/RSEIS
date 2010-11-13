@@ -68,7 +68,7 @@ makeDB(path, pattern, kind = 1, Iendian=1, BIGLONG=FALSE)
   day 366 comes before day 1 of the next year.
 }
 
-\seealso{setupDB, Mine.seis , getseis24, plotseis24, EPOCHday, PICK.GEN}
+\seealso{setupDB, Mine.seis , getseis24, plotseis24, EPOCHday, swig}
 \examples{
 \dontrun{
 
@@ -116,7 +116,7 @@ ucomp=VNE
         GH = Mine.seis(at1, at2, DB, gsta, ucomp)
 
 ###  show data:
-        PICK.GEN(GH)
+        swig(GH)
 
 }
 

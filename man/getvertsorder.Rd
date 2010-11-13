@@ -27,13 +27,13 @@ getvertsorder(P, GU)
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{PICK.GEN}
+\seealso{swig}
 \examples{
 data(GH)
 
 vertord =  getvertsorder(GH$pickfile, GH)
 
-PICK.GEN(GH,  sel=vertord$sel, WIN=vertord$win,   SHOWONLY=TRUE)
+swig(GH,  sel=vertord$sel, WIN=vertord$win,   SHOWONLY=TRUE)
 
 
 }

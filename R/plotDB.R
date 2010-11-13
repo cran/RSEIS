@@ -29,8 +29,8 @@ usta = unique(DB$sta)
 
    im = match(  stass, usta)
 
-
-   icols = pald[im]
+  ###########     1+((im-1) %% length(pald))
+   icols = pald[  1+((im-1) %% length(pald)) ]
    
 
    

@@ -45,7 +45,7 @@ sel = which(GH$COMPS=="V")
 sel = sel[order(dees$dist[sel])]
 
 ###  plot normal way:
-PICK.GEN(GH, sel=sel, WIN=c(5,10), SHOWONLY=TRUE)
+swig(GH, sel=sel, WIN=c(5,10), SHOWONLY=TRUE)
 
 
 ###  plot with varsquiggle

@@ -46,7 +46,7 @@ evolMTM(a, dt = 0, numf = 1024, Ns = 0, Nov = 0, fl = 0, fh = 10)
 \examples{
 
 data(KH)
-###   PICK.GEN(KH)
+###   swig(KH)
 
 Xamp = KH$JSTR[[1]]
 

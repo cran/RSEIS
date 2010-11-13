@@ -2,7 +2,7 @@
 \alias{plotJGET}
 \title{Plot JGET output
 }
-\description{Plot JGET output using interactive PICK.GEN
+\description{Plot JGET output using interactive swig
 }
 \usage{
 plotJGET(J, SHOWONLY = FALSE)
@@ -14,7 +14,7 @@ plotJGET(J, SHOWONLY = FALSE)
 }
 }
 \details{
-  Program combines prepSEIS  and PICK.GEN
+  Program combines prepSEIS  and swig
 
   
 }
@@ -27,7 +27,7 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 }
 
 
-\seealso{JGET.seis, prepSEIS, PICK.GEN
+\seealso{JGET.seis, prepSEIS, swig
 }
 \examples{
 

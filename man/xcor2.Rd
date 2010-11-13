@@ -20,8 +20,11 @@ xcor2(a1, a2, DT, PLOT = FALSE, LAG = 100)
  Illustrates the cross correlation of two time series.
 }
 \value{
-  Return list from ccf, and position of maximum lag.
-  Graphical Side effects.
+  \item{ccf}{Return list from function ccf}
+  \item{mlag}{maximum lag in time}
+  \item{mccx}{value of ccf at max lag mlag}
+  \item{mlag2}{maximum absolute value lag }
+  \item{mccx2}{value of ccf at mlag2}
 }
 \seealso{ccf}
 

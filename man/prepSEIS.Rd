@@ -16,7 +16,7 @@ prepSEIS(GG)
 \details{
   prepSEIS is offered to reformat the
   output of a list of seismic traces (or other time series)
-  for inpout to program PICK.GEN()
+  for inpout to program swig()
 }
 \value{
  RSEIS list
@@ -24,7 +24,7 @@ prepSEIS(GG)
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{PICK.GEN, JGET.seis, GET.seis(package="Rsac"), Package:Rsac}
+\seealso{swig, JGET.seis, GET.seis(package="Rsac"), Package:Rsac}
 \examples{
 
 data(sunspots)
@@ -35,7 +35,7 @@ EH=prepSEIS(ES)
 
 STDLAB = c("DONE",  "zoom out", "refresh", "restore", "XTR", "SPEC", "SGRAM" ,"WLET")
 
-xx =  PICK.GEN( EH, STDLAB = STDLAB)
+xx =  swig( EH, STDLAB = STDLAB)
 ###################################
 ###################################
 
@@ -81,7 +81,7 @@ PH1=prepSEIS(MYLIST)
 
 STDLAB = c("DONE",  "zoom out", "refresh", "restore", "XTR", "SPEC", "SGRAM" ,"WLET")
 
-PICK.GEN(PH1, STDLAB = STDLAB)
+swig(PH1, STDLAB = STDLAB)
 
 
 
@@ -95,7 +95,7 @@ KH=prepSEIS(KG4)
 
 STDLAB = c("DONE",  "zoom out", "refresh", "restore", "XTR", "SPEC", "SGRAM" ,"WLET")
 
-xx =  PICK.GEN( KH, sel=which(KH$COMPS == "V"), STDLAB = STDLAB)
+xx =  swig( KH, sel=which(KH$COMPS == "V"), STDLAB = STDLAB)
 
 
 

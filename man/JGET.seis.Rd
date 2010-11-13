@@ -156,7 +156,7 @@ S1  = JGET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = FALSE)
 
  GH=prepSEIS(S1)
 ####   plot the data, and interact with the data
-PICK.GEN(GH)
+swig(GH)
 
 ###  or simply:
 

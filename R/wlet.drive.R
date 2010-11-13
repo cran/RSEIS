@@ -279,8 +279,8 @@ function(Xamp, DT=0.008, STAMP=NULL)
             pwlet2freqs(faha$noctave, faha$nvoice, DT, flip=faha$flip,  pfreqs , plot=TRUE)
             buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
 
-            clHOW = jmlcrc(faha$img, nbclimb=1000)
-            cfHOW = jmlcfamily(clHOW)
+            clHOW = crc(faha$img, nbclimb=1000)
+            cfHOW = cfamily(clHOW)
             
             SH  = cfHOW$ordered
             

@@ -36,7 +36,7 @@ view.seis(aday, ihour, inkhour, SAVEFILE, days, DB, usta, acomp,  STDLAB =c("QUI
   to set up the data base for segy data:FLS.prl, segydatabase.
   To get these contact me directly.  TZ is (-6) for Guatemala.
 }
-\seealso{PICK.GEN, save.wpix}
+\seealso{swig, save.wpix}
 \examples{
 
 \dontrun{

@@ -71,7 +71,7 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 \examples{
 
 data(KH)
-###   PICK.GEN(KH)
+###   swig(KH)
 
 Xamp = KH$JSTR[[1]]
 Nfft=1024   ###  fft length

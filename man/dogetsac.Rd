@@ -27,14 +27,14 @@ Sometimes information in the SAC header is omitted by the user
 
   
 }
-\seealso{ZGET.sac, PICK.GEN, JGET.seis, Package:Rsac}
+\seealso{ZGET.sac, swig, JGET.seis, Package:Rsac}
 \examples{
 
 \dontrun{
 fnames=list.files("20020122", pattern="SAC", full.names=TRUE)
 
 ZH = dogetsac(fnames)
-PICK.GEN(ZH)
+swig(ZH)
 
 
 }

@@ -1,16 +1,16 @@
-\name{PICK.GEN}
+\name{swig}
+\alias{swig}
 \alias{PICK.GEN}
-
 \title{Seismic Analysis }
 \description{
 Main Interactive Program for plotting and analyzing seismic waveform data.
 }
 \usage{
-PICK.GEN(GH, sel = 1:length(GH$dt), ORD = NULL, WIN = NULL, APIX = NULL,
+swig(GH, sel = 1:length(GH$dt), ORD = NULL, WIN = NULL, APIX = NULL,
 PHASE = NULL,
 STDLAB = NULL, PADDLAB = NULL, TEMPBUT=NULL,
 SHOWONLY = FALSE, CHOP = FALSE, TIT = "",
-pts = FALSE, forcepix = FALSE, pcex=0.7, SCALE = 1,
+pts = FALSE, forcepix = FALSE, pcex=0.7, SCALE = 1, ilocstyle=1,
 velfile = "", stafile = "", LOC = NULL,
 FILT=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL)
 }
@@ -33,6 +33,10 @@ FILT=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL)
     traces }
   \item{pcex}{ Pick label size expansion (cex), default=0.7 }
   \item{SCALE}{flag, 1,0= scale according to window or trace }
+  \item{ilocstyle}{integer, style of click graphic, one of -1, 0, 1, 2,
+    3, indicating: 
+    points, abline, segs, segs+abline,
+    segs+long-abline  , default=1  }
   \item{velfile}{velocity structure or file name }
   \item{stafile}{station structure or file name }
   \item{LOC}{source location structure (lat, lon, depth) }
@@ -83,10 +87,10 @@ data("GH")
                            "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "UNFILT", "SCALE", "Postscript")
 
 sel=GH$COMPS=="V" 
-p = PICK.GEN(GH, sel=sel, STDLAB=STDLAB)
+p = swig(GH, sel=sel, STDLAB=STDLAB)
 print(p)
 
- p = PICK.GEN(GH, sel=sel, WIN=c(4,14) , STDLAB=c("DONE", "LAME", "DAME"))
+ p = swig(GH, sel=sel, WIN=c(4,14) , STDLAB=c("DONE", "LAME", "DAME"))
 print(p)
 
 

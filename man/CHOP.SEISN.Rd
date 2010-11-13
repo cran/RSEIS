@@ -21,14 +21,14 @@ CHOP.SEISN(GH, sel = 1:4, WIN = NULL)
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{PICK.GEN}
+\seealso{swig}
 \examples{
 data("GH")
 sel= which(GH$COMPS=="V")
 
 KF = CHOP.SEISN(GH, sel=sel, WIN = c(0 , 5)  )
 
-PICK.GEN(KF)
+swig(KF)
 }
 
 \keyword{misc}

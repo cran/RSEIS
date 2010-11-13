@@ -14,7 +14,7 @@ choosfilt(thefilts = thefilts, ncol = 5)
   \item{ncol}{number of columns}
 }
 \details{
-  Used for interactive choices in PICK.GEN.
+  Used for interactive choices in swig.
   See example below.
 
 }

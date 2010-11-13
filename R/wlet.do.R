@@ -19,7 +19,10 @@ function(why, dt, noctave=6, nvoice=20, flip=TRUE, ploty=TRUE, zscale=1, col=ter
     ## par(xaxs='i')
 
     ## plot.ts(ts(why, deltat=dt) )
-    kaha= jmlcwt(why, noctave, nvoice=nvoice, w0=5, twoD=TRUE, plot=FALSE)
+
+    ####  this used to be a problem but I think they fixed
+    ####  it.  If not, go back to jmlcwt
+    kaha= cwt(why, noctave, nvoice=nvoice, w0=5, twoD=TRUE, plot=FALSE)
  ##   kaha= cwt(why, noctave, nvoice=nvoice, w0=5, twoD=TRUE, plot=TRUE)
 
 ###  get the scale for the y-axis

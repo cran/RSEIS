@@ -75,7 +75,7 @@
   
   fn2 = fn1[gi]
   
-  print(fn2)
+   if(verbose) print(fn2)
 
   
   KG4 = JGET.seis(fn2, kind = kind,  Iendian=Iendian, BIGLONG= BIGLONG, HEADONLY=FALSE ,PLOT = FALSE)
@@ -90,9 +90,10 @@
 
       }
   }
+ ## print("Mine GLUE.GET.seis")
   
   RR = GLUE.GET.seis(KG4)
-  
+ ##  print("Mine prepseis")
   GH=prepSEIS(RR)
   
   ##  the window is seconds from the begining of the traces
@@ -125,7 +126,7 @@
   
   eday = EPOCHday(GH$info$yr, jd=GH$info$jd, origyr = DB$origyr)
 
-  
+ #######  print("Mine after EPOCHday")
   
   ss1 = secdif(eday$jday, GH$info$hr, GH$info$mi, GH$info$sec-GH$info$off,
     at1,0, 0, 0)

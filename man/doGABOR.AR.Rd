@@ -80,7 +80,7 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 
 
 data(KH)
-###   PICK.GEN(KH)
+###   swig(KH)
 
 Xamp = KH$JSTR[[1]]
 Xamp = Xamp[57914:72989]

@@ -28,7 +28,7 @@ Takes in an common x predictor and
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{PICK.GEN}
+\seealso{swig}
 \examples{
 data("GH")
 

@@ -35,7 +35,7 @@ sel= which(GH$COMPS=="V")
 
 sel = 1:3
  KF = FILT.SEISN(GH, sel = sel, FILT=Fdef)
-PICK.GEN(KF)
+swig(KF)
 }
 
 \keyword{misc}

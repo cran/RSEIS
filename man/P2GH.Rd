@@ -11,13 +11,13 @@ P2GH(P1)
 
 \arguments{
   \item{P1}{
-Output of PICK.GEN after clicking XTR
+Output of swig after clicking XTR
 }
 }
 \details{
-  Running PICK.GEN out after a selection of a window and
+  Running swig out after a selection of a window and
   the XTR button, one can create an RSEIS structure for further use
-  in PICK.GEN.
+  in swig.
 }
 \value{
 RSEIS list
@@ -27,14 +27,14 @@ RSEIS list
 
 }
 
-\seealso{PICK.GEN,
+\seealso{swig,
   prepSEIS
 }
 \examples{
 
 \dontrun{
 
-P1 = PICK.GEN(GH)
+P1 = swig(GH)
 LH = P2GH(P1)
 
 }

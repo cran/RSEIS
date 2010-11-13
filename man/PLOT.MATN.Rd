@@ -46,7 +46,7 @@ PLOT.MATN(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost
 
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}
 
-\seealso{PICK.GEN}
+\seealso{swig}
 \examples{
 
 dt = 0.001

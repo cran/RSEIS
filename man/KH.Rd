@@ -41,7 +41,7 @@ Lees, J. M., J. B. Johnson, M. Ruiz, L. Troncoso, M. Welsh, Reventador Volcano 2
 }
 \examples{
 data(KH)
-PICK.GEN(KH)
+swig(KH)
 ## maybe str(KH) ; plot(KH) ...
 }
 \keyword{datasets}

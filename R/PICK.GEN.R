@@ -16,7 +16,7 @@
   
   if(missing(SHOWONLY)) { SHOWONLY=FALSE}
   if(missing(CHOP)) { CHOP=FALSE }
-   if(missing(STDLAB)) { STDLAB = c("DONE", "QUIT","zoom out", "zoom in", "Left", "Right", "restore", "Pinfo","WINFO",
+   if(missing(STDLAB)) { STDLAB = c("DONE", "QUIT","PSEL","zoom out", "zoom in", "Left", "Right", "restore", "Pinfo","WINFO",
                            "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "UNFILT", "SCALE", "Postscript")}
   if(missing(PADDLAB)) { PADDLAB=c( "NOPIX", "REPIX") }
 
@@ -120,7 +120,7 @@ if(is.logical(sel)) { sel = which(sel) }
   mark = FALSE
 
 
-  ###################   copy of GH file ..... do I need this?
+###################   copy of GH file ..... do I need this?
   if(CHOP==TRUE)
     {
       if(!is.null(WIN))
@@ -146,30 +146,12 @@ if(is.logical(sel)) { sel = which(sel) }
   if( identical(is.na(match("NOPIX",  PADDLAB)), TRUE)) { PADDLAB = c(PADDLAB, "NOPIX") }
   if( identical(is.na(match("REPIX",  PADDLAB)), TRUE)) { PADDLAB = c(PADDLAB, "REPIX") }
 
- if(!exists('STDLAB'))
+  if(!exists('STDLAB'))
     {
       STDLAB = c("DONE",  "zoom out", "refresh", "restore", "SavePF", 
         "PickWin", "XTR", "SPEC", "SGRAM" ,"WLET")
     }
 
-
-
-fixedbuttons = c("DONE",
-"QUIT", "NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "restore", 
-"refresh", "zoom out", "zoom in", "Left",  "Right", "SCALE",  "SHOWALL",
-  "SHOWSEL", "saveFN", "FLIP", "TR_INFO", "Postscript","PNG",
-  "AUTOP","AUTOPALL", "DETECT",  "MAP", "XTR",  "SIG", 
-"SPEC.old",  "ASCII",  "AMPL",   "TRNAMPL",  "SPEC", "SGRAM",  "WLET",
-  "FILT","UNFILT",  "BRUNE",   "DETAIL",   "PTS", "MMARKS",   "PMOT",
-  "STERNET", "GTAZI", "ENVLP", "WINFO", "Pinfo", "XCOR", 
-"PHLAG", "3COMP", "Predict1D",   "SavePF", "SavePIX", "LQUAKE", 
- "PickWin", "Ppic", "Spic", "Apic", "Pup",   "Pdown", 
-     "Pnil", 
-"YPIX", "WPIX", "RMS","EDIX", 
- "NOPIX", "REPIX", 
-       "ADDBUTTS")
-     
-    
   stdlab =  STDLAB
 
   Pickdev = NULL
@@ -177,7 +159,6 @@ fixedbuttons = c("DONE",
 
   tempbuttons = NULL
 
-  
   BLABS = c(stdlab, PADDLAB)
   NLABS = length(BLABS)
   NOLAB = NLABS +1000
@@ -190,17 +171,12 @@ somecolors = c("black", "darkmagenta", "forestgreen", "blueviolet",
         "magenta1", "lightsalmon3", "darkcyan", "darkslateblue",
         "chocolate4", "goldenrod4", "mediumseagreen")
 
-
 APAL=c("black","darkmagenta","forestgreen","blueviolet",
   "tan3","lightseagreen","deeppink","cyan3","bisque3",
   "darkcyan","darkred","firebrick3","rosybrown4","royalblue3",
   "darkblue","red2","violetred3","springgreen3","darkorange4",
   "palevioletred3","mediumpurple3","tomato","dodgerblue1",
   "olivedrab4","yellow4","pink4")
-
-  
-
-  
 
 ##   pnos = grep("PIX", BLABS)
    pnos = c( grep("PIX", BLABS), grep("pik", BLABS))
@@ -271,14 +247,9 @@ APAL=c("black","darkmagenta","forestgreen","blueviolet",
    ###   print(STNS)
   ###   print(COMPS)
  
-  
   UNIsta = unique(STNS)
   
   NUNI = length( UNIsta)
-
-
-
-  
 
   if( identical(NH$pcol , "AUTO") |  is.null( NH$pcol )  )
     {
@@ -305,13 +276,9 @@ APAL=c("black","darkmagenta","forestgreen","blueviolet",
 
     }
 
-  
-
   ###  print(pcols)
 
-
 ###   want the sorting of comps to be Vertical North East always
-
 
   oCOMPS = COMPS
 
@@ -331,22 +298,11 @@ APAL=c("black","darkmagenta","forestgreen","blueviolet",
   oCOMPS[grep("E", COMPS)] = 4
   oCOMPS[grep("e", COMPS)] = 4
 
-  
 
   ords = match(STNS, sort(UNIsta))
   ordc = match(oCOMPS, sort(unique(oCOMPS) ))
 
   ordsel = order( ords+ordc/10)
-
-
-####  try to do some automatic ordering....this does not work in certain circumstances
-  ###  need to improve this section
-##  if( length(sel) == length(GH$dt) & ORD==TRUE )
-##     {
-##       sel = ordsel
-##       STNS = STNS[sel]
-##       COMPS = COMPS[sel]
-##     }
 
     if(!is.null(ORD))
     {
@@ -416,25 +372,25 @@ APAL=c("black","darkmagenta","forestgreen","blueviolet",
   
   while(TRUE)
     {
-   iloc = ilocator(1, COL=rgb(1,0.6, 0.6), NUM=FALSE , YN=length(sel), style=1)
+      iloc = ilocator(1, COL=rgb(1,0.6, 0.6), NUM=FALSE , YN=length(sel), style=1)
       Nclick = length(iloc$x)
-  ####  cat(paste(sep=" ", zenclick, Nclick), sep="\n")
-   
+####  cat(paste(sep=" ", zenclick, Nclick), sep="\n")
+      
       if(Nclick>0)
         {
           zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
           zenclick = length(zloc$x)
           K =  whichbutt(iloc ,buttons)
           sloc = zloc
-
+          
           
         }
       else
         {
-         ###  Right button was clicked
+###  Right button was clicked
           Nclick = 0
-        ###  zenclick=zenclick+1
-        ###   print(zenclick)
+###  zenclick=zenclick+1
+###   print(zenclick)
           K = 0
           zenclick = length(zloc$x)
           if(zenclick<1)
@@ -599,10 +555,7 @@ APAL=c("black","darkmagenta","forestgreen","blueviolet",
         }
       
      #############  two window clicks and a middle mouse click:
-    
-
-       ####################  START  BUTTON DEFINITIONS    ###########################
-
+        ####################  START  BUTTON DEFINITIONS    ###########################
              ###################   RESTORE  ###########################      
       if(K[Nclick]==match("restore", BLABS, nomatch = NOLAB))
         {
@@ -698,7 +651,7 @@ APAL=c("black","darkmagenta","forestgreen","blueviolet",
              zloc = list(x=NULL, y=NULL)
         }
       ###################   Shift Right   ###########################      
-       if(K[Nclick]==match("Right", BLABS, nomatch = NOLAB))
+   if(K[Nclick]==match("Right", BLABS, nomatch = NOLAB))
         {
           u = par("usr")
           DX = (u[2]-u[1])*0.3
@@ -718,7 +671,7 @@ APAL=c("black","darkmagenta","forestgreen","blueviolet",
 
       
       ###################   ZOOM IN   ###########################      
-       if(K[Nclick]==match("SCALE", BLABS, nomatch = NOLAB))
+   if(K[Nclick]==match("SCALE", BLABS, nomatch = NOLAB))
         {
 
           if(ScaleFACT==1)
@@ -742,14 +695,42 @@ APAL=c("black","darkmagenta","forestgreen","blueviolet",
         }
 
       ###################   ZOOM IN   ###########################      
-       if(K[Nclick]==match("ZERO", BLABS, nomatch = NOLAB))
+   if(K[Nclick]==match("ZERO", BLABS, nomatch = NOLAB))
         {
              zloc = list(x=NULL, y=NULL)
         }
 ###################   button to save in file the names of special files (either to reject or save )
+   if(K[Nclick]==match("PSEL", BLABS, nomatch = NOLAB))
+        {
+###################   select subset of traces
+
+          cat("modify selection:", sep="\n" )
+          ANSWER=readline("Type in index of traces? ")
+          
+          sel = ANSWER
+          #####     sel = 1:length(NH$info$jd)
+           NSEL = length(NH$dt[sel])
+
+          du = 1/NSEL
+          
+          
+          isel = sel[1]
+          
+          Torigin = list(jd=NH$info$jd[isel],
+            hr=NH$info$hr[isel], mi=NH$info$mi[isel],
+            sec=(NH$info$sec[isel]+NH$info$msec[isel]/1000+NH$info$t1[isel]-NH$info$off[isel]))
+
+           YN = YNreplot()
+  
+   
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+             zloc = list(x=NULL, y=NULL)
+          
+          
+        }
 
 
-      if(K[Nclick]==match("SHOWALL", BLABS, nomatch = NOLAB))
+   if(K[Nclick]==match("SHOWALL", BLABS, nomatch = NOLAB))
         {
           
           sel = 1:length(NH$info$jd)
@@ -2506,7 +2487,23 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
             print(data.frame(rd))
            zloc = list(x=NULL, y=NULL) 
         }
-   
+
+   ###################
+    if(K[Nclick]==match("RESHIFT", BLABS, nomatch = NOLAB))
+        {
+          
+          ASHIFT = BLAHSHIFT
+           YN = YNreplot()
+          
+          buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+
+          sloc = zloc
+          zloc = list(x=NULL, y=NULL)
+        
+          
+          
+        }
+  
             ################### TINE SHIFT = TSHIFT or aline or align traces  ###########################      
  
      if(K[Nclick]==match("TSHIFT", BLABS, nomatch = NOLAB))
@@ -2533,8 +2530,11 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
               tshft[ipick] = ppick-ppick[1]
               
               ## print(data.frame(list(sta=NH$STNS, comp=NH$COMPS, tshft=tshft)))
+
+              print(data.frame(list(sta=NH$STNS[ipick] , comp=NH$COMPS[ipick] , tshft=tshft[ipick] )))
               
               ASHIFT = tshft
+               BLAHSHIFT = tshft
             }
           else
             {
@@ -3718,7 +3718,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
                   ycol = colpix[zappa]
                   if(is.na(ycol)) { ycol = rgb(0,0,1) }
                   err = NA
-                  WPX =  pickhandler(i1=i1, ppick=ppick[iz], kzap=kzap, err=NA, ycol=ycol, NPX=NPX, WPX, NH)
+                  WPX =  pickhandler(i1=i1, ppick=ppick[iz], kzap=kzap, err=NA, ycol=ycol, NPX=NPX, WPX=WPX, NH=NH)
 
                   
                   NADDPIX = NADDPIX+1
@@ -4125,7 +4125,7 @@ ex1 = seq(from=NH$info$t1[Iv], by=NH$info$dt[Iv], length.out=length( NH$JSTR[[Iv
                    ycol = colpix[zappa]
                    if(is.na(ycol)) { ycol = rgb(0,0,1) }
                    err = NA
-                   WPX =  pickhandler(i1=i1, ppick=ppick[iz], kzap=kzap, err=NA, ycol=ycol, NPX=NPX, WPX, NH)
+                   WPX =  pickhandler(i1=i1, ppick=ppick[iz], kzap=kzap, err=NA, ycol=ycol, NPX=NPX, WPX=WPX, NH=NH)
                    NADDPIX = NADDPIX+1
                    ## 
                    

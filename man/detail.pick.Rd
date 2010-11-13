@@ -16,7 +16,7 @@ detail.pick(y, ex, dt, TIT = "")
   \item{TIT}{title}
 }
 \details{
-  Creates interactive session for picking seismograms.  Is called from PICK.GEN.
+  Creates interactive session for picking seismograms.  Is called from swig.
 }
 \value{
   KSAVE = list(x=xsave, y=ysave)
@@ -24,7 +24,7 @@ detail.pick(y, ex, dt, TIT = "")
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{PICK.GEN}
+\seealso{swig}
 \examples{
 
 data(CE1)

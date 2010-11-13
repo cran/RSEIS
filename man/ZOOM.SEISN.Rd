@@ -22,14 +22,14 @@ ZOOM.SEISN(GH, sel = 1:length(GH$dt), WIN = NULL)
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{PICK.GEN}
+\seealso{swig}
 \examples{
 data("GH")
 sel= which(GH$COMPS=="V")
 
 KF = ZOOM.SEISN(GH, sel=sel, WIN = c(0 , 5)  )
 
-PICK.GEN(KF)
+swig(KF)
 }
 
 \keyword{hplot}

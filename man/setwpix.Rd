@@ -1,9 +1,9 @@
 \name{setwpix}
 \alias{setwpix}
-\title{Set Window Pix for PICK.GEN}
+\title{Set Window Pix for swig}
 \description{
   Create list of windows picks suitable for plotting in
-  PICK.GEN.
+  swig.
 }
 \usage{
 setwpix(phase = NULL, col = NULL, yr = NULL, jd = NULL, hr = NULL, mi = NULL, sec = NULL, dur = NULL, name = NULL, comp = NULL, dispcomp = NULL)
@@ -30,7 +30,7 @@ setwpix(phase = NULL, col = NULL, yr = NULL, jd = NULL, hr = NULL, mi = NULL, se
 
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}
 
-\seealso{PICK.GEN}
+\seealso{swig}
 \examples{
 
 
@@ -61,7 +61,7 @@ hr=orgtim[3],  mi=orgtim[4], sec=psecs, dur=0, name=nam , comp="V")
 W = secdifL(KH$info, pp)
 
 win = c(min(W)-5, max(W)+5    )  
- PICK.GEN(KH, APIX=pp, WIN=win , SHOWONLY=TRUE)
+ swig(KH, APIX=pp, WIN=win , SHOWONLY=TRUE)
 
 
 }

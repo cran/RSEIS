@@ -20,7 +20,7 @@ NEWPLOT.WPX(t0, STNS, COMPS, YPX, FILL = FALSE, FORCE = TRUE, cex = cex, srt = s
   \item{srt}{string rotation angle}
 }
 \details{
-  Used in conjunction with PICK.GEN program
+  Used in conjunction with swig program
 }
 \value{
  Graphical Side Effects
@@ -28,7 +28,7 @@ NEWPLOT.WPX(t0, STNS, COMPS, YPX, FILL = FALSE, FORCE = TRUE, cex = cex, srt = s
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{PICK.GEN}
+\seealso{swig}
 \examples{
 ########  no example available now
 }

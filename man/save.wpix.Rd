@@ -1,17 +1,17 @@
 \name{save.wpix}
 \alias{save.wpix}
-\title{Save WPIX from PICK.GEN output}
-\description{Save WPIX from PICK.GEN output
+\title{Save WPIX from swig output}
+\description{Save WPIX from swig output
 }
 \usage{
 save.wpix(KOUT, fn = "wpix.out")
 }
 \arguments{
-  \item{KOUT}{List output from PICK.GEN}
+  \item{KOUT}{List output from swig}
   \item{fn}{file name for saving.}
 }
 \details{
-  Takes the output list from PICK.GEN, specifically the WPX
+  Takes the output list from swig, specifically the WPX
   component (KOUT\$WPX) and writes a table to the file system.
   This function is embedded in view.seis.
 }
@@ -23,6 +23,6 @@ save.wpix(KOUT, fn = "wpix.out")
   User must have write permission to the file.
 }
 
-\seealso{view.seis, PICK.GEN}
+\seealso{view.seis, swig}
 
 \keyword{misc}

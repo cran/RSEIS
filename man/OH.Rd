@@ -46,7 +46,7 @@ Lees, J. M. and J. Park (1995): Multiple-taper spectral analysis: A stand-alone 
 }
 \examples{
 data(OH)
-xx =  PICK.GEN( OH, sel=which(OH$COMPS == "V"))
+xx =  swig( OH, sel=which(OH$COMPS == "V"))
 
 }
 \keyword{datasets}

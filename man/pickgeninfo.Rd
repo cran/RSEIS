@@ -1,7 +1,7 @@
 \name{pickgeninfo}
 \alias{pickgeninfo}
-\title{print PICK.GEN information}
-\description{print PICK.GEN information to screen
+\title{print swig information}
+\description{print swig information to screen
 }
 \usage{
 pickgeninfo()
@@ -9,7 +9,7 @@ pickgeninfo()
 
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}
 
-\seealso{PICK.GEN}
+\seealso{swig}
 \examples{
 pickgeninfo()
 }
