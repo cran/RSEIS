@@ -45,7 +45,7 @@ function(y, dt=0.008, fwlen =  125,  bwlen  = 125, stretch=1000, MED=255, PLOT=F
 
      ey = envelope(y-mean(y))
      ##########apply a robust smoothing filter (running median)
-     print(paste(sep=' ', "################ in STLT ", lx)) 
+    ####       print(paste(sep=' ', "################ in STLT ", lx)) 
      s = runmed(ey, MED, algorithm ="Stuetzle")    
      rs = range(s)
      ess = stretch*(0.5+(s-rs[1])/(rs[2]-rs[1]))     

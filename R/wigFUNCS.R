@@ -671,6 +671,8 @@ XTR<-function(nh, g)
 
         ex = seq(from=nh$info$t1[ipick], by=nh$info$dt[ipick], length.out=length(famp) )
         temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+
+        
 #### Xamp =  -1*temp
         smallex = ex[ ex > pwin[1] & ex <pwin[2]]
 

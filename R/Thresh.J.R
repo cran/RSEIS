@@ -8,7 +8,7 @@ function(y, thresh)
       k = y>Athresh
       G = rep(0,length(y))
       G[k] =  y[k]
-      if(length(y[k])<1) { return(NA) }
+      if(length(y[k])<1) { return(NULL) }
       h = x[k]
       dd = diff(h)
       wd = which(dd>1)

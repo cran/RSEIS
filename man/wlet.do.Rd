@@ -21,17 +21,35 @@ wlet.do(why, dt, noctave = 6, nvoice = 20, flip = TRUE, ploty = TRUE, zscale = 1
   \item{STAMP}{cahracter stamp for identification}
 }
 \details{
- IUses the ccw code to calculate the transform, but plots differently.
- Morelet wavelet is used by default.
+  wlet.do uses the cwt (package:Rwave) code to calculate the continuous wavelet
+  transform,
+  but plots it differently.
+ Morelet wavelet is used by default.   The cwt produces an
+ image, the modulus of the transform, which is passed on to wlet.do
+ along with the number of octaves and the number of voices.
+ Plotting parameters are passed to the function so that replotting can
+ be accomplished (use plotwlet) without having to recalculate the transform.
+ 
 }
 \value{
-  \item{baha}{wavelet transform list}
-    \item{PE}{plotting information list}
+  \item{baha}{list:
+    wavelet transform image,
+    noctave = number of  octaves,
+    nvoice = number of voices,
+        flip = logical, whether image is flipped (default=TRUE) }
+      \item{PE}{plotting information list:
+	why=y-axis,
+	dt=time series sample,
+	interval,
+	zscale=(1,2,3) image scaling,
+	col=color map,
+        ygrid = logical(default=FALSE),
+	STAMP = character string }
 }
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{Rwave}
+\seealso{Rwave,  cwt , plotwlet, contwlet , pwlet2freqs, wlet.drive}
 \examples{
 
 data(CE1)
@@ -40,9 +58,27 @@ plot(CE1$x, CE1$y, type='l')
 
 require(Rwave)
 
-wlet.do(CE1$y, CE1$dt, flip = FALSE, ploty = TRUE)
+out = wlet.do(CE1$y, CE1$dt, flip = FALSE, ploty = TRUE)
+
+\dontrun{
+####  show with different scalings:
+plotwlet(out$baha, CE1$y, CE1$dt , zscale=3,  col=rainbow(100) ,  ygrid=FALSE)
+
+plotwlet(out$baha, CE1$y, CE1$dt , zscale=1,  col=terrain.colors(100) ,
+ygrid=TRUE)
+
+##############  add frequency scale on the right hand side of image
+pfreqs = c(0.5, 1, 2,3,4,5, 10, 14)
+
+     zp = pwlet2freqs(noctave=out$baha$noctave , nvoice=out$baha$nvoice,
+CE1$dt,
+flip = TRUE, pfreqs, plot = TRUE,
+perc = 0.85)
 
 
+
+
+}
 
 }
 

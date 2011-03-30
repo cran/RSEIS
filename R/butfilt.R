@@ -1,5 +1,5 @@
 `butfilt` <-
-function(a, fl=0, fh=50, deltat=1, type="BP", proto="BU", npoles=5, chebstop=30.0, trbndw=0.3 )
+function(a, fl=0, fh=0.5, deltat=1, type="BP", proto="BU", npoles=5, chebstop=30.0, trbndw=0.3 )
 {
 #####  comments from the C code in /home/lees/Progs/Rc/LLNfilt.c
    #####  int iord:      number of poles for filter (< 10; preferably < 5)

@@ -6,13 +6,13 @@
  design and apply butterworth low/high/band pass filters.
 }
 \usage{
-butfilt(a, fl=0, fh=50, deltat=1, type="BP", proto="BU", npoles=5, chebstop=30.0, trbndw=0.3)
+butfilt(a, fl=0, fh=0.5, deltat=1, type="BP", proto="BU", npoles=5, chebstop=30.0, trbndw=0.3)
 }
 
 \arguments{
   \item{a}{vector signal}
   \item{fl}{low frequency cut-off, default=0 }
-  \item{fh}{high frequency cut-off, DEFAULT=1/2dt}
+  \item{fh}{high frequency cut-off, DEFAULT= (1/2dt) }
   \item{deltat}{sample rate, s, deFAULT=1}
   \item{type}{type of filter, one of c("LP",  "HP","BP" ,"BR" ), DEFAULT="BP" }
   \item{proto}{prototype, c("BU", "BE" , "C1" ,"C2"), DEFAULT="BU"  }

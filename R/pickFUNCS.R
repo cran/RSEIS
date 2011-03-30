@@ -102,7 +102,7 @@ NOPIX<-function(nh, g)
     g$action = "replot"
     invisible(list(NH=nh, global.vars=g))
   }
-
+##########################
 REPIX<-function(nh, g)
   {
     g$WPX$onoff[g$WPX$onoff==(-1)] = 0
@@ -110,6 +110,13 @@ REPIX<-function(nh, g)
    g$action = "replot"
     invisible(list(NH=nh, global.vars=g))
   }
+##########################
+
+
+
+
+
+
 
 
 

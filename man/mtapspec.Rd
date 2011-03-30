@@ -31,7 +31,7 @@ functions used by mtapspec.  See reference for details.
   LIST
     \item{dat}{input data}
     \item{dt}{sample rate}
-    \item{spec}{amplitude spectrum}
+    \item{spec}{Estimated power spectrum}
     \item{dof}{degrees of freedom for each frequency}
     \item{Fv}{F-values for each frequency}
     \item{Rspec}{real part of complex spectrum}

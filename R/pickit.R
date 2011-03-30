@@ -17,7 +17,7 @@ function(ay, deltat=0.008 ,  MED=225, FRWD=8,  BKWD=8,  sbef=1, saft=6, thresh=2
     if(missing(flo)) { flo = .1 }
     if(missing(fhi)) { fhi=5.0 }
     if(missing(Kmin)) { Kmin = 7 }
-    if(missing(MED)) { MED = 1000 }
+    if(missing(MED)) { MED = 1001 }
 
     if(fhi > 1/(2*deltat)) { fhi = (1/(2*deltat))- 0.05*(1/(2*deltat)) }
 
@@ -48,6 +48,16 @@ function(ay, deltat=0.008 ,  MED=225, FRWD=8,  BKWD=8,  sbef=1, saft=6, thresh=2
     if(thresh<2*stthresh) { thresh = 2*stthresh }
   
     J = Thresh.J(A$rat,thresh)
+
+    if(is.null(J))
+      {
+
+        print("Nothing in Thresh.J")
+        
+        return(NULL)
+
+
+      }
     
     Kthresh2 = Tthresh2/deltat
     

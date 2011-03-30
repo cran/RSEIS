@@ -1,6 +1,16 @@
 infoDB<-function(DB)
   {
 
+    if(any(DB$yr>2100))
+      {
+
+        print("Problems with DB....need to check")
+        ww = which(DB$yr>2100)
+        print(ww)
+
+
+      }
+
     usta = unique(DB$sta)
     ucomp = unique(DB$comp)
     times = range(c(DB$t1, DB$t2))

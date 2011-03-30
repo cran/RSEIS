@@ -51,7 +51,7 @@ ph: (919) 962-0695
 %% \contactemail{jonathan.lees@unc.edu}
 %% \contactphone{(919) 962-0695}
 \title{RSEIS: Seismic Time Series Analysis in R}
-\date{September, 2007}
+\date{\today}
 
 \maketitle
 
@@ -154,7 +154,7 @@ STDLAB = c("DONE",  "zoom in", "zoom out", "refresh", "restore",
  "XTR", "SPEC", "SGRAM" ,"WLET", "FILT",  "Pinfo")
 
 
-PICK.GEN(KH, SHOWONLY=FALSE, STDLAB=STDLAB)
+swig(KH, SHOWONLY=FALSE, WIN = c(90, 200) , STDLAB=STDLAB)
 
 @ 
 In this example we are showing the vertical component of an explosion 
@@ -180,7 +180,7 @@ Choose  \emph{WLET} to show the wavelet transform of
 the harmonic tremor and important time variations of the
 volcano during eruption.
 
-The PICK.GEN program is normally run in interactive mode.
+The swig program is normally run in interactive mode.
 In that case, once it is started R is waiting for
 the user to select traces and buttons for
 activating a variety of programs and analysis 
@@ -196,7 +196,7 @@ to just the vertical motion seismic data, at least for now.
 If you expand the screen, you can re-arrange the buttons by
 clicking on the refresh button.
 
-PICK.GEN is a general analysis program designed for earthquake studies.
+swig is a general analysis program designed for earthquake studies.
 It uses the {\emph Really Poor Man's GUI} to 
 navigate between seismic traces and 
 various analysis procedures.
@@ -223,7 +223,7 @@ the program
 uses the number of clicks to determine
 which traces to process and what to do.
 For example, if the ``PickWin'' button is selected,
-a new PICK.GEN is spawned where the program 
+a new swig is spawned where the program 
 gathers all the components for that station, Usually Vertical, North and East,
 although in the presence of acoustic channels they will also be displayed.
 The new window is called with a new set of Buttons
@@ -261,6 +261,8 @@ on the fly.
 
 data(GH)
 numstas = length(GH$STNS)
+
+
 @ 
 
 In this example, taken from the geothermal field 
@@ -279,7 +281,8 @@ verts = which(GH$COMPS == "V")
 STDLAB = c("DONE", "QUIT",  "NEXT","PREV",  "zoom in", "zoom out", "refresh", "restore", "SavePF", 
 "PickWin", "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "Pinfo", "WINFO", "PTS", "YPIX", "WPIX")
 
-PICK.GEN(GH,  sel=verts,STDLAB =STDLAB,  SHOWONLY=TRUE)
+
+swig(GH,  sel=verts[c(1,2,3,4,6) ] ,STDLAB =STDLAB, WIN=c(4,15),  SHOWONLY=TRUE)
 
 
 @ 
@@ -292,7 +295,7 @@ We see that the stations here are 'mixed up', i.e. arriving at different times.
 
 vertord = getvertsorder(GH$pickfile, GH)
 
-PICK.GEN(GH,  sel=vertord$sel,      STDLAB =STDLAB,  SHOWONLY=FALSE)
+swig(GH,  sel=vertord$sel[1:5] ,      STDLAB =STDLAB,  WIN=c(4, 15), SHOWONLY=FALSE)
 
 @ 
 
@@ -337,11 +340,14 @@ p-pick with the waveforms, match the timing information
 and plot together.
 finally we add the picks to the section:
 <<fig=TRUE, echo=TRUE, results=HIDE>>=
+
 apx = uwpfile2ypx(GH$pickfile)
-PICK.GEN(GH,  sel=vertord$sel, APIX=apx, STDLAB =STDLAB,  SHOWONLY=FALSE, velfile=VELMOD1D, )
+swig(GH,  sel=vertord$sel[1:5] , APIX=apx, STDLAB =STDLAB,  WIN=c(4, 15), SHOWONLY=FALSE, velfile=VELMOD1D, )
+
+
 @ 
 
-Brief documentation for buttons in the PICK.GEN
+Brief documentation for buttons in the swig
 program can be seen by calling the documentation function,
 either for a specific button 
 
@@ -375,7 +381,7 @@ EH=prepSEIS(ES)
 STDLAB = c("DONE",  "zoom in", "zoom out", "refresh", "restore",
  "XTR", "SPEC", "SGRAM" ,"WLET", "FILT",  "Pinfo")
 
-xx =  PICK.GEN( EH, STDLAB = STDLAB,  SHOWONLY=TRUE)
+xx =  swig( EH, STDLAB = STDLAB,  SHOWONLY=TRUE)
 
 @ 
 
@@ -426,7 +432,7 @@ Milankovitch cycles at (approximately) 100K, 41K and 20K periods.
 
 <<fig=TRUE, echo=TRUE, results=HIDE>>=
 data(OH)
-xx =  PICK.GEN( OH, sel=which(OH$COMPS == "V"), STDLAB = STDLAB,  SHOWONLY=TRUE)
+xx =  swig( OH, sel=which(OH$COMPS == "V"), STDLAB = STDLAB,  SHOWONLY=TRUE)
 
 @ 
 

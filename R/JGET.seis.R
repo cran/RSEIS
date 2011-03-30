@@ -49,7 +49,13 @@ function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=FALSE)
           DAT = list()
           GED  = load(fn)
           assign("DAT", get(GED))
+
+          if(HEADONLY) DAT$amp = NULL
+          DAT$oldname = DAT$fn
+          DAT$fn = fn
           GIVE[[i]] = DAT
+
+          
           next
         }
 
