@@ -39,6 +39,20 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 
 eq1 = getPDEcsv(pde = "/home/lees/Site/Santiaguito/pdq.eqs")
 
+############################ 
+######  copy/paste  from the screen dump at the NEIC web site
+#####  then:
+eq1 = getPDEscreen(pde = "EQS.txt")
+
+nk = names(eq1[[1]])
+k = length(nk)
+
+##########   get a matrix of values instead
+jim =  matrix( unlist(eq1), ncol=k, byrow=TRUE)
+colnames(jim) <- nk
+
+
+
 }
 
 

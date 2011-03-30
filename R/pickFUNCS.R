@@ -285,7 +285,7 @@ PickWin<-function(nh, g)
                 }
               
               PICKLAB = c("DONE", "ZOOM.out","ZOOM.in", "REFRESH", "RESTORE",
-                "FILT", "UNFILT", "Pinfo", "WINFO")
+                "FILT", "UNFILT", "Pinfo", "WINFO", "ROT.RT")
 
               PLAB=c( "Ppic", "Spic", "Apic",  "Pup", "Pdown", "Pnil", "AUTOP",
                 "NOPIX", "EDIX", "REPIX")
@@ -387,6 +387,10 @@ pADDPIX<-function(nh, g, phase)
 
    
 ###  print(paste(sep=" ", "ISEEK",  iseek, length(iseek) ))
+
+
+
+   
     
     if(length(iseek)==1)
       {

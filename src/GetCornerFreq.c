@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <R.h>
 
 /*
 #ifdef MAC
@@ -39,23 +40,17 @@ gc = get.corner(  log10(Spec$f) , log10(lspec), dt, f1, f2)
 #define NR_END 1
 #define FREE_ARG char*
 
-void anrerror(char error_text[])
-/* Numerical Recipes standard error handler */
-{
-        fprintf(stderr,"Numerical Recipes run-time error...\n");
-        fprintf(stderr,"%s\n",error_text);
-        fprintf(stderr,"...now exiting to system...\n");
-        exit(1);
-}
-
 
 double *advector(long nl, long nh)
 /* allocate a double vector with subscript range v[nl..nh] */
 {
         double *v;
 
-        v=(double *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(double)));
-        if (!v) anrerror("allocation failure in advector()");
+        /* v=(double *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(double))); */
+	v=(double *) (size_t) R_alloc(nh-nl+1+NR_END , sizeof(double));
+
+
+        if (!v) Rprintf("allocation failure in advector()");
         return v-nl+NR_END;
 }
 void free_advector(double *v, long nl, long nh)
@@ -215,11 +210,6 @@ y = log10 displacement spectrum
 
 	*K = KINDEX;
 
-	//	fprintf(stderr, "FINAL:corn ave slope intercept: %d\n", KINDEX);
-	//	fprintf(stderr, "%f %f %f %f\n",*corn, *final_ave, *final_slope, *final_intercept);
-
-	free_advector(dtempx, (long) 0, (long) num_freqs);
-	free_advector(dtempy, (long) 0, (long) num_freqs);
 
        return score_old;
 
@@ -260,9 +250,7 @@ double brune_func(double freq, double omega0, double tstar0, double fc,
    tstar = tstar0* a1 ;
    e2ft = exp((double)(-pi*freq*tstar));
 
-/*if(alpha == -1. || alpha == 1.0)
-  fprintf(stderr,"alpha=%f tstar=%e e2ft=%e freq=%e a1=%e\n",alpha, tstar, e2ft,freq,a1);
-*/
+
    tmod = (omega0*e2ft) / sqrt(1+a2 );
 
    if(tmod == 0.0) tmod = SMALL_NUMBER;
@@ -284,7 +272,7 @@ double brune_func(double freq, double omega0, double tstar0, double fc,
 
    double score, oscore;
    
-   double PI, f,    fc ,  tstar0;
+   double  f,    fc ,  tstar0;
    /* double PI, f, ftem, fa, fb, fc , tem, tstar0,  frat; */
 
 
@@ -295,7 +283,7 @@ double brune_func(double freq, double omega0, double tstar0, double fc,
    double bruney;
    /* double blog; */
 
-    PI = 3.14159265358979;
+  
 
     alpha = 0;
     tstar0 = dstar[0];
@@ -345,7 +333,7 @@ double brune_func(double freq, double omega0, double tstar0, double fc,
 	     score += (log10(y[i]) - log10(bruney))*(log10(y[i]) - log10(bruney));
 	     
 	  }
-	   /* fprintf(stderr, "TEMP:  %lf %lf %lf %lf\n", gamma, tstar0, oscore, score); */
+	  
 	  if(score<oscore)
 	  {
 	     oscore = score;
@@ -353,7 +341,7 @@ double brune_func(double freq, double omega0, double tstar0, double fc,
 	     dgam[2]=gamma ;
 	     dstar[2] = tstar0;
 	     Ktot++;
-	     /* fprintf(stderr, "DMIN: %d %lf %lf %lf\n", Ktot, dstar[2], dgam[2], score); */
+	     
 	  }
        }
 
@@ -371,13 +359,6 @@ double brune_func(double freq, double omega0, double tstar0, double fc,
        y[i] = bruney ;
     }
     
-/*
-    fprintf(stderr, "BRUNE: omega0,  tstar0, fc, alpha, gamma\n");
-    fprintf(stderr, "BRUNE: %lf %lf %lf %lf %lf\n", omega0,  tstar0, fc, alpha, gamma);
-    fprintf(stderr, "FINAL: %d %lf %lf\n", Ktot, dstar[2], dgam[2]);
-*/
-
-   /*  fprintf(stderr, "FOR.R:\n omega0=%g; tstar0=%lf; fc=%lf; alpha=%lf; gamma=%lf;\n", omega0,  tstar0, fc, alpha, gamma); */
 
     return(Ktot);
     

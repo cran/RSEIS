@@ -301,7 +301,11 @@ PTS<-function(nh, g)
 
 FILT<-function(nh, g)
   {
-    Fdef = choosfilt(g$filters)
+
+    ### print( data.frame(g$filters) )
+
+     
+    Fdef = choosfilt(thefilts=g$filters, ncol=5)
 
     if(!is.null(Fdef))
       {
@@ -898,8 +902,12 @@ Pinfo<-function(nh, g)
 ####  print(zloc$y[1:(zenclick-1)])  
 ####  print(ypick)     
 ####  print(ipick)
+         cat("##################", sep="\n")
+        cat("rd = scan(file='', what=list(jd=0,hr=0,mi=0,sec=0,yr=0,stn='',comp=''))" , sep="\n")
+        write.table(file="", data.frame(rd), row.names =FALSE, col.names =FALSE )
+        cat(" ", sep="\n")
+
         
-        write.table(file="", data.frame(rd), row.names =FALSE)
         cat("GMT TIME: ", sep="\n")
         showdatetime(rd)
 

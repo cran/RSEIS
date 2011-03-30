@@ -1,4 +1,4 @@
-plotseis24<-function(JJ, dy=1/6, FIX=24, SCALE=0, FILT=list(ON=FALSE, fl=0.05 , fh=20.0, type="BP", proto="BU"), RCOLS=c(rgb(0.2, .2, 1), rgb(.2, .2, .2))  )
+plotseis24<-function(JJ, dy=1/18, FIX=24, SCALE=0, FILT=list(ON=FALSE, fl=0.05 , fh=20.0, type="BP", proto="BU"), RCOLS=c(rgb(0.2, .2, 1), rgb(.2, .2, .2))  )
   {
     if(missing(FIX)) { FIX=24 }
     if(missing(dy)) { dy  = 1/18 }

@@ -17,6 +17,8 @@ function(TH, sel=1:length(TH$JSTR), FILT=list(ON=TRUE, fl=0.5, fh=7.0, type="HP"
     if(missing(FILT)) { FILT = list(ON=TRUE, fl=0.5, fh=7.0, type="HP", proto="BU")  }
     if(missing(TAPER)) { TAPER = NULL }
     if(missing(POSTTAPER)) { POSTTAPER = NULL }
+
+    
     
     NEWH = TH
 
@@ -31,9 +33,11 @@ function(TH, sel=1:length(TH$JSTR), FILT=list(ON=TRUE, fl=0.5, fh=7.0, type="HP"
         dt = TH$dt[ii]
         ny = is.na(y)
         ry = y[!ny]
+
+        
         if(!is.null(TAPER)) { ry = applytaper(ry, p=TAPER) }
 
-        if(is.null(FILT$npoles)) { FILT$npoles = 4 }
+        if(is.null(FILT$npoles)) { FILT$npoles = 2 }
         
         fy = butfilt(ry, fl=FILT$fl, fh=FILT$fh , deltat=dt, type=FILT$type , proto=FILT$proto, npoles=FILT$npoles )
         ## ex = dt*0:(length(y)-1)

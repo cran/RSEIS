@@ -18,8 +18,10 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
     ####   COMPS = vector of associated components
      ####   YPX =  list of picks
 
+   ####    print(YPX)
 
-    ##  print(YPX)
+  ####   print(paste("PHASE=",PHASE))
+  ####   print(paste( "POLS=", POLS,  "FILL=",FILL, "FORCE=",FORCE, "cex=",cex, "sr=",srt))
     
       du = 1/length(STNS)
     

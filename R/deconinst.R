@@ -82,7 +82,11 @@ function(data, sintr=0.008, KAL = PreSet.Instr(), key=1, Calibnew=c(1,1.0, 0.0 )
     
     ##  need to zero pad the data
     ## remove the mean also 
-    why = c(data-mean(data),rep(0,nn-n))
+   ##  why = c(data-mean(data),rep(0,nn-n))
+    why = c(data,rep(0,nn-n))
+
+
+    
 
     DATA=fft(why)
     ###  what are these?  appropriate for Myake-jima decon?
@@ -100,20 +104,46 @@ function(data, sintr=0.008, KAL = PreSet.Instr(), key=1, Calibnew=c(1,1.0, 0.0 )
     if(calibkey==3)
       {
         meandsnew=Re(Calibnew[2])
-        g=abs(f);
-        fcut  = Calibnew[3]*max(g)
-        i3=(g<=fcut);
-        fk = f[i3]
-        f1 = fk[1]
-        f2 = max(fk)
-        f3 = min(fk)
-        f4 = fk[length(fk)]
-        i1=(f>=f1&f<=f2);
-        i2=(f>=f3&f<=f4);
+
+############  use this to filter the output in the freq domain.
+        
+        
+    ##     g=abs(f);
+     ##    fcut  = Calibnew[3]*max(g)
+    ##     i3=(g<=fcut);
+    ##     fk = f[i3]
+    ##     f1 = fk[1]
+    ##     f2 = max(fk)
+    ##     f3 = min(fk)
+    ##     f4 = fk[length(fk)]
+     ##    i1=(f>=f1&f<=f2);
+    ##     i2=(f>=f3&f<=f4);
+    ##     instnew=f*0;
+   ##      instnew[!i3]=instnew[!i3]+1;
+    ##     instnew[i1]=0.5*(1-cos(pi*(f[i1]-f1)/(f2-f1)));
+   ##      instnew[i2]=0.5*(1+cos(pi*(f[i2]-f3)/(f4-f3)));
+
+
+        f1=Re(Calibnew[3]);
+        f2=Re(Calibnew[4]);
+        f3=Re(Calibnew[5]);
+        f4=Re(Calibnew[6]);
         instnew=f*0;
-        instnew[!i3]=instnew[!i3]+1;
-        instnew[i1]=0.5*(1-cos(pi*(f[i1]-f1)/(f2-f1)));
-        instnew[i2]=0.5*(1+cos(pi*(f[i2]-f3)/(f4-f3)));
+        g=abs(f);
+        
+        i1=which(g>=f1&g<=f2);
+        
+        i2=which(g>=f3&g<=f4);
+        
+        i3= which(g>=f2&g<=f3);
+        
+        
+        instnew[i3]=instnew[i3]+1;
+        
+        instnew[i1]=0.5*(1-cos(pi*(g[i1]-f1)/(f2-f1)));
+        instnew[i2]=0.5*(1+cos(pi*(g[i2]-f3)/(f4-f3)));
+        
+        
       }
     calibkey = Calibnew[1]
     if(calibkey==1)
@@ -123,10 +153,18 @@ function(data, sintr=0.008, KAL = PreSet.Instr(), key=1, Calibnew=c(1,1.0, 0.0 )
         instnew=instnew+1
       }
 
-
+    
     
     ##  disp(['Deconvolving instrument response from trace ',int2str(k)]);
 
+##   here need to convert to real units
+    
+  ##     Sense = sensitivity for converting volts to m/s
+
+
+    ######   if the number of poles and zeros are 0 and the
+    ######   sesnitivity is non-zero, then divide by sense
+    ######    and return  
     if(KAL[[key]]$np==0 & KAL[[key]]$nz==0 & KAL[[key]]$Sense != 0 )
       {
         d = data/KAL[[key]]$Sense
@@ -159,6 +197,8 @@ function(data, sintr=0.008, KAL = PreSet.Instr(), key=1, Calibnew=c(1,1.0, 0.0 )
     
     da=tempdata[1:n];
 
+    ###########   convert to m/s using the sensitivity
+    
     ###########      Sense is the sensitivity of the instrument
     meandsold=KAL[[key]]$Sense
 

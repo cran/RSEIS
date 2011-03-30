@@ -1,5 +1,5 @@
 `SPECT.drive` <-
-function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL)
+function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparams=c(4096,256, 204 ) )
   {
 
     if(missing(DT)) { DT=1 }
@@ -38,36 +38,63 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL)
       }
 ###  
 ###  fh is one half  the nyquist  frequency
-    fl=0
-    fh=0.25*(1/DT)
+    if(missing(freqlim))
+      {
+        fl=0
+        fh=0.25*(1/DT)
+        flshow = 0
+###  fh is 60% the fh  frequency
+        fhshow = round(0.6*fh)
+      }
+    else
+      {
+        fl=freqlim[1]
+        fh=freqlim[2]
+        flshow = freqlim[3]
+        fhshow = freqlim[4]
+      }
 
-    flshow = 0
-
-    ###  fh is 60% the fh  frequency
-    fhshow = round(0.6*fh)
-
-    multi = 1
+   ###  multi = 1
 
     ###  here need to choose a length for the roving window.
     ###  I used to use 2 second windows by default, but here I think we need to
     ###  be more creative - how about 2% of the total length of the record?
 ##  tsecs = DT*(length(Xamp)*.02)
-    ### No, now lets do 256 per wind approximately
-    
+    ### No, now lets do 256 per window, approximately
 
-    tsecs = DT*256
 
-    
-    TWOSEC = tsecs*(1/DT)
-    
-    NS = floor(multi*TWOSEC)
-    NOV = floor(multi*(TWOSEC-.2*TWOSEC))
+    ###  need 3 parameters:  FFT length
+#################   time window length and time Overlap
 
-    
-    Nfft=4096
+
+    if(missing(winparams))
+      {
+        
+        TWOSEC = 256
+        NS = floor(TWOSEC)
+        NOV = floor(TWOSEC-.2*TWOSEC)
+
+        
+        Nfft=4096
+
+      }
+    else
+      {
+        TWOSEC = winparams[2]
+        NS = floor(TWOSEC)
+        NOV = floor(winparams[3])
+        Nfft=floor(winparams[1])
+      }
+
     
     DEV = evolfft(Xamp, DT , Nfft=Nfft, Ns=NS , Nov=NOV,  fl=fl, fh=fh  )
 
+    if(is.null(DEV)) {
+       emsg = c("ERROR: illegal call to evolfft.", "Exit Program SPECT.drive")
+        cat(emsg, sep="\n")
+        return(NULL)
+    }
+       
     
     PE = plotevol(DEV, log=scale.def, fl=flshow, fh=fhshow, col=pal, ygrid=gridon, STAMP=STAMP)
     
@@ -143,7 +170,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL)
 
           ## postscript(file=plfname, horizontal=TRUE, print.it=FALSE,  onefile=FALSE)
            PE = plotevol(DEV, log=scale.def, fl= flshow, fh=fhshow, col=pal, ygrid=gridon, STAMP=STAMP)
-           print(paste(sep=' ' ,"Done creating postscript file: ", plfname))
+           cat(paste(sep=' ' ,"Done creating postscript file: ", plfname), sep="\n")
 
           dev.off()
           dev.set(jdev)
@@ -287,7 +314,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL)
 
       }
 
-    print("DONE with Sgram")
+    cat("DONE with Sgram", sep="\n")
     
     
   }

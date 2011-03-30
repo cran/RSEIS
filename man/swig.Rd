@@ -12,7 +12,7 @@ STDLAB = NULL, PADDLAB = NULL, TEMPBUT=NULL,
 SHOWONLY = FALSE, CHOP = FALSE, TIT = "",
 pts = FALSE, forcepix = FALSE, pcex=0.7, SCALE = 1, ilocstyle=1,
 velfile = "", stafile = "", LOC = NULL,
-FILT=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL)
+prefilt=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL)
 }
 
 \arguments{
@@ -40,9 +40,10 @@ FILT=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL)
   \item{velfile}{velocity structure or file name }
   \item{stafile}{station structure or file name }
   \item{LOC}{source location structure (lat, lon, depth) }
-  \item{FILT}{default filter definition list(fl=.2, fh=15,  type="HP",
+  \item{prefilt}{default filter definition list(fl=.2, fh=15,  type="HP",
     proto="BU")}
-  \item{filters}{ a list of filters for choosfilt }
+  \item{filters}{ a list of filters for choosfilt, the list consists of
+    3 vectors: flo, fhi and type defining the filter choices.}
 
   
 }
@@ -55,13 +56,18 @@ FILT=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL)
   
   Default Buttons, can be created by:
   STDLAB = c("DONE", "QUIT","zoom out", "zoom in", "Left", "Right", "restore", "Pinfo","WINFO",
-                           "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "UNFILT", "SCALE", "Postscript")
+  "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "UNFILT", "SCALE",
+  "Postscript")
+
+  If the user has defined STDLAB.DEFAULT and PADDLAB.DEFAULT
+  in the .Rprofile or .First commands, these will override
+  the default in the function definition.
 
 
   
 }
 \value{
-  Various strucutres are returned
+  Various structures are returned
   based on interactive selections of the user.
 
   Howeverr, the default return list:
@@ -75,7 +81,17 @@ FILT=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL)
 
 }
 
+
+\note{
+  If using the filters for button FILT, it is useful to have a "None"
+  in case no filter is desired (i.e. user changes mind).
+  
+
+  }
+
 \author{Jonathan M. Lees<jonathan.lees.edu>}
+
+
 
 \seealso{PICK.DOC, GH, RPGM, choosfilt}
 \examples{
@@ -92,6 +108,43 @@ print(p)
 
  p = swig(GH, sel=sel, WIN=c(4,14) , STDLAB=c("DONE", "LAME", "DAME"))
 print(p)
+
+
+############    example with filter
+data(KH)
+
+thefilts =
+          list(flo=
+               c(0.02, 0.02, 0.02, 0.02, 0.02,   0.02,
+                 0.02, 0.02, 0.02,  0.02, 0.02,  0.02,
+                 0.02,
+                 1/2, 1/50,1/100, 1/100,
+1/100,1/100,1/100,1,1,
+                 0.2, 15, 5, 2,1,
+                 100),
+               fhi=
+               c(1/10, 1/6, 1/5, 1/4, 1/3, 1/2,
+                 0.2,  0.5, 1.0,  2.0, 3.0,  4.0,
+                 7.0,
+                 8, 1/2.0,1/5.0,1/10.0,
+1/20, 1/30,1/40,10,5,
+                 7.0, 100, 100, 100,10,
+                 100),
+             type =
+               c("LP","LP", "LP", "LP", "LP", "LP",
+                 "LP","LP", "LP", "LP", "LP", "LP",
+                 "LP",
+                 "BP", "BP","BP","BP","BP","BP",
+"BP","BP","BP",
+                 "HP", "HP","HP", "HP","HP",
+                 "None"))
+
+
+
+swig(KH, filters=thefilts)
+
+
+
 
 
 }

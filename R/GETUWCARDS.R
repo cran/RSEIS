@@ -52,6 +52,9 @@ function(FCARD)
 function(hcard)
 {
   h = unlist(strsplit(split=" ", hcard))
+  h = h[!(h=="")]
+
+  
   H = list(yr=as.numeric(h[2]),
     mo=as.numeric(h[3]),
     dom=as.numeric(h[4]),

@@ -1,6 +1,7 @@
 `choosfilt` <-
   function(thefilts=thefilts, ncol=5)
   {
+    if(missing(ncol)) ncol = 5
 ###  choosfilt()
     
     if(missing(thefilts))
@@ -60,16 +61,37 @@
       }
 
 
+    gfl = c("flo", "fhi", "type")
 
     
-    
-    if(missing(ncol)) {  ncol=5  }
-    
+    nfl = names(thefilts)
+
+   m =  match(gfl, nfl )
+
+    if(any(is.na(m)))
+      {
+
+        print("ERROR: Wrong Input: check the filter list for flo, fhi and type" )
+ 
+        GIVE = list(type="None",  fl=100,fh=100,ON=FALSE,  proto="BU" )
+
+  
+    return(GIVE)
+
+
+      }
 
 
 if( length(thefilts$type) != length(thefilts$flo ) &   length(thefilts$type)  != length(thefilts$fhi ) )
   {
     print(paste(sep=' ',"problem with filter definition", length(thefilts$type),length(thefilts$flo ), length(thefilts$fhi )   ))
+   print("ERROR: Wrong Input: check the filter list for flo, fhi and type" )
+ 
+        GIVE = list(type="None",  fl=100,fh=100,ON=FALSE,  proto="BU" )
+
+  
+    return(GIVE)
+
 
   }
     

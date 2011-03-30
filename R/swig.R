@@ -4,7 +4,7 @@
                   CHOP=FALSE, TIT="", pts=FALSE, forcepix=FALSE,
                   pcex=0.7, SCALE=1, ilocstyle=1,
                   velfile="", stafile="", LOC=NULL,
-                  FILT=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL  )
+                  prefilt=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL  )
 {
 
 
@@ -40,10 +40,29 @@
   
   if(missing(SHOWONLY)) { SHOWONLY=FALSE}
   if(missing(CHOP)) { CHOP=FALSE }
-  if(missing(STDLAB)) { STDLAB = c("REPLOT","DONE", "SELBUT", "PSEL","LocStyle", "ZOOM.out", "ZOOM.in", "LEFT", "RIGHT", "RESTORE",  "Pinfo","WINFO",
-                          "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "UNFILT", "SCALE", "Postscript")}
   
-  if(missing(PADDLAB)) { PADDLAB=c( "NOPIX", "REPIX") }
+  if(missing(STDLAB)) {
+    if(exists('STDLAB.DEFAULT'))
+      {
+       STDLAB =  STDLAB.DEFAULT
+      }
+    else
+      {
+      STDLAB = c("REPLOT","DONE", "SELBUT", "PSEL","LocStyle", "ZOOM.out", "ZOOM.in", "LEFT", "RIGHT", "RESTORE",  "Pinfo","WINFO",
+                          "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "UNFILT", "SCALE", "Postscript")}
+  }
+  
+  if(missing(PADDLAB)) {
+    if(exists('PADDLAB.DEFAULT'))
+      {
+        PADDLAB=PADDLAB.DEFAULT
+      }
+    else
+      {
+      PADDLAB=c( "NOPIX", "REPIX")
+    }
+
+  }
 
   if(missing(TEMPBUT)) { TEMPBUT=NULL } 
   
@@ -66,9 +85,18 @@
   if(missing(LOC)) { LOC=NULL }
 
   if(missing(SCALE)) {  ScaleFACT = 1 } else {  ScaleFACT = SCALE }
-  if(missing(FILT)) {  FILT = list(fl=.2, fh=15,  type="HP", proto="BU") }
+  if(missing(prefilt)) {
+    prefilt=NULL
+  }
 
-  if(missing(filters)) { filters = NULL }
+  if(missing(filters)) {
+    filters = NULL
+    lastfilter=NULL
+  }
+  else
+    {
+      lastfilter=1
+    }
 
   if(missing(ilocstyle)) { ilocstyle=1 }
   
@@ -211,10 +239,12 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
 
   if(is.null(APIX)==TRUE)
     {
-      WPX = list(  tag='99999',   name='99999',   comp='9',  c3='XX9',
-        phase="X",  err=0,  pol=0,    flg=0, res=0, yr=0,
+      
+       WPX = list(  tag='99999',   name='99999',   comp='9',  c3='XX9',
+         phase="X",  err=0,  pol=0,    flg=0, res=0, yr=0,
         mo=0,       dom=0,        jd=0,        hr=0,        mi=0,
-        sec=0,      col='red',  onoff =0  )
+        sec=0,      col='red',  onoff =-1  )
+
       WPX = data.frame(WPX, stringsAsFactors = FALSE)
       NPX = 0
     }
@@ -226,8 +256,8 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
       WPX = data.frame(WPX, stringsAsFactors = FALSE)
       NPX = length(WPX$sec)
 
-      ##  print(paste(sep=' ', "read in pickfile",NPX))
-      ## print(xpix)
+     ##  print(paste(sep=' ', "read in pickfile",NPX))
+      ## print(WPX)
     }
   
   RIDPIX = list()
@@ -363,6 +393,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
     pcex=1,
     
     filters = filters,
+    lastfilter = lastfilter,
     
     ScaleFACT=ScaleFACT,
     pts = pts,
@@ -372,6 +403,9 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
     KLICK = NULL,
     thebuts = FALSE
     )
+
+
+
   
   YNreplot<-function()
     {
@@ -389,6 +423,8 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
       
       if(global.vars$NPX>0)
         {
+        ###  print("plot the pix")
+          
           swig.ALLPX(global.vars$Torigin, YN$STNS, YN$COMPS, global.vars$WPX,
                      PHASE=global.vars$PHASE,  POLS=global.vars$polspix,
                      FILL=global.vars$fillpix , FORCE=global.vars$forcepix,
@@ -397,9 +433,20 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
         }
       invisible(YN)
     }
+
+  ##################   set the initial data structure (so it can be retrieved)
   
+  OLDH=NH
 
 
+  #####  initial filter to be applied?
+  if(!is.null(prefilt))
+    {
+      NH = FILT.SEISN(GH, sel = 1:length(GH$JSTR), FILT = prefilt, TAPER = 0.1, POSTTAPER = 0.1)
+    }
+
+
+  ##############   plot the data and set the menu buttons
   YN = YNreplot()
 
   if(is.numeric(SHOWONLY)) {
@@ -443,8 +490,9 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
   global.vars$sloc = sloc
   global.vars$zenclick = zenclick
  
-  OLDH=NH
-  
+
+   ####  print( data.frame(global.vars$filters) )
+
   while(TRUE) {
       ####### start while: each mouse click is recorded and tested for what to do next
       #######
@@ -790,7 +838,14 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
   but=BLABS[K[Nclick]]
 
   WPX = global.vars$WPX
+  ##############  clean off undesirable picks
   whirid = which( WPX$name==NA & WPX$comp==NA & WPX$phase==NA )
+
+  
+  WPX = WPX[-whirid, ]
+
+  whirid = which( WPX$name=='99999' & WPX$comp=='9' & WPX$phase=="X" )
+
   WPX = WPX[-whirid, ]
 
 

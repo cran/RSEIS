@@ -8,8 +8,11 @@ function(vel, outfile)
 
    write(file =  outfile, vel$descriptor)
 
+   vel$vs = round(vel$vs*100)/100
+
    v = cbind(vel$zp, vel$vp, vel$ep, vel$zs, vel$vs, vel$es)
-   write.table(file =  outfile, v , append=TRUE, quote=FALSE, row.names=FALSE, col.names=FALSE)
+   
+   write.table(file =  outfile, v , append=TRUE, quote=FALSE, row.names=FALSE, col.names=FALSE, sep="     ")
 
   }
 

@@ -4,6 +4,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <R.h> 
 
 #include "jpiki.h"
 
@@ -448,11 +449,19 @@ FILE  *fopen();
 
 /* allocate space to work */
 
-    /* fprintf(stderr,"starting jpiki\n"); */
+    /* REprintf(stderr,"starting jpiki\n"); */
 
-    s = (float *)malloc(sizeof(float)*(lx+10));
-    c = (float *)malloc(sizeof(float)*(lx+10));
-    is = (int *)malloc(sizeof(int)*(lx+10));
+  /*   s = (float *)malloc(sizeof(float)*(lx+10)); */
+/*     c = (float *)malloc(sizeof(float)*(lx+10)); */
+/*     is = (int *)malloc(sizeof(int)*(lx+10)); */
+
+
+ s = (float *)R_alloc(sizeof(float), (lx+10));
+ c = (float *)R_alloc(sizeof(float), (lx+10));
+ is = (int *)R_alloc(sizeof(int), (lx+10));
+
+
+
 
 /* initialization of adjustable picking parameters */
     ret_val = 0;
@@ -486,7 +495,7 @@ FILE  *fopen();
 
 /*
     fp = fopen("jpicki.out","w");
-    for (i = 0; i < lx; ++i) { fprintf(fp, "%d  %f\n", is[i], c[i]); }
+    for (i = 0; i < lx; ++i) { Rprintf(fp, "%d  %f\n", is[i], c[i]); }
     fclose(fp);
 */
 
@@ -517,9 +526,9 @@ FILE  *fopen();
 	*epik = 0;
     }
 RETURN:
-    free(s);
-    free(c);
-    free(is);
+  /*   free(s); */
+/*     free(c); */
+/*     free(is); */
     return (ret_val);
 }
 
@@ -537,7 +546,7 @@ int dfbrat(double *seis, double *fbcurv, int npts,
 
 /*     for(i=0; i<npts; i++) */
 /*     { */
-/*        fprintf(stderr, "%f\n", seis[i]); */
+/*        REprintf(stderr, "%f\n", seis[i]); */
 /* 	       } */
 
     /* Parameter adjustments - holdover from Fortran */
@@ -620,7 +629,7 @@ int dfbrat(double *seis, double *fbcurv, int npts,
    tar = *itar;
    ik =  jpiki(epik, polar, pikwt, x , lx ,  tar);
    *IND = ik;
-   /* fprintf(stderr, "DONE JPIKI: %d %d %d %d %d\n",ik, *epik, *polar,   *pikwt,*IND ); */
+   /* REprintf(stderr, "DONE JPIKI: %d %d %d %d %d\n",ik, *epik, *polar,   *pikwt,*IND ); */
    return;
 }
 
@@ -644,7 +653,7 @@ int dfbrat(double *seis, double *fbcurv, int npts,
 
 /*     for(i=0; i<npts; i++) */
 /*     { */
-/*        fprintf(stderr, "%f\n", seis[i]); */
+/*        REprintf(stderr, "%f\n", seis[i]); */
 /* 	       } */
 
     /* Parameter adjustments - holdover from Fortran */
@@ -758,7 +767,7 @@ int dfbrat(double *seis, double *fbcurv, int npts,
 
 /*     for(i=0; i<npts; i++) */
 /*     { */
-/*        fprintf(stderr, "%f\n", seis[i]); */
+/*        REprintf(stderr, "%f\n", seis[i]); */
 /* 	       } */
 
     /* Parameter adjustments - holdover from Fortran */

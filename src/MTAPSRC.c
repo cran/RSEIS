@@ -3,13 +3,15 @@
 #include <stdlib.h>
 #include <math.h>
 #include <stdlib.h>
+#include <R.h> 
+
 
 #define NRANSI
 #include "jl.h"
 
 
-#define perr(x,y)  (fprintf(stderr, x , y))
-#define prbl (fprintf(stderr,"\n"))
+#define perr(x,y)  (REprintf( x , y))
+#define prbl (REprintf("\n"))
 
 
 
@@ -873,12 +875,6 @@ L1001:
 /*************************************************************/
 /*************************************************************/
 /*************************************************************/
-/** FUNC DEF */ void jmsg(char *a)
-
-{
-  fprintf(stderr,"%s",a);
-  fprintf(stderr,"\n");
-}
 
 
 
@@ -887,10 +883,10 @@ L1001:
 /* allocate a float jector with subscript range v[nl..nh] */
 {
 	float *v;
-        /*  fprintf(stderr,"fjector: %ld %ld \n", nl, nh); */
-	v=(float *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(float)));
+        
+	v=(float *)R_alloc((size_t) (nh-nl+1+NR_END),sizeof(float));
 	
-	if (!v) fprintf(stderr,"allocation failure in jector()\n");
+	if (!v) REprintf("allocation failure in jector()\n");
 	return v-nl+NR_END;
 }
 
@@ -900,20 +896,20 @@ L1001:
 /* allocate a double jector with subscript range v[nl..nh] */
 {
 	double  *v;
-         /* fprintf(stderr,"djector: %ld %ld \n", nl, nh); */
-	v=(double  *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(double)));
+         
+	v=(double  *)R_alloc((size_t) (nh-nl+1+NR_END),sizeof(double));
 	
-	if (!v) fprintf(stderr,"allocation failure in djector()\n");
+	if (!v) REprintf("allocation failure in djector()\n");
 	return v-nl+NR_END;
 }
 /** FUNC DEF */ int  *ijector(long nl, long nh)
 /* allocate an int  jector with subscript range v[nl..nh] */
 {
 	int  *v;
-        /*  fprintf(stderr,"ijector: %ld %ld \n", nl, nh); */
-	v=(int *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(int)));
+       
+	v=(int *)R_alloc((size_t) (nh-nl+1+NR_END),sizeof(int));
 	
-	if (!v) fprintf(stderr,"allocation failure in jijector()\n");
+	if (!v) REprintf("allocation failure in jijector()\n");
 	return v-nl+NR_END;
 }
 
@@ -943,7 +939,7 @@ L1001:
 void 
 blank()
 {
-	fprintf(stderr, "\n");
+	REprintf( "\n");
 }
 
 /** FUNC DEF */ int  multitap(int num_points, int nwin, double *lam, double npi, double *tapers, double *tapsum)
@@ -1022,12 +1018,12 @@ blank()
 	jtridib_(&num_points, &eps, diag, offdiag, offsq, &rlb, &rlu, &m11, &nwin, lam,
 		 ip, &ierr, scratch1, scratch2);
 #if DIAG1
-	fprintf(stderr, "ierr=%d rlb=%.8f rlu=%.8f\n", ierr, rlb, rlu);
+	REprintf( "ierr=%d rlb=%.8f rlu=%.8f\n", ierr, rlb, rlu);
 
-	fprintf(stderr, "eigenvalues for the eigentapers\n");
+	REprintf( "eigenvalues for the eigentapers\n");
 
 	for (k = 0; k < nwin; k++)
-		fprintf(stderr, "%.20f ", lam[k]);
+		REprintf("%.20f ", lam[k]);
 	blank();
 #endif
 
@@ -1041,13 +1037,13 @@ blank()
 
 
 
-
+	/*
 	free_djector(scratch1, (long) 0, (long) num_points);
 	free_djector(scratch2, (long) 0, (long) num_points);
 	free_djector(scratch3, (long) 0, (long) num_points);
 	free_djector(scratch4, (long) 0, (long) num_points);
 	free_djector(scratch6, (long) 0, (long) num_points);
-
+	*/
 
 
 	/*
@@ -1120,7 +1116,7 @@ blank()
 
 	/* Free Memory */
 
-
+	/*
 	free_djector(ell, (long) 0, (long) nwin);
 	free_djector(diag, (long) 0, (long) num_points);
 	free_djector(offdiag, (long) 0, (long) num_points);
@@ -1128,7 +1124,7 @@ blank()
 	free_ijector(ip, (long) 0, (long) nwin);
 
 	free_djector(evecs, (long) 0, (long) len);
-
+	*/
 
 	return 1;
 }
@@ -1259,11 +1255,11 @@ c  set tolerance for iterative scheme exit */
 
 
 #if 0
-  fprintf(stderr,"test input\n adwait: %d %d %f\n",nwin, num_freq, avar);
-       fprintf(stderr,"\n Data=\n");
+  REprintf("test input\n adwait: %d %d %f\n",nwin, num_freq, avar);
+       REprintf("\n Data=\n");
     for( i =0; i<num_freq; i++)
        {
-            fprintf(stderr,"%d %f \n",i,sqr_spec[i]);
+            REprintf("%d %f \n",i,sqr_spec[i]);
           }
 #endif
 
@@ -1285,10 +1281,7 @@ c  set tolerance for iterative scheme exit */
             bias[i]=(1.00-el[i]);
              }
 
-    /*
-         for( i=1;i<=nwin; i++) fprintf(stderr,"%f %f\n",el[i], bias[i]);
-         fprintf(stderr,"\n"); 
-     */
+    
 
        /* START do 100 */
     for( jloop=0; jloop<num_freq; jloop++)
@@ -1324,7 +1317,7 @@ c  set tolerance for iterative scheme exit */
          ax=fn/fx;
          dif = ax-as;
          das=ABS(dif);
-      /* fprintf(stderr,"adwait: jloop = %d k=%d %g %g %g %g\n",jloop,k, fn,fx,ax,das);*/
+      
          test_tol = das/as;
          if( test_tol < tol )
             { 
@@ -1334,7 +1327,7 @@ c  set tolerance for iterative scheme exit */
          as=ax;
         }
 
-        /* fprintf(stderr,"adwait: k=%d test_tol=%f\n",k, test_tol);*/
+        
                             /* end  300  */
 
                            /* c  flag if iteration does not converge */
@@ -1360,9 +1353,11 @@ c  set tolerance for iterative scheme exit */
 
   }                                       /* end 100 */
 
-     /*fprintf(stderr,"%d failed iterations\n",jitter);*/
+   
+    /*
       free_djector(spw,0,nwin);
       free_djector(bias,0,nwin);
+    */
 
      return jitter;
 }
@@ -1441,7 +1436,7 @@ c  set tolerance for iterative scheme exit */
 	for (j = 0; j < num_freq; j++) {
 		if(ares[j]>0.0) 
                    ares[j] = sqrt(ares[j]);
-                  else printf("sqrt problem in hires pos=%d %f\n", j, ares[j]);
+                  else Rprintf("sqrt problem in hires pos=%d %f\n", j, ares[j]);
 	}
 
 	return 1;
@@ -1568,10 +1563,8 @@ c  set tolerance for iterative scheme exit */
 */
 
 
-/*fprintf(stderr, "From do_mtap_spec:  npoints=%d kind=%d nwin=%d npi=%f inorm=%d dt=%f klen=%d\n",npoints, kind, nwin, npi, inorm, dt, klen );
-               for(i=0; i< npoints; i++)
-               fprintf(stderr, "%d %e\n",i, data[i]);
-*/
+
+             
 
 	lambda = djector((long)0, (long)nwin);
         tapsum=djector((long)0,(long)nwin);
@@ -1586,16 +1579,6 @@ c  set tolerance for iterative scheme exit */
        /* get a slepian taper  */
 
 	k = multitap(npoints, nwin, lambda,  npi, tapers, tapsum);
-#if 0
-
-        tap_file = fopen("taper_file", "w");
-        /* print out tapers for curiosity  */
-        for(i=0; i<npoints; i++){
-         for(j=0; j<nwin; j++)fprintf(tap_file,"%15.10f ",tapers[i+j*npoints]);
-          fprintf(tap_file,"\n");
-          }
-          fclose(tap_file);
-#endif
 
 
 
@@ -1660,8 +1643,8 @@ c  set tolerance for iterative scheme exit */
 
 
             for(i=1; i<num_freqs-1; i++){
-       if(2*i+1 > klen) fprintf(stderr,"error in index\n");
-       if(i+kf > num_freq_tap ) fprintf(stderr,"error in index\n");
+       if(2*i+1 > klen) REprintf("error in index\n");
+       if(i+kf > num_freq_tap ) REprintf("error in index\n");
 
             sqramp = SQR(amp[2*i+1])+SQR(amp[2*i]);
 
@@ -1685,30 +1668,30 @@ c  set tolerance for iterative scheme exit */
 
              sum += sqr_spec[0+kf] + sqr_spec[num_freqs-1+kf];
 
-        if(num_freqs-1+kf>num_freq_tap )fprintf(stderr,"error in index\n");
+        if(num_freqs-1+kf>num_freq_tap )REprintf("error in index\n");
 
 		temp = sum / (double) num_freqs;
 		if (temp > 0.0)
 			avamp = sqrt(temp) / anrm;
 		else {
 			avamp = 0.0;
-			 /* fprintf(stderr," avamp = 0.0! \n"); */ 
+			 
 		}
 
 
-		free_djector(amp,(long) 0,(long) klen);
+		/* free_djector(amp,(long) 0,(long) klen); */
 
 	}
 
-                 free_djector(b, (long)0, (long)npoints);
-		fv = djector((long)0,(long) num_freqs);
+                 /* free_djector(b, (long)0, (long)npoints); */
+ 		fv = djector((long)0,(long) num_freqs); 
 
         /* choice of hi-res or adaptive weighting for spectra    */
 
 
 #if 0
 		if ((inf = fopen("mspec.file", "w")) == NULL) {
-			fprintf(stderr, "mspec.file unable to open\n");
+			REprintf("mspec.file unable to open\n");
 			return;
 		}
 	
@@ -1717,9 +1700,9 @@ c  set tolerance for iterative scheme exit */
 	
 		kf = iwin * num_freqs;
 
-			fprintf(inf, "%f %f ", ReSpec[i + kf], ImSpec[i + kf]);
+			Rprintf(inf, "%f %f ", ReSpec[i + kf], ImSpec[i + kf]);
 		}
-             	fprintf(inf, "\n");
+             	Rprintf(inf, "\n");
 	}
 	
 	fclose(inf);
@@ -1797,10 +1780,10 @@ c  set tolerance for iterative scheme exit */
 #if 0
            /* dump out the degrees of freedom to a file for later inspection  */
               	if ((dof_file = fopen("dof_file", "w")) == NULL) {
-		fprintf(stderr, "dof unable to open\n");
+		REprintf("dof unable to open\n");
 		return;}
                	for (i = 0; i < num_freqs; i++) {
-	                fprintf(dof_file,"%f\n",degf[i]);
+	                Rprintf(dof_file,"%f\n",degf[i]);
                        	}
 
                    fclose(dof_file);
@@ -1816,9 +1799,9 @@ c  set tolerance for iterative scheme exit */
 
 
                 
-		free_djector(dcf,(long)0,(long) num_freq_tap);
-		free_djector(degf,(long)0,(long) num_freqs);
-		free_djector(fv,(long)0,(long) num_freqs);
+	/* 	free_djector(dcf,(long)0,(long) num_freq_tap); */
+/* 		free_djector(degf,(long)0,(long) num_freqs); */
+/* 		free_djector(fv,(long)0,(long) num_freqs); */
 
 
 		break;
@@ -1826,18 +1809,18 @@ c  set tolerance for iterative scheme exit */
 
 /*  free up memory and return  */
 
-        free_djector(amu,(long)0,(long) num_freqs);
+        /* free_djector(amu,(long)0,(long) num_freqs); */
         
 
-	free_djector(sqr_spec, (long)0,(long) num_freq_tap);
-	free_djector(ReSpec, (long)0,(long) num_freq_tap);
+/* 	free_djector(sqr_spec, (long)0,(long) num_freq_tap); */
+/* 	free_djector(ReSpec, (long)0,(long) num_freq_tap); */
 
-	free_djector(ImSpec, (long)0,(long) num_freq_tap);
+/* 	free_djector(ImSpec, (long)0,(long) num_freq_tap); */
 
-	free_djector(lambda,(long) 0,(long) nwin);
+/* 	free_djector(lambda,(long) 0,(long) nwin); */
 
-	free_djector(tapers,(long) 0, (long)len_taps);
-	free_djector(tapsum,(long) 0, (long)nwin);
+/* 	free_djector(tapers,(long) 0, (long)len_taps); */
+/* 	free_djector(tapsum,(long) 0, (long)nwin); */
 
 }
 
@@ -1902,10 +1885,6 @@ c  set tolerance for iterative scheme exit */
 */
 
 
-/*
-	 fprintf(stderr, "From Mtap_spec:  npoints=%d kind=%d nwin=%d npi=%f inorm=%d dt=%f klen=%d\n",
-		 npoints, kind, nwin, npi, inorm, dt, klen );
-*/
 
 	lambda = djector((long)0, (long)nwin);
         tapsum=  djector((long)0,(long)nwin);
@@ -1918,7 +1897,7 @@ c  set tolerance for iterative scheme exit */
 
 
        /* get a slepian taper  */
-/* 	fprintf(stderr, "get tapers\n"); */
+
 	k = multitap(npoints, nwin, lambda,  npi, tapers, tapsum);
 
 #if 0
@@ -1929,17 +1908,17 @@ c  set tolerance for iterative scheme exit */
 	      kk = iwin * npoints;
 	   
 	      
-	      fprintf(stdout, "%f ", tapers[kk + j]);
+	      Rprintf(stdout, "%f ", tapers[kk + j]);
  
 	   }
-	   fprintf(stdout, "\n");
+	   Rprintf(stdout, "\n");
 	}
 	
 	
 	
 #endif 
 
-	/* fprintf(stderr, "DONE: multitap\n"); */
+	/* Rprintf(stderr, "DONE: multitap\n"); */
      /* choose normalization based on inorm flag  */
 
 	anrm = 1.;
@@ -1980,12 +1959,12 @@ c  set tolerance for iterative scheme exit */
 	      b[j] = data[j] * tapers[kk + j];   /*  application of  iwin-th taper   */
 	   
 	   amp = djector((long)0,(long) klen);
-	  /*  fprintf(stderr, "GOING to: mt_get_spec\n"); */
+	  
 
 	   mt_get_spec(b, npoints, klen, amp);  /* calculate the eigenspectrum */
 	   
 	   
-	  /*  fprintf(stderr, "DONE: mt_get_spec\n"); */
+	  
 	   
 	   sum = 0.0;
 	   
@@ -2001,8 +1980,8 @@ c  set tolerance for iterative scheme exit */
 
 	   for(i=1; i<num_freqs-1; i++)
 	   {
-	      if(2*i+1 > klen) fprintf(stderr,"error in index\n");
-	      if(i+kf > num_freq_tap ) fprintf(stderr,"error in index\n");
+	      if(2*i+1 > klen) REprintf("error in index\n");
+	      if(i+kf > num_freq_tap ) REprintf("error in index\n");
 	      
 	      sqramp = SQR(amp[2*i+1])+SQR(amp[2*i]);
 	      
@@ -2026,48 +2005,29 @@ c  set tolerance for iterative scheme exit */
 
 	   sum += sqr_spec[0+kf] + sqr_spec[num_freqs-1+kf];
 	   
-	   if(num_freqs-1+kf>num_freq_tap )fprintf(stderr,"error in index\n");
+	   if(num_freqs-1+kf>num_freq_tap )REprintf("error in index\n");
 	   
 	   temp = sum / (double) num_freqs;
 	   if (temp > 0.0)
 	      avamp = sqrt(temp) / anrm;
 	   else {
 	      avamp = 0.0;
-	      /* fprintf(stderr," avamp = 0.0! \n"); */ 
+	      
 	   }
 	   
 	   
-	   free_djector(amp,(long) 0,(long) klen);
+	   /* free_djector(amp,(long) 0,(long) klen); */
 	   
 	}
 	
-	free_djector(b, (long)0, (long)npoints);
+/* 	free_djector(b, (long)0, (long)npoints); */
 	fv = djector((long)0,(long) num_freqs);
 	
         /* choice of hi-res or adaptive weighting for spectra    */
 
 
-#if 0
-		if ((inf = fopen("mspec.file", "w")) == NULL) {
-			fprintf(stderr, "mspec.file unable to open\n");
-			return;
-		}
-	
-		for (i = 0; i < num_freqs; i++) {
-	for (iwin = 0; iwin < nwin; iwin++) {
-	
-		kf = iwin * num_freqs;
 
-			fprintf(inf, "%f %f ", ReSpec[i + kf], ImSpec[i + kf]);
-		}
-             	fprintf(inf, "\n");
-	}
-	
-	fclose(inf);
 
-#endif 
-
-/*  fprintf(stderr, "DONE: going to kind\n"); */
 
 	switch (kind) {
 	case 1:
@@ -2135,17 +2095,7 @@ c  set tolerance for iterative scheme exit */
 
                 get_F_values(ReSpec, ImSpec, num_freqs, nwin, fv, tapsum);
 
-#if 0
-           /* dump out the degrees of freedom to a file for later inspection  */
-              	if ((dof_file = fopen("dof_file", "w")) == NULL) {
-		fprintf(stderr, "dof unable to open\n");
-		return;}
-               	for (i = 0; i < num_freqs; i++) {
-	                fprintf(dof_file,"%f\n",degf[i]);
-                       	}
 
-                   fclose(dof_file);
-#endif
 
                  /* rap up   */
 
@@ -2155,28 +2105,15 @@ c  set tolerance for iterative scheme exit */
                  Fvalues[i] = fv[i];
                   }
 
-/*  fprintf(stderr, "DONE:Fvalues \n"); */
+
 
                 
-		free_djector(dcf,(long)0,(long) num_freq_tap);
-		free_djector(degf,(long)0,(long) num_freqs);
-		free_djector(fv,(long)0,(long) num_freqs);
 
 
 		break;
 	}
 
-/*  free up memory and return  */
-/*  fprintf(stderr, "DONE:  Mem Free \n"); */
 
-        free_djector(amu,(long)0,(long) num_freqs);
-
-	free_djector(sqr_spec, (long)0,(long) num_freq_tap);
-
-	free_djector(lambda,(long) 0,(long) nwin);
-	free_djector(tapsum,(long) 0,(long) nwin);
-
-	free_djector(tapers,(long) 0, (long)len_taps);
 
 
 }
@@ -2234,16 +2171,16 @@ c  set tolerance for iterative scheme exit */
   tap_file = fopen("taper_file", "w");
   /* print out tapers for curiosity  */
   for(i=0; i<npoints; i++){
-    for(j=0; j<nwin; j++)fprintf(tap_file,"%15.10f ",tapers[i+j*npoints]);
-    fprintf(tap_file,"\n");
+    for(j=0; j<nwin; j++)Rprintf(tap_file,"%15.10f ",tapers[i+j*npoints]);
+    Rprintf(tap_file,"\n");
   }
   fclose(tap_file);
 #endif
 
-  free_djector(lambda,(long) 0,(long) nwin);
+  /* free_djector(lambda,(long) 0,(long) nwin); */
 
   /* 	free_djector(tapers,(long) 0, (long)len_taps); */
-  free_djector(tapsum,(long) 0, (long)nwin);
+ /*  free_djector(tapsum,(long) 0, (long)nwin); */
 
 }
 

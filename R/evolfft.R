@@ -18,12 +18,21 @@ function(a, dt=0, Nfft=0,  Ns=0, Nov=0, fl=0, fh=10, pcttap = 0.05 )
       }
     
     Ns = floor(Ns)
+
+    if(Ns>NT)
+      {
+        emsg = c("ERROR: illegal call to evolfft.",
+        "Number of samples in trace must be greater than the number of sample in the moving window")
+        cat(emsg, sep="\n")
+        return(NULL)
+      }
     
     kcol =floor( (NT-floor(Nov) )/(Ns-floor(Nov)))
 
     
     if(kcol<Ns)
       {
+        cat("NOTE: Making an adjustment in input parameters", sep="\n")
          Ns = kcol
          Nov = floor(Ns-0.1*Ns)
          kcol =floor( (NT-floor(Nov) )/(Ns-floor(Nov)))
@@ -49,10 +58,10 @@ function(a, dt=0, Nfft=0,  Ns=0, Nov=0, fl=0, fh=10, pcttap = 0.05 )
 
    ###  print(paste(sep=' ', "evolfft kcol=", kcol, "krow=", krow, "Ns", Ns, "Nov", Nov))
 
-     print(paste(sep=' ', "evolfft kcol=", kcol, "krow=", krow, "Ns", Ns, "Nov", Nov))
+     cat(paste(sep=' ', "evolfft kcol=", kcol, "krow=", krow, "Ns", Ns, "Nov", Nov), sep="\n")
     if(kcol<1)
       {
-        print(paste(sep=' ', "error in evolfft kcol=", kcol, "krow=", krow, "NT", NT, "Ns", Ns, "Nov", Nov))
+        cat(paste(sep=' ', "error in evolfft kcol=", kcol, "krow=", krow, "NT", NT, "Ns", Ns, "Nov", Nov), sep="\n")
         return(NULL)
       }
           

@@ -1,6 +1,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdlib.h>
+#include <R.h> 
 
 /*
 #ifdef MAC
@@ -10,12 +11,6 @@
 #endif
 */
 
-
-
-
-#include <stdio.h>
-#include <stdlib.h>
-
 /* static float sqrarg; */
 /* static double  dsqrarg; */
 
@@ -24,22 +19,14 @@
 #define SQR(a) ((sqrarg=(a)) == 0.0 ? 0.0 : sqrarg*sqrarg)
 #define DSQR(a) ((dsqrarg=(a)) == 0.0 ? 0.0 : dsqrarg*dsqrarg)
 
-void nrerror(char error_text[])
-/* Numerical Recipes standard error handler */
-{
-        fprintf(stderr,"Numerical Recipes run-time error...\n");
-        fprintf(stderr,"%s\n",error_text);
-        fprintf(stderr,"...now exiting to system...\n");
-        exit(1);
-}
 
 double *dvector(long nl, long nh)
 /* allocate a double vector with subscript range v[nl..nh] */
 {
         double *v;
 
-        v=(double *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(double)));
-        if (!v) nrerror("allocation failure in dvector()");
+        v=(double *)R_alloc((size_t) (nh-nl+1+NR_END), sizeof(double));
+        if (!v) Rprintf("allocation failure in dvector()");
         return v-nl+NR_END;
 }
 
@@ -76,9 +63,9 @@ void memcof(double  data[], int n, int m, double  *xms, double  d[])
                 for (i=1;i<=(k-1);i++)
                         d[i]=wkm[i]-d[k]*wkm[k-i];
                 if (k == m) {
-                        free_dvector(wkm,1,m);
-                        free_dvector(wk2,1,n);
-                        free_dvector(wk1,1,n);
+                        /* free_dvector(wkm,1,m); */
+/*                         free_dvector(wk2,1,n); */
+/*                         free_dvector(wk1,1,n); */
                         return;
                 }
                 for (i=1;i<=k;i++) wkm[i]=d[i];
@@ -87,7 +74,7 @@ void memcof(double  data[], int n, int m, double  *xms, double  d[])
                         wk2[j]=wk2[j+1]-wkm[k]*wk1[j+1];
                 }
         }
-        nrerror("never get here in memcof.");
+        /* nrerror("never get here in memcof."); */
 }
 #undef NRANSI
 
@@ -206,21 +193,13 @@ double  evlmem(double  fdt, double  d[], int m, double  xms)
    k1=T1-floor(O1/deltat)-IW;
    k2 = k1+IW;
 
-   /* fprintf(stderr, "1 IW, k1, k2: %d %d %d\n", IW, k1, k2); */
 
    win1  = dvector(0, IW);
    for(i=0; i<IW; i++) {  win1[i] = y1[k1+i]; }
 
    memcof(win1-1, IW, num_cof, &pm, cof1);
 
-   /*
-     fprintf(stderr, "\n");
-     for(i=1; i<=num_cof; i++)
-     {
-     fprintf(stderr, "%d %f\n",i, cof1[i]);
-     }
-   */
-
+   
 /***********************************/
 
 /*   select window for signal part  window 2  */
@@ -228,20 +207,12 @@ double  evlmem(double  fdt, double  d[], int m, double  xms)
    k1=T1+floor(O2/deltat)+1;
    k2 = k1+IW;
 
-   /* fprintf(stderr, "2 IW, k1, k2: %d %d %d\n", IW, k1, k2); */
-
+   
 
    for(i=0; i<IW; i++) {  win1[i] = y1[k1+i]; }
 
    memcof(win1-1, IW, num_cof, &pm, cof2);
 
-/*
-   fprintf(stderr, "\n");
- for(i=1; i<=num_cof; i++)
-   {
-      fprintf(stderr, "%d %f\n",i, cof2[i]);
-   }
-*/
 
 /***********************************/
 
@@ -309,9 +280,9 @@ double  evlmem(double  fdt, double  d[], int m, double  xms)
     }
 
 
-   free_dvector(cof1, 1, M);
-   free_dvector(cof2, 1, M);
-   free_dvector(z1, 0, N);
+   /* free_dvector(cof1, 1, M); */
+/*    free_dvector(cof2, 1, M); */
+/*    free_dvector(z1, 0, N); */
 
    return(kmin);
 
@@ -384,7 +355,7 @@ double  evlmem(double  fdt, double  d[], int m, double  xms)
       
    }
 
-  free_dvector(cof, 1,num_cof);
+  /* free_dvector(cof, 1,num_cof); */
 
 
   return(0);

@@ -60,7 +60,8 @@ Mine.seis(at1, at2, DB, grepsta, grepcomp, kind = 1, Iendian=1, BIGLONG=FALSE, C
     file headers - in that case use the token from the file name.
 
   
-}
+  }
+  
 \note{
 
   
@@ -71,15 +72,49 @@ Mine.seis(at1, at2, DB, grepsta, grepcomp, kind = 1, Iendian=1, BIGLONG=FALSE, C
   file name.  It may be prudent to force the file names
   and header files to match prior to using Mine.seis.
   For SEGY files, in LINUX-UNIX, use:
-  rename,    segymod (PASSCAL) to modify the headers
+  rename,    segymod (PASSCAL) to modify the headers.
+
+  For SAC files, use sac software.
+
+  For R-based codes save the files in
+  a format that has the relevant information (DAT format).
 
 
   
 }
 
+
 \value{
-list of seismograms cut from the database
+  List of seismograms cut from the database
 }
+
+\examples{
+
+\dontrun{
+
+#######   Assume  k97DB already exists
+for(i in 1:24)
+{
+at1 = 232+(i-1)/24
+at2 = at1+1/24
+
+GH = Mine.seis(at1, at2, k97DB, "kar1", c("4", "1") )
+w = swig(GH)
+if(identical(w$but, "QUIT"))break
+}
+
+
+
+
+}
+
+
+
+
+}
+
+
+
 \author{Jonathan M. Lees<jonathan.lees.edu>}
-\seealso{GLUEseisMAT, JGET.seis, JSAC.seis, JSEGY.seis, sysinfo}
+\seealso{makeDB, GLUEseisMAT, JGET.seis, JSAC.seis, JSEGY.seis, sysinfo}
 \keyword{misc}

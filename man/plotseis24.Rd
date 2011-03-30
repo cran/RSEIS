@@ -7,14 +7,15 @@
   of getseis24.
 }
 \usage{
-plotseis24(JJ, dy = 1/6, FIX = 24, SCALE = 0, FILT = list(ON = FALSE, fl = 0.05, fh = 20, type = "BP", proto = "BU"), RCOLS = c(rgb(0.2, 0.2, 1), rgb(0.2, 0.2, 0.2)))
+plotseis24(JJ, dy = 1/18, FIX = 24, SCALE = 0, FILT = list(ON = FALSE, fl = 0.05, fh = 20, type = "BP", proto = "BU"), RCOLS = c(rgb(0.2, 0.2, 1), rgb(0.2, 0.2, 0.2)))
 }
 \arguments{
   \item{JJ}{output list of getseis24
 }
   \item{dy}{Delta-y in percentage of trace
 }
-  \item{FIX}{Fix 24 hours
+  \item{FIX}{Fix 24 hour plot.  If FIX is less than 24, the plot will
+    show only that number of hours.
 }
   \item{SCALE}{scale, 0=scale each trace, 1=scale window
 }

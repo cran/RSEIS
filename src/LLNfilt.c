@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <R.h> 
 
 /*
 #ifdef MAC
@@ -141,12 +142,6 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 
 
   
-#if 0
-fprintf(stderr,"APPLY: %f %f %f %f \n", b0, b1, b2, a1, a2);
-            fprintf(stderr, "number of samples: %d\n", nsamps);
-          for(j=379; j<= 379+25; j++)
-            fprintf(stderr, "%d %f\n", j, data[j]);
-#endif
 
 	for (i = 1; i <= i__2; ++i) {
 	    output = b0 * data[i] + b1 * x1 + b2 * x2;
@@ -185,11 +180,6 @@ fprintf(stderr,"APPLY: %f %f %f %f \n", b0, b1, b2, a1, a2);
 	}
     }
 
-#if 0
-            fprintf(stderr, "number of samples: %d\n", nsamps);
-          for(j=379; j<= 379+25; j++)
-            fprintf(stderr, "%d %f\n", j, data[j]);
-#endif
 
     return;
 }
@@ -234,9 +224,7 @@ fprintf(stderr,"APPLY: %f %f %f %f \n", b0, b1, b2, a1, a2);
     float omegar, ripple;
     float fhw, eps, flw, dcvalue;
 
-#if 0
-fprintf(stderr,"DESIGN: %d %s %s %f %f %f %f %f\n",iord, type, aproto, a, trbndw, fl, fh, ts);
-#endif
+
     /*  Analog prototype selection */
 
     if (strncmp(aproto, "BU", 2) == 0) {
@@ -280,11 +268,6 @@ fprintf(stderr,"DESIGN: %d %s %s %f %f %f %f %f\n",iord, type, aproto, a, trbndw
     /*  Bilinear analog to digital transformation */
     bilin2(&sn[1], &sd[1]);
 
-#if 0
-fprintf(stderr,"nsects = %d\n",nsects);
-for(i=0; i<= nsects; i++)
-        fprintf(stderr,"SN SD: %f %f \n", sn[i], sd[i] );
-#endif
 
     return;
 }
@@ -1523,31 +1506,26 @@ char ktype[3], kproto[3];
 
 /* copy trace over to a float array */
 
-   why  = (float *)calloc( k, sizeof(float));
+   why  = (float *)R_alloc( k, sizeof(float));
+
+
+
 /*     strncpy(kproto,"BU\0",3); */
 /*    strncpy(ktype,"LP\0",3); */
-/*    fprintf(stderr, "DOING FILTER PARMS:ktype=%2s kproto=%2s\n",ktype, kproto); */
+
    strncpy(kproto,aproto[0],3);
    strncpy(ktype,type[0],3);
-/* fprintf(stderr, "DOING FILTER PARMS:ktype=%2s kproto=%2s\n",ktype, kproto); */
 
-/*
-fprintf(stderr, "DOING FILTER PARMS: iord=%d type=%s aproto=%s a=%f trbndw=%f fl=%f fh=%f ts=%f\n",
-	      *iord, ktype, kproto, a , trbndw, fl,  fh, ts);
-	      */
+
+
 
 design(*iord, ktype, kproto, a, trbndw, fl, fh, ts);
 
-/*  for(i=0; i<50; i++) */
-/*  { */
-
-/* fprintf(stderr, "%d %lf %lf\n", i, sn[i], sd[i]); */
-/*  } */
 
  mean = 0;
   for(i=0; i<k; i++)
    {
-     /*  fprintf(stderr, "%lf\n", input[i]); */
+    
       mean += input[i];
       why[i] = input[i];
 
@@ -1556,36 +1534,20 @@ design(*iord, ktype, kproto, a, trbndw, fl, fh, ts);
 
   for(i=0; i<k; i++)
    {
-     /*  fprintf(stderr, "%lf\n", input[i]); */
+   
       
       why[i] -= mean;
-      /* if(i<25) */
-/*       { */
-/* 	 fprintf(stderr, "%f %f\n", why[i], input[i]); */
-/*       } */
-
+      
    }
 
-#if 0
-fprintf(stderr, "done, going to apply, k=%d\n", k);
-#endif
 
 apply(why, k, 1);
-#if 0
-  for(i=0; i<25; i++)
-   {
-      fprintf(stderr, "%lf\n", why[i]);
-
-   }
-fprintf(stderr, "done, copy data\n");
-
-#endif
 
 
  for(i=0; i< k; i++)
     output[i] = why[i];
 
- free(why);
+ /* free(why); */
 
 }
 

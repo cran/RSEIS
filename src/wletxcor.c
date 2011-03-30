@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <R.h>
 
 
 #include <math.h>
@@ -14,7 +15,7 @@
 */
 
 
-#include <stdlib.h>
+
 /*************************************************************************************/
 /*************************************************************************************/
 /*************************************************************************************/
@@ -45,8 +46,6 @@
    tempLET = sqrt(Nlet*sum2LET-(sumLET*sumLET));
 
 
- /*   fprintf(stderr, "wletxcor: K=%d; Nlet=%d; Nsig=%d; sumLET=%f; tempLET=%f\n", K, Nlet, Nsig, sumLET, tempLET); */
-/*    fprintf(stderr, "wletxcor:  max=%d\n", (Nsig-K-1)+Nlet-1); */
 
    for(i=0; i<(Nsig-Nlet-1);i++)
    {
@@ -82,7 +81,7 @@
       
    }
    
-  /*  fprintf(stderr, "wletxcor: Done with Xcor\n"); */
+  
 }
 
 /*************************************************************************************/
@@ -114,9 +113,7 @@
    tempLET = sqrt(Nlet*sum2LET-(sumLET*sumLET));
 
 
- /*   fprintf(stderr, "wletxcor: K=%d; Nlet=%d; Nsig=%d; sumLET=%f; tempLET=%f\n", K, Nlet, Nsig, sumLET, tempLET); */
-/*    fprintf(stderr, "wletxcor:  max=%d\n", (Nsig-K-1)+Nlet-1); */
-
+ 
    for(i=0; i<(Nsig-Nlet-1);i++)
    {
       
@@ -151,7 +148,7 @@
       
    }
    
-  /*  fprintf(stderr, "wletxcor: Done with Xcor\n"); */
+  
 }
 /*************************************************************************************/
 /*************************************************************************************/

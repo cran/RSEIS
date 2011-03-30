@@ -13,8 +13,16 @@ function(jd1, hr1, mi1, sec1, jd2, hr2, mi2, sec2, yr1=0, yr2=0)
     }
   else
     {
+
+      EYR = min(c(yr1,yr2)) 
+
+      E1 = EPOCHday(yr1, jd1, origyr=EYR)
+      E2 = EPOCHday(yr2, jd2, origyr=EYR)
+
+      secs1 = E1$jday*(86400)+hr1*(3600)+mi1*(60)+sec1;
+      secs2 = E2$jday*(86400)+hr2*(3600)+mi2*(60)+sec2;
       
-      return(NULL)
+      return(secs2-secs1)
     }
 
   

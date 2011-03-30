@@ -154,6 +154,16 @@ function(A, output="")
   {
     if(missing(output)) output=""
 
+
+############  need here to rectify the times int eh pickfile
+    ###  in UW format the times are all in seconds relative to the
+    ####   minute on the Acard.
+    ####   need to make sure these are reduced (i.e. less than 60 in general)
+    
+
+
+
+    
     
     cat(file=output  , writeUW.Acard(A$LOC), sep="\n")
     

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <R.h>
 
 #define MIN(a,b) ((a) <= (b) ? (a) : (b))
 #define MAX(a,b) ((a) >= (b) ? (a) : (b))
@@ -69,14 +70,6 @@ static int c__1 = 1;
     h[lhpz+1] = ztop[lhpz+1] - MAX(hpz, ztop[0]);
     ztop[0] = ztop_save; /* reset surface layer top to orig value */
 
-/*
-    fprintf(stderr, "Model Breakdown: %f %f %f %c\n", delta, hpz, staz, model_flag);
-    for (j = 0; j< nlay-1; j++)
-    {
-       fprintf(stderr, "%d %f %f %f\n" ,j, h[j],  ztop[j], vel[j]);
-
-    }
-*/
 
 
     /* Consider possible zero distance; in this case, no ref. calcs. */
@@ -388,7 +381,7 @@ int revarr(int *n, double *a)
 
 
 
-    /* fprintf(stderr, " starting ccinv1(r,hpz,nlay):%f %f %d\n",*r,*hpz ,*nly );  */
+    
 
 
     --rnod;
@@ -399,7 +392,7 @@ int revarr(int *n, double *a)
 	nvellay = *nly;
 	nnodes = nvellay*2+2;
 
-	/* fprintf(stderr, " testing  ccinv1(nvellay, nnodes):%d %d\n",nvellay, nnodes  );  */
+	
 
 
    	dtds = (double *) calloc(nnodes, sizeof(double));
@@ -426,7 +419,7 @@ int revarr(int *n, double *a)
 /* ---------------------------------------------------------- */
 
 
-    /* fprintf(stderr, " starting ccinv1(r,hpz,nlay):%f %f %d %d\n",*r,*hpz ,*nly,  nnodes);  */
+    
 
     fcopy(top, &ttop[1], nly);
 
@@ -440,7 +433,7 @@ int revarr(int *n, double *a)
     top[0] = t1;
     sflg = (-1.0);
 L95:
-    /*  fprintf(stderr, "sflg = %f\n",sflg); */ 
+    
 
 /*        write(0,*) 'sflg = ',sflg */
 /* --- locate layer containing hypocenter and store index in lhpz. */
@@ -583,7 +576,7 @@ L210:
 /* ---------------------------------------------------------- */
 /* 	write(0,*)'lowlr,dtds(array)',lowlr,dtds */
 
-   /*  fprintf(stderr, "lowlr %d\n", lowlr); */
+   
 
 
 /* --- refraction path calculations are now completed. variable lowlr */
@@ -658,7 +651,7 @@ L260:
 /* L270: */
     }
 
-    /* fprintf(stderr, "outer loop; sum,r,t1,t2,t3: %f %lf %f %f %f\n", sum,*r,t1,t2,t3); */
+    
 
 /* 	write(0,*)'outer loop; sum,r,t1,t2,t3',sum,r,t1,t2,t3 */
     if ((r__1 = *r - sum) < 0.) {
@@ -701,7 +694,7 @@ L280:
     }
 L310:
 
-    /* fprintf(stderr, "p is found!\n"); */
+    
 
 /* 	write(0,*)'p is found!' */
 /* --- p has now been found to sufficient accuracy, calculate direct */
@@ -713,7 +706,7 @@ L320:
     }
 
 
-   /*  fprintf(stderr, "after p is found!\n"); */
+   
 /* --- following code assumes direct wave time is minimum. variables */
 /*     are set and nodes are filled on this basis */
     ttime = tt;
@@ -733,14 +726,14 @@ L320:
 	
 	/* if(slness[lidx]==0) */
 /* 	{ */
-/* 	   fprintf(stderr, "problem with slness: layer=%d\n", lidx); */
+
 /* 	} */
        
 	rsum = d[lidx - 1] * p / slness[lidx] + rsum;
 	
 /* 	if(!(rsum>=0)) */
 /* 	{ */
-/* 	   fprintf(stderr, "problem with slness: layer=%d\n", lidx); */
+/* 	   REprintf( "problem with slness: layer=%d\n", lidx); */
 /* 	} */
        
 	rnod[i + 1] = rsum;
@@ -759,7 +752,7 @@ L320:
     }
     ret_val = ttime;
 
-    /*  fprintf(stderr, "a ccinvr rnod 1 nnod\n");  */
+    /*  REprintf( "a ccinvr rnod 1 nnod\n");  */
 
 /*      write(0,*)'a ccinvr rnod 1 nnod',rnod(1),rnod(nnod) */
 
@@ -775,7 +768,7 @@ L320:
       
        /* for (i = 1; i <= *nnod; ++i)  */
 /*        { */
-/* 	  fprintf(stderr, "ccinvr a rnod=%d %f %f\n" ,i, rnod[i], ret_val ); */
+/* 	  REprintf( "ccinvr a rnod=%d %f %f\n" ,i, rnod[i], ret_val ); */
 	  
 /*        } */
       
@@ -784,7 +777,7 @@ L320:
        *iret2 = indpth;
        return ret_val;
     }
-    /* fprintf(stderr, "a ccinvr rnod 1 nnod %f %f\n", rnod[0],rnod[*nnod-1]); */
+    /* REprintf( "a ccinvr rnod 1 nnod %f %f\n", rnod[0],rnod[*nnod-1]); */
     if (sflg == 1.0) {
 	free(dtds);
 	free(h);
@@ -804,13 +797,13 @@ L320:
     for (i = 1; i <= i__1; ++i) {
 	rnod[i] = t1 - rnod[i];
 /* 	write(0,*)'ccinv i  rnod ',i,rnod(i) */
-	/* fprintf(stderr, "ccinv i  rnod %d %f\n", i,rnod[i]); */
+	/* REprintf( "ccinv i  rnod %d %f\n", i,rnod[i]); */
 
 /* L345: */
     }
     revarr(nnod, &znod[1]);
 /*      write(0,*)'b ccinvr rnod 1 nnod',rnod(1),rnod(nnod) */
-      /* fprintf(stderr, "b ccinvr rnod 1 nnod %f %f\n", rnod[0], rnod[*nnod-1]);   */
+      /* REprintf("b ccinvr rnod 1 nnod %f %f\n", rnod[0], rnod[*nnod-1]);   */
 	free(dtds);
 	free(h);
 	free(d);
@@ -920,7 +913,7 @@ L350:
     }
     revarr(nnod, &znod[1]);
 /*      write(0,*)'d ccinvr rnod 1 nnod',rnod(1),rnod(nnod) */
-    /* fprintf(stderr, "d ccinvr rnod 1 nnod %f %f\n", rnod[0],rnod[*nnod-1]); */
+    /* REprintf( "d ccinvr rnod 1 nnod %f %f\n", rnod[0],rnod[*nnod-1]); */
 
 	free(dtds);
 	free(h);
@@ -933,7 +926,7 @@ L350:
 L9500:
     *jerr = -1;
 /*      write(0,*)'error in ccinv1: p=pold jerr = -1' */
-    fprintf(stderr, "error in ccinv1: p=pold jerr = -1 \n");
+    REprintf( "error in ccinv1: p=pold jerr = -1 \n");
 	free(dtds);
 	free(h);
 	free(d);
@@ -991,7 +984,7 @@ L9500:
   if((jerr<0))
     {
       
-      fprintf(stderr, "ERROR:jtrace tt<0: nnod = %d  dis=%f hypoz=%lf  newlay=%d  tt=%lf JERR=%d\n", 
+      REprintf( "ERROR:jtrace tt<0: nnod = %d  dis=%f hypoz=%lf  newlay=%d  tt=%lf JERR=%d\n", 
 	      *nnod, indelta,  inhpz, lolev, tt,  jerr);
     }
   
@@ -999,7 +992,7 @@ L9500:
 
   for(i=0; i<j; i++)
     {
-      fprintf(stderr, "%lf, %lf\n", znod[i], rnod[i]);
+      REprintf( "%lf, %lf\n", znod[i], rnod[i]);
 
     }
 

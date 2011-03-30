@@ -1,6 +1,5 @@
 \name{JGET.seis}
 \alias{JGET.seis}
-\alias{getseisinfo}
 
 \title{Reads various seismic file formats}
 \description{
@@ -8,7 +7,7 @@
 }
 \usage{
 JGET.seis(fnames, kind = 1, Iendian=1, BIGLONG=FALSE , HEADONLY=FALSE,  PLOT = FALSE)
-getseisinfo(fnames, kind = 1)
+
 }
 \arguments{
   \item{fnames}{list of file names.}
@@ -87,7 +86,7 @@ getseisinfo(fnames, kind = 1)
 
   OLDER:
   
-  getseisinfo gets only the header information from the trace.
+  
   Information in the file names is ignored, so be sure to modify headers
   prior to using this method of extracting meta-data. (Or modify
   the meta data from the file names after reading in the data.)
@@ -104,8 +103,7 @@ getseisinfo(fnames, kind = 1)
    WINDOWS and MACOS so this feature was removed.
    A filter for mseed format is currently being developed.
 
-   getseisinfo is an older  (superceded) C-coded version to get the
-   headers.  This code is now defunct.
+   
 
 
 
