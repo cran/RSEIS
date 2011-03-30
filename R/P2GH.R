@@ -1,6 +1,6 @@
 P2GH<-function(P1)
   {
-    ##########  P1 = PICK.GEN(GH)
+    ##########  P1 = swig(GH)
     ########  select a small window on a trace, then click XTR
     
     DATTIM = P1$TIMEpick

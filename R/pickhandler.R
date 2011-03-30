@@ -1,6 +1,6 @@
 pickhandler<-function(i1=1, ppick=0, kzap="Y", err=NA, res=0, ycol=rgb(0,0,1) , pol=0, flg=0, onoff=1, NPX=1, WPX=WPX, NH=NH)
   {
-#######   used in PICK.GEN for handling picks
+#######   used in swig  for handling picks
     if(missing(i1)) i1=1
     if(missing(kzap)) kzap="Y"
     if(missing(err)) err=NA

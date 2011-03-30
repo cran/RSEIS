@@ -87,7 +87,7 @@ def.par = par(no.readonly = TRUE)
             }
           
           
-          ##  PICK.GEN(KH)
+          ##  swig(KH)
 
           if(length(KH$JSTR)>0)
             {

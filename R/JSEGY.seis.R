@@ -293,7 +293,7 @@ SEGYall = c(A1, A2, A3, A4, A5, A6, sampleLength,
       DATIM =   c(year, day, hour, minute)
 
       
-      sec = second+  msecs/1000000
+      sec = second+  msecs/1000
       
       thesta= stationname
       thecomp= channelname

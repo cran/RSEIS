@@ -26,6 +26,8 @@
 \alias{TSHIFT}
 \alias{RMS}
 \alias{LocStyle}
+\alias{CENTER}
+\alias{fspread}
 
 
 \title{Buttons for swig
@@ -60,6 +62,8 @@ Pinfo(nh, g)
 TSHIFT(nh, g)
 RMS(nh, g)
 LocStyle(nh, g)
+CENTER(nh, g)
+fspread(nh, g)
 
 }
 \arguments{

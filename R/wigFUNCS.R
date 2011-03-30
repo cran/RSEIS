@@ -60,6 +60,23 @@ HALF<-function(nh, g)
 
 }
 
+CENTER<-function(nh, g)
+  {
+    if (g$zenclick > 1) {
+        rd = getrdpix(g$zloc, g$zenclick, g$sel, nh)
+    }
+    else {
+        rd = list(PUSHED = "CENTER")
+    }
+    g$action = "break"
+    g$rd = rd
+    g$zloc = list(x = NULL, y = NULL)
+    invisible(list(global.vars = g))
+
+
+  }
+
+
 MARK<-function(nh, g)
 {
 
@@ -337,6 +354,100 @@ UNFILT<-function(nh, g)
     invisible(list(global.vars=g))
   }
 #########################
+
+
+
+fspread<-function(nh, g)
+  {
+    ###  click on a trace panel and do a filter spread
+    
+
+ zenclick = length(g$zloc$x)
+
+
+    if(zenclick>=3)
+      {
+        ypick = length(g$sel)-floor(length(g$sel)*g$zloc$y[zenclick-1])
+        ipick = g$sel[ypick]
+        print(paste(sep=' ',"fspread", ypick, nh$info$name[ ipick]))
+
+        famp = nh$JSTR[[ipick]]
+
+        pwin = sort(c(g$zloc$x[zenclick-2], g$zloc$x[zenclick-1]))
+
+        ex = seq(from=nh$info$t1[ipick], by=nh$info$dt[ipick], length.out=length(famp) )
+        temp =  famp[ ex > pwin[1] & ex <pwin[2]]
+
+        
+#### Xamp =  -1*temp
+        smallex = ex[ ex > pwin[1] & ex <pwin[2]]
+
+        asec = nh$info$sec[ipick]+nh$info$msec[ipick]/1000+nh$info$t1[ipick]-nh$info$off[ipick]+pwin[1]
+        
+        spaz = recdate( nh$info$jd[ipick], nh$info$hr[ipick], nh$info$mi[ipick], asec,  nh$info$yr[ipick] )
+        
+        spaz$yr =   as.integer(nh$info$yr[ipick])
+        
+        MODAY = getmoday(spaz$jd,  spaz$yr)
+        
+        TP = list(yr=spaz$yr[1], jd=spaz$jd, mo=MODAY$mo,
+          dom= MODAY$dom  ,hr=spaz$hr, mi=spaz$mi, sec=spaz$sec )
+
+       dst = dateStamp(TP)
+
+        titl = paste(nh$STNS[ipick], nh$COMPS[ipick], dst)
+        
+        fh=c(1/20, 1/10, 1/5, .5, 1, 2, 3)
+        fl=rep(1/100, times=length(fh) )
+
+        
+         dev.new(width=14, height=10)
+
+        jex = range(smallex)
+        jr =  jex[2] - jex[1]
+        j10 = jr*0.2
+
+        jwin = c(jex[1]+j10, jex[2]-j10)
+       #  jwin = NULL
+            
+        FILT.spread(smallex, temp, nh$dt[ipick], fl = fl, fh = fh, sfact = 1, WIN = jwin, PLOT = TRUE, TIT =titl , TAPER = 0.1, POSTTAPER=NULL)
+
+        dev.set(g$MAINdev)
+        
+        g$zloc = list(x=NULL, y=NULL) 
+        g$action="donothing"
+        invisible(list(global.vars=g))
+        
+        
+      }
+    else
+      {
+        cat("XTR WARNING: no window or trace has been selected:", sep="\n")
+        RETX=NULL
+        g$zloc = list(x=NULL, y=NULL) 
+        
+        g$action="donothing"
+        invisible(list(global.vars=g))
+        
+        
+      }
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 SPEC<-function(nh, g)
   {

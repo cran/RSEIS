@@ -1,6 +1,6 @@
 seisorder<-function(GH, ORD,  VNE= c("V", "N", "E") )
   {
-###  given an RSEIS list used for PICK.GEN
+###  given an RSEIS list used for swig 
 ###   get a convenient ordering
 
     ##  the order depends on the input ORD which has station information

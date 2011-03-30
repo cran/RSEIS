@@ -5,7 +5,7 @@ plotJGET<-function(J, SHOWONLY=FALSE)
 ##    J  = JGET.seis(fn,kind=2,BIGLONG=FALSE,HEADONLY=FALSE,Iendian=3,PLOT=TRUE)
 
     GH=prepSEIS(J)
-    PICK.GEN(GH, SHOWONLY=SHOWONLY)
+    swig(GH, SHOWONLY=SHOWONLY)
 
     invisible(GH)
   }

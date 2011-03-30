@@ -626,7 +626,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
         {
           print(paste(sep=' ' ,"Start swig postscript"))
           jdev = dev.cur()
-          plfname = local.file("pick_gen","eps")
+          plfname = local.file("swig","eps")
           
           ### postscript(file=plfname, horizontal=TRUE, print.it=FALSE,  onefile=FALSE)
            P = round(par('pin'))

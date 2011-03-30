@@ -127,7 +127,7 @@ J = 1:N
 #####   hot.doc = strsplit( ho.doc, split="\\\"")
 #####   possiblebutts = unlist(lapply(hot.doc, getmem, 2))
     
-#####      kli   = system("grep NOLAB /home/lees/R_PAX/RSEIS/R/PICK.GEN.R | grep match", intern=TRUE)
+#####      kli   = system("grep NOLAB /home/lees/R_PAX/RSEIS/R/swig.R | grep match", intern=TRUE)
 
 #####     cp =  chooser(blibs, nsel=NA)
 #####     cp =  chooser(blibs, nsel=0)

@@ -1,6 +1,6 @@
 pickgeninfo<-function()
   {
-doc = c("#############################", "PICK.GEN is a generic Picking program",
+doc = c("#############################", "swig is a generic Picking program",
 "Use left Mouse click to select traces and windows.",
 "Use the buttons to operate on the selected traces/windows",
 "To zoom, click twice with the left mouse on the traces, then right mouse zooms",

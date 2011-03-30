@@ -17,7 +17,7 @@ pickseis24<-function(pjj, DB, usta, ucomp )
       GH = Mine.seis(at1, at2, DB, usta, ucomp)
 
       dev.set(3)
-      PICK.GEN(GH)
+      swig(GH)
 
       dev.set(2)
 

@@ -254,8 +254,8 @@ function(GH, sel=sel, FRWD=8,  BKWD=8,  sbef=1, saft=6, DFRWD=.5,  DBKWD=.5, thr
       ##  gin = locator(2)
 
 
-###  PICK.GEN(GH, sel=sel)
-###  y = PICK.GEN(GH, sel=sel, WIN=gin)
+###  swig(GH, sel=sel)
+###  y = swig(GH, sel=sel, WIN=gin)
 
     ###  gin = locator(2)
       gin = NULL

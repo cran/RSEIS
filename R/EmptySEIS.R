@@ -1,6 +1,26 @@
 'EmptySEIS'<-
   function()
 {
+
+info=list(fn="",
+name="",
+yr=0,
+jd=0,
+mo=0,
+dom=0,
+hr=0,
+mi=0,
+sec=0,
+msec=0,
+dt=0,
+t1=0,
+t2=0,
+off=0,
+n1=0,
+n2=0,
+n3=0,
+n=0)
+
   K = list(JSTR=list(),
                STNS=vector(),
                dir="",
@@ -9,7 +29,7 @@
                OCOMPS=vector(),
                dt=vector(),
                KNOTES=vector(),
-               info=list(),
+               info=info,
                nn=vector(),
                ex=vector(),
                pcol=vector(),
@@ -18,8 +38,8 @@
                ftime=vector(),
                units=vector(),
                pickfile=EmptyPickfile(),
-               velfile=list(),
-               stafile=list(),
+               velfile="",
+               stafile="",
                aname="",
                UWFILEID="")
   return(K)

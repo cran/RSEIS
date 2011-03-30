@@ -103,7 +103,7 @@ view.seis<-function(aday, ihour, inkhour, SAVEFILE, days, DB, usta, acomp,  STDL
 
         if(length(KOUT$WPX$yr)>1) { save.wpix(KOUT, fn= SAVEFILE) }
         
-#####  depending on what came out of PICK.GEN do different things
+#####  depending on what came out of swig do different things
 ######   remember to save the picks in a file for later use
 
         if(KOUT$but == "QUIT") {
