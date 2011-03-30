@@ -1,5 +1,5 @@
 `Mine.seis` <-
-  function(at1, at2, DB, grepsta, grepcomp, kind=1, Iendian=1, BIGLONG=FALSE, CHOP=TRUE, verbose = FALSE)
+  function(at1, at2, DB, grepsta, grepcomp,  kind=1, Iendian=1, BIGLONG=FALSE, CHOP=TRUE, verbose = FALSE, chtoken=NULL, statoken=NULL)
 {
   ##  find all the files that overlap the times times
 #########   at1 and at2 should be single times in julian days
@@ -7,6 +7,13 @@
 
 ##### grepsta, grepcomp should match what is on the file name, not
 ###  what is in the header of the seismic data
+
+
+  ####  in some situation the chanel name and the station name are not embedded in the
+  ####   file headers - in that case use the token from the file name
+
+  if(missing(chtoken)) { chtoken=NULL }
+  if(missing(statoken)) { statoken=NULL }
   
   if(missing(kind)) { kind = 1 }
   if(missing(CHOP)) { CHOP=TRUE }
@@ -79,6 +86,13 @@
 
   
   KG4 = JGET.seis(fn2, kind = kind,  Iendian=Iendian, BIGLONG= BIGLONG, HEADONLY=FALSE ,PLOT = FALSE)
+
+
+ ## here we must insure that the channel names are unique
+
+  
+
+  
 
    if(verbose)
     {

@@ -57,7 +57,7 @@ function(x,y, dt, fl=fl, fh=fh, sfact=1, WIN=NULL, PLOT=TRUE, TIT=NULL, TAPER=0.
           if(!is.null(POSTTAPER))
           {
             ###  print("applying tape at ", TAPER)
-           
+            fy = fy - mean(fy)
              ftapy = applytaper(fy, p=POSTTAPER)
             fy  =  ftapy 
           }

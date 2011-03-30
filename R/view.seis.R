@@ -98,7 +98,7 @@ view.seis<-function(aday, ihour, inkhour, SAVEFILE, days, DB, usta, acomp,  STDL
         
 
 ########   show wiggles
-        KOUT = PICK.GEN(GH, STDLAB=STDLAB)
+        KOUT = swig(GH, STDLAB=STDLAB)
 
 
         if(length(KOUT$WPX$yr)>1) { save.wpix(KOUT, fn= SAVEFILE) }

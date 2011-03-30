@@ -63,7 +63,7 @@ Plot hodograms (particle motion) for 3-component seismic data.
 
 Start out by calling the RSEIS library,
 
-<<fig=FALSE, echo=TRUE, results=HIDE>>=
+<<fig=FALSE, echo=TRUE, results=hide>>=
 library(RSEIS)
 @ 
 
@@ -71,7 +71,7 @@ Then load some data and plot.  This data is from the Coso Geothermal field in Co
 The data is sampled at 250 sampled/sec and there are numerous stations recorded
 on three components.   Some stations are too noise for particle motion analysis.
 
-<<fig=FALSE, echo=TRUE, results=HIDE>>=
+<<fig=FALSE, echo=TRUE, results=hide>>=
 data(GH)
 
 PICK.GEN(GH, SHOWONLY=TRUE)

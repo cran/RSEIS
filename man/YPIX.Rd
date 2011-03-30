@@ -12,6 +12,9 @@
 \alias{Pup}
 \alias{Pnil}
 \alias{Pdown}
+\alias{FILLPIX}
+\alias{RIDPIX}
+\alias{SEEPIX}
 
 \title{PICK Buttons for swig
 }
@@ -31,6 +34,10 @@ POLSWITCH(nh, g, dir)
 Pup(nh, g)
 Pnil(nh, g)
 Pdown(nh, g)
+FILLPIX(nh, g)
+RIDPIX(nh, g)
+SEEPIX(nh, g)
+
 
 }
 \arguments{
@@ -50,7 +57,26 @@ Pdown(nh, g)
 \details{
 
   Buttons can be defined on the fly.
+  \describe{
+    \item{YPIX}{Multiple picks on a panel}
+    \item{WPIX}{window picks (start and end)}
+    \item{NOPIX}{remove the picks}
+    \item{REPIX}{un-remove the picks}
+    \item{PickWin}{Pick window for 3 component picking}
+    \item{pADDPIX}{add picks}
+    \item{Ppic}{P-wave arrival (only one per station) }
+    \item{Spic}{S-wave arrival (only one per station)}
+    \item{Apic}{acoustic-wave arrival (only one per station)}
+    \item{POLSWITCH}{flip polarity}
+    \item{Pup}{Polarity Up}
+    \item{Pnil}{Polarity nil}
+    \item{Pdown}{Polarity down}
+    \item{FILLPIX}{Fill the pick from bottom to top of panel}
+    \item{RIDPIX}{remove pick}
+    \item{SEEPIX}{print current picks to screen}
 
+
+}
   
 }
 \value{The return value depends on the nature of the function

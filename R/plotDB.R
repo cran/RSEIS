@@ -38,11 +38,17 @@ usta = unique(DB$sta)
 
    day.yrs =  EPOCHyear(days, origyr=DB$origyr)
 
-   plot(x,y, type="n", axes=FALSE, xlab="", ylab="")
 
+  
+   plot(x,y, type="n", axes=FALSE, xlab="", ylab="")
+   abline(h=1:length(SPT1), lty=2, col=grey(.9))
    box()
 
-   axis(2, at=1:length(SPT1), labels=names(SPT1), las=1, cex=.8)
+   u = par("usr")
+
+   axis(4, pos=u[1]  , at=1:length(SPT1), labels=names(SPT1), las=1, cex=.8, padj=-0.5)
+
+   
 
   ##  axis(1, at=days, labels=paste(sep=" ", day.yrs$yr, day.yrs$jd), , las=2)
 axis(3, at=days, labels=paste(sep="/", day.yrs$yr, day.yrs$jd))
@@ -56,7 +62,7 @@ axis(1, at=days, labels=paste(sep="/", day.yrs$yr, day.yrs$jd))
    for(i in 1:length(SPT1))
      {
        why = rep(i, length(SPT1[[i]]))
-       segments(SPT1[[i]], why, SPT2[[i]], why, col=icols[i], lwd=2)
+       segments(SPT1[[i]], why, SPT2[[i]], why, col=icols[i], lwd=2.5)
 
 
      }

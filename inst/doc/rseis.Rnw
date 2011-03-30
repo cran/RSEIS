@@ -110,7 +110,7 @@ machine being used.
 The packages required by RSEIS include RPMG, and Rwave, 
 and RFOC if focal mechanisms are going to be inspected.
 
-<<fig=FALSE, echo=TRUE, results=HIDE>>=
+<<fig=FALSE, echo=TRUE, results=hide>>=
 
 library(RSEIS)
 library(RPMG)
@@ -125,7 +125,7 @@ options(continue = " ")
 There several data set that accompany RSEIS,
 and these can be loaded with simple calls to data().
 For example,
-<<fig=FALSE, echo=TRUE, results=HIDE>>=
+<<fig=FALSE, echo=TRUE, results=hide>>=
 data(KH)
 names(KH)
 
@@ -135,7 +135,7 @@ meta-data about the earthquake.  To see a view of this data
 we call the main program and display the earthquake records as they are stored
 in memory,
 
-<<fig=FALSE, echo=FALSE, results=HIDE>>=
+<<fig=FALSE, echo=FALSE, results=hide>>=
 
 pdark=c("tomato3","royalblue","forestgreen","blueviolet","tan3",
 "lightseagreen","deeppink","cyan3",
@@ -147,7 +147,7 @@ palette(pdark )
 
 @ 
 
-<<fig=TRUE, echo=TRUE, results=HIDE>>=
+<<fig=TRUE, echo=TRUE, results=hide>>=
 
 
 STDLAB = c("DONE",  "zoom in", "zoom out", "refresh", "restore",
@@ -257,7 +257,7 @@ on the fly.
 
 \subsection{Example: Coso Geothermal Event }
 
-<<fig=FALSE, echo=TRUE, results=HIDE>>=
+<<fig=FALSE, echo=TRUE, results=hide>>=
 
 data(GH)
 numstas = length(GH$STNS)
@@ -273,7 +273,7 @@ some of the components.  This situation is not
 atypical of earthquake seismic data recorded in the field.
 If we show only the vertical component traces,
 The plot is more manageable and easier to view:
-<<fig=TRUE, echo=TRUE, results=HIDE>>=
+<<fig=TRUE, echo=TRUE, results=hide>>=
 
 
 verts = which(GH$COMPS == "V")
@@ -291,7 +291,7 @@ swig(GH,  sel=verts[c(1,2,3,4,6) ] ,STDLAB =STDLAB, WIN=c(4,15),  SHOWONLY=TRUE)
 
 
 We see that the stations here are 'mixed up', i.e. arriving at different times.
-<<fig=TRUE, echo=TRUE, results=HIDE>>=
+<<fig=TRUE, echo=TRUE, results=hide>>=
 
 vertord = getvertsorder(GH$pickfile, GH)
 
@@ -339,7 +339,7 @@ Using this information we can associate the
 p-pick with the waveforms, match the timing information
 and plot together.
 finally we add the picks to the section:
-<<fig=TRUE, echo=TRUE, results=HIDE>>=
+<<fig=TRUE, echo=TRUE, results=hide>>=
 
 apx = uwpfile2ypx(GH$pickfile)
 swig(GH,  sel=vertord$sel[1:5] , APIX=apx, STDLAB =STDLAB,  WIN=c(4, 15), SHOWONLY=FALSE, velfile=VELMOD1D, )
@@ -369,7 +369,7 @@ One standard data set included in the R
 Distribution is the 
 sunspot data.  As an example of RSEIS we can read this time series in and plot it using the
 same code introduced above.
-<<fig=TRUE, echo=TRUE, results=HIDE>>=
+<<fig=TRUE, echo=TRUE, results=hide>>=
 data(sunspots)
 
 AA = attributes(sunspots)
@@ -430,13 +430,13 @@ time sereis and looking at the
 spectrum one can immediately see the 
 Milankovitch cycles at (approximately) 100K, 41K and 20K periods.
 
-<<fig=TRUE, echo=TRUE, results=HIDE>>=
+<<fig=TRUE, echo=TRUE, results=hide>>=
 data(OH)
 xx =  swig( OH, sel=which(OH$COMPS == "V"), STDLAB = STDLAB,  SHOWONLY=TRUE)
 
 @ 
 
-<<fig=TRUE, echo=TRUE, results=HIDE>>=
+<<fig=TRUE, echo=TRUE, results=hide>>=
 a = list(y=OH$JSTR[[1]], dt=OH$dt[1])
  Mspec = mtapspec(a$y, a$dt, klen =1024 , MTP = list(kind = 1,
         nwin = 5, npi = 3, inorm = 0))
@@ -478,7 +478,7 @@ To illustrate the effects of comparing numerous filters to
 a specific volcanic explosions event,
 
 
-<<fig=TRUE, echo=TRUE, results=HIDE>>=
+<<fig=TRUE, echo=TRUE, results=hide>>=
  data(KH)
      dt = KH$dt[1]
 

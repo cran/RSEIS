@@ -30,15 +30,20 @@ YPIX<-function(nh, g)
                 if(is.na(ycol)) { ycol = rgb(0,0,1) }
                 err = NA
                 res = 0
-                g$WPX =  pickhandler(i1=i1, ppick=ppick[iz], kzap=kzap, res=res, err=NA, ycol=ycol, NPX=g$NPX, WPX=g$WPX, NH=nh)
+                g$WPX =  pickhandler(i1=i1, ppick=ppick[iz], kzap=kzap, res=res, err=NA, ycol=ycol, onoff=2, NPX=g$NPX, WPX=g$WPX, NH=nh)
+               ##  g$ADDPIX =  pickhandler(i1=i1, ppick=ppick[iz], kzap=kzap, res=res, err=NA, ycol=ycol, NPX=g$NPX, WPX=g$WPX, NH=nh)
                 g$NADDPIX = g$NADDPIX+1
                 
                 ## 
               }
 ###PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix, cex=pcex)
-            
+            g$PHASE = unique( c(g$PHASE, "Y") )
           }
       }
+
+    ## print(g$PHASE)
+
+    
     g$zloc = list(x=NULL, y=NULL) 
     g$action = "replot"
     invisible(list(NH=nh, global.vars=g))
@@ -114,8 +119,103 @@ REPIX<-function(nh, g)
 
 
 
+##########################
+FILLPIX<-function(nh, g)
+  {
+    g$fillpix = !g$fillpix 
+    g$zloc = list(x=NULL, y=NULL) 
+   g$action = "replot"
+    invisible(list(NH=nh, global.vars=g))
+  }
+##########################
+
+##########################
+RIDPIX<-function(nh, g)
+  {
+
+    tol = .1
+############   find picks near the clicks and remove...temporarily
+    if(g$zenclick>=2)
+      {
+        zappa = match(g$KLICK, g$BLABS)
+        col = g$colpix[which(g$pnos=="YPIX")]
+        kix = legitpix(g$sel, g$zloc, g$zenclick)
+        ypick =  kix$ypick
+        ppick = kix$ppick
+
+############   proceed only if have legitimate clicks
+        if(length(ypick)>0)
+          {
+            
+            ipick = g$sel[ypick]
+            
+####
+            
+            
+            for(iz in 1:length(ypick))
+              {
+                
+                i1 = ipick[iz]
+                i2 = ypick[iz]
+              ##  print(paste(iz, i1, i2))
+
+                
+                asec = nh$info$sec[i1]+nh$info$msec[i1]/1000+nh$info$t1[i1]-nh$info$off[i1]+ppick[iz]
+                pic1 = recdate(nh$info$jd[i1], nh$info$hr[i1], nh$info$mi[i1], asec)
 
 
+             ##  print(pic1)
+                
+                ds = abs(secdifL(g$WPX, pic1))
+                
+
+            ##    print(ds)
+
+                if( any(ds<=tol) )
+                  {
+                    
+                    irid = which.min(ds)
+
+                    
+                  ##   print(irid)
+                    samesta = g$WPX$name[irid]==nh$STNS[i1] & g$WPX$comp[irid]==nh$COMPS[i1]
+                    if(samesta) g$WPX$onoff[irid] = -1
+                  }
+
+                
+                
+             ##   g$WPX =  pickhandler(i1=i1, ppick=ppick[iz], kzap=kzap, res=res, err=NA, ycol=ycol, NPX=g$NPX, WPX=g$WPX, NH=nh)
+               ##  g$ADDPIX =  pickhandler(i1=i1, ppick=ppick[iz], kzap=kzap, res=res, err=NA, ycol=ycol, NPX=g$NPX, WPX=g$WPX, NH=nh)
+               ## g$NADDPIX = g$NADDPIX+1
+                
+                ## 
+              }
+###PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix, cex=pcex)
+            
+          }
+      }
+    g$zloc = list(x=NULL, y=NULL) 
+    g$action = "replot"
+    invisible(list(NH=nh, global.vars=g))
+    
+
+    
+  }
+##########################
+
+
+##########################
+SEEPIX<-function(nh, g)
+  {
+    options(width=180)
+    print(g$WPX)
+    
+    #### write.table(g$WPX)
+    g$zloc = list(x=NULL, y=NULL) 
+   g$action = "donothing"
+    invisible(list(NH=nh, global.vars=g))
+  }
+##########################
 
 
 
@@ -247,6 +347,13 @@ pADDPIX<-function(nh, g, phase)
     
     ipick = g$sel[ypick]
 
+
+   ####################   here I take the first click - but is that right?
+   ####  is this because I am forcing only one P-wave arrival?
+   ####   that does not make sense.....
+
+
+   
     ipick = ipick[1]
 
     
@@ -277,6 +384,8 @@ pADDPIX<-function(nh, g, phase)
 ###########   this looks like a bug./....
     
     iseek = which(g$WPX$phase==phase & g$WPX$name==nh$STNS[ipick] &  g$WPX$comp==nh$COMPS[ipick])
+
+   
 ###  print(paste(sep=" ", "ISEEK",  iseek, length(iseek) ))
     
     if(length(iseek)==1)

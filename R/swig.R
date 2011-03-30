@@ -23,7 +23,20 @@
 ###   if(missing(APIX)) { APIX = NULL}  else { if(!exists(deparse(substitute(APIX)))) { print("WARNING: NO WPX"); APIX=NULL} }
 
   if(missing(APIX)) { APIX = NULL}
-  if(missing(PHASE)) { PHASE = NULL}
+  
+  if(missing(PHASE)) {
+    PHASE = NULL
+    if(!is.null(APIX))
+      {
+        PHASE = unique(APIX$phase)
+
+      }
+
+    
+  }
+
+
+  
   
   if(missing(SHOWONLY)) { SHOWONLY=FALSE}
   if(missing(CHOP)) { CHOP=FALSE }
@@ -144,7 +157,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
 "PHLAG", "3COMP", "Predict1D",   "SavePF", "SavePIX", "LQUAKE",
  "PickWin", "Ppic", "Spic", "Apic", "Pup",   "Pdown",
      "Pnil",
-"YPIX", "WPIX", "RMS","EDIX",
+"YPIX", "WPIX", "RMS","EDIX","FILLPIX",
  "NOPIX", "REPIX",
        "ADDBUTTS")
 
@@ -198,8 +211,8 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
 
   if(is.null(APIX)==TRUE)
     {
-      WPX = list(  tag=NA,   name=NA,   comp=NA,  c3=NA,
-        phase=NA,  err=0,  pol=0,    flg=0, res=0, yr=0,
+      WPX = list(  tag='99999',   name='99999',   comp='9',  c3='XX9',
+        phase="X",  err=0,  pol=0,    flg=0, res=0, yr=0,
         mo=0,       dom=0,        jd=0,        hr=0,        mi=0,
         sec=0,      col='red',  onoff =0  )
       WPX = data.frame(WPX, stringsAsFactors = FALSE)
@@ -338,14 +351,19 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
     du=du,
     STNS=STNS,
     COMPS=COMPS,
+    NADDPIX=NADDPIX,
+    ADDPIX=ADDPIX,
+    RIDPIX=RIDPIX,
     WPX=WPX, 
-    PHASE=NULL,
-    forcepix=FALSE,
+    PHASE=PHASE,
+    forcepix=forcepix,
     fillpix=FALSE,
     srtpix=0,
     polspix=TRUE,
     pcex=1,
-
+    
+    filters = filters,
+    
     ScaleFACT=ScaleFACT,
     pts = pts,
     action = "continue",

@@ -17,13 +17,23 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
     ####   STNS is a list of showing stations
     ####   COMPS = vector of associated components
      ####   YPX =  list of picks
+
+
+    ##  print(YPX)
     
       du = 1/length(STNS)
     
     uphase = unique(YPX$phase)
 
+
+####    print(paste("input parameters  PHASE=", PHASE, "POLS=", POLS,  "FILL=", FILL,
+####                "FORCE=",FORCE,"cex=", cex, "srt=", srt, collapse=" "))
+
+    
+
     if(is.null(PHASE))
       {
+       ## print("PHASE is NULL")
         ###########  match the pick with the component only
        ####   m1 = match(STNS , YPX$name)
 
@@ -93,7 +103,7 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
           qerr = YPX$err[mpicks ]
           LABS = YPX$phase[mpicks]
           
-###   M = meshgrid(1:length(STNS), 1:length(COMPS) )
+###   
           ypixA = (length(STNS)-wmd)*du
 
       }
@@ -112,7 +122,8 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
     
     
     x1 = secdif(   t0$jd, t0$hr, t0$mi, t0$sec, YPX$jd[ mpicks], YPX$hr[mpicks ],YPX$mi[mpicks ], YPX$sec[mpicks ])
-    
+
+#############  set the color of the pix 
     if(is.null(YPX$col))
       {
         pcol=rep("springgreen4", length(YPX$sec[mpicks]))
@@ -129,7 +140,6 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
 
       }
 
-
   ###   print(paste(sep=" ", "PLOT.ALLPX", pcol))
 
 
@@ -141,8 +151,8 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
     if(FILL==TRUE)
       {
 #############  draw the pick down the whole window
-        ypixA = 0
-         ypixB = 1
+        ypixA = rep(0, times=length(ypixA))
+         ypixB = rep(1, times=length(ypixB))
         
       }
 
@@ -162,6 +172,8 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
 
 
     
+   #### print(mpicks)
+   #### print(YPX)
     
 
     if(!noLAB)
@@ -170,7 +182,7 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
         jlab = YPX$flg[mpicks]
         wlab = which(jlab!="N")
         
-        ##   print(wlab)
+       ####   print(wlab)
         
         nx1 =x1[wlab]
         nLABS=LABS[wlab]
@@ -182,8 +194,8 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
         typixB  = split(nypixB,nypixB)
         tpcol  = split(npcol,nypixB)
 
-        ##    print(c(length(wlab), length(tx1)))
-        ##   print(tx1)
+          ###  print(c(length(wlab), length(tx1)))
+          ### print(tx1)
 
         
 ##############  typixB are the categories

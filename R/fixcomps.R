@@ -25,6 +25,7 @@ function(oldcomps, SEGY=FALSE)
     comps[UPcomps=="LD"] = "I"
     comps[UPcomps=="L"] = "I"
     comps[UPcomps=="A"] = "I"
+    comps[UPcomps=="MIC"] = "I"
 
     
     
