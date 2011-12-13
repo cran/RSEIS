@@ -5,7 +5,7 @@ function(stafile)
   if(is.null(stafile)) { return(NULL) }
   
   if(!is.list(stafile) & is.character(stafile) )
-    {  sta = scan(file=stafile, list(name="", lat=0, lon=0, z=0), quiet=TRUE) }
+    {  sta = scan(file=stafile, list(name="", lat=0, lon=0, z=0), quiet=TRUE, flush=TRUE) }
   else
     {
       sta =stafile

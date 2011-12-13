@@ -12,7 +12,7 @@ STDLAB = NULL, PADDLAB = NULL, TEMPBUT=NULL,
 SHOWONLY = FALSE, CHOP = FALSE, TIT = "",
 pts = FALSE, forcepix = FALSE, pcex=0.7, SCALE = 1, ilocstyle=1,
 velfile = "", stafile = "", LOC = NULL,
-prefilt=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL)
+prefilt=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL, xtickfactor = 1)
 }
 
 \arguments{
@@ -44,7 +44,8 @@ prefilt=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL)
     proto="BU")}
   \item{filters}{ a list of filters for choosfilt, the list consists of
     3 vectors: flo, fhi and type defining the filter choices.}
-
+ \item{xtickfactor}{Factor for multiplying the x-axis tick markers
+   (default=1; for minutes=60, hrs=3600, days=24*3600) }
   
 }
 \details{

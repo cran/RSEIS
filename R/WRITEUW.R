@@ -5,11 +5,11 @@ function(LOC)
     ############ writeUW.Acard(P$LOC)
     
       ID = paste(sep="",
-        formatC(LOC$yr, format="d", wid=4, flag="0"),
-        formatC(LOC$mo, format="d", wid=2, flag="0"), 
-	formatC(LOC$dom, format="d", wid=2, flag="0"), 
-	formatC(LOC$hr, format="d", wid=2,  flag="0"), 
-	formatC(LOC$mi, format="d", wid=2,flag="0"))
+        formatC(LOC$yr, format="d", width=4, flag="0"),
+        formatC(LOC$mo, format="d", width=2, flag="0"), 
+	formatC(LOC$dom, format="d", width=2, flag="0"), 
+	formatC(LOC$hr, format="d", width=2,  flag="0"), 
+	formatC(LOC$mi, format="d", width=2,flag="0"))
 
       L = abs(LOC$lat)
       LAT1 = floor(L)

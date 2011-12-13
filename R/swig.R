@@ -4,7 +4,7 @@
                   CHOP=FALSE, TIT="", pts=FALSE, forcepix=FALSE,
                   pcex=0.7, SCALE=1, ilocstyle=1,
                   velfile="", stafile="", LOC=NULL,
-                  prefilt=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL  )
+                  prefilt=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL, xtickfactor = 1  )
 {
 
 
@@ -19,7 +19,12 @@
   
   if(missing(WIN)) { WIN = NULL }
   if(missing(sel)) { sel = 1:length(GH$dt)}
-  if(missing(ORD)) { ORD = NULL } 
+  if(missing(ORD)) { ORD = NULL }
+
+
+  if(missing(xtickfactor)) { xtickfactor = 1 }
+  
+  
 ###   if(missing(APIX)) { APIX = NULL}  else { if(!exists(deparse(substitute(APIX)))) { print("WARNING: NO WPX"); APIX=NULL} }
 
   if(missing(APIX)) { APIX = NULL}
@@ -42,25 +47,27 @@
   if(missing(CHOP)) { CHOP=FALSE }
   
   if(missing(STDLAB)) {
-    if(exists('STDLAB.DEFAULT'))
-      {
-       STDLAB =  STDLAB.DEFAULT
-      }
-    else
-      {
-      STDLAB = c("REPLOT","DONE", "SELBUT", "PSEL","LocStyle", "ZOOM.out", "ZOOM.in", "LEFT", "RIGHT", "RESTORE",  "Pinfo","WINFO",
-                          "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "UNFILT", "SCALE", "Postscript")}
+  ##  if(exists('STDLAB.DEFAULT'))
+   ##     {
+   ##      STDLAB =  STDLAB.DEFAULT
+  ##      }
+  ##    else
+   ##     {
+      STDLAB = c("REPLOT","DONE", "SELBUT", "PSEL","LocStyle",
+        "ZOOM.out", "ZOOM.in", "LEFT", "RIGHT", "RESTORE",  "Pinfo","WINFO",
+                          "XTR", "SPEC", "SGRAM" ,"WLET",
+        "FILT", "UNFILT", "SCALE", "Postscript")
   }
   
   if(missing(PADDLAB)) {
-    if(exists('PADDLAB.DEFAULT'))
-      {
-        PADDLAB=PADDLAB.DEFAULT
-      }
-    else
-      {
-      PADDLAB=c( "NOPIX", "REPIX")
-    }
+   ##   if(exists('PADDLAB.DEFAULT'))
+    ##    {
+    ##      PADDLAB=PADDLAB.DEFAULT
+     ##   }
+   ##   else
+    ##    {
+      PADDLAB=c("YPIX", "NOPIX", "REPIX")
+    
 
   }
 
@@ -101,7 +108,9 @@
   if(missing(ilocstyle)) { ilocstyle=1 }
   
   
+ 
 
+  
   if(is.logical(sel)) { sel = which(sel) } 
   
   if( is.null(sel) ) { sel = 1:length(GH$dt) }
@@ -386,7 +395,8 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
     srtpix=0,
     polspix=TRUE,
     pcex=1,
-    
+    xtickfactor = xtickfactor,
+ 
     filters = filters,
     lastfilter = lastfilter,
     
@@ -401,14 +411,16 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
 
 
 
-  
+   ##################
+   ################## 
   YNreplot<-function()
     {
       sel = global.vars$sel
+      
       YN = PLOT.SEISN(NH, WIN=global.vars$WIN, dt=NH$dt[sel],
         sel=global.vars$sel, sfact=global.vars$ScaleFACT ,
         notes=NH$KNOTES[sel], COL=global.vars$pcols, TIT=global.vars$TIT,
-        SHIFT=global.vars$ASHIFT , pts=global.vars$pts)
+        SHIFT=global.vars$ASHIFT , pts=global.vars$pts, xtickfactor = global.vars$xtickfactor )
 
       if(!is.na(global.vars$SUBTIT)) title(sub=global.vars$SUBTIT)
 
@@ -428,7 +440,8 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
         }
       invisible(YN)
     }
-
+##################
+   ################## 
   ##################   set the initial data structure (so it can be retrieved)
   
   OLDH=NH
@@ -442,6 +455,9 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
 
 
   ##############   plot the data and set the menu buttons
+
+
+  
   YN = YNreplot()
 
   if(is.numeric(SHOWONLY)) {
@@ -484,7 +500,9 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
   global.vars$zloc = zloc
   global.vars$sloc = sloc
   global.vars$zenclick = zenclick
- 
+
+  
+
 
    ####  print( data.frame(global.vars$filters) )
 

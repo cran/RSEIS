@@ -141,11 +141,11 @@ function(baha, Ysig, dt , clev=0.75,  NLEV=12, zscale=1,  zbound=NULL, col=col, 
 
  #    xtix = c(floor(min(x)),xtix,  floor(max(x)))
     
-    axis(3,tck=.01,at=xtix,lab=FALSE)
+    axis(3,tck=.01,at=xtix,labels=FALSE)
     mtext( side=3,    at=xtix, text=xtix, line=.5)
 
 
-    axis(1,tck=.01,at=xtix,lab=FALSE)
+    axis(1,tck=.01,at=xtix,labels=FALSE)
     mtext( side=1,    at=xtix, text=xtix, line=.25)
 
    

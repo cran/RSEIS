@@ -134,6 +134,12 @@ isign = TRUE
 
       SACH = data.frame(names=sacheadnames, values=ALLHEAD)
 
+##############  this bizarre header is the beginning of the trace (like an offset)
+
+      ###  b stands for beginning?????
+      
+      b = A1[6]
+      
       N = A2[10]
       
         ##   close(zz)
@@ -151,7 +157,8 @@ isign = TRUE
       
       DATIM =   as.numeric(A2[1:4] )
 
-      sec = A2[5]+ A2[6]/1000
+      ##################################  the b is an offset
+      sec = A2[5]+ A2[6]/1000 + b 
       
       thesta1= as.character(A4)
 

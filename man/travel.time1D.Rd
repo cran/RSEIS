@@ -1,5 +1,7 @@
 \name{travel.time1D}
 \alias{travel.time1D}
+\alias{many.time1D}
+
 
 \title{Seismic Travel Time 1D}
 \description{
@@ -7,11 +9,14 @@
 }
 \usage{
 travel.time1D(indelta, inhpz, instaz, inlay, ztop, vel)
+many.time1D(indelta, inhpz, instaz, inlay, ztop, vel)
+
+
 }
 
 \arguments{
   \item{indelta}{distance in KM}
-  \item{inhpz}{depthof hypocenter, km}
+  \item{inhpz}{depth of hypocenter, km}
   \item{instaz}{elevation of station}
   \item{inlay}{number of layers}
   \item{ztop}{vector, tops of layers}
@@ -19,6 +24,13 @@ travel.time1D(indelta, inhpz, instaz, inlay, ztop, vel)
 }
 \details{
   Uses local  1D velocity model, not appropriate for spherical earth.
+  The many.time1D version will take a vector of distances (indelta)
+  and either one station elevation or a vector.
+
+  The station elevation should be referenced to the top of the velocity
+  model, not necessarily sea level.  Usually this is set to zero
+  and a station correction is used to take into account the
+  topographic and other geologic effects.
   
 }
 \value{

@@ -21,7 +21,7 @@
       }
 
     
-    s = complex(real=0, imag=1)*w;
+    s = complex(real=0, imaginary=1)*w;
     h = apolyval(b,s) / apolyval(a,s)
     return(h)
   }

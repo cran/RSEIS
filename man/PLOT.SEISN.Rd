@@ -7,7 +7,7 @@
 }
 \usage{
 PLOT.SEISN(GH, tim = 1, dt = 1, sel =c(1:4) , WIN =c(1,0) , labs
-=c("CE1") , notes = "CE1.V", subnotes=NA, tags ="CE1.V" , sfact = 1, LOG = "", COL = 'red', add = 1, pts = FALSE, YAX = 1, TIT = NULL, SHIFT = NULL, rm.mean = TRUE, UNITS = "volts", MARK = TRUE)
+=c("CE1") , notes = "CE1.V", subnotes=NA, tags ="CE1.V" , sfact = 1, LOG = "", COL = 'red', add = 1, pts = FALSE, YAX = 1, TIT = NULL, SHIFT = NULL, rm.mean = TRUE, UNITS = "volts", MARK = TRUE, xtickfactor = 1)
 }
 
 \arguments{
@@ -39,6 +39,9 @@ PLOT.SEISN(GH, tim = 1, dt = 1, sel =c(1:4) , WIN =c(1,0) , labs
   \item{rm.mean}{remove mean from traces}
   \item{UNITS}{character, units of traces (see labs) }
   \item{MARK}{character marking for earthquake}
+  \item{xtickfactor}{Factor for multiplying the x-axis tick markers (default=1; for minutes=60, hrs=3600, days=24*3600) }
+  
+  
 }
 \details{
  panel of N traces are plotted.  For YAX, default is YAX=1, plot an axis

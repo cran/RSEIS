@@ -1,5 +1,5 @@
 `PLOT.SEISN` <-
-function(GH, tim=1, dt=1,  sel=c(1:4), WIN=c(1,0), labs=c("CE1"), notes="CE1.V", subnotes=NA, tags="CE1.V", sfact=1, LOG="", COL='red', add=1, pts=FALSE, YAX=1, TIT=NULL, SHIFT=NULL , rm.mean=TRUE, UNITS="volts", MARK=TRUE)
+function(GH, tim=1, dt=1,  sel=c(1:4), WIN=c(1,0), labs=c("CE1"), notes="CE1.V", subnotes=NA, tags="CE1.V", sfact=1, LOG="", COL='red', add=1, pts=FALSE, YAX=1, TIT=NULL, SHIFT=NULL , rm.mean=TRUE, UNITS="volts", MARK=TRUE, xtickfactor = 1 )
 {
   ### plot a matrix of seismograms on a simple panel display
   ###   GH = structure of traces
@@ -26,7 +26,9 @@ function(GH, tim=1, dt=1,  sel=c(1:4), WIN=c(1,0), labs=c("CE1"), notes="CE1.V",
   if(missing(rm.mean)) { rm.mean=TRUE }
   if(missing(MARK)) { MARK=TRUE  }
 
+  if(missing(xtickfactor)) { xtickfactor = 1 }
 
+  
   ulen = unlist(lapply(GH$JSTR, length))
   ireftrace = which.max(ulen)
   if(length(ireftrace)<1) return(-1)
@@ -121,8 +123,29 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
       }
 
   
-  ttics = pretty(tim[tflag], n=10 )
-  atics = ttics
+  ##  print(paste("i am here",xtickfactor ))
+  if(xtickfactor==1)
+    {
+      XLAB = "Time(s)"
+      ttics = pretty(tim[tflag], n=10 )
+      atics = ttics
+    }
+  else
+    {
+      
+      ttics = pretty(  tim[tflag]/xtickfactor  , n=10 )
+      atics = ttics
+      ttics = ttics*xtickfactor
+      if(xtickfactor==86400)   XLAB = "Time(Days)"
+      if(xtickfactor==3600)    XLAB = "Time(Hours)"
+      if(xtickfactor==60)      XLAB = "Time(Minutes)"
+      if(xtickfactor>31535999  )      XLAB = "Time(Years)"
+      
+      
+    }
+
+  
+  
   if(LOG=='x')
     {
       periods = c(30,20,10,5,2,1)
@@ -403,7 +426,11 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
         {
           axis(side=3, tck=0.01, at=moretics, labels=FALSE)
         }
-      title(xlab='Time (s)', line=1.4, cex=1.2) 
+      
+      title(xlab=XLAB, line=1.4, cex=1.2)
+
+
+      
     }
   
   u = par("usr")

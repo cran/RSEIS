@@ -155,9 +155,9 @@ function(ADAT, dt=1, ex=seq(0, 100), comp=c(4,5,6), sta="ZZZ", az=0, len=50, shi
     { 
       plot(ex,dat[,i], axes=FALSE, xlab="",ylab="", type="n")
       lines(ex,dat[,i],type="l")
-      axis(1,tck=.03,at=xtics,lab=FALSE)
+      axis(1,tck=.03,at=xtics,labels=FALSE)
       # axis(2, las=1)
-      axis(3,tck=.03,at=xtics,lab=FALSE)
+      axis(3,tck=.03,at=xtics,labels=FALSE)
       box()
       locy=0.8*max(ascd[,i])
 
@@ -196,7 +196,7 @@ function(ADAT, dt=1, ex=seq(0, 100), comp=c(4,5,6), sta="ZZZ", az=0, len=50, shi
 					#   axis(2, las=1)
  #  axis(2, at=c(-60, -30,0,30 , 60), tck=1, las=1, lty=2, lwd=0.5)
 axis(2, at=seq(0,90, by=10), tck=1, las=1, lty=2, lwd=0.5)
-  axis(3,at=xtics,tck=.03,lab=FALSE)
+  axis(3,at=xtics,tck=.03,labels=FALSE)
 
    if(!is.na(picks)) { PLTpicks(picks, labs) }
        
@@ -219,7 +219,7 @@ axis(2, at=seq(0,90, by=10), tck=1, las=1, lty=2, lwd=0.5)
   
   axis(2, las=1)
   axis(1,at=xtics,tck=.03, las=1,   mgp=c(.1,.1,0))
-  axis(3,at=xtics,tck=.03,lab=FALSE)
+  axis(3,at=xtics,tck=.03,labels=FALSE)
   mtext( paste(fileid) , line=0.1)
      if(!is.na(picks)) { PLTpicks(picks, labs) }
    ### plot.ps(ain)
@@ -235,7 +235,7 @@ axis(2, at=seq(0,90, by=10), tck=1, las=1, lty=2, lwd=0.5)
 
  # axis(2, at=c(-150,-100, -50,0,50, 100, 150), tck=1, las=1, lty=2, lwd=0.5)
   axis(2, at=seq(0,180, by=20), tck=1, las=1, lty=2, lwd=0.5)
-  axis(3,at=xtics,tck=.03,lab=FALSE)
+  axis(3,at=xtics,tck=.03,labels=FALSE)
    axis(1,at=xtics,tck=.03, las=1,   mgp=c(.1,.1,0))
 
   AZ=  fmod(az, 180)

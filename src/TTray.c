@@ -940,7 +940,40 @@ L9500:
 /***********************************************************************************/
 /***********************************************************************************/
 
+/** FUNC DEF */ void   CALL_DTTmany(int *n, double *delta, double *hpz, double *staz, int *nlay, double *ztop, double  *vel,
+				 double *dtdr, double *dtdz, double *angle, double *outt)
+{
+  /************  loop call to travel time calculations  *****/
+  /***   delta is a vector of N distance, staz is a vector of N station elevations relative to vel model ********/
 
+  int i, N;
+  double tt;
+  double indelta, inhpz,  instaz;
+  double  ddr, ddz, dang, dist;
+
+  int inlay;
+  
+  inhpz=*hpz;
+  
+  inlay=*nlay;
+
+  N = *n;
+  
+  for(i=0; i<N; i++)
+    {
+      dist = delta[i];
+      instaz= staz[i];
+
+      tt = JMLttlvz(dist, inhpz, instaz, inlay , ztop ,  vel, &ddr, &ddz, &dang);
+
+      dtdr[i]=ddr;
+      dtdz[i]=ddz;
+      angle[i]=dang;
+      outt[i] = tt;
+
+    }
+  return;
+}
 
 
 /** FUNC DEF */ void   CALL_DTT1(double *delta, double *hpz, double *staz, int *nlay, double *ztop, double  *vel,

@@ -112,14 +112,14 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
     ### print(paste(sep=" ",min(x),  max(x), paste(xtix)))
 
   #   xtix = c(floor(min(x)),xtix,  floor(max(x)))
-    axis(3,tck=.01,at=xtix,lab=FALSE)
+    axis(3,tck=.01,at=xtix,labels=FALSE)
     if(!is.na(match(3, AXE)))
       {
 
     mtext( side=3,    at=xtix, text=xtix, line=.5)
   }
 
-    axis(1,tck=.01,at=xtix,lab=FALSE)
+    axis(1,tck=.01,at=xtix,labels=FALSE)
     mtext( side=1,    at=xtix, text=xtix, line=.25)
 
    

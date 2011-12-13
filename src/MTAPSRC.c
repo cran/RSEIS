@@ -976,7 +976,7 @@ blank()
 	long            len;
 	int             ierr;
 	int             m11;
-	DPI = (double) PI;
+	DPI = (double) JMLPI;
 	TWOPI = (double) 2 *DPI;
 
 	anpi = npi;

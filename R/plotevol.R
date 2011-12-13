@@ -97,11 +97,11 @@ plotevol<-function (DEVOL, log = 0, fl = 0, fh = 10, col = col, ylog = FALSE,
         0.01, max(tim) - Tdiff * 0.04, perc + 0.01, lwd = 2)
     xtix = pretty(x, n = 10)
     xtix = xtix[xtix >= min(x) & xtix < max(x)]
-    axis(3, tck = 0.01, at = xtix, lab = FALSE)
+    axis(3, tck = 0.01, at = xtix, labels = FALSE)
     if (!is.na(match(3, AXE))) {
         mtext(side = 3, at = xtix, text = xtix, line = 0.5)
     }
-    axis(1, tck = 0.01, at = xtix, lab = FALSE)
+    axis(1, tck = 0.01, at = xtix, labels = FALSE)
     mtext(side = 1, at = xtix, text = xtix, line = 0.25)
     mtext(side = 1, at = max(x), text = "Time, s", line = 1.5,
         adj = 1)

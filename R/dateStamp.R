@@ -11,11 +11,11 @@ if(is.null(datelist$msec)) { datelist$msec = rep(0, length(datelist$sec) ) }
     msec = floor(msec)
     
     ftime = paste(sep=":", rd$yr,
-      formatC(rd$jd, wid=3 , flag = "0")  ,
-      formatC(rd$hr, wid=2 , flag = "0"),
-      formatC(rd$mi, wid=2 , flag = "0"),
-      formatC(sec, wid=2 , flag = "0"),
-      formatC(msec, wid=3 , flag = "0") )
+      formatC(rd$jd, width=3 , flag = "0")  ,
+      formatC(rd$hr, width=2 , flag = "0"),
+      formatC(rd$mi, width=2 , flag = "0"),
+      formatC(sec, width=2 , flag = "0"),
+      formatC(msec, width=3 , flag = "0") )
     
     return(ftime)
     
