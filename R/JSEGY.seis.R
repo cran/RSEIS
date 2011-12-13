@@ -1,9 +1,9 @@
-`JSEGY.seis` <-function(fnames, Iendian=1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT=FALSE)
+`JSEGY.seis` <-function(fnames, Iendian=1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT=-1)
 {
   ###  get a bunch of segy files from a directory and store in structure
   ####  
   
-  if(missing(PLOT)) { PLOT=FALSE }
+  if(missing(PLOT)) { PLOT=-1 }
   
   if(missing(Iendian)) { Iendian=1 }
   if(missing(HEADONLY)) {HEADONLY=FALSE }
@@ -351,11 +351,16 @@ SEGYall = c(A1, A2, A3, A4, A5, A6, sampleLength,
       GIVE[[i]] = list(fn=fn, sta=thesta,  comp=thecomp, dt=dt, DATTIM=tstart, N=N, units=aunits , coords=coords ,  amp=x, HEAD=SEGYH, IO=list(kind=1, Iendian=Iendian,  BIGLONG=BIGLONG) )
 
       
-      if(PLOT==TRUE)
+      if(PLOT>=0)
         {
           plot(x, type='l', main=paste(sep=' ', thesta, thecomp))
           print("left CLICK once in WINDOW for NEXT TRACE:")
-          locator(1)
+           if(PLOT==0) { locator(1) }
+          else
+            {
+              Sys.sleep(PLOT);
+            }
+          
         }
     }
   invisible(GIVE)

@@ -6,7 +6,7 @@
   This fuction calls c-routines to read in \sQuote{segy}, \sQuote{sac}.
 }
 \usage{
-JGET.seis(fnames, kind = 1, Iendian=1, BIGLONG=FALSE , HEADONLY=FALSE,  PLOT = FALSE)
+JGET.seis(fnames, kind = 1, Iendian=1, BIGLONG=FALSE , HEADONLY=FALSE,  PLOT = -1)
 
 }
 \arguments{
@@ -24,8 +24,8 @@ JGET.seis(fnames, kind = 1, Iendian=1, BIGLONG=FALSE , HEADONLY=FALSE,  PLOT = F
   }
   
   
-  \item{PLOT}{logical, for if the traces should be plotted.  This is
-  interactive and can be shut off for large data sets.}
+  \item{PLOT}{integer, <0 no plot; 0 
+  interactive; >0 number of seconds to sleep}
 }
 \value{
   List containing the seismic data and header information.
@@ -120,24 +120,24 @@ JGET.seis(fnames, kind = 1, Iendian=1, BIGLONG=FALSE , HEADONLY=FALSE,  PLOT = F
 
 Lname = list.files(path='/data/wadati/bourbon/LaurelCanNC/R005.01' , pattern="08.005.01.41.23.9024", full.names=TRUE)
 
-S1  = JGET.seis(Lname, kind = 1, PLOT = FALSE)
+S1  = JGET.seis(Lname, kind = 1, PLOT = -1)
 
 ###   for data created on UNIX (SUN) but read on linux:
 
-S1  = JGET.seis(Lname, kind = 1, Iendian="swap", BIGLONG=FALSE, PLOT = FALSE)
+S1  = JGET.seis(Lname, kind = 1, Iendian="swap", BIGLONG=FALSE, PLOT = -1)
 
 ###   for data created on linux (32 bit)  but read on linux 64 bit:
 
-S1  = JGET.seis(Lname, kind = 1, Iendian="little", BIGLONG=FALSE, PLOT = FALSE)
+S1  = JGET.seis(Lname, kind = 1, Iendian="little", BIGLONG=FALSE, PLOT = -1)
 
 ###   for SEGY data created on linux (64 bit)  but read on linux 32 bit:
 
-S1  = JGET.seis(Lname, kind = 1, Iendian="little", BIGLONG=TRUE, PLOT = FALSE)
+S1  = JGET.seis(Lname, kind = 1, Iendian="little", BIGLONG=TRUE, PLOT = -1)
 
 
 ###   for SAC data created on MAC-OS (64 bit)  but read on linux 32 bit:
 
-S1  = JGET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = FALSE)
+S1  = JGET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = -1)
 
 
 ##################   
@@ -150,7 +150,7 @@ S1  = JGET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = FALSE)
 
 ####  prepare the data for further processing:
 
-S1  = JGET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = FALSE)
+S1  = JGET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = -1)
 
  GH=prepSEIS(S1)
 ####   plot the data, and interact with the data

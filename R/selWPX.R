@@ -1,7 +1,7 @@
-`selAPX` <-
+`selWPX` <-
 function(APX, ista=NULL , icomp=c("V", "N", "E") )
   {
-    ###############   select from an APX WPX or APIX list a subset
+    ###############   select from WPX
     if(missing(icomp)) { icomp=NULL  }
 
  

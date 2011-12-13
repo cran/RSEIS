@@ -51,8 +51,16 @@ function(GH, sel=sel, FRWD=8,  BKWD=8,  sbef=1, saft=6, DFRWD=.5,  DBKWD=.5, thr
       nam4 = paste("PP",M, sep="")
       
 
+pik1 = pickit(g , deltat=deltat,  FRWD=FRWD,  BKWD=BKWD,sbef=sbef, saft=saft,
+                          thresh=thresh, Tthresh2 =  Tthresh2, flo=flo, fhi=fhi, stretch=stretch, Kmin=Kmin)
+
+      
       assign(nam4, pickit(g , deltat=deltat,  FRWD=FRWD,  BKWD=BKWD,sbef=sbef, saft=saft,
                           thresh=thresh, Tthresh2 =  Tthresh2, flo=flo, fhi=fhi, stretch=stretch, Kmin=Kmin))
+
+
+
+      
       v = get(nam4)
       v$STNS = GH$STNS[M3]
       v$COMPS = GH$COMPS[M3]

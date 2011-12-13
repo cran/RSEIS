@@ -19,6 +19,7 @@ brune.doom(amp, dt = 1, f1 = 0.01, f2 = 15, PLOTB = FALSE, tit = "")
 }
 
 \value{
+  List:
 \item{ SUCCESS}{(0,1) for success or failure of modeling}
  \item{ WARN }{flag = "OK"}
   \item{tstar0}{ tstar0}
@@ -26,6 +27,8 @@ brune.doom(amp, dt = 1, f1 = 0.01, f2 = 15, PLOTB = FALSE, tit = "")
   \item{omega0}{omega0}
   \item{fc}{ fc}
   \item{alpha}{alpha}
+   \item{chisqrd}{chi-squared misfit over region of fitting}
+
    
 }
 \references{

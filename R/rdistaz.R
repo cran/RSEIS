@@ -1,4 +1,4 @@
-`distaz` <-
+`rdistaz` <-
   function( olat, olon, tlat, tlon)
 {
 #### *   This subroutine will compute the distance, azimuth, and back

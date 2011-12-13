@@ -35,7 +35,7 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 
 fn = '/home/lees/taurus_2050_20100302_100000_BHE.sac'
 
-J  = JGET.seis(fn,kind=2,BIGLONG=FALSE,HEADONLY=FALSE,Iendian=3,PLOT=TRUE)
+J  = JGET.seis(fn,kind=2,BIGLONG=FALSE,HEADONLY=FALSE,Iendian=3,PLOT=0)
 
 plotJGET(J)
 

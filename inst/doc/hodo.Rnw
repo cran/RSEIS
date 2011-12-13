@@ -74,7 +74,7 @@ on three components.   Some stations are too noise for particle motion analysis.
 <<fig=FALSE, echo=TRUE, results=hide>>=
 data(GH)
 
-PICK.GEN(GH, SHOWONLY=TRUE)
+swig(GH, SHOWONLY=TRUE)
 
 @ 
 
@@ -113,7 +113,7 @@ isphase = which(GH$pickfile$STAS$name==thesta & GH$pickfile$STAS$phase=="S" )
 
 lat=GH$pickfile$STAS$lat[ipphase]
 lon = GH$pickfile$STAS$lon[ipphase]
-DAZ = distaz(lat, lon,   GH$pickfile$LOC$lat,GH$pickfile$LOC$lon )
+DAZ = rdistaz(lat, lon,   GH$pickfile$LOC$lat,GH$pickfile$LOC$lon )
  rbaz = grotseis(DAZ$baz, flip=FALSE)
 
 @ 

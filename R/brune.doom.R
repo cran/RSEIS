@@ -148,6 +148,7 @@ function(amp, dt=1, f1=0.01, f2=15,  PLOTB=FALSE ,  tit="")
   xc$omega0 = jmod$omega0;
   xc$fc = jmod$fc;
   xc$alpha= jmod$alpha
+  xc$chisqrd = jmod$chisqrd
    
   return(xc)
   

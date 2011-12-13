@@ -89,7 +89,7 @@ swig(PH1, STDLAB = STDLAB)
 \dontrun{
 ######  this example shows how to read data from SEGY files using Rsac
 #####  and entering RSEIS
-KG4 = JGET.seis(c(fnames), kind = 1, PLOT = FALSE)
+KG4 = JGET.seis(c(fnames), kind = 1, PLOT = -1)
 
 KH=prepSEIS(KG4)
 

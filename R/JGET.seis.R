@@ -1,10 +1,10 @@
 `JGET.seis` <-
-function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=FALSE)
+function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1)
 {
   ###  get a bunch of AH files from a directory and store in structure
   ####  kind 1=segy, 2=sac, 3=AH, kind=0->R format
   
-  if(missing(PLOT)) { PLOT=FALSE }
+  if(missing(PLOT)) { PLOT=-1 }
   if(missing(kind)) { kind=1 }
   if(missing(HEADONLY)) {HEADONLY=FALSE }
   if(missing(Iendian)) { Iendian=1 }

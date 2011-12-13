@@ -15,6 +15,10 @@
 \alias{FILLPIX}
 \alias{RIDPIX}
 \alias{SEEPIX}
+\alias{ROT.RT}
+\alias{JustV}
+\alias{JustE}
+\alias{JustN}
 
 \title{PICK Buttons for swig
 }
@@ -37,7 +41,10 @@ Pdown(nh, g)
 FILLPIX(nh, g)
 RIDPIX(nh, g)
 SEEPIX(nh, g)
-
+ROT.RT(nh, g)
+JustV(nh, g)
+JustE(nh, g)
+JustN(nh, g)
 
 }
 \arguments{
@@ -74,6 +81,11 @@ SEEPIX(nh, g)
     \item{FILLPIX}{Fill the pick from bottom to top of panel}
     \item{RIDPIX}{remove pick}
     \item{SEEPIX}{print current picks to screen}
+    \item{ROT.RT}{Rotate to radial and transverse (need event and
+      station locations}
+    \item{JustV}{Display only vertical components}
+    \item{JustE}{Display only east components}
+    \item{JustN}{Display only north components}
 
 
 }

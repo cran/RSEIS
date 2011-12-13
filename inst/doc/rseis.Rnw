@@ -406,7 +406,7 @@ plxy = "xy"
       axis(1)
       box()
   ##     L = locator()
- ## DUMPLOC(L)
+ ## rDUMPLOC(L)
   
 L=list()
 L$x=c(0.0939105803154482,0.183351679178275,0.350333785192083)
@@ -457,7 +457,7 @@ plxy = "xy"
       box()
       
 ##   L = locator()
-##   DUMPLOC(L)
+##   rDUMPLOC(L)
 
 u = par("usr")
 L=list()

@@ -9,7 +9,7 @@
 ###  what is in the header of the seismic data
 
 
-  ####  in some situation the chanel name and the station name are not embedded in the
+  ####  in some situations the chanel name and the station name are not embedded in the
   ####   file headers - in that case use the token from the file name
 
   if(missing(chtoken)) { chtoken=NULL }
@@ -85,7 +85,7 @@
    if(verbose) print(fn2)
 
   
-  KG4 = JGET.seis(fn2, kind = kind,  Iendian=Iendian, BIGLONG= BIGLONG, HEADONLY=FALSE ,PLOT = FALSE)
+  KG4 = JGET.seis(fn2, kind = kind,  Iendian=Iendian, BIGLONG= BIGLONG, HEADONLY=FALSE ,PLOT = -1)
 
 
  ## here we must insure that the channel names are unique

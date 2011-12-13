@@ -1,4 +1,4 @@
-`DUMPLOC`<-function(zloc, dig=12)
+`rDUMPLOC`<-function(zloc, dig=12)
   {
 	if(missing(dig)) dig =12
 

@@ -19,26 +19,7 @@ pickhandler<-function(i1=1, ppick=0, kzap="Y", err=NA, res=0, ycol=rgb(0,0,1) , 
     
     if(missing(WPX))
       {
-        WPX = list(
-          tag="",
-          name="",
-          comp="",
-          c3="",
-          phase="",
-          err=0,
-          pol=0,
-          flg=0,
-          res=0,
-          yr=0,
-          mo=0,
-          dom=0,
-          jd=0,
-          hr=0,
-          mi=0,
-          sec=0,
-          col='red',
-          onoff =0  )
-        WPX = data.frame(WPX, stringsAsFactors = FALSE)
+        WPX = cleanWPX()
       }
     
     ## print(i1)
@@ -56,6 +37,8 @@ pickhandler<-function(i1=1, ppick=0, kzap="Y", err=NA, res=0, ycol=rgb(0,0,1) , 
     WPX$pol[NPX]=pol
     WPX$flg[NPX]=flg
     WPX$res[NPX]= res
+    WPX$dur[NPX]= res
+
     WPX$yr[NPX]=NH$info$yr[i1]
     WPX$mo[NPX]= NH$info$mo[i1]
     WPX$dom[NPX]=NH$info$dom[i1]

@@ -283,7 +283,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
             
             whyat = min(PE$y)+(diff(range(PE$y)))*(zloc$y[1:(Nclick-1)]-min(PE$why))/(diff(range(PE$why)))
             exat  = min(PE$x)+(diff(range(PE$x)))*(zloc$x[1:(Nclick-1)]-min(PE$x))/(diff(range(PE$x)))
-            DUMPLOC(list(x=exat, y=whyat))
+            rDUMPLOC(list(x=exat, y=whyat))
              zloc = list(x=NULL, y=NULL) 
             
            ###  print(exat)

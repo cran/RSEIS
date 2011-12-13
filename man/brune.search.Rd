@@ -18,6 +18,7 @@ brune.search(infreq, inspec, f1, f2, omega0, fcorn, tstar0, gamma)
   \item{fcorn}{ initial starting corner frequency}
   \item{tstar0}{initial starting t* }
   \item{gamma}{initial starting gamma}
+  
 }
 \details{
  see paper by Lees and Lindley
@@ -32,6 +33,8 @@ brune.search(infreq, inspec, f1, f2, omega0, fcorn, tstar0, gamma)
   \item{gamma}{ gamma}
   
   \item{alpha}{alpha parameter}
+  \item{chisqrd}{chi-squared misfit over region of fitting}
+
   
 }
 \references{Lees and Lindley}

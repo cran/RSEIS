@@ -37,6 +37,8 @@ function(ay, deltat=0.008 ,  MED=225, FRWD=8,  BKWD=8,  sbef=1, saft=6, thresh=2
 
     
     A = STLTcurve(fy, dt=deltat, fwlen = LEN1,  bwlen  = LEN2, stretch=stretch, MED=MED, PLOT=FALSE)
+
+    
 ###        A = STLTcurve(fy, dt=deltat, fwlen = LEN1,  bwlen  = LEN2, PLOT=TRUE)
 
 
@@ -45,7 +47,8 @@ function(ay, deltat=0.008 ,  MED=225, FRWD=8,  BKWD=8,  sbef=1, saft=6, thresh=2
        argh = jstats(A$rat)
      stthresh = argh$bstats[5]
   
-    if(thresh<2*stthresh) { thresh = 2*stthresh }
+  ###   if(thresh<2*stthresh) { thresh = 2*stthresh }
+    if(thresh<stthresh) { thresh = stthresh }
   
     J = Thresh.J(A$rat,thresh)
 
@@ -67,7 +70,7 @@ function(ay, deltat=0.008 ,  MED=225, FRWD=8,  BKWD=8,  sbef=1, saft=6, thresh=2
     ##  thresh drops below 1.01 then we are picking noise.
     ##  the min number of picks (7) should be a parameter to adjust to dataset
 
-  if(TRUE)
+  if(FALSE)
     {
     while(length(Z)<Kmin & thresh>threshbot )
       {
@@ -94,5 +97,7 @@ function(ay, deltat=0.008 ,  MED=225, FRWD=8,  BKWD=8,  sbef=1, saft=6, thresh=2
     a2 = x[J$L]
 
     return(list(RAT=A$rat, x=x, ay=ay, fy=fy, deltat=deltat, J=J$J , Z=Z, a1=a1, a2=a2, thresh=thresh, Tthresh2=Tthresh2, Kmin=Kmin) )
+
+    
   }
 

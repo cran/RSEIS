@@ -1,5 +1,5 @@
-\name{DUMPLOC}
-\alias{DUMPLOC}
+\name{rDUMPLOC}
+\alias{rDUMPLOC}
 
 \title{DUMP vectors to screen in list format}
 \description{
@@ -7,7 +7,7 @@
   has been executed.
 }
 \usage{
-DUMPLOC(zloc, dig = 12)
+rDUMPLOC(zloc, dig = 12)
 }
 
 \arguments{
@@ -32,7 +32,7 @@ G$y=c(-0.72392,-0.62145,-0.52135,-0.42599,-0.33774,-0.25896,-0.20759,
 0.16480, 0.21487, 0.27001, 0.32895, 0.39044, 0.45319)
 
 g = G
-DUMPLOC(g, dig = 5)
+rDUMPLOC(g, dig = 5)
 
 
 }

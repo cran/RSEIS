@@ -39,7 +39,7 @@ data(GH)
 m = match( GH$STNS,    GH$stafile$name)
 LATS = GH$stafile$lat[m]
 LONS = GH$stafile$lon[m]
-dees = distaz( GH$pickfile$LOC$lat, GH$pickfile$LOC$lon, LATS, LONS)
+dees = rdistaz( GH$pickfile$LOC$lat, GH$pickfile$LOC$lon, LATS, LONS)
 
 sel = which(GH$COMPS=="V")
 sel = sel[order(dees$dist[sel])]

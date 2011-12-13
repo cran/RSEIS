@@ -239,13 +239,8 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
 
   if(is.null(APIX)==TRUE)
     {
+      WPX = cleanWPX()
       
-       WPX = list(  tag='99999',   name='99999',   comp='9',  c3='XX9',
-         phase="X",  err=0,  pol=0,    flg=0, res=0, yr=0,
-        mo=0,       dom=0,        jd=0,        hr=0,        mi=0,
-        sec=0,      col='red',  onoff =-1  )
-
-      WPX = data.frame(WPX, stringsAsFactors = FALSE)
       NPX = 0
     }
   else
@@ -253,7 +248,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
       ## print("reading in pickfile")
       ##  
       WPX = APIX
-      WPX = data.frame(WPX, stringsAsFactors = FALSE)
+      ##  WPX = data.frame(WPX, stringsAsFactors = FALSE)
       NPX = length(WPX$sec)
 
      ##  print(paste(sep=' ', "read in pickfile",NPX))
@@ -838,18 +833,32 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
   but=BLABS[K[Nclick]]
 
   WPX = global.vars$WPX
-  ##############  clean off undesirable picks
-  whirid = which( WPX$name==NA & WPX$comp==NA & WPX$phase==NA )
+
+
+
+  if(any(is.na(WPX$name)))
+    {
+      idpx = which(is.na(WPX$name))
+      
+      WPX =  deleteWPX(WPX, idpx)
+    }
+
+
 
   
-  WPX = WPX[-whirid, ]
+  ##############  clean off undesirable picks
+ ##### whirid = which( WPX$name==NA & WPX$comp==NA & WPX$phase==NA )
 
-  whirid = which( WPX$name=='99999' & WPX$comp=='9' & WPX$phase=="X" )
+  
+#####  WPX = deleteWPX(WPX, whirid)
 
-  WPX = WPX[-whirid, ]
+#####  whirid = which( WPX$name=='99999' & WPX$comp=='9' & WPX$phase=="X" )
 
+#####  WPX = deleteWPX(WPX, whirid)
 
-  print("returning from swig")
+  
+
+ #####  print("returning from swig")
   
   RETP = list(but=but, sloc=sloc, WPX=WPX, BRUNINFO=BRUNINFO, DETLINFO=DETLINFO,  mark=mark, PUSHED=PushK, g=global.vars)
   

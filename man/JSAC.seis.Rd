@@ -7,8 +7,8 @@
 \description{Read SEGY/SAC format binary data
 }
 \usage{
-JSAC.seis(fnames, Iendian = 1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT = FALSE)
-JSEGY.seis(fnames, Iendian = 1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT = FALSE)
+JSAC.seis(fnames, Iendian = 1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT = -1)
+JSEGY.seis(fnames, Iendian = 1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT = -1)
 
 }
 \arguments{
@@ -24,7 +24,8 @@ JSEGY.seis(fnames, Iendian = 1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT = FALSE)
 }
 
 
-  \item{PLOT}{logical, whether to plot the data after reading in
+  \item{PLOT}{integer, <0 no plot; 0 
+  interactive; >0 number of seconds to sleep
   }
   
 }
@@ -111,14 +112,14 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 ####  this will return a list of traces
 Lname = list.files(path='/data/wadati/bourbon/LaurelCanNC/R005.01' , pattern="08.005.01.41.23.9024", full.names=TRUE)
 
-S1  = JSAC.seis(Lname, Iendian = 1, PLOT = FALSE)
+S1  = JSAC.seis(Lname, Iendian = 1, PLOT = -1)
 
 
 #####################   from a data base example: this will return one
 #####                    trace header
 f1 = DB$fn[200]
 
-j1 = JSAC.seis(f1, Iendian=1, HEADONLY=TRUE , BIGLONG=FALSE, PLOT=FALSE)
+j1 = JSAC.seis(f1, Iendian=1, HEADONLY=TRUE , BIGLONG=FALSE, PLOT=-1)
 
 print( j1[[1]]$HEAD )
 
@@ -128,7 +129,7 @@ print( j1[[1]]$HEAD )
 dir = "/data/wadati/soju/SEISMIC_DATA/Reventador2005/rev05/SEGY/R251.01"
 lf = list.files(path=dir, pat="05.251", full.names=TRUE)
 f1 = lf[1]
-j1 = JSEGY.seis(f1, Iendian=1, HEADONLY=TRUE , BIGLONG=FALSE, PLOT=FALSE)
+j1 = JSEGY.seis(f1, Iendian=1, HEADONLY=TRUE , BIGLONG=FALSE, PLOT=-1)
 
 
 print( j1[[1]]$HEAD )

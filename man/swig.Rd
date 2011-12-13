@@ -1,7 +1,7 @@
 \name{swig}
 \alias{swig}
-\alias{PICK.GEN}
-\title{Seismic Analysis }
+
+\title{Seismic Wiggle Analysis }
 \description{
 Main Interactive Program for plotting and analyzing seismic waveform data.
 }

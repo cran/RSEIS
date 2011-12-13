@@ -30,7 +30,7 @@ convert2Rseis<-function(FLS, NEWDIR=".", kind = 1, Iendian="little" , BIGLONG=FA
 
         f1 = FLS[i]
 
-        a = JGET.seis(f1, kind = kind, Iendian=Iendian, BIGLONG=BIGLONG , PLOT = FALSE)
+        a = JGET.seis(f1, kind = kind, Iendian=Iendian, BIGLONG=BIGLONG , PLOT = -1)
 
         DAT = a[[1]]
 

@@ -1,9 +1,9 @@
-`JSAC.seis` <-function(fnames, Iendian=1, HEADONLY=FALSE , BIGLONG=TRUE, PLOT=FALSE)
+`JSAC.seis` <-function(fnames, Iendian=1, HEADONLY=FALSE , BIGLONG=TRUE, PLOT=-1)
 {
   ###  get a bunch of sac files from a directory and store in structure
   ####  
   
-  if(missing(PLOT)) { PLOT=FALSE }
+  if(missing(PLOT)) { PLOT=-1 }
   
   if(missing(Iendian)) { Iendian=1 }
   if(missing(HEADONLY)) {HEADONLY=FALSE }
@@ -201,11 +201,15 @@ isign = TRUE
       GIVE[[i]] = list(fn=fn, sta=thesta,  comp=thecomp, dt=dt, DATTIM=tstart, N=N, units=aunits , amp=x, HEAD=SACH, IO=list(kind=2, Iendian=Iendian,  BIGLONG=BIGLONG)   )
 
       
-      if(PLOT==TRUE)
+      if(PLOT>=0)
         {
           plot(x, type='l', main=paste(sep=' ', thesta, thecomp))
           print("left CLICK in WINDOW for NEXT TRACE:")
-          locator(1)
+          if(PLOT==0) { locator(1) }
+          else
+            {
+              Sys.sleep(PLOT);
+            }
         }
     }
   invisible(GIVE)

@@ -136,7 +136,7 @@ function(Xamp, DT=0.008, STAMP=NULL)
                 j = j+1
                 
               
-            DUMPLOC(list(x=MYx, y=MYy))
+            rDUMPLOC(list(x=MYx, y=MYy))
             
             print(paste(sep=" ", "MAX=", MAT[w], "MIN=", MAT[wmin]))
             
@@ -296,7 +296,7 @@ function(Xamp, DT=0.008, STAMP=NULL)
           {  
             whyat = min(PE$y)+(diff(range(PE$y)))*(zloc$y[1:(zenclick-1)]-min(PE$why))/(diff(range(PE$why)))
             exat  = min(PE$x)+(diff(range(PE$x)))*(zloc$x[1:(zenclick-1)]-min(PE$x))/(diff(range(PE$x)))
-            DUMPLOC(list(x=exat, y=whyat))
+            rDUMPLOC(list(x=exat, y=whyat))
              zloc = list(x=NULL, y=NULL) 
           }
 
@@ -345,7 +345,7 @@ function(Xamp, DT=0.008, STAMP=NULL)
 
             PEAXBoxes = list(x=MYx, y=MYy)
             
-            DUMPLOC(list(x=MYx, y=MYy))
+            rDUMPLOC(list(x=MYx, y=MYy))
              zloc = list(x=NULL, y=NULL)
             
           }

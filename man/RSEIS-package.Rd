@@ -4,8 +4,7 @@
 \docType{package}
 \title{
 Seismic Analysis and Display
-}
-\description{
+}\description{
   Multiple interactive codes to analize seismic data, via, spectrum
   analysis, wavelet transforms, particle motion, hodograms.
 }
@@ -153,8 +152,8 @@ Maintainer:Jonathan M. Lees<jonathan.lees.edu>
       contwlet
       deconinst
       detail.pick
-      distaz
-      DUMPLOC
+      rdistaz
+      rDUMPLOC
       EmptyPickfile
       ETECTG
       finteg

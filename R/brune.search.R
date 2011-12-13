@@ -32,7 +32,20 @@ dstar = c(tst1, tst2,0)
 gam3 =  sear[[6]]
 tstar3 =  sear[[8]]
 
-return(list(omega0=omega0,tstar0=tstar3[3]  , fc=fcorn,  alpha=0, gamma=gam3[3]) )
+bruney = sear[[2]]
+
+if(all(bruney>0) & all(y>0))
+  {
+    chisqrd = sum ( (log10(y) - log10(bruney))*(log10(y) - log10(bruney)) )
+    
+  }
+else
+  {
+    chisqrd =NA
+    
+  }
+
+return(list(omega0=omega0,tstar0=tstar3[3]  , fc=fcorn,  alpha=0, gamma=gam3[3], chisqrd=chisqrd ) )
 
 }
 

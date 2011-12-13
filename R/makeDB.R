@@ -5,8 +5,23 @@ makeDB<-function(path, pattern="R", kind =1, Iendian=1, BIGLONG=FALSE)
       if(missing(Iendian)) { Iendian=1 }
        if(missing(BIGLONG)) { BIGLONG=TRUE}
 
-    LF1 = list.files(path =path, pattern=pattern)
+    if(is.na(pattern) | is.null(pattern)  )
+      {
+        LF1 = list.files(path=path)
+        NDIRS = 1
+      }
+    else
+      {
 
+        LF1 = list.files(path=path, pattern=pattern)
+        NDIRS = length(LF1)
+
+      }
+
+ 
+    
+    
+    
     ADB = list(fn="", 
       yr=0,
       jd=0,
@@ -21,7 +36,7 @@ makeDB<-function(path, pattern="R", kind =1, Iendian=1, BIGLONG=FALSE)
       origyr=0)
 
     N = 0
-    for(i in 1:length(LF1))
+    for(i in 1:NDIRS)
       {
         LF2 = list.files(path =paste(sep="/", path, LF1[i]) , full.names=TRUE, recursive = TRUE)
 
@@ -30,7 +45,7 @@ makeDB<-function(path, pattern="R", kind =1, Iendian=1, BIGLONG=FALSE)
         
         ##   OLD: sinfo  =  getseisinfo(LF2, kind=kind)
 
-        sinfo  = JGET.seis(LF2, kind=kind, Iendian=Iendian, BIGLONG=BIGLONG , HEADONLY=TRUE , PLOT=FALSE)
+        sinfo  = JGET.seis(LF2, kind=kind, Iendian=Iendian, BIGLONG=BIGLONG , HEADONLY=TRUE , PLOT=-1)
         
         for(j in 1:length(sinfo))
           {

@@ -1,54 +1,4 @@
-YPIX<-function(nh, g)
-  {
-    if(g$zenclick>=2)
-      {
-        zappa = match(g$KLICK, g$BLABS)
-        col = g$colpix[which(g$pnos=="YPIX")]
-        kix = legitpix(g$sel, g$zloc, g$zenclick)
-        ypick =  kix$ypick
-        ppick = kix$ppick
 
-############   proceed only if have legitimate picks
-        if(length(ypick)>0)
-          {
-            azap = "YPIX"
-            kzap = "Y"
-            ipick = g$sel[ypick]
-            
-#### print(paste(sep=" ", "DUMP YPIX", zappa, col, azap, kzap , ppick , ypick,ipick)) 
-            
-            for(iz in 1:length(ypick))
-              {
-                g$NPX = g$NPX+1
-                Nn = names(g$WPX)
-               g$WPX =rbind(g$WPX, rep(NA, length(Nn)))
-                
-                i1 = ipick[iz]
-                i2 = ypick[iz]
-
-                ycol = g$colpix[zappa]
-                if(is.na(ycol)) { ycol = rgb(0,0,1) }
-                err = NA
-                res = 0
-                g$WPX =  pickhandler(i1=i1, ppick=ppick[iz], kzap=kzap, res=res, err=NA, ycol=ycol, onoff=2, NPX=g$NPX, WPX=g$WPX, NH=nh)
-               ##  g$ADDPIX =  pickhandler(i1=i1, ppick=ppick[iz], kzap=kzap, res=res, err=NA, ycol=ycol, NPX=g$NPX, WPX=g$WPX, NH=nh)
-                g$NADDPIX = g$NADDPIX+1
-                
-                ## 
-              }
-###PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE, FORCE=forcepix, cex=pcex)
-            g$PHASE = unique( c(g$PHASE, "Y") )
-          }
-      }
-
-    ## print(g$PHASE)
-
-    
-    g$zloc = list(x=NULL, y=NULL) 
-    g$action = "replot"
-    invisible(list(NH=nh, global.vars=g))
-  }
-############################################################
 WPIX<-function(nh, g)
   {
     #####   WPIX are introduced as pairs of pix
@@ -284,10 +234,10 @@ PickWin<-function(nh, g)
 
                 }
               
-              PICKLAB = c("DONE", "ZOOM.out","ZOOM.in", "REFRESH", "RESTORE",
+              PICKLAB = c("DONE",  "ZOOM.out","ZOOM.in", "REFRESH", "RESTORE",
                 "FILT", "UNFILT", "Pinfo", "WINFO", "ROT.RT")
 
-              PLAB=c( "Ppic", "Spic", "Apic",  "Pup", "Pdown", "Pnil", "AUTOP",
+              PLAB=c( "Ppic", "Spic",  "Apic",  "Pup", "Pdown", "Pnil", "AUTOP",
                 "NOPIX", "EDIX", "REPIX")
 
               stit = nh$STNS[ma[1]]
@@ -317,7 +267,7 @@ PickWin<-function(nh, g)
               ##
 ####    print(cbind(WPX$name, WPX$comp, WPX$phase, WPX$onoff))
               g$NPX = length(g$WPX$name)
-              print(paste(sep=' ', "DONE with PICKWIN", g$NPX))
+####                print(paste(sep=' ', "DONE with PICKWIN", g$NPX))
               dev.set( g$MAINdev)
 
               
@@ -335,7 +285,7 @@ pADDPIX<-function(nh, g, phase)
   {
    zappa = match(g$KLICK, g$PADDLAB)
     azap = g$PADDLAB[zappa]
-    print(paste(sep=" ", "My PICKIN", azap, zappa))
+###     print(paste(sep=" ", "My PICKIN", azap, zappa))
 
     kix = legitpix(g$sel, g$zloc, g$zenclick)
     ypick =  kix$ypick
@@ -385,64 +335,54 @@ pADDPIX<-function(nh, g, phase)
     
     iseek = which(g$WPX$phase==phase & g$WPX$name==nh$STNS[ipick] &  g$WPX$comp==nh$COMPS[ipick])
 
+####  print(paste(sep=" ", phase, nh$STNS[ipick], nh$COMPS[ipick], "ISEEK",  iseek, length(iseek) ))
+
+   onepx = cleanWPX()
+
+   onepx$phase=phase
    
-###  print(paste(sep=" ", "ISEEK",  iseek, length(iseek) ))
+   onepx$yr=nh$info$yr[ipick]
+   onepx$mo= nh$info$mo[ipick]
+   onepx$dom=nh$info$dom[ipick]
+   onepx$jd=nh$info$jd[ipick]
+   onepx$hr= nh$info$hr[ipick]
+   onepx$mi=nh$info$mi[ipick]
+   onepx$col=g$specpix.col[4]
+   onepx$sec=asec
+   onepx$err=err
+   onepx$onoff = 1
+   
+   
+   if(length(iseek)==1)
+     {
+##############   replace the pick with the current pick
+       wNPX = iseek
+       onepx$tag = g$WPX$tag[wNPX]
+       onepx$name = g$WPX$name[wNPX]
+       onepx$comp = g$WPX$comp[wNPX]
+       onepx$c3 = g$WPX$c3[wNPX]
 
+       g$WPX =  replaceWPX(g$WPX, onepx, wNPX)
+       
+     }
+   else
+     {
+       onepx$name=nh$STNS[ipick]
+       onepx$comp=nh$COMPS[ipick]
+       onepx$c3=nh$OCOMPS[ipick]
+       onepx$tag=paste(sep=".",nh$STNS[ipick],  nh$OCOMPS[ipick])
+###############   add a new pick to WPX list
+       g$WPX = catWPX(g$WPX,onepx )
+       }
 
 
    
-    
-    if(length(iseek)==1)
-      {
-        wNPX = iseek
-        
-        g$WPX$yr[wNPX]=nh$info$yr[ipick]
-        g$WPX$mo[wNPX]= nh$info$mo[ipick]
-        g$WPX$dom[wNPX]=nh$info$dom[ipick]
-        g$WPX$jd[wNPX]=nh$info$jd[ipick]
-        g$WPX$hr[wNPX]= nh$info$hr[ipick]
-        g$WPX$mi[wNPX]=nh$info$mi[ipick]
-        g$WPX$col[wNPX]=g$specpix.col[4]
-        g$WPX$sec[wNPX]=asec
-        g$WPX$err[wNPX]=err
-        g$WPX$onoff[wNPX] = 1 
-      }
-    else
-      {
-        g$NPX = g$NPX+1
-        wNPX  = g$NPX
-####  tag = paste(sep=".",nh$STNS[ipick],  nh$OCOMPS[ipick])
-####  print(tag)
-        Nn = names(g$WPX)
-        g$WPX =rbind(g$WPX, rep(NA, length(Nn)))
-        
-#########   a 
-        g$WPX$tag[wNPX]=paste(sep=".",nh$STNS[ipick],  nh$OCOMPS[ipick])
-        
-        g$WPX$name[wNPX]=nh$STNS[ipick]
-        g$WPX$comp[wNPX]=nh$COMPS[ipick]
-        g$WPX$c3[wNPX]=nh$OCOMPS[ipick]
-        g$WPX$phase[wNPX]=phase
-        
-        g$WPX$yr[wNPX]=nh$info$yr[ipick]
-        g$WPX$mo[wNPX]= nh$info$mo[ipick]
-        g$WPX$dom[wNPX]=nh$info$dom[ipick]
-        g$WPX$jd[wNPX]=nh$info$jd[ipick]
-        g$WPX$hr[wNPX]= nh$info$hr[ipick]
-        g$WPX$mi[wNPX]=nh$info$mi[ipick]
-        g$WPX$sec[wNPX]=asec
-        g$WPX$col[wNPX]=g$specpix.col[4]
-        g$WPX$onoff[wNPX] = 1 
-        g$WPX$err[wNPX]=err
-        g$WPX$flg[wNPX] = 0
-        g$WPX$res[wNPX] = NA
-
-      }
-    
-    
-    
-    
-    g$NADDPIX = 3
+   g$NPX = length(g$WPX$sec)
+             
+   g$PHASE = unique( c(g$PHASE, "Y") )
+   
+   
+   g$NADDPIX = 3
 ###
 
     
@@ -491,7 +431,7 @@ POLSWITCH<-function(nh, g, dir)
 
     zappa = match(g$KLICK, g$PADDLAB)
     azap = g$PADDLAB[zappa]
-    print(paste(sep=" ", "My PICK", dir, azap, zappa))
+###     print(paste(sep=" ", "My PICK", dir, azap, zappa))
 
     kix = legitpix(g$sel, g$zloc, g$zenclick)
     ypick =  kix$ypick
@@ -517,6 +457,12 @@ POLSWITCH<-function(nh, g, dir)
         
         g$WPX$pol[wNPX]=dir
         
+      }
+    else
+      {
+        print(paste(sep=" ", "NO MATCH FOUND ISEEK",  iseek, length(iseek) ))
+        print("Click in a panel first, then select polarity")
+
       }
     return(g)
 

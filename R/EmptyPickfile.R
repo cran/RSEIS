@@ -69,14 +69,14 @@
          LIP=vector(length=6),
 
 
-         E=list(rms=0,
+         E=list(rms=NA,
            meanres=0,
            sdres=0,
            sdmean=0,
            sswres=0,
            ndf=0,
            fixflgs=0,
-           sterrx=0,
+           sterrx=NA,
            sterry=0,
            sterrz=0,
            sterrt=0,

@@ -27,7 +27,7 @@ grotseis(ang, flip = FALSE)
 \value{
 3 by 3 rotation matrix.
 }
-\seealso{distaz}
+\seealso{rdistaz}
 
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}
 \note{
@@ -67,7 +67,7 @@ sguitoXY$'lat'=c(14.7397535236)
 sguitoXY$'lon'=c(268.4314147874)
 sguitoXY$'z'=c(2.501)
 
-DAZ = distaz( sguitoXY$lat, sguitoXY$lon ,       STAXY$lat, STAXY$lon)
+DAZ = rdistaz( sguitoXY$lat, sguitoXY$lon ,       STAXY$lat, STAXY$lon)
 
 STAXY$az = DAZ$baz
 
