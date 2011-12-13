@@ -2007,17 +2007,17 @@ APAL=c("black","darkmagenta","forestgreen","blueviolet",
 
          ###  smallex = NH$ex[ NH$ex > pwin[1] & NH$ex <pwin[2]]
           
-          if(require("Rwave")==TRUE)
-            {
+           if(require("Rwave")==TRUE)
+             {
             
               wlet.drive(Xamp, NH$dt[ipick], STAMP=ftime)
-            }
+             }
           else
             {
               
               cat("WLET WARNING: NEED package RWAVE to do wavelet analysis (not available on MAC", sep="\n")
               
-            }
+             }
           
           
           dev.set( MAINdev)

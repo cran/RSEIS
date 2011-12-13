@@ -738,10 +738,10 @@ WLET<-function(nh, g)
             
               wlet.drive(Xamp, nh$dt[ipick], STAMP=ftime)
             }
-          else
+           else
             {
               
-              cat("WLET WARNING: NEED package RWAVE to do wavelet analysis (not available on MAC", sep="\n")
+             cat("WLET WARNING: NEED package RWAVE to do wavelet analysis (not available on MAC", sep="\n")
               
             }
           

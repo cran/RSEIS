@@ -1,0 +1,8 @@
+NEWS for Rwave package
+======================
+
+2.8-1  2011-12-16
+	o   Upgrade of Rwave and related wavelet transform functions
+		Fixed bug in JSEGY.seis related to samprate
+
+

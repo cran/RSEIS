@@ -3,7 +3,7 @@ function(Xamp, DT=0.008, STAMP=NULL)
   {
 
        if(require("Rwave")==FALSE)
-         {
+        {
            return
          }
 

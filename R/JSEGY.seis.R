@@ -288,7 +288,10 @@ SEGYall = c(A1, A2, A3, A4, A5, A6, sampleLength,
       
       N = numsamps
 
-      dt = as.numeric( deltaSample )/1000000
+
+       ####  bugfix from Jake
+      ####   dt = as.numeric( deltaSample )/1000000
+      dt = as.numeric( samprate )/1000000
       
       DATIM =   c(year, day, hour, minute)
 

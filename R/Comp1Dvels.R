@@ -29,8 +29,13 @@ function(INV, depth=1:50 )
     for(i in 1:length(INV))
       {
         v = get(INV[i])
-        lines(v$vp, -v$zp, type='s', col=i+1, lwd=2)
-        lines(v$vs, -v$zs, type='s', lty=2, col=i+1, lwd=2)
+
+      zp = c(v$zp, v$zp[length(v$zp)]+10)
+      zs = c(v$zs, v$zs[length(v$zs)]+10)
+        vp = c(v$vp[1], v$vp)
+        vs = c(v$vs[1], v$vs)
+        lines(vp, -zp, type='s', col=i+1, lwd=2)
+        lines(vs, -zs, type='s', lty=2, col=i+1, lwd=2)
         
       }
     
