@@ -1,5 +1,5 @@
 `VELOCITY.SEISN`<-
-function(TH, sel=1:length(TH$JSTR), inst=1, Kal=Kal, FILT=list(ON=FALSE, fl=1/30, fh=7.0, type="HP", proto="BU") )
+function(TH, sel=1:length(TH$JSTR), inst=1, Kal=Kal, waterlevel=1.e-8 , FILT=list(ON=FALSE, fl=1/30, fh=7.0, type="HP", proto="BU") )
 {
   ########  convert the seismic to velocity
   ###  inst refers to the instrument response described in Kal
@@ -49,7 +49,7 @@ if(is.logical(sel)) { sel = which(sel) }
      y = y-mean(y)
      y = detrend(y)
      y = applytaper(y)
-     dy  = deconinst(y, dt, Kal, ins, Calibnew, waterlevel=1.e-8)
+     dy  = deconinst(y, dt, Kal, ins, Calibnew, waterlevel=waterlevel)
      
      ty = applytaper(dy-mean(dy), p=0.05)
      tapy = detrend(ty)

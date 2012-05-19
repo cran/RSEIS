@@ -6,7 +6,7 @@
   This fuction calls c-routines to read in \sQuote{segy}, \sQuote{sac}.
 }
 \usage{
-JGET.seis(fnames, kind = 1, Iendian=1, BIGLONG=FALSE , HEADONLY=FALSE,  PLOT = -1)
+JGET.seis(fnames, kind = 1, Iendian=1, BIGLONG=FALSE , HEADONLY=FALSE,  PLOT = -1, RAW=FALSE)
 
 }
 \arguments{
@@ -25,7 +25,9 @@ JGET.seis(fnames, kind = 1, Iendian=1, BIGLONG=FALSE , HEADONLY=FALSE,  PLOT = -
   
   
   \item{PLOT}{integer, <0 no plot; 0 
-  interactive; >0 number of seconds to sleep}
+    interactive; >0 number of seconds to sleep}
+  \item{RAW}{logical, default=FALSE(convert to volts) , TRUE (return counts intead of
+      volts) }
 }
 \value{
   List containing the seismic data and header information.

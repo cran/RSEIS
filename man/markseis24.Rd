@@ -6,7 +6,8 @@
 \description{Mark a 24 hour seismic display
 }
 \usage{
-markseis24(pjj, pix = list(yr = 2009, jd = 1, hr = 0, mi = 0, sec = 0, dur = 0), col = "red", LEGON = 3, BARON = TRUE, ARROWS = TRUE)
+markseis24(pjj, pix = list(yr = 2009, jd = 1, hr = 0, mi = 0, sec = 0,
+dur = 0), col = "red", LEGON = 3, BARON = TRUE, ARROWS = TRUE, lwd=1)
 }
 \arguments{
   \item{pjj}{Output information from plotseis24 (x,y, yr, jd)
@@ -25,7 +26,11 @@ ault)
 
 }
   \item{ARROWS}{logical: plot arrows FALSE=no arrows
-}
+  }
+  \item{lwd}{numeric, graphical parameter, line width
+  }
+
+  
 }
 \details{
   the LEGON parameter controls the small marks at the ends: Either left(1)

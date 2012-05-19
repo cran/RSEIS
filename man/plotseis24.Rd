@@ -7,7 +7,9 @@
   of getseis24.
 }
 \usage{
-plotseis24(JJ, dy = 1/18, FIX = 24, SCALE = 0, FILT = list(ON = FALSE, fl = 0.05, fh = 20, type = "BP", proto = "BU"), RCOLS = c(rgb(0.2, 0.2, 1), rgb(0.2, 0.2, 0.2)))
+plotseis24(JJ, dy = 1/18, FIX = 24, SCALE = 0, FILT = list(ON = FALSE,
+fl = 0.05, fh = 20, type = "BP", proto = "BU"), RCOLS = c(rgb(0.2, 0.2,
+1), rgb(0.2, 0.2, 0.2)), add=FALSE )
 }
 \arguments{
   \item{JJ}{output list of getseis24
@@ -22,12 +24,17 @@ plotseis24(JJ, dy = 1/18, FIX = 24, SCALE = 0, FILT = list(ON = FALSE, fl = 0.05
   \item{FILT}{filter data
 }
   \item{RCOLS}{colors
-}
+  }
+  \item{add}{logical, if TRUE, add to existing plot (i.e. do not issue a
+    plot command)}
+  
 }
 \details{
   Plots full 24 hours of data.
   The list returned can be used by winseis24
   to get picks and windows for zooming.
+
+  The FIX argument is currently not available.
 }
 \value{
   list:
@@ -48,8 +55,18 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 
 \dontrun{
 JJ = getseis24(DB, 2008, 366, usta, acomp, kind = 1)
- 
-pjj = plotseis24(JJ, dy=1/18, FIX=24, SCALE=1, FILT=list(ON=FALSE, fl=0.05 , fh=20.0, type="BP", proto="BU"), RCOLS=c(rgb(0.2, .2, 1), rgb(.2, .2, .2))  )
+
+### show with no scaling
+pjj = plotseis24(JJ, dy=1/18, FIX=24, SCALE=0, FILT=list(ON=FALSE,
+fl=0.05 , fh=20.0, type="BP", proto="BU"), RCOLS=c(grey(0.8) , grey(0.8)), add=FALSE  )
+
+
+pjj = plotseis24(JJ, dy=1/18, FIX=24, SCALE=1, FILT=list(ON=FALSE,
+fl=0.05 , fh=20.0, type="BP", proto="BU"), RCOLS=c(rgb(0.2, .2, 1),
+rgb(.2, .2, .2)), add=TRUE  )
+
+
+
 
 }
 

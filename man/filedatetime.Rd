@@ -6,11 +6,15 @@
   naming unique output files.
 }
 \usage{
-filedatetime(orgtim, tims)
+filedatetime(orgtim, tims=0, datesep="-", timesep=":", secsep="_")
 }
 \arguments{
   \item{orgtim}{time vector of length 5: c(yr, jd, hr, mi, sec)  }
-  \item{tims}{seconds to add to orgtim}
+  \item{tims}{seconds to add to orgtim, default=0}
+  \item{datesep}{character, seperater for the date}
+  \item{timesep}{character, seperator for the time}
+  \item{secsep}{character, seperator for the seconds}
+  
 }
 
 \value{

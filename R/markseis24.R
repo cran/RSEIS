@@ -1,4 +1,4 @@
-markseis24<-function(pjj, pix =list(yr=2009, jd=1, hr=0, mi=0, sec=0, dur=0), col='red', LEGON=3, BARON=TRUE, ARROWS=TRUE )
+markseis24<-function(pjj, pix =list(yr=2009, jd=1, hr=0, mi=0, sec=0, dur=0), col='red', LEGON=3, BARON=TRUE, ARROWS=TRUE, lwd=1 )
 {
 ############  after plotting plotseis24 use this to add marks on the plot
   ###   duration is set in seconds
@@ -6,7 +6,9 @@ markseis24<-function(pjj, pix =list(yr=2009, jd=1, hr=0, mi=0, sec=0, dur=0), co
   if(missing(LEGON)){ LEGON= 3 }
   if(missing(col)) { col='red' }
   if(missing(ARROWS)) { ARROWS=TRUE }
-  
+  if(missing(lwd)) {lwd=1  }
+
+  alen = 0.06
   jd = pjj$jd
   yr = pjj$yr
 
@@ -24,17 +26,24 @@ wy = which( is.na(ydivs) )
   
   ydiff = ydivs[3] - ydivs[2]
 
-  dur = pix$dur
-
-  if(is.null(pix$dur) ) { dur=rep(0, length(pix$hr)) }
-
+  
+ 
+  if(is.null(pix$dur) )
+    {
+      dur=rep(0, length(pix$hr))
+    }
+  else
+    {
+      dur = pix$dur
+    }
+  
   if(length(dur)<length(pix$hr)) {
     print("warning: (markseis24) replace dur with dur[1]")
     dur=rep(dur[1], length(pix$hr))
-
+    
   }
   
-   pix = recdatel(pix)
+  pix = recdatel(pix)
   pix$dur = dur
   
   w = which(pix$yr==yr & pix$jd==jd)
@@ -74,7 +83,7 @@ wy = which( is.na(ydivs) )
 
   nonwrapper = which(ypos1==ypos2)
   
-  winmark(xpos1[nonwrapper],xpos2[nonwrapper] , side=1, bar=yy1[nonwrapper], leg=yy2[nonwrapper], col=col, lwd = 1, arrows = ARROWS, alen = 0.06, LEGON=LEGON, BARON=BARON )
+  winmark(xpos1[nonwrapper],xpos2[nonwrapper] , side=1, bar=yy1[nonwrapper], leg=yy2[nonwrapper], col=col, lwd = lwd, arrows = ARROWS, alen = 0.06, LEGON=LEGON, BARON=BARON )
 
 
 wrapper = which(ypos1!=ypos2)
@@ -98,7 +107,7 @@ wrapper = which(ypos1!=ypos2)
       yy2 = ydivs[WY2+2]+ydiff*.2
 
 
-      winmark(xpos1,xpos2 , side=1, bar=yy1, leg=yy2, col=col, lwd = 1,  alen = 0.06, LEGON=LEGON, BARON=BARON, arrows = ARROWS )
+      winmark(xpos1,xpos2 , side=1, bar=yy1, leg=yy2, col=col, lwd = lwd,  alen = 0.06, LEGON=LEGON, BARON=BARON, arrows = ARROWS )
 
 
       WY1 = ypos2[wrapper]
@@ -114,7 +123,7 @@ wrapper = which(ypos1!=ypos2)
 
       yy2 = ydivs[WY2+2]+ydiff*.2
 
-      winmark(xpos1,xpos2 , side=1, bar=yy1, leg=yy2, col=col, lwd = 1, alen = 0.06, LEGON=2, BARON=BARON, arrows = ARROWS )
+      winmark(xpos1,xpos2 , side=1, bar=yy1, leg=yy2, col=col, lwd = lwd, alen = 0.06, LEGON=2, BARON=BARON, arrows = ARROWS )
 
     }
 

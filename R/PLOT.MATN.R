@@ -148,12 +148,12 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost=
 
   if(add==1)
     {
-      plot(range(tim[tflag]), c(0,1), type='n', axes=FALSE, xlab="", ylab="", log=LOG)
+      plot(range(tim[tflag], na.rm=TRUE ), c(0,1), type='n', axes=FALSE, xlab="", ylab="", log=LOG)
       
     }
   if(add==2)
     {
-      plot(range(tim[tflag]), c(0,1), type='n', axes=FALSE, xlab="", ylab="", log=LOG)
+      plot(range(tim[tflag], na.rm=TRUE ), c(0,1), type='n', axes=FALSE, xlab="", ylab="", log=LOG)
 
     }
 

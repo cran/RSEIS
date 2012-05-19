@@ -23,3 +23,7 @@ NEWS for Rwave package
 		PLOT.SEISN and swig:  new parameter xtickfactor allows user to change the x-axis units
 		JSAC.seis: added in the b - offset for SAC header information
 			In SAC  a beginning offset in seconds must be added to the time
+
+3.0-5	2012-04-27
+	o Major changes: 
+		ADDED rseis2sac to write out a set of SAC format files for exchange.

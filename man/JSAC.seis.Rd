@@ -7,8 +7,8 @@
 \description{Read SEGY/SAC format binary data
 }
 \usage{
-JSAC.seis(fnames, Iendian = 1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT = -1)
-JSEGY.seis(fnames, Iendian = 1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT = -1)
+JSAC.seis(fnames, Iendian = 1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT = -1, RAW=FALSE)
+JSEGY.seis(fnames, Iendian = 1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT = -1, RAW=FALSE)
 
 }
 \arguments{
@@ -26,7 +26,9 @@ JSEGY.seis(fnames, Iendian = 1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT = -1)
 
   \item{PLOT}{integer, <0 no plot; 0 
   interactive; >0 number of seconds to sleep
-  }
+}
+\item{RAW}{logical, default=FALSE(convert to volts) , TRUE (return counts intead of
+      volts) }
   
 }
 \details{

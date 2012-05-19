@@ -1,5 +1,5 @@
 `DISPLACE.SEISN`<-
-function(TH, sel=1:length(TH$JSTR), inst=1, Kal=Kal, FILT=list(ON=FALSE, fl=1/30, fh=7.0, type="HP", proto="BU") )
+function(TH, sel=1:length(TH$JSTR), inst=1, Kal=Kal, waterlevel=1.e-8, FILT=list(ON=FALSE, fl=1/30, fh=7.0, type="HP", proto="BU") )
 {
   ########  convert the seismic to displacement
   if(missing(Kal)) {   Kal = PreSet.Instr() }
@@ -41,7 +41,7 @@ if(is.logical(sel)) { sel = which(sel) }
      y = y-mean(y, na.rm =TRUE)
      y = detrend(y)
      y = applytaper(y)
-     dy  = deconinst(y, dt, Kal, ins, Calibnew, waterlevel=1.e-8)
+     dy  = deconinst(y, dt, Kal, ins, Calibnew, waterlevel=waterlevel)
      
      ty = applytaper(dy-mean(dy, na.rm =TRUE), p=0.05)
      tapy = detrend(ty)

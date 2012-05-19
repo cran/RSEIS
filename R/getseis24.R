@@ -61,7 +61,7 @@ getseis24<-function(DB, iyear=2009, iday=1, usta="", acomp="", kind = 1,  Iendia
     fn2 = fnloc[gi]
 
     ###   read in the data from the SEGY data base and store
-    GG = JGET.seis(fn2, kind = kind, PLOT = FALSE, Iendian=Iendian, BIGLONG=BIGLONG )
+    GG = JGET.seis(fn2, kind = kind, PLOT = -1, Iendian=Iendian, BIGLONG=BIGLONG )
 ###  this set of data should have only one station and one component
 
     ###  set up some information from each of the traces in the data set

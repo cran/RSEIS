@@ -1,5 +1,5 @@
 `JGET.seis` <-
-function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1)
+function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1, RAW=FALSE)
 {
   ###  get a bunch of AH files from a directory and store in structure
   ####  kind 1=segy, 2=sac, 3=AH, kind=0->R format
@@ -8,7 +8,8 @@ function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1)
   if(missing(kind)) { kind=1 }
   if(missing(HEADONLY)) {HEADONLY=FALSE }
   if(missing(Iendian)) { Iendian=1 }
-     if(missing(BIGLONG)) { BIGLONG=FALSE}
+  if(missing(BIGLONG)) { BIGLONG=FALSE}
+  if(missing(RAW)) { RAW=FALSE }
 
   
   GIVE = as.list(1:length(fnames))
@@ -61,14 +62,16 @@ function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1)
 
       if(kind==1)
         {
-          DAT  = JSEGY.seis(fn, Iendian=Iendian, HEADONLY=HEADONLY , BIGLONG=BIGLONG, PLOT=PLOT)
+        #####   print(paste("RAW=", RAW))
+          
+          DAT  = JSEGY.seis(fn, Iendian=Iendian, HEADONLY=HEADONLY , BIGLONG=BIGLONG, PLOT=PLOT, RAW=RAW)
           GIVE[[i]] = DAT[[1]]
           next
         }
 
       if(kind==2)
         {
-          DAT  = JSAC.seis(fn, Iendian=Iendian, HEADONLY=HEADONLY , BIGLONG=BIGLONG, PLOT=PLOT)
+          DAT  = JSAC.seis(fn, Iendian=Iendian, HEADONLY=HEADONLY , BIGLONG=BIGLONG, PLOT=PLOT, RAW=RAW)
           GIVE[[i]] = DAT[[1]]
           next
         }

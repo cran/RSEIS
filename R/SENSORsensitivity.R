@@ -19,17 +19,20 @@ function(K=1)
     ####  EL   = Electret Microphone
     ####  MC = McChesney Microphone
     ####  EL(SANGAY) = Electret Microphone used at Sangay 1998
+
+
     
-    codes = c(1,    2,      3,  101,    102,    103,    104)
     
-    AI = c("40T", "3T",  "L28", "LD",    "EL", "MC", "EL(SANGAY)")
+    codes = c(1,    2,      3,  101,    102,    103,    104,   200 )
     
-    II = c(0.8/1000, 1.5/1000, .0304/1000,   0.04841724,  .1,  0.08, 0.03 )
+    AI = c("40T", "3T",  "L28", "LD",    "EL", "MC", "EL(SANGAY)", "TRIL120")
     
-    unit = c("mu m/s", "mu m/s", "mu m/s", "Pa", "Pa","Pa","Pa")
+    II = c(0.8/1000, 1.5/1000, .0304/1000,   0.04841724,  .1,  0.08, 0.03, 1.201/1000  )
+    
+    unit = c("mu m/s", "mu m/s", "mu m/s", "Pa", "Pa","Pa","Pa", "mu m/s" )
     ###   updir 1 = positive is up motion, -1 positive is down motion
     
-    updir  = c(1, 1, -1, 1, 1, 1, 1)
+    updir  = c(1, 1, -1, 1, 1, 1, 1, 1 )
 
     if(missing(K))
       {

@@ -149,6 +149,8 @@ function(ADAT, dt=1, ex=seq(0, 100), comp=c(4,5,6), sta="ZZZ", az=0, len=50, shi
   
 #  dev.set(which=2)
 #########   old: par(mfrow=c(6, 1) )
+       
+       
   par(mfrow=c(6, 1) )
   par(mai=c(0.1, .5, 0.1, 0.5) )
   for(i in 1:3)
@@ -267,7 +269,9 @@ axis(2, at=seq(0,90, by=10), tck=1, las=1, lty=2, lwd=0.5)
   # dev.prev()
 
   #  invisible(par(opar))
-  #   par(opar)
-  invisible(list(aex=aex[1:jall], rateig=rateig[1:jall], aaz=aaz[1:jall], ai=ai[1:jall], figaz=figaz, azpar=azpar, incpar=incpar ))	
+  #
+	newpar=par(no.readonly = TRUE)
+       par(opar)
+  invisible(list(aex=aex[1:jall], rateig=rateig[1:jall], aaz=aaz[1:jall], ai=ai[1:jall], figaz=figaz, azpar=azpar, incpar=incpar, par=newpar  )  )	
 }
 

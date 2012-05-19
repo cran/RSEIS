@@ -1,4 +1,4 @@
-`JSEGY.seis` <-function(fnames, Iendian=1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT=-1)
+`JSEGY.seis` <-function(fnames, Iendian=1 , HEADONLY=FALSE, BIGLONG=TRUE,  PLOT=-1, RAW=FALSE )
 {
   ###  get a bunch of segy files from a directory and store in structure
   ####  
@@ -8,6 +8,7 @@
   if(missing(Iendian)) { Iendian=1 }
   if(missing(HEADONLY)) {HEADONLY=FALSE }
   if(missing(BIGLONG)) { BIGLONG=TRUE}
+  if(missing(RAW)) { RAW=FALSE }
 
   GIVE = as.list(1:length(fnames))
 
@@ -339,11 +340,32 @@ SEGYall = c(A1, A2, A3, A4, A5, A6, sampleLength,
 
           
 ###    i1 = unlist( strsplit(split=" ", B4[4]) )
-          
+
+
+          if(RAW)
+            {
+             
+              
+              x = as.vector(D1)
+
+              aunits="counts"
+            ###  print("using RAW (counts), range:")
+            ###  print(range(x))
+              
+            }
+          else
+            {
           x = scalefac * as.vector(D1)
+
           aunits="volts"
+        }
 
         }
+
+
+
+
+      
       close(zz)
 
 
@@ -363,6 +385,13 @@ SEGYall = c(A1, A2, A3, A4, A5, A6, sampleLength,
           
         }
     }
+
+
+ ### print("using RAW (counts), range:")
+ ### print(range(x))
+ ### for(ig in 1:length(GIVE)) { print( range(GIVE[[ig]]$amp ))  }
+  
+  
   invisible(GIVE)
 }
 

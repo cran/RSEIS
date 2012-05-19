@@ -1,8 +1,17 @@
 EPOCHyear<-function(iday,  origyr=1972)
   {
     if(missing(origyr)) { origyr=1972 }
+ # print("EPOCHyear Dates")
+    if(any(!is.numeric(iday)))
+      {
+        print("Bad Dates")
+      }
 
     N = length(iday)
+    if(N<1)
+      {
+        list(yr=1972, jd=1)
+      }
     
     IYEARS = rep(NA, N)
     IJD = rep(NA, N)

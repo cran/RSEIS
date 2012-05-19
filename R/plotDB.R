@@ -36,6 +36,8 @@ usta = unique(DB$sta)
    
     days = pretty(x)
 
+    days = days[days!=0]
+
    day.yrs =  EPOCHyear(days, origyr=DB$origyr)
 
 

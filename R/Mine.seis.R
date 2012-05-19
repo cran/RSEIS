@@ -1,5 +1,5 @@
 `Mine.seis` <-
-  function(at1, at2, DB, grepsta, grepcomp,  kind=1, Iendian=1, BIGLONG=FALSE, CHOP=TRUE, verbose = FALSE, chtoken=NULL, statoken=NULL)
+  function(at1, at2, DB, grepsta, grepcomp,  kind=1, Iendian=1, BIGLONG=FALSE, CHOP=TRUE, verbose = FALSE, chtoken=NULL, statoken=NULL, RAW=FALSE)
 {
   ##  find all the files that overlap the times times
 #########   at1 and at2 should be single times in julian days
@@ -20,6 +20,7 @@
   if(missing(verbose)) { verbose=FALSE }
   if(missing(Iendian)) { Iendian=1 }
      if(missing(BIGLONG)) { BIGLONG=TRUE}
+ if(missing(RAW)) { RAW=FALSE  }
 
   
 
@@ -85,7 +86,7 @@
    if(verbose) print(fn2)
 
   
-  KG4 = JGET.seis(fn2, kind = kind,  Iendian=Iendian, BIGLONG= BIGLONG, HEADONLY=FALSE ,PLOT = -1)
+  KG4 = JGET.seis(fn2, kind = kind,  Iendian=Iendian, BIGLONG= BIGLONG, HEADONLY=FALSE ,PLOT = -1, RAW=RAW)
 
 
  ## here we must insure that the channel names are unique

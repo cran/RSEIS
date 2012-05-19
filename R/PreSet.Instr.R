@@ -4,7 +4,7 @@ function()
     ## set up a list of instruments from passcal Guralp
 ###  usage    Kal = PreSet.Instr()
 
-    types = c("40T", "3T", "L28", "LE3D20s", "GEOSP1", "CMG3ESPC" ,  "60T")
+    types = c("40T", "3T", "L28", "LE3D20s", "GEOSP1", "CMG3ESPC" ,  "60T", "TRIL120" )
     
     K = as.list(types)
 
@@ -121,6 +121,22 @@ function()
    "SENSE 700.7874"
    )
     
+TRIL120 = c("ZEROS 5",
+  "0 0",
+  "0 0",
+  "-90.0 0",
+  "-160.7 0",
+  "-3108 0",
+  "POLES 7",
+  "-0.03852 0.03658",
+  "-0.03852 -0.03658",
+  "-178 0",
+  "-135 160",
+  "-135 -160",
+  "-671 1154",
+  "-671 -1154",
+  "CONSTANT 308000",
+  "SENSE 1201")
 
     ###########   this is a filter I derived using
     ########    specs and matlab (yuk!)
@@ -157,6 +173,7 @@ function()
     K[[5]] = ReadSet.Instr(GEOSP1)
     K[[6]] = ReadSet.Instr(CMG3ESPC)
     K[[7]] = ReadSet.Instr(CMG60T)
+    K[[8]] = ReadSet.Instr(TRIL120)
 
     names(K) = types
     ##  Others?

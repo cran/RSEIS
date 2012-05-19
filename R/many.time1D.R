@@ -17,6 +17,15 @@ function(indelta, inhpz, instaz, inlay , ztop ,  vel)
     ###  angle=angle of takeoff measured from nadir (down vecotor)  tt=travel time
 
     N = length(indelta)
+
+
+    if(length(ztop)<inlay) { print("ERROR: BAD velocity model"); return(NULL) }
+    if(length(vel)<inlay) { print("ERROR: BAD velocity model"); return(NULL) }
+    if( any(indelta) <0)  { print("ERROR: BAD Distance in travel.time1D "); return(NULL) }
+
+    if(any(!is.numeric(ztop))){ print("ERROR: BAD velocity model"); return(NULL) }
+    if(any(!is.numeric(vel))){ print("ERROR: BAD velocity model"); return(NULL) }
+    
     
     dtdr=rep(0, N);
     dtdz=rep(0, N);

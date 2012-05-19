@@ -6,7 +6,8 @@
  Mine a seismic data base to extract secions of time limited data
 }
 \usage{
-Mine.seis(at1, at2, DB, grepsta, grepcomp, kind = 1, Iendian=1, BIGLONG=FALSE, CHOP=TRUE, verbose=FALSE, chtoken=NULL, statoken=NULL)
+Mine.seis(at1, at2, DB, grepsta, grepcomp, kind = 1, Iendian=1,
+BIGLONG=FALSE, CHOP=TRUE, verbose=FALSE, chtoken=NULL, statoken=NULL, RAW=FALSE)
 }
 
 \arguments{
@@ -31,7 +32,8 @@ Mine.seis(at1, at2, DB, grepsta, grepcomp, kind = 1, Iendian=1, BIGLONG=FALSE, C
   \item{verbose}{print out intermediate information for debugging }
    \item{chtoken}{channel token for selecting channels (NULL) }
    \item{statoken}{station token for selecting stations (NULL) }
-    
+    \item{RAW}{logical, default=FALSE(convert to volts) , TRUE (return counts intead of
+      volts) }
 }
 \details{
   

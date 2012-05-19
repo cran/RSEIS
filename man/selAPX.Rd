@@ -9,7 +9,7 @@ select a subset of picks from a larger data base
 }
 \usage{
 selAPX(APX, ista = NULL, icomp = c("V", "N", "E"))
-selWPX(APX, ista = NULL, icomp = c("V", "N", "E"))
+selWPX(APX, ind=NULL, ista = NULL, icomp = c("V", "N", "E"))
 
 }
 %- maybe also 'usage' for other objects documented here.
@@ -17,6 +17,8 @@ selWPX(APX, ista = NULL, icomp = c("V", "N", "E"))
   \item{APX}{Pick Data Frame}
   \item{ista}{vector of stations to select}
   \item{icomp}{vector of components}
+  \item{ind}{index of picks to select (negitive values imply omission) }
+  
 }
 
 \value{

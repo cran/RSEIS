@@ -16,6 +16,8 @@ function(jd=0, hr=0, mi=0, sec=0, yr=0)
 
     eday = EPOCHday(yr, jd=jd)
 
+    
+
     secs = eday$jday*(86400)+hr*(3600)+mi*(60)+sec;
 
  days = trunc( secs / (86400));

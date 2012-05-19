@@ -1,36 +1,49 @@
 `selWPX` <-
-function(APX, ista=NULL , icomp=c("V", "N", "E") )
+  function(APX, ind=NULL,  ista=NULL , icomp=c("V", "N", "E") )
   {
-    ###############   select from WPX
+###############   select from WPX
     if(missing(icomp)) { icomp=NULL  }
 
- 
+    
     MPX = data.frame(APX, stringsAsFactors = FALSE)
 
-    #####aname = APX$name
-    #####acomp = APX$comp
+#####aname = APX$name
+#####acomp = APX$comp
 
-    if(is.null(icomp))
+
+
+    if(!missing(ind))
       {
-        atag = APX$name
-        itag = ista
-        w1 = which(!is.na(match(atag, itag)))
-        m = w1
+
+        getind =  ind
+
+
       }
     else
       {
+
         
-        M = meshgrid(1:length(ista), 1:length(icomp) )
-        itag =  paste(sep=".",ista[M$x], icomp[M$y])
-        atag = paste(sep=".", APX$name, APX$comp)
-        m =  which(!is.na(match(atag, itag)))
-        
+
+        if(is.null(icomp))
+          {
+            atag = APX$name
+            itag = ista
+            w1 = which(!is.na(match(atag, itag)))
+            getind = w1
+          }
+        else
+          {
+
+            getind  = which(ista %in% APX$name && icomp  %in% APX$comp )
+            
+          }
+
       }
     
     
-  
     
-    SWP =  MPX[  m ,  ]
+    
+    SWP =  MPX[ getind  ,  ]
 
     SWP = as.list(SWP)
 

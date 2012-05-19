@@ -1,4 +1,4 @@
-plotseis24<-function(JJ, dy=1/18, FIX=24, SCALE=0, FILT=list(ON=FALSE, fl=0.05 , fh=20.0, type="BP", proto="BU"), RCOLS=c(rgb(0.2, .2, 1), rgb(.2, .2, .2))  )
+plotseis24<-function(JJ, dy=1/18, FIX=24, SCALE=0, FILT=list(ON=FALSE, fl=0.05 , fh=20.0, type="BP", proto="BU"), RCOLS=c(rgb(0.2, .2, 1), rgb(.2, .2, .2))  , add=FALSE )
   {
     if(missing(FIX)) { FIX=24 }
     if(missing(dy)) { dy  = 1/18 }
@@ -26,9 +26,16 @@ plotseis24<-function(JJ, dy=1/18, FIX=24, SCALE=0, FILT=list(ON=FALSE, fl=0.05 ,
  rcol = RCOLS
     
     par(mar=c(5, 4, 4, 4)+0.1,  xaxs='i', yaxs='i', lwd=0.5, bty="u")
-    plot( c(0, 3600), -ry  , type='n', xpd=TRUE, axes=FALSE, xlab="Time,s", ylab="")
+
+    
+    if(!add)
+      {
+        plot( c(0, 3600), -ry  , type='n', xpd=TRUE, axes=FALSE, xlab="Time,s", ylab="")
 ##  90:100
     box(col=grey(0.7) )
+      }
+
+    
     tix = rep(NA, length=h)
     
   altcol = length(RCOLS)
@@ -64,8 +71,17 @@ plotseis24<-function(JJ, dy=1/18, FIX=24, SCALE=0, FILT=list(ON=FALSE, fl=0.05 ,
                 
                 
                 ked = c(rev(ibeg), zed, rev(iend))
-                print("filtering")
-                fy = butfilt(ked,FILT$fl, FILT$fh , adt, FILT$type , FILT$proto )
+           ###      print("filtering")
+                if(!any(is.na(ked)))
+                  {
+                    fy = butfilt(ked,FILT$fl, FILT$fh , adt, FILT$type , FILT$proto )
+                  }
+                else
+                  {
+                    fy = ked
+                  }
+
+                
                 
                 jed =  fy[(ipad+1):(ipad+L)    ]
                 
@@ -103,9 +119,6 @@ bigmin = min(miny, na.rm=TRUE)
         icol = RCOLS[cols[i]]
         if(length(fy)>2)
           {
-           
-              
-            
             if(SCALE==0)
               {
                 zee  = RESCALE(fy,  -1,   1, miny[i], maxy[i])
@@ -113,9 +126,6 @@ bigmin = min(miny, na.rm=TRUE)
             else
               {
                 ##    w
-
-             
-                
                 zee  = RESCALE(fy, -1 ,  1, bigmin, bigmax)       
               }
             tmean = mean(zee, na.rm=TRUE)

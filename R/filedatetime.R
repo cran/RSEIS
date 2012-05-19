@@ -1,4 +1,4 @@
-filedatetime<-function (orgtim, tims) 
+filedatetime<-function (orgtim, tims=0, datesep="-", timesep=":", secsep="_" ) 
 {
  ###   orgtime is a vector c(yr, jd, hr, mi, sec)
   if(is.list(orgtim))
@@ -13,17 +13,17 @@ filedatetime<-function (orgtim, tims)
   rd = recdate(jd = rd$jd, hr = rd$hr, mi = rd$mi, sec = rd$sec, 
     yr = rd$yr)
   MODAY = getmoday(rd$jd, rd$yr)
-  gdates = paste(sep = "-", formatC(rd$yr, width = 3, flag = "0"), 
+  gdates = paste(sep = datesep, formatC(rd$yr, width = 3, flag = "0"), 
     formatC(MODAY$mo, width = 2, flag = "0"), formatC(MODAY$dom, 
                                  width = 2, flag = "0"))
   mysec = floor(rd$sec)
   mymcrsec = floor((rd$sec - mysec) * 1e+06)
   hours = rd$hr
-  gtimes = paste(sep = ":", formatC(hours, width = 2, flag = "0"), 
+  gtimes = paste(sep = timesep, formatC(hours, width = 2, flag = "0"), 
     formatC(rd$mi, width = 2, flag = "0"), formatC(mysec, width = 2, 
                               flag = "0"))
   amcrsec = formatC(as.integer(mymcrsec), width = 6, flag = "0")
-  charvec = paste(sep="_", gdates, gtimes, amcrsec)
+  charvec = paste(sep=secsep, gdates, gtimes, amcrsec)
   cat(charvec, sep = "\n")
   
   return( charvec[which.min(tims)] )

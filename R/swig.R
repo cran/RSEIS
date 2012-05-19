@@ -4,7 +4,7 @@
                   CHOP=FALSE, TIT="", pts=FALSE, forcepix=FALSE,
                   pcex=0.7, SCALE=1, ilocstyle=1,
                   velfile="", stafile="", LOC=NULL,
-                  prefilt=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL, xtickfactor = 1  )
+                  prefilt=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL, YAX = 1  , xtickfactor = 1  )
 {
 
 
@@ -23,6 +23,7 @@
 
 
   if(missing(xtickfactor)) { xtickfactor = 1 }
+    if(missing(YAX)) { YAX = 1 }
   
   
 ###   if(missing(APIX)) { APIX = NULL}  else { if(!exists(deparse(substitute(APIX)))) { print("WARNING: NO WPX"); APIX=NULL} }
@@ -396,6 +397,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
     polspix=TRUE,
     pcex=1,
     xtickfactor = xtickfactor,
+    YAX =  YAX,
  
     filters = filters,
     lastfilter = lastfilter,
@@ -420,7 +422,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
       YN = PLOT.SEISN(NH, WIN=global.vars$WIN, dt=NH$dt[sel],
         sel=global.vars$sel, sfact=global.vars$ScaleFACT ,
         notes=NH$KNOTES[sel], COL=global.vars$pcols, TIT=global.vars$TIT,
-        SHIFT=global.vars$ASHIFT , pts=global.vars$pts, xtickfactor = global.vars$xtickfactor )
+        SHIFT=global.vars$ASHIFT , pts=global.vars$pts, YAX=global.vars$YAX,   xtickfactor = global.vars$xtickfactor )
 
       if(!is.na(global.vars$SUBTIT)) title(sub=global.vars$SUBTIT)
 
