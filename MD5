@@ -1,6 +1,6 @@
-0c2678c9f2117ccd8ad0e0bb6368c47e *DESCRIPTION
+b57e7ad3945c897115c842809d8d249d *DESCRIPTION
 8a171986e76cba08da13e7353bf56d54 *NAMESPACE
-d5b1fa5999f5faa1db4d684ee4ac11d3 *NEWS
+fb0402e1af96fc2c41aca9214f0bb689 *NEWS
 27b1bab432b598f16c11274ea29b9e3d *R/ASCII.SEISN.R
 eba4eca41dadad95516f3de70a136c85 *R/BUTREPLOT.R
 c98c9512e8eeb65426ca1739b0baa5c3 *R/CHOP.SEISN.R
@@ -59,7 +59,7 @@ f553768275b446cdcf0c2cb5da544349 *R/PPIX.R
 604ee5770fb56a21d39ac989775eae61 *R/PSTLTcurve.R
 ed9721da28b09b326171e63398a834dd *R/PreSet.Instr.R
 dd78ea0a5d1d8fcbb32018a65a0be047 *R/Put1Dvel.R
-ee655b79191e54252eb35cb60b99618e *R/Ray.time1D.R
+53b3e4e123877cdafbea6fd5d1ee4f1d *R/Ray.time1D.R
 3964c320101371b3ebf20fad08cb1234 *R/ReadSet.Instr.R
 1ef0f0df86f3451606491fb6de09158b *R/SEARCHPIX.R
 9e7b9a64253183693e5c20736c7c85cc *R/SEISNtime.R
@@ -169,7 +169,7 @@ e7af650ba95741c805e6a8e96e76cf23 *R/jpolyval.R
 fbb3c7760be8a61016c781e847abc1ee *R/longreset.R
 018771b31c14850612b0a7cd963e321f *R/makeDB.R
 33b59720f9c588aa97450448c7fc4601 *R/makefreq.R
-ec8b0065a7efbb0542b57ba0766c71aa *R/many.time1D.R
+bb1acb1d49d71070264a1cc5414b3609 *R/many.time1D.R
 4a3a13ce9545b48fa9228eb221a106cc *R/markseis24.R
 8d4d63e4849796cf272db349ceef936c *R/matsquiggle.R
 a0682c54ff6c25979f3dcfb4545505b3 *R/mirror.matrix.R
@@ -181,7 +181,7 @@ ae76499ad7138d038b5a63cf51c5516d *R/one.R
 72d1ebba9cbb673b4cb49e161689de64 *R/partmotnet.R
 5d682c48fba4527d16abfd728e2dcfc4 *R/pathDB.R
 97043252b352e4af10baf1f24cb6f0f9 *R/peaks.R
-753c8b6353dbb554340ef94f42903c36 *R/pickFUNCS.R
+81ba8e241359900457a2a6f4e4dabb10 *R/pickFUNCS.R
 a73efc4415d0976fb23eadc60ba0a8c0 *R/pickgeninfo.R
 998fc95d071c25a60a9b6be34f677fff *R/pickhandler.R
 0cee4af9988756141951adb295096282 *R/pickit.R
@@ -239,7 +239,7 @@ d48dc24031ff2297db99ce60bb3587b5 *R/sysinfo.R
 fa9fe3ee25849bac69a13d7988afcdee *R/tojul.R
 a850a0500b19227b88ded29d911ce305 *R/tomo.colors.R
 12df43708dda9a3b2bc2e7ead98fed12 *R/trapz.R
-d3a6339081da0ac2cb5244d7330cb054 *R/travel.time1D.R
+f07ed54d34895dbd678f68f0bd44067d *R/travel.time1D.R
 3ebc2577f1d55329cefb3fd21d5c3048 *R/tung.pulse.R
 66734b51de918a9e2a0f9c80de7f6323 *R/unpackAcard.R
 20750f4189ac793cc34425e97289ad64 *R/uwpfile2ypx.R
@@ -274,9 +274,9 @@ aa87f94bf286f851f6d0299e18015502 *demo/FILT.R
 fa68dbea5d4e116224177232c8022fa3 *demo/SPECT.R
 f6d1e92da714716a5f5c2a24ce6d437d *demo/SUNrs.R
 92d7128ff34a647b813380a17f663c20 *inst/doc/hodo.Rnw
-de5786fea6ac5b1131dbd629cc0a1d35 *inst/doc/hodo.pdf
+3a19a383a2058ac564a663c80a50e582 *inst/doc/hodo.pdf
 c2eed0689abd92bc78f915b27fc4f6db *inst/doc/rseis.Rnw
-a1efafe7b58f3c74ece76c2cb8a0a873 *inst/doc/rseis.pdf
+b5ce19647e5ea9a3673db8e107cb7c23 *inst/doc/rseis.pdf
 827cb6e391b21d5ebda30900e86a153b *man/ASCII.SEISN.Rd
 20c206009bd9c34135e9cc6448f96f03 *man/BUTREPLOT.Rd
 efe49578f9eebf458f9a657d39b83457 *man/CE1.Rd
@@ -336,7 +336,7 @@ ecec371397560626231e446ca3d12872 *man/PLTpicks.Rd
 a40287f0cf02ca68d063d865b0a4849d *man/PSTLTcurve.Rd
 e11a33d67c14ccfed854248de188a70e *man/PreSet.Instr.Rd
 fc1b640ab197625cf718ee45e588e534 *man/Put1Dvel.Rd
-44d77cb9442b30431bdd18f0b2fa7317 *man/RSEIS-package.Rd
+b5ed52f6928431c34e182a30478e0d0d *man/RSEIS-package.Rd
 4e470bc699eb10babea2e5df4247928e *man/Ray.time1D.Rd
 c95c635441cda6d4ea816557da30df9c *man/ReadSet.Instr.Rd
 fcc0a6847829dba70d920744cac3b9af *man/SEARCHPIX.Rd
@@ -353,7 +353,7 @@ d73a2a577b2286179b693d10e9866ffa *man/Thresh.J.Rd
 9e296d780bf1a282d6d87561643e19b1 *man/VELMOD1D.Rd
 1a090ddb757e5270483b363f5280e777 *man/VELOCITY.SEISN.Rd
 da4aab46d6fd9d892ef73648b02fbde1 *man/XTR.Rd
-5a020f123da72f058718515de965036c *man/YPIX.Rd
+9e5803d1434a3fe7b883da775d69457d *man/YPIX.Rd
 504cf59214807c8e254c2f4c6b17efbf *man/YRsecdif.Rd
 1de5a15fbebd707a79ed840f0f89fb96 *man/ZOOM.SEISN.Rd
 ec1760bcc8e83815bf2f23f74d8609ae *man/Zdate.Rd
@@ -541,7 +541,7 @@ a30a1fb5f31e64aad25ade01fb643585 *man/zlocator.Rd
 e8d803abbf80cf97376d18471bda8514 *src/GetCornerFreq.c
 21d660a955054032975f8c3f3b9bd5df *src/LLNfilt.c
 197f4620a03953d7d3c619c4db622e11 *src/MTAPSRC.c
-70ba12513256ffb48030176e3dbb87e5 *src/TTray.c
+2a7f72a4a52d9b458cb8947a89719dbb *src/TTray.c
 ad505caa9e4f09fda103226718e6d3eb *src/defines.h
 f50c2847945ae7013551148e6739505a *src/jl.h
 ce8fa14d183bb51d3b9ab9c6092c8ec4 *src/jlproto.h

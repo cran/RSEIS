@@ -1023,11 +1023,16 @@ L9500:
   
   j = *nnod;
 
+
+  /*
   for(i=0; i<j; i++)
     {
       REprintf( "%lf, %lf\n", znod[i], rnod[i]);
 
     }
+  */
+
+
 
   *outt = tt;
   return;

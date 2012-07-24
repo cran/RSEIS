@@ -10,7 +10,7 @@ function(indelta, inhpz, instaz, inlay , ztop ,  vel)
     ######   instaz  = elevation of reciever
     ######    inlay  =number of layers
     ######    ztop  = tops of the vel model
-    ######    vel   =   slowness in the layers
+    ######    vel   =  velocity in the layers
 
     ##  output:  dtdr=derivative with respect to r   dtdz=derivative with respect to z
     ###  angle=angle of takeoff measured from nadir (down vecotor)  tt=travel time
@@ -20,9 +20,15 @@ function(indelta, inhpz, instaz, inlay , ztop ,  vel)
     nnod = inlay*4
     znod = rep(0,length=nnod)
     rnod = rep(0,length=nnod)
+
+    slness = 1/vel
     
-    TTout = .C("CALL_DTTray",PACKAGE = "RSEIS", as.double(indelta), as.double(inhpz),as.double(instaz), as.integer(inlay), as.double(ztop) ,  as.double(vel),
-      as.double(dtdr), as.double(dtdz), as.double(angle),  as.double(outt), as.integer(nnod) , as.double(znod), as.double(rnod) )
+    TTout = .C("CALL_DTTray",PACKAGE = "RSEIS",
+      as.double(indelta),
+      as.double(inhpz),as.double(instaz),
+      as.integer(inlay), as.double(ztop) ,  as.double(slness),
+      as.double(dtdr), as.double(dtdz), as.double(angle),  as.double(outt),
+      as.integer(nnod) , as.double(znod), as.double(rnod) )
 
     dtdr=as.numeric(unlist(TTout[7]));
     dtdz=as.numeric(unlist(TTout[8]));

@@ -27,3 +27,5 @@ NEWS for Rwave package
 3.0-5	2012-04-27
 	o Major changes: 
 		ADDED rseis2sac to write out a set of SAC format files for exchange.
+3.0-8   2012-07-16
+	Fixed bug in Ray.time1D.R - now the program takes velocity and converts internally to slowness

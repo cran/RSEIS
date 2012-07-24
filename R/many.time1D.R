@@ -21,7 +21,7 @@ function(indelta, inhpz, instaz, inlay , ztop ,  vel)
 
     if(length(ztop)<inlay) { print("ERROR: BAD velocity model"); return(NULL) }
     if(length(vel)<inlay) { print("ERROR: BAD velocity model"); return(NULL) }
-    if( any(indelta) <0)  { print("ERROR: BAD Distance in travel.time1D "); return(NULL) }
+    if( any(indelta<0))  { print("ERROR: BAD Distance in travel.time1D "); return(NULL) }
 
     if(any(!is.numeric(ztop))){ print("ERROR: BAD velocity model"); return(NULL) }
     if(any(!is.numeric(vel))){ print("ERROR: BAD velocity model"); return(NULL) }

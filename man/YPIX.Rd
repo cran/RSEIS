@@ -19,6 +19,7 @@
 \alias{JustV}
 \alias{JustE}
 \alias{JustN}
+\alias{iNEXT}
 
 \title{PICK Buttons for swig
 }
@@ -86,6 +87,7 @@ JustN(nh, g)
     \item{JustV}{Display only vertical components}
     \item{JustE}{Display only east components}
     \item{JustN}{Display only north components}
+    \item{iNEXT}{Used internally in PickWin to move to next station}
 
 
 }
