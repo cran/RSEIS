@@ -32,34 +32,35 @@ plt.MTM0(frange, prange, plxy, M, freqs, amp, a, dof = dof, Fv = Fv, COL = 2)
 data(CE1)
 plot(CE1$x, CE1$y, type='l')
 
-len = length(CE1$y)
- len2 = 2*next2(len)
- Mspec =   mtapspec(CE1$y,  CE1$dt, klen=len2, MTP=list(kind=1,nwin=5,
-npi=3,inorm=0)  )
+len <- length(CE1$y)
+ len2 <- 2*next2(len)
+ Mspec <- mtapspec(CE1$y,  CE1$dt, klen=len2, MTP=list(kind=1,nwin=5,
+               npi=3,inorm=0)  )
 
 
-f=Mspec$freq
-M = 1
- f1 = 0.01
-f2 = 100
- plxy = ''
- flag = f>=f1 & f <= f2;
-    freqs = f[flag]
- mydof = NULL
-      myFv = NULL
- amp = Mspec$spec[1:length(f)]
+f<-Mspec$freq
+M <- 1
+ f1 <- 0.01
+f2 <- 100
+ plxy <- ''
+ flag <- f>=f1 & f <= f2;
+    freqs <- f[flag]
+ mydof <- NULL
+      myFv <- NULL
+ amp <- Mspec$spec[1:length(f)]
 
-      amp = list(amp[flag])
+      amp <- list(amp[flag])
 
 
-a = list(y=CE1$y, dt=CE1$dt)
-frange = range(freqs, na.rm = TRUE)
- prange = range(amp  , na.rm = TRUE)
+a <- list(y=CE1$y, dt=CE1$dt)
+frange <- range(freqs, na.rm = TRUE)
+ prange <- range(amp  , na.rm = TRUE)
 
 ###  plot(freqs, amp[[1]])
 
 
- plt.MTM0(frange, prange, plxy, M, freqs, amp, a, dof=mydof, Fv=myFv, COL=4)
+ plt.MTM0(frange, prange, plxy, M, freqs, amp, a,
+        dof=mydof, Fv=myFv, COL=4)
 
 
 

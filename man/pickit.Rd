@@ -6,7 +6,10 @@
   Automatic Picking Algorithm
 }
 \usage{
-pickit(ay, deltat = 0.008, MED = 225, FRWD = 8, BKWD = 8, sbef = 1, saft = 6, thresh = 2, Tthresh2 = 7, stretch = 1000, flo = 0.1, fhi = 5, Kmin = 7, dthresh = 0.01, threshbot = 1.01)
+pickit(ay, deltat = 0.008, MED = 225, FRWD = 8, BKWD = 8,
+ sbef = 1, saft = 6, thresh = 2, Tthresh2 = 7,
+stretch = 1000, flo = 0.1, fhi = 5, Kmin = 7,
+dthresh = 0.01, threshbot = 1.01)
 }
 
 \arguments{
@@ -31,7 +34,8 @@ pickit(ay, deltat = 0.008, MED = 225, FRWD = 8, BKWD = 8, sbef = 1, saft = 6, th
   This code uses several methods for getting best pick.
 }
 \value{
-list(RAT=A$rat, x=x, ay=ay, fy=fy, deltat=deltat, J=J$J , Z=Z, a1=a1, a2=a2, thresh=thresh, Tthresh2=Tthresh2, Kmin=Kmin)
+  list(RAT=A$rat, x=x, ay=ay, fy=fy, deltat=deltat, J=J$J ,
+  Z=Z, a1=a1, a2=a2, thresh=thresh, Tthresh2=Tthresh2, Kmin=Kmin)
 }
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}

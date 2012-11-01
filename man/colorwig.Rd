@@ -25,8 +25,8 @@ Graphical Side Effects
 
 data(KH)
 
-x = KH$ex[KH$ex>95& KH$ex<125]
-y = KH$JSTR[[1]][KH$ex>95& KH$ex<125]
+x <- KH$ex[KH$ex>95& KH$ex<125]
+y <- KH$JSTR[[1]][KH$ex>95& KH$ex<125]
 
 
 colorwig(x , y , rainbow(100))

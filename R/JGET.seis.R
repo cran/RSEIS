@@ -12,7 +12,7 @@ function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1, RAW
   if(missing(RAW)) { RAW=FALSE }
 
   
-  GIVE = as.list(1:length(fnames))
+  tmpGIVE = as.list(1:length(fnames))
 
   ii = 1
 
@@ -50,11 +50,16 @@ function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1, RAW
           DAT = list()
           GED  = load(fn)
           assign("DAT", get(GED))
+          if(is.null(names(DAT)) & length(DAT)>=1)
+            {
+              DAT = DAT[[1]]
 
+            }
+          
           if(HEADONLY) DAT$amp = NULL
           DAT$oldname = DAT$fn
           DAT$fn = fn
-          GIVE[[i]] = DAT
+          tmpGIVE[[i]] = DAT
 
           
           next
@@ -65,29 +70,29 @@ function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1, RAW
         #####   print(paste("RAW=", RAW))
           
           DAT  = JSEGY.seis(fn, Iendian=Iendian, HEADONLY=HEADONLY , BIGLONG=BIGLONG, PLOT=PLOT, RAW=RAW)
-          GIVE[[i]] = DAT[[1]]
+          tmpGIVE[[i]] = DAT[[1]]
           next
         }
 
       if(kind==2)
         {
           DAT  = JSAC.seis(fn, Iendian=Iendian, HEADONLY=HEADONLY , BIGLONG=BIGLONG, PLOT=PLOT, RAW=RAW)
-          GIVE[[i]] = DAT[[1]]
+          tmpGIVE[[i]] = DAT[[1]]
           next
         }
 
       if(kind==3)
         {
           print("AH format currently not available")
-          GIVE[[i]] = NA
+          tmpGIVE[[i]] = NA
           next
         }
 
       #############  if no kind matches, better return NA
-      GIVE[[i]] = NA
+      tmpGIVE[[i]] = NA
 
       
     }
-  invisible(GIVE)
+  invisible(tmpGIVE)
 }
 

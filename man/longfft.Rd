@@ -90,20 +90,26 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 setwd("/home/lees/MARIO_TUNG/LONGFFT")
 
 ###  2 color palettes
-p1=Gcols(plow=5, phi=0,  N=100, pal="topo.colors", mingray=0.8)
-p2=Gcols(plow=5, phi=0,  N=100, pal="rainbow", mingray=0.8)
+p1 <- Gcols(plow=5, phi=0,  N=100, pal="topo.colors", mingray=0.8)
+p2 <- Gcols(plow=5, phi=0,  N=100, pal="rainbow", mingray=0.8)
 
 ###   one station, vertical component
-longfft(DB, DAYS=c(148:156) , HRS=1:24 , sta="BBIL", comp=c("BHZ") , NPP=6 , CSCALE=FALSE, 
-pal = list(p1=p1, p2=p2), PS=TRUE ,  kind = 2,  Iendian=1, BIGLONG=FALSE )
+longfft(DB, DAYS=c(148:156) , HRS=1:24 ,
+sta="BBIL", comp=c("BHZ") , NPP=6 , CSCALE=FALSE, 
+pal = list(p1=p1, p2=p2), PS=TRUE ,  kind = 2,
+Iendian=1, BIGLONG=FALSE )
 
 ###   one station, infrasound
-longfft(DB, DAYS=c(148:156) , HRS=1:24 , sta="BBIL", comp=c("BDF") , NPP=6 , CSCALE=FALSE, 
-pal = list(p1=p2, p2=p1), PS=TRUE ,  kind = 2,  Iendian=1, BIGLONG=FALSE )
+longfft(DB, DAYS=c(148:156) , HRS=1:24 , sta="BBIL",
+comp=c("BDF") , NPP=6 , CSCALE=FALSE, 
+pal = list(p1=p2, p2=p1), PS=TRUE ,  kind = 2,
+Iendian=1, BIGLONG=FALSE )
 
 ###  one station, both vertical and infrasound, alternating
-longfft(DB, DAYS=c(148:156) , HRS=1:24 , sta="BBIL", comp=c("BHZ", "BDF") , NPP=6 , CSCALE=FALSE, 
-pal = list(p1=p2, p2=p1), PS=TRUE ,  kind = 2,  Iendian=1, BIGLONG=FALSE )
+longfft(DB, DAYS=c(148:156) , HRS=1:24 , sta="BBIL",
+comp=c("BHZ", "BDF") , NPP=6 , CSCALE=FALSE, 
+pal = list(p1=p2, p2=p1), PS=TRUE ,  kind = 2,
+Iendian=1, BIGLONG=FALSE )
 
 
 

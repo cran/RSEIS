@@ -29,7 +29,7 @@ JBLACK(n, acol=rgb(0,0,0))
 
 \seealso{shade.col, rainbow, colors }
 \examples{
-pal = JBLACK(100)
+pal <- JBLACK(100)
 
 }
 

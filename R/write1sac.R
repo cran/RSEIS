@@ -36,6 +36,9 @@ write1sac<-function(a1, BIGLONG=FALSE  , fn=NULL)
       "kuser0", "kuser1", "kuser2", "kcmpnm", "knetwk", "kdatrd", 
       "kinst")
 
+
+    
+
     
     theENDIAN =  .Platform$endian
     
@@ -130,6 +133,12 @@ write1sac<-function(a1, BIGLONG=FALSE  , fn=NULL)
         
 
       }
+
+
+
+
+
+    
 #####################################   write the file
     zz <- file(sacfn, "wb")
     for(j in 1:70)

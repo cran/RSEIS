@@ -116,15 +116,15 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 MYFUNC<-function(nh, g)
   {
     print("pressed MYFUNC")
-    d = data.frame(list(stations=nh$STNS, components=nh$COMPS))
+    d  <-  data.frame(list(stations=nh$STNS, components=nh$COMPS))
 print(d)        
-    g$action = "replot"
+    g$action  <-  "replot"
     invisible(list(global.vars=g))	
   }
 
-STDLAB=c("DONE", "QUIT", "SELBUT" , "MYFUNC" )
+STDLAB <- c("DONE", "QUIT", "SELBUT" , "MYFUNC" )
 data(GH)
-JJ = swig(GH, sel=1:10, STDLAB=STDLAB)
+JJ  <-  swig(GH, sel=1:10, STDLAB=STDLAB)
 
 }
 

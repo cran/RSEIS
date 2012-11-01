@@ -100,7 +100,7 @@ function(Xamp, DT=0.008, STAMP=NULL)
             numc = ncol(faha$img)
             numf = nrow(faha$img)
             
-            szi = seq(start=1, to=(length(zloc$x)-1), by=2)
+            szi = seq(from=1, to=(length(zloc$x)-1), by=2)
             
             MYx = rep(NA, length(szi))
             MYy = rep(NA, length(szi))
@@ -199,10 +199,13 @@ function(Xamp, DT=0.008, STAMP=NULL)
             jdev = dev.cur()
             plfname = local.file("wletc","eps")
 
+            
+            dbounds = range(faha$img )
 
             P = round(par('pin'))
 
-            postscript(file=plfname , width=P[1], height=P[2], paper = "special", horizontal=FALSE, onefile=TRUE,print.it=FALSE)
+            postscript(file=plfname , width=P[1], height=P[2], paper = "special",
+                       horizontal=FALSE, onefile=TRUE,print.it=FALSE)
 
 
             
@@ -219,7 +222,8 @@ function(Xamp, DT=0.008, STAMP=NULL)
                  print("bef cont: PEAX:")
                 print(PEAX)
               }
-            PE =contwlet(faha, Xamp, DT,   clev=0.75,  NLEV=20, zscale=scale.def, zbound=dbounds,  col=col, ygrid=FALSE, PEAX=PEAX)
+            PE =contwlet(faha, Xamp, DT,   clev=0.75,  NLEV=20, zscale=scale.def, zbound=dbounds,
+              col=col, ygrid=FALSE, PEAX=PEAX)
             pwlet2freqs(faha$noctave, faha$nvoice, DT, flip=faha$flip, pfreqs  , plot=TRUE)
             
             print(paste(sep=' ' ,"Done creating postscript file:", plfname))
@@ -293,10 +297,16 @@ function(Xamp, DT=0.008, STAMP=NULL)
           }
         
         if(K[Nclick]==match("INFO", labs, nomatch = NOLAB))
-          {  
+          {
+
+            points(zloc$x[1:(zenclick-1)], zloc$y[1:(zenclick-1)], pch =3)
+            
             whyat = min(PE$y)+(diff(range(PE$y)))*(zloc$y[1:(zenclick-1)]-min(PE$why))/(diff(range(PE$why)))
             exat  = min(PE$x)+(diff(range(PE$x)))*(zloc$x[1:(zenclick-1)]-min(PE$x))/(diff(range(PE$x)))
-            rDUMPLOC(list(x=exat, y=whyat))
+
+            
+            CLICKEDpts = list(x=exat, y=whyat)
+            rDUMPLOC(CLICKEDpts)
              zloc = list(x=NULL, y=NULL) 
           }
 
@@ -308,7 +318,7 @@ function(Xamp, DT=0.008, STAMP=NULL)
             numf = nrow(faha$img)
 
             
-            szi = seq(start=1, to=(length(zloc$x)-1), by=2)
+            szi = seq(from=1, to=(length(zloc$x)-1), by=2)
             MYx = rep(NA, length(szi))
             MYy = rep(NA, length(szi))
             j = 1
@@ -345,7 +355,7 @@ function(Xamp, DT=0.008, STAMP=NULL)
 
             PEAXBoxes = list(x=MYx, y=MYy)
             
-            rDUMPLOC(list(x=MYx, y=MYy))
+            rDUMPLOC(PEAXBoxes)
              zloc = list(x=NULL, y=NULL)
             
           }

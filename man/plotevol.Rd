@@ -2,7 +2,7 @@
 \alias{plotevol}
 \alias{blankevol}
 \alias{plotevol2}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Plot Spectrogram}
 \description{
  Plot Spectrogram
@@ -22,7 +22,7 @@ CSCALE=FALSE, WUNITS="Volts", STAMP=NULL, STYLE="fft", WIG=TRUE  )
 
 
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{DEVOL}{spectrogram structure }
   \item{log}{scale by logarithm}
@@ -72,32 +72,32 @@ CSCALE=FALSE, WUNITS="Volts", STAMP=NULL, STYLE="fft", WIG=TRUE  )
 
 data(CE1)
 
-Xamp = CE1$y
+Xamp <- CE1$y
 
-DT = CE1$dt
+DT <- CE1$dt
 
- tsecs = DT*(length(Xamp)*.02)
-    multi = 2
-scale.def = 1
-  TWOSEC = tsecs*(1/DT)
+ tsecs <- DT*(length(Xamp)*.02)
+    multi <- 2
+scale.def <- 1
+  TWOSEC <- tsecs*(1/DT)
     
-  NS = floor(multi*TWOSEC)
-  NOV = floor(multi*(TWOSEC-.2*TWOSEC))
+  NS <- floor(multi*TWOSEC)
+  NOV <- floor(multi*(TWOSEC-.2*TWOSEC))
 
     
-    Nfft=4096
+    Nfft<-4096
 
-    pal = rainbow(100)
+    pal <- rainbow(100)
 
-    fl  = 0
-   fh=1/(2*DT)
+    fl  <- 0
+   fh <- 1/(2*DT)
 
-   flshow =  .5
-   fhshow = 120
+   flshow <-  .5
+   fhshow <- 120
 
-   DEV = evolfft(Xamp,DT , Nfft=Nfft, Ns=NS , Nov=NOV,  fl=fl, fh=fh  )
+   DEV <- evolfft(Xamp,DT , Nfft=Nfft, Ns=NS , Nov=NOV,  fl=fl, fh=fh  )
 
-  PE =  plotevol(DEV, log=scale.def, fl=flshow, fh=fhshow,
+  PE <-  plotevol(DEV, log=scale.def, fl=flshow, fh=fhshow,
                  col=pal, ygrid=FALSE, STAMP="HITHERE", STYLE="fft")
 
 

@@ -70,22 +70,26 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 }
 \examples{
 
+
+\dontrun{
 data(KH)
 ###   swig(KH)
 
-Xamp = KH$JSTR[[1]]
-Nfft=1024   ###  fft length
-Ns=512      ###  number of samples in a window
-Nov=480    ###  number of samples of overlap per window
-fl=0        ###  low frequency to return
-fh=12     ###  high frequency to return
- dt = KH$dt[1]
+Xamp <- KH$JSTR[[1]]
+Nfft <- 1024   ###  fft length
+Ns <- 512      ###  number of samples in a window
+Nov <- 480    ###  number of samples of overlap per window
+fl <- 0        ###  low frequency to return
+fh <- 12     ###  high frequency to return
+ dt  <-  KH$dt[1]
 
 
-EV = MTMgabor(Xamp, dt = dt, numf =Nfft , Ns = Ns, Nov = Nov, fl = fl, fh= fh)
+EV <-   MTMgabor(Xamp, dt = dt, numf =Nfft , Ns = Ns, Nov = Nov, fl = fl, fh= fh)
 
-PE = plotevol(EV, log=1, fl=0.01, fh=fh, col=rainbow(100), ygrid=FALSE, STAMP="", STYLE="ar")
+PE   <- plotevol(EV, log=1, fl=0.01, fh=fh, col=rainbow(100),
+              ygrid=FALSE, STAMP="", STYLE="ar")
 
+}
 
 
 }

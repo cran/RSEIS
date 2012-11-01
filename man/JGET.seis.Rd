@@ -3,16 +3,17 @@
 
 \title{Reads various seismic file formats}
 \description{
-  This fuction calls c-routines to read in \sQuote{segy}, \sQuote{sac}.
+  This fuction calls binary routines to read in \sQuote{segy}, \sQuote{sac}.
 }
 \usage{
-JGET.seis(fnames, kind = 1, Iendian=1, BIGLONG=FALSE , HEADONLY=FALSE,  PLOT = -1, RAW=FALSE)
+JGET.seis(fnames, kind = 1, Iendian=1, BIGLONG=FALSE ,
+HEADONLY=FALSE,  PLOT = -1, RAW=FALSE)
 
 }
 \arguments{
   \item{fnames}{list of file names.}
   \item{kind}{an integer 1, 2, 3; 0=R(DAT) , 1 = segy, 2 = sac, 3 = AH.}
-  \item{Iendian}{ Endian-ness of the data: 1,2,3: "little", "big", "swap".
+  \item{Iendian}{ vector,   Endian-ness of the data: 1,2,3: "little", "big", "swap".
     Default = 1 (little)
   }
   \item{BIGLONG}{ logical, TRUE=long=8 bytes
@@ -56,14 +57,17 @@ JGET.seis(fnames, kind = 1, Iendian=1, BIGLONG=FALSE , HEADONLY=FALSE,  PLOT = -
  }
  \details{
  
-  Uses readBin to extract data in SAC format.
-  user must know what kind of machine the data
+  Uses readBin to extract data in SAC/SEGY format.
+  User must know what kind of machine the data
   was created on for I/O purposes.
   
 
   If data was created on a little endian machine but
   is being read on big endian machine, need to call
   the endian "swap" for swapping.
+
+   Iendian can be a vector if input files have different endian-ness.
+
 
   If data was created on a machine with LONG=4 bytes,
   be sure to call the program with BIGLONG=FALSE.
@@ -120,26 +124,27 @@ JGET.seis(fnames, kind = 1, Iendian=1, BIGLONG=FALSE , HEADONLY=FALSE,  PLOT = -
 \examples{  
 \dontrun{
 
-Lname = list.files(path='/data/wadati/bourbon/LaurelCanNC/R005.01' , pattern="08.005.01.41.23.9024", full.names=TRUE)
+Lname  <-  list.files(path='/data/wadati/bourbon/LaurelCanNC/R005.01' ,
+         pattern="08.005.01.41.23.9024", full.names=TRUE)
 
-S1  = JGET.seis(Lname, kind = 1, PLOT = -1)
+S1   <-  JGET.seis(Lname, kind = 1, PLOT = -1)
 
 ###   for data created on UNIX (SUN) but read on linux:
 
-S1  = JGET.seis(Lname, kind = 1, Iendian="swap", BIGLONG=FALSE, PLOT = -1)
+S1   <-  JGET.seis(Lname, kind = 1, Iendian="swap", BIGLONG=FALSE, PLOT = -1)
 
 ###   for data created on linux (32 bit)  but read on linux 64 bit:
 
-S1  = JGET.seis(Lname, kind = 1, Iendian="little", BIGLONG=FALSE, PLOT = -1)
+S1   <-  JGET.seis(Lname, kind = 1, Iendian="little", BIGLONG=FALSE, PLOT = -1)
 
 ###   for SEGY data created on linux (64 bit)  but read on linux 32 bit:
 
-S1  = JGET.seis(Lname, kind = 1, Iendian="little", BIGLONG=TRUE, PLOT = -1)
+S1   <-  JGET.seis(Lname, kind = 1, Iendian="little", BIGLONG=TRUE, PLOT = -1)
 
 
 ###   for SAC data created on MAC-OS (64 bit)  but read on linux 32 bit:
 
-S1  = JGET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = -1)
+S1   <-  JGET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = -1)
 
 
 ##################   
@@ -152,9 +157,9 @@ S1  = JGET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = -1)
 
 ####  prepare the data for further processing:
 
-S1  = JGET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = -1)
+S1   <-  JGET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = -1)
 
- GH=prepSEIS(S1)
+ GH <- prepSEIS(S1)
 ####   plot the data, and interact with the data
 swig(GH)
 

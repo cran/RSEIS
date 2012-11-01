@@ -8,7 +8,7 @@
 \usage{
 logspace(d1, d2, n = n)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{d1}{lower frequency}
   \item{d2}{upper frequency}
@@ -26,7 +26,7 @@ logspace(d1, d2, n = n)
 
 \examples{
 
-f=logspace(1, 25)
+f <- logspace(1, 25)
 
 }
 

@@ -21,11 +21,11 @@ See legend() for details on input
 \seealso{legend}
 \examples{
 
-###  VELMOD1D = Get1Dvel("/home/lees/Progs/R_PAX/wu_coso.vel", PLOT = TRUE)
 
 plot(c(0,1), c(0,1))
-u = par('usr')
-LEG = jlegend( u[1], u[4], c("Vp", "Vs"), lwd=2, col=c(4,3), plot=FALSE  )
+u  <-  par('usr')
+LEG  <-  jlegend( u[1], u[4], c("Vp", "Vs"),
+            lwd=2, col=c(4,3), plot=FALSE  )
 
  
 }

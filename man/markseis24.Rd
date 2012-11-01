@@ -61,21 +61,25 @@ acomp = "V"
 iday = 2
 
 ###   get one day's worth of data
-JJ = getseis24(DB, 2009, iday, "CAL", "V", kind = 1)
+JJ <- getseis24(DB, 2009, iday, "CAL", "V", kind = 1)
 
 ###  plot day
-pjj = plotseis24(JJ, dy=1/18, FIX=24, SCALE=0, FILT=list(ON=FALSE, fl=0.5 , fh=20.0, type="BP", proto="BU"), RCOLS=c(rgb(0.2, .2, 1), rgb(.2, .2, .2))  )
+pjj <- plotseis24(JJ, dy=1/18, FIX=24, SCALE=0,
+FILT <- list(ON=FALSE, fl=0.5 , fh=20.0, type="BP", proto="BU"),
+RCOLS=c(rgb(0.2, .2, 1), rgb(.2, .2, .2))  )
 title(paste("CAL", "V"))
 
 ###   set up pix
-WINS2 = win15
-Apix = WINS2$hr[seq(from=1, to=length(WINS2$hr), by=2) ]
-dur = (WINS2$hr[seq(from=2, to=length(WINS2$hr), by=2) ]-Apix)*3600
+WINS2 <- win15
+Apix <- WINS2$hr[seq(from=1, to=length(WINS2$hr), by=2) ]
+dur <- (WINS2$hr[seq(from=2, to=length(WINS2$hr), by=2) ]-Apix)*3600
 
-## dur = rep(0, times=length(Apix))
+## dur <- rep(0, times=length(Apix))
 
 ##  mark the 24 hour plot
-markseis24(pjj, pix =list(yr=rep(pjj$yr, length(Apix)), jd=rep(pjj$jd, length(Apix)) , hr=Apix, mi=rep(0, length(Apix)), sec=rep(0, length(Apix)), dur=dur), col='red', ARROWS=FALSE )
+markseis24(pjj, pix =list(yr=rep(pjj$yr, length(Apix)),
+ jd=rep(pjj$jd, length(Apix)) , hr=Apix, mi=rep(0, length(Apix)),
+sec=rep(0, length(Apix)), dur=dur), col='red', ARROWS=FALSE )
 
 
 

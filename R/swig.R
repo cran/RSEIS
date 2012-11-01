@@ -56,7 +56,7 @@
    ##     {
       STDLAB = c("REPLOT","DONE", "SELBUT", "PSEL","LocStyle",
         "ZOOM.out", "ZOOM.in", "LEFT", "RIGHT", "RESTORE",  "Pinfo","WINFO",
-                          "XTR", "SPEC", "SGRAM" ,"WLET",
+                      "Xwin",    "XTR", "SPEC", "SGRAM" ,"WLET",
         "FILT", "UNFILT", "SCALE", "Postscript")
   }
   

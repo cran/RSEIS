@@ -63,10 +63,10 @@ http://earthquake.usgs.gov/earthquakes/eqarchives/epic/epic_global.php
 }
 \examples{
 \dontrun{
-fn = "/home/lees/WORK/SENDAI.EVENT/catsearch.8757"
+fn <- "/home/lees/WORK/SENDAI.EVENT/catsearch.8757"
 
-g = getANSS(fn)
-g$jd = getjul(g$yr, g$mo, g$dom)
+g <- getANSS(fn)
+g$jd <- getjul(g$yr, g$mo, g$dom)
 }
 
 }

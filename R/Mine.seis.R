@@ -19,7 +19,7 @@
   if(missing(CHOP)) { CHOP=TRUE }
   if(missing(verbose)) { verbose=FALSE }
   if(missing(Iendian)) { Iendian=1 }
-     if(missing(BIGLONG)) { BIGLONG=TRUE}
+     if(missing(BIGLONG)) { BIGLONG=FALSE }
  if(missing(RAW)) { RAW=FALSE  }
 
   
@@ -138,8 +138,9 @@
     }
 
 
-  
-  eday = EPOCHday(GH$info$yr, jd=GH$info$jd, origyr = DB$origyr)
+  if(is.null(attr(DB, "origyr")))  { origyr = min(DB$yr) }
+  else {origyr=attr(DB, "origyr") }
+  eday = EPOCHday(GH$info$yr, jd=GH$info$jd, origyr = origyr )
 
  #######  print("Mine after EPOCHday")
   

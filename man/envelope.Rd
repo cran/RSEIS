@@ -1,6 +1,6 @@
 \name{envelope}
 \alias{envelope}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Envelope Function with Hilbert Transform}
 \description{
   Envelope Function with Hilbert Transform
@@ -27,7 +27,7 @@ envelope(x)
 \examples{
 
 data(CE1)
-ev = envelope(CE1$y)
+ev <- envelope(CE1$y)
 plot(CE1$x, CE1$y, type='l')
 lines(CE1$x,ev, col='red')
 

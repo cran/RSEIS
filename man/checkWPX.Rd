@@ -39,7 +39,7 @@ see repairWPX to fix problems.
 }
 \examples{
 
-s1 = setWPX(name="HI", yr=2011, jd=231, hr=4, mi=3, sec = runif(5)) 
+s1 <- setWPX(name="HI", yr=2011, jd=231, hr=4, mi=3, sec = runif(5)) 
 
 s1$col=NULL
 

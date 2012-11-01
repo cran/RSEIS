@@ -33,9 +33,9 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 
 \dontrun{
 
-fn = '/home/lees/taurus_2050_20100302_100000_BHE.sac'
+fn <- '/home/lees/taurus_2050_20100302_100000_BHE.sac'
 
-J  = JGET.seis(fn,kind=2,BIGLONG=FALSE,HEADONLY=FALSE,Iendian=3,PLOT=0)
+J  <- JGET.seis(fn,kind=2,BIGLONG=FALSE,HEADONLY=FALSE,Iendian=3,PLOT=0)
 
 plotJGET(J)
 

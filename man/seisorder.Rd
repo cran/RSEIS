@@ -30,16 +30,17 @@ seisorder(GH, ORD, VNE = c("V", "N", "E"))
 \examples{
 
 data(GH)
-staf = GH$stafile
+staf <- GH$stafile
 
 ################   get the distances from the source to the stations
-d1  = GreatDist(GH$pickfile$LOC$lon, GH$pickfile$LOC$lat,staf$lon, staf$lat)
+d1  <- GreatDist(GH$pickfile$LOC$lon, GH$pickfile$LOC$lat,
+              staf$lon, staf$lat)
 
 ###  staf has the names of the stations already, so insert the order via
 ###                       dist
-staf$dist=d1$dkm
+staf$dist <- d1$dkm
 
-sorder = seisorder(GH, staf, VNE= c("V", "N", "E"))
+sorder <- seisorder(GH, staf, VNE= c("V", "N", "E"))
 
 \dontrun{
 swig(GH, sel=sorder)

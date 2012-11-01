@@ -21,7 +21,7 @@ view.seis<-function(aday, ihour, inkhour, SAVEFILE, days, DB, usta, acomp,  STDL
 
    if(missing(TZ)) { TZ=NULL }
 
-   if(is.null(DB$origyr))  DB$origyr = min(DB$yr, na.rm=TRUE)
+   if(is.null(attr(DB, "origyr")))  attr(DB, "origyr") = min(DB$yr, na.rm=TRUE)
 
    if(!is.list(days) )
      {
@@ -71,7 +71,7 @@ view.seis<-function(aday, ihour, inkhour, SAVEFILE, days, DB, usta, acomp,  STDL
 
    
    
-   eday = EPOCHday(days$yr[aday], jd=days$jd[aday], origyr = DB$origyr)
+   eday = EPOCHday(days$yr[aday], jd=days$jd[aday], origyr =  attr(DB, "origyr") )
            
     while( ihour >= 0 & ihour < 24)
       {

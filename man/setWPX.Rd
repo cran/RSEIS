@@ -7,7 +7,9 @@ Create a WPX list from vector input
 or relavent parameters.
 }
 \usage{
-setWPX(phase = NULL, col = NULL, yr = NULL, jd = NULL, hr = NULL, mi = NULL, sec = NULL, dur = NULL, name = NULL, comp = NULL, dispcomp = NULL, onoff = NULL)
+setWPX(phase = NULL, col = NULL, yr = NULL, jd = NULL,
+hr = NULL, mi = NULL, sec = NULL, dur = NULL, name = NULL,
+comp = NULL, dispcomp = NULL, onoff = NULL)
 }
 \arguments{
   \item{phase}{character, phase names
@@ -54,7 +56,7 @@ addWPX,	catWPX,	checkWPX,	cleanWPX,	clusterWPX,	repairWPX,	saveWPX
 }
 \examples{
 
-s1 = setWPX(name="HI", yr=2011, jd=231, hr=4, mi=3, sec = runif(5)) 
+s1 <- setWPX(name="HI", yr=2011, jd=231, hr=4, mi=3, sec = runif(5)) 
 
 
 }

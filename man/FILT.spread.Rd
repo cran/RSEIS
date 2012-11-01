@@ -7,7 +7,9 @@
   at a variety of bandwidths.
 }
 \usage{
-FILT.spread(x, y, dt, fl = fl, fh = fh, sfact = 1, WIN = NULL, PLOT = TRUE, TIT = NULL, TAPER = 0.05, POSTTAPER=0.05)
+FILT.spread(x, y, dt, fl = fl, fh = fh, sfact = 1,
+ WIN = NULL, PLOT = TRUE, TIT = NULL, TAPER = 0.05,
+ POSTTAPER=0.05)
 }
 
 \arguments{
@@ -41,18 +43,19 @@ FILT.spread(x, y, dt, fl = fl, fh = fh, sfact = 1, WIN = NULL, PLOT = TRUE, TIT 
 \seealso{butfilt, PLOT.MATN}
 \examples{
 data(KH)
-dt = KH$dt[1]
+dt  <-  KH$dt[1]
 
-y =  KH$JSTR[[1]]
+y  <-   KH$JSTR[[1]]
 
-x =  seq(from=0, by=dt, length=length(y))
+x  <-   seq(from=0, by=dt, length=length(y))
 
 
 
-fl=rep(1/100, 5)
-fh=1/c(1,2,5,10,20)
+fl <- rep(1/100, 5)
+fh <- 1/c(1,2,5,10,20)
 
-FILT.spread(x, y, dt, fl = fl, fh = fh, sfact = 1, WIN = NULL, PLOT = TRUE, TIT = NULL, TAPER = 0.05)
+FILT.spread(x, y, dt, fl = fl, fh = fh, sfact = 1,
+   WIN = NULL, PLOT = TRUE, TIT = NULL, TAPER = 0.05)
 
 
 }

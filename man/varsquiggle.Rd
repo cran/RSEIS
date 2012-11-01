@@ -9,7 +9,7 @@
 varsquiggle(GH, sel = c(1, 2), WIN = c(0, 1), dist=NULL, thick=1 ,
 FLIP=FALSE, filcol='blue', tracecol='blue')
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{GH}{Seismic List}
   \item{sel}{selection of seismic traces}
@@ -36,13 +36,13 @@ Graphical Side effects
 \seealso{matsquiggle, varsquig}
 \examples{
 data(GH)
-m = match( GH$STNS,    GH$stafile$name)
-LATS = GH$stafile$lat[m]
-LONS = GH$stafile$lon[m]
-dees = rdistaz( GH$pickfile$LOC$lat, GH$pickfile$LOC$lon, LATS, LONS)
+m <- match( GH$STNS,    GH$stafile$name)
+LATS <- GH$stafile$lat[m]
+LONS <- GH$stafile$lon[m]
+dees <- rdistaz( GH$pickfile$LOC$lat, GH$pickfile$LOC$lon, LATS, LONS)
 
-sel = which(GH$COMPS=="V")
-sel = sel[order(dees$dist[sel])]
+sel <- which(GH$COMPS=="V")
+sel <-  sel[order(dees$dist[sel])]
 
 ###  plot normal way:
 swig(GH, sel=sel, WIN=c(5,10), SHOWONLY=TRUE)

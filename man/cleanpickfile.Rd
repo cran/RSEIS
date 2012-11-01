@@ -23,7 +23,7 @@ cleanpickfile(P)
 
 \seealso{EmptyPickfile}
 \examples{
-P = EmptyPickfile()
+P <- EmptyPickfile()
 cleanpickfile(P)
 }
 

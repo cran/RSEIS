@@ -31,10 +31,10 @@ MTMdisp(a, f1 = f1, f2 = f2, len2 = 1024, PLOT = FALSE)
 \seealso{mtapspec  }
 \examples{
 data(CE1)
-xvel = list(y=CE1$y[CE1$x>5.443754 & CE1$x<5.615951], dt=CE1$dt)
+xvel <- list(y=CE1$y[CE1$x>5.443754 & CE1$x<5.615951], dt=CE1$dt)
 
-len2 = next2(length(xvel$y))
-Spec =MTMdisp(xvel, f1=.01, f2=25, len2=len2, PLOT=FALSE )
+len2 <- next2(length(xvel$y))
+Spec <- MTMdisp(xvel, f1=.01, f2=25, len2=len2, PLOT=FALSE )
 
 }
 

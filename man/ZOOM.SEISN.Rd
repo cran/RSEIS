@@ -8,7 +8,7 @@
 \usage{
 ZOOM.SEISN(GH, sel = 1:length(GH$dt), WIN = NULL)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{GH}{Seismic trace structure }
   \item{sel}{selection of traces }
@@ -25,9 +25,9 @@ ZOOM.SEISN(GH, sel = 1:length(GH$dt), WIN = NULL)
 \seealso{swig}
 \examples{
 data("GH")
-sel= which(GH$COMPS=="V")
+sel <-  which(GH$COMPS=="V")
 
-KF = ZOOM.SEISN(GH, sel=sel, WIN = c(0 , 5)  )
+KF  <-  ZOOM.SEISN(GH, sel=sel, WIN = c(0 , 5)  )
 
 swig(KF)
 }

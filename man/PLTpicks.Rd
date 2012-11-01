@@ -22,9 +22,9 @@ PLTpicks(picks, labs = NA, cols = NA)
 }
 \examples{
 
-ex = seq(from=0, to=4*pi, length = 200)
+ex  <-  seq(from=0, to=4*pi, length = 200)
 
-y = sin(ex)
+y  <-  sin(ex)
 picks = c(0.5*pi, 2.3*pi)
 plot(ex, y, type='l')
 

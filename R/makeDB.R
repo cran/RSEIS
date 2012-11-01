@@ -1,9 +1,11 @@
-makeDB<-function(path, pattern="R", kind =1, Iendian=1, BIGLONG=FALSE)
+makeDB<-function(path="." , pattern="R", dirs="", kind =1, Iendian=1, BIGLONG=FALSE)
   {
     if(missing(kind)) { kind =1 }
     if(missing(pattern)) {pattern="R"  }
       if(missing(Iendian)) { Iendian=1 }
-       if(missing(BIGLONG)) { BIGLONG=TRUE}
+       if(missing(BIGLONG)) { BIGLONG=FALSE }
+        if(missing(path)) { path="." }
+     
 
     if(is.na(pattern) | is.null(pattern)  )
       {
@@ -18,6 +20,11 @@ makeDB<-function(path, pattern="R", kind =1, Iendian=1, BIGLONG=FALSE)
 
       }
 
+    if(length(dirs)>0)
+      {
+           LF1 = dirs
+           NDIRS = length(LF1)
+      }
  
     
     
@@ -59,9 +66,8 @@ makeDB<-function(path, pattern="R", kind =1, Iendian=1, BIGLONG=FALSE)
            ADB$hr[N] = REC$DATTIM$hr
            ADB$mi[N] = REC$DATTIM$mi
            ADB$sec[N] = REC$DATTIM$sec+REC$DATTIM$msec/1000
+           ADB$dt[N] = REC$DATTIM$dt
            ADB$dur[N] = REC$DATTIM$dt*REC$N
-           
-
           }
 
       }
@@ -69,14 +75,18 @@ makeDB<-function(path, pattern="R", kind =1, Iendian=1, BIGLONG=FALSE)
 
 
     
-    ADB$origyr = min(ADB$yr)
+    origyr = min(ADB$yr)
 
- eday = EPOCHday(ADB$yr, jd = ADB$jd, origyr = ADB$origyr)
+ eday = EPOCHday(ADB$yr, jd = ADB$jd, origyr = origyr)
     ADB$t1 = eday$jday + ADB$hr/24 + ADB$mi/(24 * 60) + ADB$sec/(24 *
         3600)
     ADB$t2 = ADB$t1 + ADB$dur/(24 * 3600)
+    attr(ADB, "origyr")<- min(origyr)
+    attr(ADB, "kind")=kind
+    attr(ADB, "Iendian")=Iendian
+    attr(ADB, "BIGLONG")=BIGLONG
 
-
+    
     invisible(ADB)
 
     

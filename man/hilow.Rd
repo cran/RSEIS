@@ -22,12 +22,12 @@ hilow(y)
 }
 
 \examples{
-ex = seq(from=0, to=4*pi, length = 200)
+ex <- seq(from=0, to=4*pi, length = 200)
 
-y = sin(ex)
+y <- sin(ex)
 plot(ex, y, type='l')
 
-peakval = hilow(y)
+peakval <- hilow(y)
 
 abline(v=ex[peakval$hi], col='green')
 abline(v=ex[peakval$lo], col='red')

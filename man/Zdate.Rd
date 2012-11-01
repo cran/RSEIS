@@ -37,12 +37,12 @@ dateStamp(datelist)
 \examples{
 data("GH")
 
-sel= which(GH$COMPS == "V")
+sel <-  which(GH$COMPS == "V")
 
-ftime = Zdate(GH$info, sel[1:5], 1)
+ftime  <-  Zdate(GH$info, sel[1:5], 1)
 
-dvec = c(2009, 134, 5, 14, 10, 32, 24.5, 0)
-A = dateList(dvec)
+dvec  <-  c(2009, 134, 5, 14, 10, 32, 24.5, 0)
+A  <-  dateList(dvec)
 dateStamp(A)
 
 }

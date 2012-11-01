@@ -25,7 +25,7 @@ fixcomps(oldcomps, SEGY = FALSE)
 
 \seealso{fixcompname }
 \examples{
-comp = c("v", "e")
+comp <- c("v", "e")
 fixcomps(comp)
 }
 

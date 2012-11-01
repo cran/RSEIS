@@ -1,5 +1,7 @@
 YPIX<-function(nh, g)
   {
+    #####  BUTTONDOC:YPIX:'generic (Y) pick' 
+
     if(g$zenclick>=2)
       {
         zappa = match(g$KLICK, g$BLABS)

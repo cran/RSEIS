@@ -36,7 +36,7 @@ setypx()
 \seealso{setwpix}
 \examples{
 
-a = setypx()
+a <- setypx()
 
 print(a)
 

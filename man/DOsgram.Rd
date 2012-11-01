@@ -6,7 +6,8 @@
 \description{Gabor transform with simple spectrum
 }
 \usage{
-DOsgram(Xamp, DT = 0.008, multi = 1, scale.def = 0, TWIN = 2, TSKIP = 0.2, PCTTAP = 0.05, PLOT=TRUE)
+DOsgram(Xamp, DT = 0.008, multi = 1, scale.def = 0,
+ TWIN = 2, TSKIP = 0.2, PCTTAP = 0.05, PLOT=TRUE)
 }
 \arguments{
    \item{Xamp}{signal
@@ -39,7 +40,8 @@ list
 \item{sig}{input signal}
 \item{dt}{deltat}
 \item{numfreqs}{Number of frequencies output}
-\item{wpars}{input parameters list(Nfft=numfreqs,  Ns=Ns, Nov=Nov, fl=fl, fh=fh)}
+\item{wpars}{input parameters list(Nfft=numfreqs,
+  Ns=Ns, Nov=Nov, fl=fl, fh=fh)}
 \item{DSPEC}{spectrum image}
 
 \item{freqs}{output frequencies (y axis)}
@@ -62,24 +64,21 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 }
 \examples{
 
-
-
-
-
 data(KH)
 ###   swig(KH)
 
-Xamp = KH$JSTR[[1]]
-Xamp = Xamp[57914:72989]
+Xamp  <-  KH$JSTR[[1]]
+Xamp  <-  Xamp[57914:72989]
 
-Nfft=1024   ###  fft length
-Ns=512      ###  number of samples in a window
-Nov=480    ###  number of samples of overlap per window
-fl=0        ###  low frequency to return
-fh=12     ###  high frequency to return
+Nfft <- 1024   ###  fft length
+Ns <- 512      ###  number of samples in a window
+Nov <- 480    ###  number of samples of overlap per window
+fl <- 0        ###  low frequency to return
+fh <- 12     ###  high frequency to return
 
 
-EV = DOsgram(Xamp, DT = 0.008, multi = 1, scale.def = 0, TWIN = 2, TSKIP = 0.2, PCTTAP = 0.05)
+EV  <-  DOsgram(Xamp, DT = 0.008, multi = 1, scale.def = 0,
+TWIN = 2, TSKIP = 0.2, PCTTAP = 0.05)
 
 
 

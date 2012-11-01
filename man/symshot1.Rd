@@ -46,7 +46,7 @@ symshot1(PLOT = FALSE)
 \seealso{wiggleimage, symshot}
 \examples{
 
-S1 = symshot1()
+S1 <- symshot1()
 wiggleimage(S1$smograms, dt = -S1$dt, dx = S1$x, col = "black")
 
 

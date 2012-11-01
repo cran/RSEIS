@@ -1,6 +1,6 @@
 \name{INVRft}
 \alias{INVRft}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Inverse Fourier Transform}
 \description{
   Inverse Fourier Transform
@@ -36,8 +36,8 @@ time shift theorem has been used to account for time not starting at t=0.
 
 \seealso{makefreq, FRWDft, INSTresponse}
 \examples{
-zil = rnorm(300)
-fss = FRWDft( zil, length(zil), 0, 0.004)   
+zil  <-  rnorm(300)
+fss  <-  FRWDft( zil, length(zil), 0, 0.004)   
 INVRft(fss$G, length(zil), 0, 0.004)
 
 

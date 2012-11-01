@@ -1,12 +1,13 @@
 \name{pwlet2freqs}
 \alias{pwlet2freqs}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Convert Wavelet Axis to Frequency}
 \description{
   Convert Wavelet Axis to Frequency
 }
 \usage{
-pwlet2freqs(noctave, nvoice, dt, flip = TRUE, tab.FREQ, plot = FALSE, perc = 0.85)
+pwlet2freqs(noctave, nvoice, dt, flip = TRUE,
+tab.FREQ, plot = FALSE, perc = 0.85)
 }
 
 \arguments{
@@ -32,9 +33,10 @@ This function is used to add a y-axis to a wavelet transform plot.
 
 \seealso{wlet.do}
 \examples{
-pfreqs = c(0.5, 1, 2,3,4,5, 10, 14)
+pfreqs <- c(0.5, 1, 2,3,4,5, 10, 14)
 
-zp = pwlet2freqs(noctave= 6, nvoice= 20, 0.004, flip = TRUE, pfreqs, plot = FALSE, perc = 0.85)
+zp <- pwlet2freqs(noctave= 6, nvoice= 20, 0.004,
+ flip = TRUE, pfreqs, plot = FALSE, perc = 0.85)
   
 }
 

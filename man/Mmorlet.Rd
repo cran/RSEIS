@@ -31,7 +31,7 @@ Mmorlet(UB = -4, LB = 4, N = 256, plot = FALSE)
 \seealso{scal2freqs, Rwave }
 \examples{
 
-mm  = Mmorlet(-8, 8, 256)
+mm  <- Mmorlet(-8, 8, 256)
 
 
 

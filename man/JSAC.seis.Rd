@@ -7,16 +7,17 @@
 \description{Read SEGY/SAC format binary data
 }
 \usage{
-JSAC.seis(fnames, Iendian = 1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT = -1, RAW=FALSE)
-JSEGY.seis(fnames, Iendian = 1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT = -1, RAW=FALSE)
-
+JSAC.seis(fnames, Iendian = 1 , HEADONLY=FALSE,
+BIGLONG=TRUE, PLOT = -1, RAW=FALSE)
+JSEGY.seis(fnames, Iendian = 1 , HEADONLY=FALSE,
+BIGLONG=TRUE, PLOT = -1, RAW=FALSE)
 }
 \arguments{
   \item{fnames}{vector of file names to be extracted and converted.
   }
   
-\item{Iendian}{ Endian-ness of the data: 1,2,3: "little", "big", "swap".
-  Default = 1 (little)
+\item{Iendian}{ vector, Endian-ness of the data: 1,2,3: "little", "big", "swap".
+  Default = 1 (little) 
 }
 \item{HEADONLY}{ logical, TRUE= header information only
 }
@@ -41,6 +42,8 @@ JSEGY.seis(fnames, Iendian = 1 , HEADONLY=FALSE, BIGLONG=TRUE, PLOT = -1, RAW=FA
 
   For either code, a full header is returned, although the
   header for each format may be different.
+
+  
   
 }
 \value{
@@ -91,6 +94,8 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 
   MAC uses different convention.
 
+  Iendian can be a vector if input files have different endian-ness.
+
   SAC inserts -12345  for no data.
 
   There are other issues regarding the size of long.
@@ -112,26 +117,27 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 
 
 ####  this will return a list of traces
-Lname = list.files(path='/data/wadati/bourbon/LaurelCanNC/R005.01' , pattern="08.005.01.41.23.9024", full.names=TRUE)
+Lname  <-  list.files(path='/data/wadati/bourbon/LaurelCanNC/R005.01' ,
+ pattern="08.005.01.41.23.9024", full.names=TRUE)
 
-S1  = JSAC.seis(Lname, Iendian = 1, PLOT = -1)
+S1   <-  JSAC.seis(Lname, Iendian = 1, PLOT = -1)
 
 
 #####################   from a data base example: this will return one
 #####                    trace header
-f1 = DB$fn[200]
+f1  <-  DB$fn[200]
 
-j1 = JSAC.seis(f1, Iendian=1, HEADONLY=TRUE , BIGLONG=FALSE, PLOT=-1)
+j1  <-  JSAC.seis(f1, Iendian=1, HEADONLY=TRUE , BIGLONG=FALSE, PLOT=-1)
 
 print( j1[[1]]$HEAD )
 
 
 #############   example for SEGY data: one SEGY  header
 
-dir = "/data/wadati/soju/SEISMIC_DATA/Reventador2005/rev05/SEGY/R251.01"
-lf = list.files(path=dir, pat="05.251", full.names=TRUE)
-f1 = lf[1]
-j1 = JSEGY.seis(f1, Iendian=1, HEADONLY=TRUE , BIGLONG=FALSE, PLOT=-1)
+dir  <-  "/data/wadati/soju/SEISMIC_DATA/Reventador2005/rev05/SEGY/R251.01"
+lf  <-  list.files(path=dir, pat="05.251", full.names=TRUE)
+f1  <-  lf[1]
+j1  <-  JSEGY.seis(f1, Iendian=1, HEADONLY=TRUE , BIGLONG=FALSE, PLOT=-1)
 
 
 print( j1[[1]]$HEAD )

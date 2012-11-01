@@ -24,20 +24,20 @@ detrend(x)
 \seealso{mean}
 \examples{
 
-dt = 0.001
+dt <- 0.001
 
- t = seq(0, 6, by=0.001)
+ t <- seq(0, 6, by=0.001)
 
 
-y = 5*sin(2*pi*10*t)
+y <- 5*sin(2*pi*10*t)
 
 plot(t,y, type='l')
 
-y = y  + 3 * t
+y <- y  + 3 * t
 plot(t,y, type='l')
 
 
-dy = detrend(y)
+dy <- detrend(y)
 
 plot(t,dy, type='l')
 

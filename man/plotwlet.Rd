@@ -1,14 +1,15 @@
 \name{plotwlet}
 \alias{plotwlet}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Plot Wavelet Transform}
 \description{
  Plot Wavelet Transform
 }
 \usage{
-plotwlet(baha, Ysig, dt, zscale = 1, zbound = NULL, col = rainbow(100), ygrid = FALSE, STAMP = "")
+plotwlet(baha, Ysig, dt, zscale = 1, zbound = NULL,
+col = rainbow(100), ygrid = FALSE, STAMP = "")
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{baha}{Output of wlet.do}
   \item{Ysig}{signal processed}

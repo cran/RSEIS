@@ -1,6 +1,6 @@
 \name{xcor2}
 \alias{xcor2}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Cross Correlation}
 \description{
 Cross correlation of two signals
@@ -8,7 +8,7 @@ Cross correlation of two signals
 \usage{
 xcor2(a1, a2, DT, PLOT = FALSE, LAG = 100)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{a1}{input signal 1}
   \item{a2}{input signal 1}
@@ -33,15 +33,15 @@ xcor2(a1, a2, DT, PLOT = FALSE, LAG = 100)
 
 data(CE1)
 
-ts1 = CE1$y[CE1$x>5.443754 & CE1$x<5.615951]
+ts1 <- CE1$y[CE1$x>5.443754 & CE1$x<5.615951]
 
-ts2 = CE1$y[CE1$x>5.760959]
-ts2 = ts2[1:length(ts1)]
+ts2 <- CE1$y[CE1$x>5.760959]
+ts2 <- ts2[1:length(ts1)]
 
-ts1 = ts1-mean(ts1)
-ts2 = ts2-mean(ts2)
+ts1 <- ts1-mean(ts1)
+ts2 <- ts2-mean(ts2)
 
-xc = xcor2(ts1, ts2, CE1$dt , PLOT = TRUE)
+xc <- xcor2(ts1, ts2, CE1$dt , PLOT = TRUE)
 
 }
 

@@ -1,6 +1,6 @@
 \name{detail.pick}
 \alias{detail.pick}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Detail Pick on 3-component seismogram}
 \description{
   Pops up three components and prepares menu items for picking
@@ -8,7 +8,7 @@
 \usage{
 detail.pick(y, ex, dt, TIT = "")
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{y}{signal amplitudes}
   \item{ex}{x-axis }

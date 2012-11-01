@@ -33,13 +33,13 @@ Original code by
 
 \examples{
 
-dt = 0.01
-freq = 16
-nlen = 35
+dt <- 0.01
+freq <- 16
+nlen <- 35
 
-G = genrick(freq, dt, nlen)
+G <- genrick(freq, dt, nlen)
 
-tee = seq(from=0, by=dt, length=length(G))
+tee <- seq(from=0, by=dt, length=length(G))
 
 plot(tee, G, type='l')
 

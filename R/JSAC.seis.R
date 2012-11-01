@@ -46,23 +46,31 @@ isign = TRUE
   GIVE = as.list(1:length(fnames))
   
   DATAendian =c("little", "big", "swap")
+ Kendian =c(1,2,3)
 
-  if(is.character(Iendian))
-    {
-      Iendian = grep(Iendian, DATAendian)
-      theENDIAN = DATAendian[Iendian]
-    }
+  #### Iendian should now be a vector
+
+
+ 
+
+if(is.character(Iendian))
+  {
+    endianVEC =Iendian
+  }
   else
     {
-      theENDIAN = DATAendian[Iendian]
-      
+      endianVEC = DATAendian[match(Iendian , Kendian )]
     }
+ if(length(endianVEC)<length(fnames)) { endianVEC  = rep(endianVEC, times=length(fnames) ) }
+
+
   
   for(i in 1:length(fnames))
     {
 
       fn = fnames[i]
       infile = fn
+      theENDIAN = endianVEC[i]
 ####   print(fn);
 ###  if this file does not exist, exit!
       if(file.exists(infile)==FALSE)

@@ -52,9 +52,11 @@ setupDB<-function(DB, token=TRUE, split="\\.")
 ################################### 
     
 #############  set up beginning and ending times for each file:
-    DB$origyr = min(DB$yr, na.rm=TRUE)
+   origyr = min(DB$yr)
+    attr(DB, "origyr")<- origyr
+
     
-    eday = EPOCHday(DB$yr, jd =  DB$jd, origyr=DB$origyr)
+    eday = EPOCHday(DB$yr, jd =  DB$jd, origyr=origyr)
     DB$t1 = eday$jday + DB$hr/24 + DB$mi/(24*60) + DB$sec/(24*3600)
     DB$t2 = DB$t1 + DB$dur/(24*3600)
     

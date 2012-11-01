@@ -20,7 +20,7 @@ leests(a, dt = 0.008)
 
 \examples{
 
-x = rnorm(10)
+x  <-  rnorm(10)
 
 leests(x, dt = 0.01)
 

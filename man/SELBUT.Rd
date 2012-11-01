@@ -35,9 +35,10 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 \examples{
 
 \dontrun{
-STDLAB=c("DONE", "QUIT", "zoom.out", "zoom.in", "SELBUT", "FILT","UNFILT", "PSEL", "SGRAM", "WLET", "SPEC", "XTR" )
+STDLAB <- c("DONE", "QUIT", "zoom.out", "zoom.in", "SELBUT",
+"FILT","UNFILT", "PSEL", "SGRAM", "WLET", "SPEC", "XTR" )
 onoff = rep(0, length(STDLAB))
-onoff[1:5] = 1
+onoff[1:5] <- 1
 SELBUT(STDLAB, onoff=onoff)
 
 }

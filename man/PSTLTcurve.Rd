@@ -1,14 +1,15 @@
 \name{PSTLTcurve}
 \alias{PSTLTcurve}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Short Term/Long Term curve}
 \description{
  ST/LT ratio curve for sutomated picking routines
 }
 \usage{
-PSTLTcurve(y, dt = 0.008, fwlen = 125, bwlen = 125, perc = 0.05, stretch = 1000, MED = 255, PLOT = FALSE)
+PSTLTcurve(y, dt = 0.008, fwlen = 125, bwlen = 125,
+ perc = 0.05, stretch = 1000, MED = 255, PLOT = FALSE)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{y}{signal}
   \item{dt}{deltaT (s)}
@@ -44,10 +45,17 @@ require(stats)
 data(CE1)
 plot(CE1$x, CE1$y, type='l')
 
-z = CE1$y[ CE1$x>5.352622 & CE1$x<5.589836]
+z <- CE1$y[ CE1$x>5.352622 & CE1$x<5.589836]
+x <- CE1$x[ CE1$x>5.352622 & CE1$x<5.589836]
 
-PSTLTcurve(z, dt = CE1$dt, fwlen = 125, bwlen = 125, perc = 0.05,
-stretch = 1000, MED = 255, PLOT = FALSE)
+G <- PSTLTcurve(z, dt = CE1$dt, fwlen = 10,
+bwlen = 10, perc = 0.05,
+stretch = 10, MED = 11, PLOT = FALSE)
+
+### get time from beginning of trace
+tpick <- x[G$ind]
+abline(v=x[G$ind], col='red', lty=2)
+
 
 }
 

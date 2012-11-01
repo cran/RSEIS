@@ -19,10 +19,10 @@ fromjul(jul, yy)
 }
 \examples{
 
-iyear = 2001
- jul = 233
-inine =   tojul(iyear,1,1);
-ijul =    inine + jul - 1;
+iyear <- 2001
+ jul <- 233
+inine <-   tojul(iyear,1,1);
+ijul <-    inine + jul - 1;
 fromjul( ijul, iyear);
 
 

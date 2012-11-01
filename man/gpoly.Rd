@@ -22,7 +22,7 @@ gpoly(x)
 
 \examples{
 
-K = PreSet.Instr()
+K <- PreSet.Instr()
 
 ##  convert zeros to polynomial coefficients
 

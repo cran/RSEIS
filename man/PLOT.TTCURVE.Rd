@@ -7,7 +7,11 @@
 
 }
 \usage{
-PLOT.TTCURVE(GH, STAXY = NULL, DIST = c(0, 10), DY = 0.1, tim = 1, dt = 1, sel = c(1:4), WIN = c(1, 0), labs = c("CE1"), notes = "CE1.V", tags = "CE1.V", sfact = 1, COL = "red", add = 1, pts = FALSE, YAX = FALSE, TIT = NULL, SHIFT = NULL, rm.mean = TRUE, UNITS = "volts", MARK = TRUE)
+PLOT.TTCURVE(GH, STAXY = NULL, DIST = c(0, 10), DY = 0.1,
+tim = 1, dt = 1, sel = c(1:4), WIN = c(1, 0), labs = c("CE1"),
+ notes = "CE1.V", tags = "CE1.V", sfact = 1, COL = "red",
+add = 1, pts = FALSE, YAX = FALSE, TIT = NULL, SHIFT = NULL,
+ rm.mean = TRUE, UNITS = "volts", MARK = TRUE)
 }
 \arguments{
   \item{GH}{Seismic data Structure}
@@ -36,7 +40,8 @@ PLOT.TTCURVE(GH, STAXY = NULL, DIST = c(0, 10), DY = 0.1, tim = 1, dt = 1, sel =
 \value{
  Graphical Side effect.
 
-  list(n=nn, dy=dy,  minS=minS, maxS=maxS, meanS=meanS, DX=range(tim[tflag]), DY=DY, DIST=DIST )
+ list(n=nn, dy=dy,  minS=minS, maxS=maxS, meanS=meanS,
+ DX=range(tim[tflag]), DY=DY, DIST=DIST )
  
 }
 

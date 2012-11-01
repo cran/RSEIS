@@ -8,7 +8,7 @@
 \usage{
 wiggle.env(x, y)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{x}{x-coordinate}
   \item{y}{y-coordinate}

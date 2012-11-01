@@ -12,7 +12,8 @@ STDLAB = NULL, PADDLAB = NULL, TEMPBUT=NULL,
 SHOWONLY = FALSE, CHOP = FALSE, TIT = "",
 pts = FALSE, forcepix = FALSE, pcex=0.7, SCALE = 1, ilocstyle=1,
 velfile = "", stafile = "", LOC = NULL,
-prefilt=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL, YAX = 1  ,  xtickfactor = 1)
+prefilt=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL,
+ YAX = 1  ,  xtickfactor = 1)
 }
 
 \arguments{
@@ -103,21 +104,23 @@ data("GH")
 ###  This loads a structure
 
 
-  STDLAB = c("DONE", "QUIT","zoom out", "zoom in", "Left", "Right", "restore", "Pinfo","WINFO",
-                           "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "UNFILT", "SCALE", "Postscript")
+  STDLAB <- c("DONE", "QUIT","zoom out", "zoom in", "Left",
+"Right", "restore", "Pinfo","WINFO",
+                           "XTR", "SPEC", "SGRAM" ,"WLET",
+ "FILT", "UNFILT", "SCALE", "Postscript")
 
-sel=GH$COMPS=="V" 
-p = swig(GH, sel=sel, STDLAB=STDLAB)
+sel <- GH$COMPS=="V" 
+p <- swig(GH, sel=sel, STDLAB=STDLAB)
 print(p)
 
- p = swig(GH, sel=sel, WIN=c(4,14) , STDLAB=c("DONE", "LAME", "DAME"))
+ p <- swig(GH, sel=sel, WIN=c(4,14) , STDLAB=c("DONE", "LAME", "DAME"))
 print(p)
 
 
 ############    example with filter
 data(KH)
 
-thefilts =
+thefilts <-
           list(flo=
                c(0.02, 0.02, 0.02, 0.02, 0.02,   0.02,
                  0.02, 0.02, 0.02,  0.02, 0.02,  0.02,

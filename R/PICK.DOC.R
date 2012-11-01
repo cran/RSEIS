@@ -4,9 +4,20 @@
     if(missing(w)) { w = NA }
 
     
-    ALLLABS = c( "DONE","QUIT","NEXT","PREV","HALF","MARK","DOC","restore","refresh","zoom out","zoom in","Left","Right","SCALE","ZERO","SHOWALL","SHOWSEL","saveFN","FLIP","TR_INFO","Postscript","PNG","AUTOP","AUTOPALL","DETECT","MAP","XTR","SIG","SPEC.old","ASCII","AMPL","TRNAMPL","SPEC","SGRAM","WLET","FILT","UNFILT","BRUNE","DETAIL","PTS","MMARKS","PMOT","STERNET","GTAZI","ENVLP","WINFO","Pinfo","Plines","XCOR","PHLAG","3COMP","Predict1D","SavePF","SavePIX","LQUAKE","PickWin","Ppic","Spic","Apic","Pup","Pdown","Pnil","YPIX","WPIX","RMS","EDIX","NOPIX","REPIX","ADDBUTTS","NA")
-
     
+   ALLLABS = c( 
+"YPIX", "ROT.RT", "JustV", "JustE", "JustN", "WPIX", "NOPIX", 
+"REPIX", "FILLPIX", "RIDPIX", "SEEPIX", "iNEXT", "PickWin", 
+"pADDPIX", "Ppic", "Spic", "Apic", "POLSWITCH", "Pup", 
+"Pnil", "Pdown", "NEXT", "PREV", "HALF", "CENTER", 
+"MARK", "DOC", "REFRESH", "RESTORE", "ZOOM.out", "ZOOM.in", 
+"LEFT", "RIGHT", "SCALE", "Xwin", "PSEL", "FLIP", 
+"PTS", "FILT", "UNFILT", "fspread", "SPEC", "WWIN", 
+"SGRAM", "WLET", "XTR", "Pinfo", "TSHIFT", "RMS", 
+"LocStyle", "NA")
+ 
+
+ 
 
     
     N = length(ALLLABS)
@@ -16,78 +27,60 @@
 
 
 
-DOC[[1]] = "Close Window and Finish"
-DOC[[2]] = "Quit application"
-DOC[[3]] = "Sends a message Back to calling program for next trace"
-DOC[[4]] = "Sends a message Back to calling program for previous trace"
-DOC[[5]] = "Scroll by half a window length"
-DOC[[6]] = "Mark a Specific Trace"
-DOC[[7]] = "print Documentation"
-DOC[[8]] = "restore the window traces to full screen"
-DOC[[9]] = "refresh the screen"
-DOC[[10]] = "Zoom out by a percent"
-DOC[[11]] = "Zoom in  by a percent"
-DOC[[12]] = "Shift Left by a percent"
-DOC[[13]] = "Shift Right by a percent"
-DOC[[14]] = "SCALE by trace or scale by Window"
-DOC[[15]] = "Does nothing (maybe for zero padding?)"
-DOC[[16]] = "Show all picks in memory (turns onoff to on)"
-DOC[[17]] = "Show selected picks in memory (turns onoff to on)"
-DOC[[18]] = "Save in file name created by current date/time"
-DOC[[19]] = "Flip polarity of traces"
-DOC[[20]] = "trace information"
-DOC[[21]] = "create a Postscript file"
-DOC[[22]] = "Plot to PNG file (alternative to postscript)"
-DOC[[23]] = "Automatic picking on one trace"
-DOC[[24]] = "Automatic picking on all traces in window"
-DOC[[25]] = "signal detection using automated picking"
-DOC[[26]] = "Make a map of stations (needs station info in list)"
-DOC[[27]] = "extract a single trace and return at end of session"
-DOC[[28]] = "pulse analysis (chugging)"
-DOC[[29]] = "OLD SPEC.old"
-DOC[[30]] = "Dump data out into file with ascii format"
-DOC[[31]] = "Amplitude analysis"
-DOC[[32]] = "ternary filtered AMPLITUDE ANALYSIS"
-DOC[[33]] = "MTM spectrum in separate window with options"
-DOC[[34]] = "spectrogram window"
-DOC[[35]] = "wavelet analysis"
-DOC[[36]] = "filter a trace with a set of choices"
-DOC[[37]] = "Undo filtering"
-DOC[[38]] = "do brune model analysis for short period data, save meta-data"
-DOC[[39]] = "pick details of first arrivals and save meta data"
-DOC[[40]] = "toggle points option, plot each point in time series"
-DOC[[41]] = "Unused"
-DOC[[42]] = "particle motion hodogram, must have three components in the window"
-DOC[[43]] = "plot an equal area steronet with the points of the 3-comp seismogram"
-DOC[[44]] = "SVD particle motion in windows (needs 3Comp seis)"
-DOC[[45]] = "get envelope of a windowed time series"
-DOC[[46]] = "Window Information (dumped to screen)"
-DOC[[47]] = "pick information"
-DOC[[48]] = "draws segments on traces"
-DOC[[49]] = "cross correlation of traces"
-DOC[[50]] = "calculate the phase lag between traces based on cross spectrum"
-DOC[[51]] = "find all componenets of this station and plot in separate window"
-DOC[[52]] = "Predict arrivals with 1D velocity model (model must be in memory)"
-DOC[[53]] = "Save Pick File (UW format)"
-DOC[[54]] = "Save picks in table (ascii)"
-DOC[[55]] = "run Lquake on pickfile in memory"
-DOC[[56]] = "Select a pick win"
-DOC[[57]] = "P-arrival pick estimate"
-DOC[[58]] = "S-arrival Pick estimate"
-DOC[[59]] = "Acoustic arrival pick estimate"
-DOC[[60]] = "P ick arrival up (vertical)"
-DOC[[61]] = "Pick arrival down"
-DOC[[62]] = "Pick arrival nil (nither up nor down)"
-DOC[[63]] = "Y picking"
-DOC[[64]] = "Window picks"
-DOC[[65]] = "Root Mean Square of trace between picks"
-DOC[[66]] = "edit window picks"
-DOC[[67]] = "erase all previous picks"
-DOC[[68]] = "restore previously erased picks"
-DOC[[69]] = "Add buttons"
-DOC[[70]] = "nothing"
 
-   
+   DOC[[1]] = 'generic (Y) pick' 
+DOC[[2]] = 'Rotate seismogram to Radial Transverse' 
+DOC[[3]] = 'Show only vertical'
+DOC[[4]] = 'Show only East' 
+DOC[[5]] = 'Show only North' 
+DOC[[6]] = 'Window picks'
+DOC[[7]] = 'Turn off Picks (set onoff to zero)' 
+DOC[[8]] = 'Turn Picks back on' 
+DOC[[9]] = 'Pick line spans vertical window'
+DOC[[10]] = 'Remove picks' 
+DOC[[11]] = 'print picks to screen'
+DOC[[12]] = 'Do Nothing' 
+DOC[[13]] = 'Spawn a 3-component picking window'
+DOC[[14]] = 'add picks to list'
+DOC[[15]] = 'P-wave pick' 
+DOC[[16]] = 'S-wave pick' 
+DOC[[17]] = 'Acoustic wave pick' 
+DOC[[18]] = 'Switch Polarity'
+DOC[[19]] = 'Up Polarity' 
+DOC[[20]] = 'NUll Polarity'
+DOC[[21]] = 'Down Polarity'
+DOC[[22]] = 'Next BATCH of FILES'
+DOC[[23]] = 'Previous BATCH of FILES'
+DOC[[24]] = 'Shift Half a window'
+DOC[[25]] = 'Center a window'
+DOC[[26]] = 'Mark a trace' 
+DOC[[27]] = 'Show documentation' 
+DOC[[28]] = 'Refresh screen' 
+DOC[[29]] = 'Restore from zoom' 
+DOC[[30]] = 'Zoom out' 
+DOC[[31]] = 'Zoom in' 
+DOC[[32]] = 'Shift Left'
+DOC[[33]] = 'Shift Right'
+DOC[[34]] = 'Toggle Scale by trace/window'
+DOC[[35]] = 'Delete all windows except main'
+DOC[[36]] = 'Pick trace Sta/COMP to show' 
+DOC[[37]] = 'Flip selected trace' 
+DOC[[38]] = 'Show sample points' 
+DOC[[39]] = 'Filter trace'
+DOC[[40]] = 'Unfilter traces'
+DOC[[41]] = 'do a filter spread on selection' 
+DOC[[42]] = 'Display Spectrum' 
+DOC[[43]] = 'Window' 
+DOC[[44]] = 'Spectrogram' 
+DOC[[45]] = 'Wavelet Transform'
+DOC[[46]] = 'Extract single trace' 
+DOC[[47]] = 'Pick information' 
+DOC[[48]] = 'Shift traces to line up with first pick'
+DOC[[49]] = 'Root Mean Square of selection'
+DOC[[50]] = 'choose the locator style for picking in swig' 
+
+
+
 
 J = 1:N
     

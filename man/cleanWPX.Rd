@@ -28,7 +28,7 @@ addWPX,	catWPX,	checkWPX,repairWPX,clusterWPX,saveWPX, setWPX
 }
 \examples{
 
-s0 = cleanWPX()
+s0 <- cleanWPX()
 
 }
 \keyword{misc}

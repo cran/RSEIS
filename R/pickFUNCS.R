@@ -1,6 +1,7 @@
 
 WPIX<-function(nh, g)
   {
+    #####  BUTTONDOC:WPIX:'Window picks - pairs of picks on each trace'
     #####   WPIX are introduced as pairs of pix
     if(g$zenclick>=2)
       {
@@ -52,6 +53,7 @@ print(paste(sep=" ", "DUMP WPIX", zappa, azap, kzap , ppick , ypick,ipick))
 ##########################
 NOPIX<-function(nh, g)
   {
+    #####  BUTTONDOC:NOPIX:'Turn off Picks (set onoff to zero)' 
     g$WPX$onoff = rep(-1, length(g$WPX$onoff))
     g$zloc = list(x=NULL, y=NULL) 
     g$action = "replot"
@@ -60,6 +62,7 @@ NOPIX<-function(nh, g)
 ##########################
 REPIX<-function(nh, g)
   {
+    #####  BUTTONDOC:REPIX:'Turn Picks back on' 
     g$WPX$onoff[g$WPX$onoff==(-1)] = 0
     g$zloc = list(x=NULL, y=NULL) 
    g$action = "replot"
@@ -72,6 +75,7 @@ REPIX<-function(nh, g)
 ##########################
 FILLPIX<-function(nh, g)
   {
+    #####  BUTTONDOC:FILLPIX:'Pick line spans vertical window'
     g$fillpix = !g$fillpix 
     g$zloc = list(x=NULL, y=NULL) 
    g$action = "replot"
@@ -82,7 +86,7 @@ FILLPIX<-function(nh, g)
 ##########################
 RIDPIX<-function(nh, g)
   {
-
+#####  BUTTONDOC:RIDPIX:'Remove picks' 
     tol = .1
 ############   find picks near the clicks and remove...temporarily
     if(g$zenclick>=2)
@@ -157,6 +161,7 @@ RIDPIX<-function(nh, g)
 ##########################
 SEEPIX<-function(nh, g)
   {
+    #####  BUTTONDOC:SEEPIX:'print picks to screen'
     options(width=180)
     print(g$WPX)
     
@@ -171,6 +176,7 @@ SEEPIX<-function(nh, g)
 
 iNEXT<-function(nh, g)
   {
+    #####  BUTTONDOC:iNEXT:'Do Nothing' 
     g$zloc = list(x=NULL, y=NULL)
     g$action = "break"
     invisible(list(NH=nh, global.vars=g))
@@ -178,7 +184,7 @@ iNEXT<-function(nh, g)
   }
 PickWin<-function(nh, g)
   {
-
+#####  BUTTONDOC:PickWin:'Spawn a 3-component picking window'
     kix = legitpix(g$sel, g$zloc, g$zenclick)
     ypick =  kix$ypick
     ppick = kix$ppick
@@ -316,6 +322,8 @@ PickWin<-function(nh, g)
 
 pADDPIX<-function(nh, g, phase)
   {
+    #####  BUTTONDOC:pADDPIX:'add picks to list'
+    
    zappa = match(g$KLICK, g$PADDLAB)
     azap = g$PADDLAB[zappa]
 ###     print(paste(sep=" ", "My PICKIN", azap, zappa))
@@ -427,6 +435,7 @@ pADDPIX<-function(nh, g, phase)
 ####################################
 Ppic<-function(nh, g)
   {
+#####  BUTTONDOC:Ppic:'P-wave pick' 
 
     
     g = pADDPIX(nh, g, "P")
@@ -439,6 +448,7 @@ Ppic<-function(nh, g)
 #####
 Spic<-function(nh, g)
   {
+#####  BUTTONDOC:Spic:'S-wave pick' 
 
     
     g = pADDPIX(nh, g, "S")
@@ -451,6 +461,8 @@ Spic<-function(nh, g)
 #####
 Apic<-function(nh, g)
   {
+    #####  BUTTONDOC:Apic:'Acoustic wave pick' 
+
     g = pADDPIX(nh, g, "A")
     
     g$zloc = list(x=NULL, y=NULL)
@@ -461,7 +473,7 @@ Apic<-function(nh, g)
 ####################################
 POLSWITCH<-function(nh, g, dir)
   {
-
+#####  BUTTONDOC:POLSWITCH:'Switch Polarity'
     zappa = match(g$KLICK, g$PADDLAB)
     azap = g$PADDLAB[zappa]
 ###     print(paste(sep=" ", "My PICK", dir, azap, zappa))
@@ -516,6 +528,7 @@ POLSWITCH<-function(nh, g, dir)
 #####  polarity determinations
 Pup<-function(nh, g)
   {
+#####  BUTTONDOC:Pup:'Up Polarity' 
 
     g = POLSWITCH(nh, g, "U")
     g$zloc = list(x=NULL, y=NULL)
@@ -526,7 +539,7 @@ Pup<-function(nh, g)
 #####
 Pnil<-function(nh, g)
   {
-
+#####  BUTTONDOC:Pnil:'NUll Polarity'
     g = POLSWITCH(nh, g, "N")
     
     g$zloc = list(x=NULL, y=NULL)
@@ -537,7 +550,7 @@ Pnil<-function(nh, g)
 #####
 Pdown<-function(nh, g)
   {
-
+#####  BUTTONDOC:Pdown:'Down Polarity'
     g = POLSWITCH(nh, g, "D")
     g$zloc = list(x=NULL, y=NULL)
     g$action = "replot"

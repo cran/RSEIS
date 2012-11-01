@@ -27,10 +27,10 @@ get.slepians(npoints = 900, nwin = 5, npi = 3)
 \seealso{mtapspec}
 \examples{
 
-nwin = 5
-npi = 3
-npoints = 900
-sleps = get.slepians(npoints, nwin, npi)
+nwin <- 5
+npi <- 3
+npoints <- 900
+sleps <- get.slepians(npoints, nwin, npi)
 
 matplot(sleps, type='l', xlab="Index", ylab="Taper Amplitude")
 legend('topleft', legend=1:nwin, lty=1:nwin, col=1:nwin)

@@ -24,7 +24,7 @@ mirror.matrix(x)
 
 \examples{
 
-xy = matrix(rnorm(100), ncol=10)
+xy <- matrix(rnorm(100), ncol=10)
 mirror.matrix(xy)
 
 

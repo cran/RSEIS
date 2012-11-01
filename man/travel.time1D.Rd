@@ -50,9 +50,9 @@ many.time1D(indelta, inhpz, instaz, inlay, ztop, vel)
 
 data(VELMOD1D)
 
-v= VELMOD1D
+v <- VELMOD1D
 
-tees = travel.time1D(23, 7, 0, length(v$zs) , v$zp , v$vp)
+tees <- travel.time1D(23, 7, 0, length(v$zs) , v$zp , v$vp)
 
 print(tees)
 

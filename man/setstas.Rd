@@ -1,6 +1,6 @@
 \name{setstas}
 \alias{setstas}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Set Station information}
 \description{
   Read station information and set in list
@@ -8,7 +8,7 @@
 \usage{
 setstas(stafile)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{stafile}{character, station file name path}
 }
@@ -28,7 +28,9 @@ setstas(stafile)
 
 \examples{
 
-\dontrun{ sta = setstas("/pathto/stationfile") }
+\dontrun{
+sta <- setstas("/pathto/stationfile")
+}
 }
 
 

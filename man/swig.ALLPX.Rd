@@ -6,7 +6,8 @@
  plot all phase arrival picks
 }
 \usage{
-swig.ALLPX(t0, STNS, COMPS, YPX, PHASE = NULL, POLS = TRUE, FILL = FALSE, FORCE = TRUE, cex = cex, srt = srt)
+swig.ALLPX(t0, STNS, COMPS, YPX, PHASE = NULL, POLS = TRUE,
+ FILL = FALSE, FORCE = TRUE, cex = cex, srt = srt)
 }
 
 \arguments{
@@ -34,7 +35,8 @@ swig.ALLPX(t0, STNS, COMPS, YPX, PHASE = NULL, POLS = TRUE, FILL = FALSE, FORCE 
 \examples{
 
 
-\dontrun{ swig.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE,
+\dontrun{
+swig.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE,
 FORCE=forcepix) }
 
 }

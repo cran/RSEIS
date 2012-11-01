@@ -5,7 +5,9 @@
 \description{Replot Function for SELBUT
 }
 \usage{
-BUTREPLOT(opts, ncol = 5, HOZ = TRUE, TOP = TRUE, cols = "white", main = "", xlim = c(0, 1), ylim = c(0, 1), newplot = TRUE)
+BUTREPLOT(opts, ncol = 5, HOZ = TRUE, TOP = TRUE,
+ cols = "white", main = "", xlim = c(0, 1),
+        ylim = c(0, 1), newplot = TRUE)
 }
 \arguments{
   \item{opts}{character list of options
@@ -48,7 +50,9 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 \examples{
 
 
-STDLAB=c("DONE", "QUIT", "zoom.out", "zoom.in", "SELBUT", "FILT","UNFILT", "PSEL", "SGRAM", "WLET", "SPEC", "XTR" )
+STDLAB <- c("DONE", "QUIT", "zoom.out", "zoom.in",
+  "SELBUT", "FILT","UNFILT", "PSEL", "SGRAM",
+       "WLET", "SPEC", "XTR" )
 BUTREPLOT(STDLAB)
 
 

@@ -35,6 +35,6 @@
 data(VELMOD1D)
 Get1Dvel(VELMOD1D, PLOT=TRUE)
 
-## maybe str(VELMOD1D) ; plot(VELMOD1D) ...
+
 }
 \keyword{datasets}

@@ -1,14 +1,15 @@
 \name{gaddtix}
 \alias{gaddtix}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{add tic marks}
 \description{
 Add tic marks to plot
 }
 \usage{
-gaddtix(side = 3, pos = 0, tck = 0.005, at = c(0, 1), labels = NULL, col = 2, addline = FALSE, ...)
+gaddtix(side = 3, pos = 0, tck = 0.005, at = c(0, 1),
+labels = NULL, col = 2, addline = FALSE, ...)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{side}{side = 1, 2, 3, 4}
   \item{pos}{relative to axis}
@@ -32,7 +33,8 @@ gaddtix(side = 3, pos = 0, tck = 0.005, at = c(0, 1), labels = NULL, col = 2, ad
 
 plot(c(0,1), c(0,1), type='n', ann=FALSE, axes=FALSE)
 
-gaddtix(side=1, pos=0,   tck=-0.01, at=seq(from=0, to=.5, by=.2) , labels=seq(from=0, to=.5, by=.2), col=1)
+gaddtix(side=1, pos=0,   tck=-0.01, at=seq(from=0, to=.5, by=.2) ,
+labels=seq(from=0, to=.5, by=.2), col=1)
 
 }
 

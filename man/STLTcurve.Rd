@@ -6,7 +6,8 @@
   Get short-term average long-term verage ratio curve for picking
 }
 \usage{
-STLTcurve(y, dt = 0.008, fwlen = 125, bwlen = 125, stretch = 1000, MED = 255, PLOT = FALSE)
+STLTcurve(y, dt = 0.008, fwlen = 125, bwlen = 125,
+stretch = 1000, MED = 255, PLOT = FALSE)
 }
 
 \arguments{
@@ -38,7 +39,8 @@ DT = CE1$dt
 
 
 
-sy = STLTcurve(y, dt=DT, fwlen =  25,  bwlen  = 25, stretch=1000, MED=255, PLOT=FALSE)
+sy = STLTcurve(y, dt=DT, fwlen =  25,  bwlen  = 25,
+stretch=1000, MED=255, PLOT=FALSE)
 
 par(mfrow=c(2,1))
 

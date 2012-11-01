@@ -1,6 +1,6 @@
 \name{choosfilt}
 \alias{choosfilt}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{INteractive CHoice of Filter}
 \description{
  Choose Butterworth filter from a selection
@@ -8,7 +8,7 @@
 \usage{
 choosfilt(thefilts = thefilts, ncol = 5)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{thefilts}{list of filter parameters}
   \item{ncol}{number of columns}
@@ -33,7 +33,7 @@ choosfilt(thefilts = thefilts, ncol = 5)
 \seealso{butfilt, RPMG}
 \examples{
 
- thefilts =
+ thefilts <-
           list(flo=
                c(0.02, 0.02, 0.02, 0.02, 0.02,   0.02,
                  0.02, 0.02, 0.02,  0.02, 0.02,  0.02,

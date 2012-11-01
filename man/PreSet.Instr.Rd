@@ -23,7 +23,7 @@ PreSet.Instr()
 
 \seealso{ReadSet.Instr}
 \examples{
-MYset = PreSet.Instr()
+MYset <- PreSet.Instr()
 MYset[[1]]
 }
 

@@ -57,13 +57,13 @@ setupDB(DB, token = TRUE, split = "\\\\.")
 \dontrun{
 
 ###  location of data base file
-datadir1 = '/home/lees/Site/Santiaguito/SG09'
-d1 = 'segyDB'
+datadir1  <-  '/home/lees/Site/Santiaguito/SG09'
+d1  <-  'segyDB'
 #### scan in the data base file
-DB = scan(file=paste(sep="/", datadir1, d1), list(fn="", yr=0, jd=0,
+DB  <-  scan(file=paste(sep="/", datadir1, d1), list(fn="", yr=0, jd=0,
 hr=0, mi=0, sec=0, dur=0))
 #### interactively fix the DB list
-DB = setupDB(DB)
+DB  <-  setupDB(DB)
 
 
 }

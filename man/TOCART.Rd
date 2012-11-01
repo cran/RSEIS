@@ -1,6 +1,6 @@
 \name{TOCART}
 \alias{TOCART}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Convert to Cartesian coordinates}
 \description{
   Convert to cartesian coordinates
@@ -8,7 +8,7 @@
 \usage{
 TOCART(az, nadir)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{az}{degrees, azimuth }
   \item{nadir}{degrees, dip }

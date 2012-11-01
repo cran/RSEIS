@@ -35,9 +35,9 @@ INSTresponse(Kal, key, ff, tt = tt, plotkey = NULL)
 
 
 ########  set list of possible instruments:
-Kal = PreSet.Instr()
+Kal  <-  PreSet.Instr()
 ###  get instrument reponse for first in list:
-resp1  = INSTresponse(Kal, 1, c(0,100)  , tt=c(1,0.008), plotkey=TRUE)
+resp1   <-  INSTresponse(Kal, 1, c(0,100)  , tt=c(1,0.008), plotkey=TRUE)
 ###  plots amplitude and phase
 }
 

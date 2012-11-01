@@ -30,7 +30,7 @@ ReadSet.Instr(file)
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 \examples{
 ###  in this case a file has already been read in:
-CMG=c(
+CMG <- c(
       "ZEROS 2",
       "0.0000E+00 0.0000E+00",
       "0.0000E+00 0.0000E+00",
@@ -44,7 +44,7 @@ CMG=c(
 ReadSet.Instr(CMG)
 
 \dontrun{
-RL28 = ReadSet.Instr('/pathto/Equipment/Sensors/L28.inst.response')
+RL28  <-  ReadSet.Instr('/pathto/Equipment/Sensors/L28.inst.response')
 }
 
 

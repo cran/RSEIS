@@ -41,8 +41,8 @@ addWPX,	catWPX,	checkWPX,	cleanWPX,	clusterWPX,	repairWPX,	setWPX
 \examples{
 
 \dontrun{
-s1 = setWPX(name="HI", yr=2011, jd=231, hr=4, mi=3, sec = runif(5)) 
-hh = saveWPX(s1)
+s1 <- setWPX(name="HI", yr=2011, jd=231, hr=4, mi=3, sec = runif(5)) 
+hh <- saveWPX(s1)
 
 ###   read in the data
 

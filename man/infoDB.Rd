@@ -32,11 +32,11 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 
 \dontrun{
 
- path = '/home/lees/Site/Santiaguito/SG09'
-     pattern = "R0*"
+ path  <-  '/home/lees/Site/Santiaguito/SG09'
+     pattern  <-  "R0*"
 
      ###   get DB information
-     XDB  =  makeDB(path, pattern, kind =1)
+     XDB   <-   makeDB(path, pattern, kind =1)
 
 infoDB(XDB)
 

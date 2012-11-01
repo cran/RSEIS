@@ -1,6 +1,6 @@
 \name{NEWPLOT.WPX}
 \alias{NEWPLOT.WPX}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Plot Window Picks (WPX) }
 \description{
 adds picks to existing seismic section
@@ -8,7 +8,7 @@ adds picks to existing seismic section
 \usage{
 NEWPLOT.WPX(t0, STNS, COMPS, YPX, FILL = FALSE, FORCE = TRUE, cex = cex, srt = srt)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{t0}{starting time for window}
   \item{STNS}{stations to match}

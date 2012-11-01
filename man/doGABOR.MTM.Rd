@@ -7,7 +7,8 @@
   using MTM.  This is a driver for MTMgabor.
 }
 \usage{
-doGABOR.MTM(Xamp, DT = 0.008, ppoint=95 , multi = 1, scale.def = 0, TWIN = 2, TSKIP = 0.2, PCTTAP = 0.05,  PLOT=TRUE)
+doGABOR.MTM(Xamp, DT = 0.008, ppoint=95 , multi = 1,
+ scale.def = 0, TWIN = 2, TSKIP = 0.2, PCTTAP = 0.05,  PLOT=TRUE)
 }
 \arguments{
   \item{Xamp}{signal
@@ -43,7 +44,8 @@ list output of MTMgabor:
 \item{sig}{input signal}
 \item{dt}{deltat}
 \item{numfreqs}{Number of frequencies output}
-\item{wpars}{input parameters list(Nfft=numfreqs,  Ns=Ns, Nov=Nov, fl=fl, fh=fh)}
+\item{wpars}{input parameters list(Nfft=numfreqs,
+  Ns=Ns, Nov=Nov, fl=fl, fh=fh)}
 \item{DSPEC}{spectrum image}
 \item{HIMAT}{matrix with high values of F-test at 90 percent confidence
 }
@@ -86,7 +88,8 @@ data(KH)
 Xamp = KH$JSTR[[1]]
 Xamp = Xamp[57914:72989]
 
-EV = doGABOR.MTM(Xamp, DT = KH$dt[1], multi = 1, scale.def = 0, TWIN = 2, TSKIP = 0.2, PCTTAP = 0.05)
+EV = doGABOR.MTM(Xamp, DT = KH$dt[1], multi = 1, scale.def = 0,
+TWIN = 2, TSKIP = 0.2, PCTTAP = 0.05)
 
 }
 \keyword{misc}

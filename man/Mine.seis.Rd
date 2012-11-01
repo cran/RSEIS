@@ -97,11 +97,11 @@ BIGLONG=FALSE, CHOP=TRUE, verbose=FALSE, chtoken=NULL, statoken=NULL, RAW=FALSE)
 #######   Assume  k97DB already exists
 for(i in 1:24)
 {
-at1 = 232+(i-1)/24
-at2 = at1+1/24
+at1 <- 232+(i-1)/24
+at2 <- at1+1/24
 
-GH = Mine.seis(at1, at2, k97DB, "kar1", c("4", "1") )
-w = swig(GH)
+GH <- Mine.seis(at1, at2, k97DB, "kar1", c("4", "1") )
+w <- swig(GH)
 if(identical(w$but, "QUIT"))break
 }
 

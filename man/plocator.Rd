@@ -1,6 +1,6 @@
 \name{plocator}
 \alias{plocator}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Specialized Locator function}
 \description{
 Locator function with set parameters
@@ -8,7 +8,7 @@ Locator function with set parameters
 \usage{
 plocator(COL = 1, NUM = FALSE, YN = NULL, style = 0)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{COL}{color}
   \item{NUM}{number of points }

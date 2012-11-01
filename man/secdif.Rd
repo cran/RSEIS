@@ -1,6 +1,6 @@
 \name{secdif}
 \alias{secdif}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Return difference in seconds}
 \description{
   Difference between two Date/Times (Julian Day)
@@ -8,7 +8,7 @@
 \usage{
 secdif(jd1, hr1, mi1, sec1, jd2, hr2, mi2, sec2)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{jd1}{Julian Day}
   \item{hr1}{hour}
@@ -29,11 +29,10 @@ secdif(jd1, hr1, mi1, sec1, jd2, hr2, mi2, sec2)
 
 \seealso{secdifL }
 \examples{
-T1 = list(jd=12, hr=13, mi=23, sec=21)
-T2 = list(jd=14, hr=23, mi=23, sec=2)
+T1 <- list(jd=12, hr=13, mi=23, sec=21)
+T2 <- list(jd=14, hr=23, mi=23, sec=2)
 secdif(T1$jd, T1$hr, T1$mi, T1$sec,  T2$jd, T2$hr, T2$mi, T2$sec)
 
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+
 \keyword{misc}

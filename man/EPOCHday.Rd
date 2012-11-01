@@ -23,9 +23,9 @@ EPOCHday(yr, jd = 1, origyr = 1972)}
 \seealso{EPOCHyear, recdate}
 \examples{
 
-tyears  = 1973:2009
+tyears   <-  1973:2009
 
-E1 = EPOCHday(tyears, jd=1,   origyr=1972       )
+E1  <-  EPOCHday(tyears, jd=1,   origyr=1972       )
 
 EPOCHyear(E1$jday,   origyr=1972  )
 

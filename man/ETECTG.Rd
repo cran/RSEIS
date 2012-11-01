@@ -5,7 +5,10 @@
   Event Detection for a seismic section
 }
 \usage{
-ETECTG(GH, sel = sel, FRWD = 8, BKWD = 8, sbef = 1, saft = 6, DFRWD = 0.5, DBKWD = 0.5, thresh = 2, Tthresh2 = 7, stretch = 1000, flo = 0.1, fhi = 5, PLOT = FALSE, Kmin = 7, perc = 0.05, kind = 1, DOARAIC = FALSE)
+ETECTG(GH, sel = sel, FRWD = 8, BKWD = 8, sbef = 1,
+saft = 6, DFRWD = 0.5, DBKWD = 0.5, thresh = 2,
+Tthresh2 = 7, stretch = 1000, flo = 0.1, fhi = 5,
+ PLOT = FALSE, Kmin = 7, perc = 0.05, kind = 1, DOARAIC = FALSE)
 }
 
 \arguments{

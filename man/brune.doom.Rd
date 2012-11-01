@@ -1,6 +1,6 @@
 \name{brune.doom}
 \alias{brune.doom}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Brune Modeling}
 \description{
   Modeling the Brune spectrum with Graphical Diagnostics
@@ -8,7 +8,7 @@
 \usage{
 brune.doom(amp, dt = 1, f1 = 0.01, f2 = 15, PLOTB = FALSE, tit = "")
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{amp}{signal }
   \item{dt}{deltaT }

@@ -54,31 +54,25 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 
 \dontrun{
 
-DB = makeDB('/media/disk-1/TUNG_2010', "2010", kind=2,Iendian=1, BIGLONG=FALSE )
+DB <- makeDB('/media/disk-1/TUNG_2010', "2010",
+kind=2,Iendian=1, BIGLONG=FALSE )
 
-sw = which(DB$yr>2011)
+sw <- which(DB$yr>2011)
 
 ##########   remove the bad lines from the DB
-DDB = editDB(DB, -sw)
+DDB <- editDB(DB, -sw)
 infoDB(DB)
 
 #############  to change the path names if the data
 ##   moves to a different server:
 
-for example: 
-###  "/data/wadati/soju/SEISMIC_DATA/Reventador2005/rev05/SEGY/R256.01/05.256.12.24.06.9024.6"
-    ###  change to:
- ###  "/mnt/SEISMIC_DATA/Reventador2005/rev05/SEGY/R256.01/05.256.12.24.06.9024.6"
- 
-path1="/data/wadati/soju"
-path2="/mnt"
+###for example: 
+###  
 
-newDB = pathDB(DB, path1, path2 )
+path1<-"/data/wadati/soju"
+path2<-"/mnt"
 
-
-
-
-
+newDB <- pathDB(DB, path1, path2 )
 
 }
 

@@ -24,8 +24,8 @@ hilbert(x)
 
 \seealso{fft, envelope }
 \examples{
-x = rnorm(100)
-y=hilbert(x)
+x <- rnorm(100)
+y <- hilbert(x)
 
 }
 

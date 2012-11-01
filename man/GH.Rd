@@ -56,18 +56,22 @@ Example of seismic data structure. Geothermal Earthquake.
     
   The pickfile consists of:
   \describe{
-    \item{LOC}{list(yr, jd, mo, dom, hr, mi, sec, lat, lon, z, mag, gap,
+    \item{LOC}{list(yr, jd, mo, dom, hr, mi,
+      sec, lat, lon, z, mag, gap,
       delta , rms, hozerr)}
-    \item{MC}{list(az1, dip1, az2, dip2,  dir, rake1, dipaz1, rake2, dipaz2,
+    \item{MC}{list(az1, dip1, az2, dip2,  dir, rake1,
+      dipaz1, rake2, dipaz2,
       F=list(az, dip), G=list(az, dip), U=list(az, dip),
       V=list(az, dip), P=list(az, dip),
       T=list(az,dip),sense,M=list( az1, d1,  az2, d2,
-      uaz, ud, vaz, vd, paz, pd , taz, td), UP=TRUE, icol=1, ileg,  fcol='red', CNVRG, LIM =c(0,0,0,0))}
+      uaz, ud, vaz, vd, paz, pd , taz, td), UP=TRUE,
+      icol=1, ileg,  fcol='red', CNVRG, LIM =c(0,0,0,0))}
     \item{STAS}{list(tag, name, comp, c3, phase, sec, err, pol, flg , res)}
     \item{LIP}{vector, length=6}
     \item{H}{list(yr,mo,dom,hr,mi,sec,lat,lon,z,mag)}
     \item{N}{name card}
-    \item{E}{list(rms,meanres,sdres,sdmean,sswres,ndf,fixflgs,sterrx,sterry,sterrz,sterrt,mag,sterrmag)}
+    \item{E}{list(rms,meanres,sdres,sdmean,
+      sswres,ndf,fixflgs,sterrx,sterry,sterrz,sterrt,mag,sterrmag)}
     \item{filename}{file name}
     \item{PICKER}{Name of Picker}
     \item{UWFILEID}{numeric ID}
@@ -84,6 +88,6 @@ Lees, J.M., 2004. Scattering from a fault interface in the Coso geothermal field
 }
 \examples{
 data(GH)
-## maybe str(GH) ; plot(GH) ...
+
 }
 \keyword{datasets}

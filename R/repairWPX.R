@@ -30,6 +30,27 @@ repairWPX<-function(wpx)
       }
 
     #######  fix dates?
+
+    
+ nn = as.vector( unlist( lapply(zpx, "length") ) )
+    Npix  = max(nn)
+   wn =  which(nn==1)
+
+    if(length(wn)>0)
+      {
+    for(i in 1:length(wn))
+      {
+        zed = zpx[[ wn[i]  ]]
+        zpx[[ wn[i]  ]] = rep(zed[1], times=Npix)
+      }
+  }
+
+    nn = as.vector( unlist( lapply(zpx, "length") ) )
+
+    if(length(unique(nn))>1)
+      {
+        print("repairWPX: There are still problem with this WPX")
+      }
     #######   fix names?
 
 

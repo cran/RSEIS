@@ -27,8 +27,8 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 
 \examples{
 
-a = 1:20
-b = insertNAs(a, c(5, 12))
+a  <-  1:20
+b  <-  insertNAs(a, c(5, 12))
 b 
 
 

@@ -1,6 +1,6 @@
 \name{getvertsorder}
 \alias{getvertsorder}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Get Order of Picks from P-wave Arrivals}
 \description{
   Uses a Pickfile and the Waveform file,
@@ -10,7 +10,7 @@
 \usage{
 getvertsorder(P, GU)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{P}{Pickfile Structure}
   \item{GU}{Waveform structure}
@@ -31,7 +31,7 @@ getvertsorder(P, GU)
 \examples{
 data(GH)
 
-vertord =  getvertsorder(GH$pickfile, GH)
+vertord <-  getvertsorder(GH$pickfile, GH)
 
 swig(GH,  sel=vertord$sel, WIN=vertord$win,   SHOWONLY=TRUE)
 

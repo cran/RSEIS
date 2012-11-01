@@ -6,9 +6,11 @@
  Matrix of several seismograms
 }
 \usage{
-PLOT.MATN(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost=0,  shift=NULL, LOG="", COL='red', add=1, AXES=1, units=NULL, VS=FALSE)
+PLOT.MATN(ascd, tim=1, dt=1,  WIN=c(0,1), labs="",
+notes=notes, sfact=1,ampboost=0,  shift=NULL, LOG="",
+COL='red', add=1, AXES=1, units=NULL, VS=FALSE)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{ascd}{N by K matrix of seismograms where }
   \item{tim}{time values fo x-axis}
@@ -49,19 +51,19 @@ PLOT.MATN(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost
 \seealso{swig}
 \examples{
 
-dt = 0.001
+dt  <-  0.001
 
- t = seq(0, 6, by=0.001)
+ t  <-  seq(0, 6, by=0.001)
 
-thefreqs = seq(from=10, to=100, by=10)
-theamps =  runif(length(thefreqs))
+thefreqs  <-  seq(from=10, to=100, by=10)
+theamps  <-   runif(length(thefreqs))
 
-#   % sample rate = 1000 Hz, 0.001 seconds 601 samples
- x = NULL
+#   sample rate is 1000 Hz, 0.001 seconds 601 samples
+ x  <-  NULL
 
 for(i in 1:length(thefreqs))
 {
-x = cbind(x, theamps[i]*sin(2*pi*thefreqs[i]*t))
+x  <-  cbind(x, theamps[i]*sin(2*pi*thefreqs[i]*t))
 
 
 }

@@ -14,17 +14,37 @@
 
 
  DATAendian =c("little", "big", "swap")
+  Kendian =c(1,2,3)
 
-  if(is.character(Iendian))
-    {
-      Iendian = grep(Iendian, DATAendian)
-      theENDIAN = DATAendian[Iendian]
-    }
+  #### Iendian should now be a vector
+
+
+ 
+
+if(is.character(Iendian))
+  {
+    endianVEC =Iendian
+  }
   else
     {
-      theENDIAN = DATAendian[Iendian]
-      
+      endianVEC = DATAendian[match(Iendian , Kendian )]
     }
+
+  if(length(endianVEC)<length(fnames)) { endianVEC = rep(endianVEC, times=length(fnames) ) }
+
+
+    
+  
+ #### if(is.character(Iendian))
+ ####   {
+ ####     Iendian = grep(Iendian, DATAendian)
+####      theENDIAN = DATAendian[Iendian]
+####    }
+ #### else
+####    {
+####      theENDIAN = DATAendian[Iendian]
+      
+####    }
   
 
  ########  on some systems LONG = 8 bytes
@@ -60,7 +80,11 @@
 
       fn = fnames[i]
       infile = fn
-####   print(fn);
+      theENDIAN = endianVEC[i]
+####
+     ##  print(paste(fn, theENDIAN) );
+
+      
 ###  if this file does not exist, exit!
       if(file.exists(infile)==FALSE)
         {
@@ -264,7 +288,7 @@
       min =readBin(zz, integer() , n = 1 , size =iint ,  endian = theENDIAN, signed = TRUE)
 
 
- ##  print(paste(sep=" ", "numsamps=", numsamps, "sampleLength=", sampleLength  ))
+  ##  print(paste(sep=" ", i, "numsamps=", numsamps, "sampleLength=", sampleLength  ))
   ##  print(paste(sep=" ",  "scalefac=",   scalefac ))
       ####################################      done reading header
        #####    count = 7+4+8+2+4+13+5+16+6+6+4+7+5
@@ -289,10 +313,30 @@ SEGYall = c(A1, A2, A3, A4, A5, A6, sampleLength,
       
       N = numsamps
 
+      if( !is.integer(N))
+         {
+           ##  this is a problem
+           print("ERROR: number of samples is not an integer.")
+           print(paste(i, fn))
 
+         }
+
+         
        ####  bugfix from Jake
       ####   dt = as.numeric( deltaSample )/1000000
+       
+      if(as.numeric( samprate )==0)
+        {
+          samprate = deltaSample
+        }
+
+      
       dt = as.numeric( samprate )/1000000
+      ####   you have to have a sample rate
+      if(dt==0)
+        {
+          dt=0.025
+        }
       
       DATIM =   c(year, day, hour, minute)
 

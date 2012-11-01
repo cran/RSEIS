@@ -29,3 +29,18 @@ NEWS for Rwave package
 		ADDED rseis2sac to write out a set of SAC format files for exchange.
 3.0-8   2012-07-16
 	Fixed bug in Ray.time1D.R - now the program takes velocity and converts internally to slowness
+
+3.1-2	2013-04-09
+	Earlier Jake called attention to a bug in JSEGY.seis, dealing with sample rate.
+	This was fixed wrongly and now the code checks samprate and deltaSample to extract the sample rate
+
+3.1-3   2013-05-20
+	Fixed CHOP.SEISN
+	fixed memory leak in GETARAIC man example
+
+3.2-0   2013-06-03
+       Changed Documentation to conform with length standards
+       Fixed index bug in hilbert transform
+       JSEGY.seis: Iendian can be a vector now when files have different byte order
+       
+       

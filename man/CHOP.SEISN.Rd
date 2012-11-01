@@ -24,9 +24,9 @@ CHOP.SEISN(GH, sel = 1:4, WIN = NULL)
 \seealso{swig}
 \examples{
 data("GH")
-sel= which(GH$COMPS=="V")
+sel <-  which(GH$COMPS=="V")
 
-KF = CHOP.SEISN(GH, sel=sel, WIN = c(0 , 5)  )
+KF  <-  CHOP.SEISN(GH, sel=sel, WIN = c(0 , 5)  )
 
 swig(KF)
 }

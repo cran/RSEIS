@@ -20,7 +20,7 @@ DAYSperYEAR(yr)
 
 \examples{
 
-years = seq(from=1850, to=2010, by=1)
+years <- seq(from=1850, to=2010, by=1)
 
 DAYSperYEAR(years)
 

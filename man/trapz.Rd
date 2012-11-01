@@ -21,7 +21,7 @@ trapz(y, dt)
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}
 
 \examples{
-x = rnorm(100)
+x <- rnorm(100)
 trapz(x, 0.01)
 
 }

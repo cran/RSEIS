@@ -17,7 +17,7 @@ function(x)
       {
 ### even and nonempty
         h[c(1, n/2+1)] = 1;
-        h[2:n/2] = 2;
+        h[2:(n/2)] = 2;
       }
     else
       {
@@ -25,7 +25,7 @@ function(x)
           {
             ##  odd and nonempty
             h[1] = 1;
-            h[2:(n+1)/2] = 2;
+            h[2:((n+1)/2)] = 2;
           }
       }
     ht = fft(ff*h , inverse=TRUE)/length(ff);

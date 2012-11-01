@@ -34,8 +34,8 @@ RSEIS list
 
 \dontrun{
 
-P1 = swig(GH)
-LH = P2GH(P1)
+P1 <- swig(GH)
+LH <- P2GH(P1)
 
 }
 

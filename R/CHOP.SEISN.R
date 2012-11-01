@@ -37,6 +37,7 @@ CHOP.SEISN = function (GH, sel = 1:4, WIN = NULL)
 
     NEWH$STNS = GH$STNS[sel]
     NEWH$COMPS = GH$COMPS[sel]
+    NEWH$OCOMPS = GH$OCOMPS[sel]
     NEWH$KNOTES = GH$KNOTES[sel]
     NEWH$pcol = GH$pcol[sel]
     NEWH$ok = GH$ok[sel]

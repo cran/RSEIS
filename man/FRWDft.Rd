@@ -1,6 +1,6 @@
 \name{FRWDft}
 \alias{FRWDft}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Forward fourier Transform}
 \description{
   Forward fourier Transform
@@ -27,8 +27,8 @@ FRWDft(g, n, tstart, dt)
 
 \seealso{INVRft}
 \examples{
-zil = rnorm(300)
-fss = FRWDft( zil, length(zil), 0, 0.004)   
+zil  <-  rnorm(300)
+fss  <-  FRWDft( zil, length(zil), 0, 0.004)   
 
 
 

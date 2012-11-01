@@ -7,6 +7,7 @@
 
 NEXT<-function(nh, g)
 {
+  #####  BUTTONDOC:NEXT:'Next BATCH of FILES'
 
   if(g$zenclick>1)
     {
@@ -25,7 +26,7 @@ NEXT<-function(nh, g)
 
 PREV<-function(nh, g)
 {
-
+#####  BUTTONDOC:PREV:'Previous BATCH of FILES'
   if(g$zenclick>1)
     {
       rd = getrdpix(g$zloc, g$zenclick, g$sel, nh)
@@ -44,7 +45,7 @@ PREV<-function(nh, g)
 
 HALF<-function(nh, g)
 {
-
+#####  BUTTONDOC:HALF:'Shift Half a window'
   if(g$zenclick>1)
     {
       rd = getrdpix(g$zloc, g$zenclick, g$sel, nh)
@@ -62,6 +63,7 @@ HALF<-function(nh, g)
 
 CENTER<-function(nh, g)
   {
+#####  BUTTONDOC:CENTER:'Center a window'
     if (g$zenclick > 1) {
         rd = getrdpix(g$zloc, g$zenclick, g$sel, nh)
     }
@@ -79,7 +81,7 @@ CENTER<-function(nh, g)
 
 MARK<-function(nh, g)
 {
-
+#####  BUTTONDOC:MARK:'Mark a trace' 
   if(g$zenclick>1)
     {
       rd = getrdpix(g$zloc, g$zenclick, g$sel, nh)
@@ -98,6 +100,7 @@ MARK<-function(nh, g)
 ##########################################
 DOC<-function(nh, g)
 {
+  #####  BUTTONDOC:DOC:'Show documentation' 
   PICK.DOC(g$BLABS)
   g$zloc = list(x=NULL, y=NULL)
   g$action = "replot"
@@ -106,6 +109,7 @@ DOC<-function(nh, g)
 ##########################################
 REFRESH<-function(nh, g)
   {
+    #####  BUTTONDOC:REFRESH:'Refresh screen' 
     u = par("usr")
     L = length(g$sloc$x)
     if(L>1)
@@ -121,6 +125,8 @@ REFRESH<-function(nh, g)
 #######
 RESTORE<-function(nh, g)
   {
+    #####  BUTTONDOC:RESTORE:'Restore from zoom' 
+
     u = par("usr")
     L = length(g$sloc$x)
     if(L>1)
@@ -136,6 +142,8 @@ RESTORE<-function(nh, g)
 #######
 ZOOM.out<-function(nh, g)
   {
+#####  BUTTONDOC:ZOOM.out:'Zoom out' 
+    
     u = par("usr")
     DX = (u[2]-u[1])*0.3
     zloc = list(x= c(u[1]-DX, u[2]+DX))
@@ -149,6 +157,7 @@ ZOOM.out<-function(nh, g)
 
 ZOOM.in<-function(nh, g)
   {
+    #####  BUTTONDOC:ZOOM.in:'Zoom in' 
     zenclick = length(g$zloc$x)
     if(zenclick>=3)
       {
@@ -173,6 +182,7 @@ ZOOM.in<-function(nh, g)
 #######
 LEFT<-function(nh, g)
   {
+    #####  BUTTONDOC:LEFT:'Shift Left'
     u = par("usr")
     DX = (u[2]-u[1])*0.3
 ####  zloc = list(x= c(u[1]+DX, u[2]+DX))
@@ -187,6 +197,7 @@ LEFT<-function(nh, g)
 
 RIGHT<-function(nh, g)
   {
+    #####  BUTTONDOC:RIGHT:'Shift Right'
     u = par("usr")
     DX = (u[2]-u[1])*0.3
 ####  zloc = list(x= c(u[1]+DX, u[2]+DX))
@@ -208,6 +219,7 @@ RIGHT<-function(nh, g)
 #######
 SCALE<-function(nh, g)
   {
+    #####  BUTTONDOC:SCALE:'Toggle Scale by trace/window'
              if(g$ScaleFACT==1)
             {
 
@@ -224,13 +236,37 @@ SCALE<-function(nh, g)
           
     invisible(list(global.vars=g))	
   }
+########################################
+Xwin<-function(nh, g)
+  {
+#####  BUTTONDOC:Xwin:'Delete all windows except main'
+          ALLdevs =     dev.list()
+
+
+          ww  = ALLdevs[ which(g$MAINdev != ALLdevs)]
+
+              for(i in 1:length(ww))
+                {
+                  dev.off(which = ww[i])
+
+                }
+              
+         
+          dev.set(g$MAINdev)
+            g$zloc = list(x=NULL, y=NULL) 
+     
+    g$action="donothing"
+    invisible(list(global.vars=g))
+ 
+  }
 
 
 
 ########################################
 PSEL<-function(nh, g)
         {
-          
+          #####  BUTTONDOC:PSEL:'Pick trace Sta/COMP to show' 
+
           sel = SELSTA(nh, sel=g$sel, newdev=TRUE, STAY=FALSE)
           
           NSEL = length(nh$dt[g$sel])
@@ -258,6 +294,7 @@ PSEL<-function(nh, g)
 ####  this needs work
 FLIP<-function(nh, g)
   {
+    #####  BUTTONDOC:FLIP:'Flip selected trace' 
     zenclick = length(g$zloc$x)
 
     if(zenclick>1)
@@ -291,6 +328,9 @@ FLIP<-function(nh, g)
 ########################
 PTS<-function(nh, g)
   {
+#####  BUTTONDOC:PTS:'Show sample points' 
+
+    
     g$pts=!g$pts
     g$action = "replot"
      g$zloc = list(x=NULL, y=NULL) 
@@ -301,7 +341,7 @@ PTS<-function(nh, g)
 
 FILT<-function(nh, g)
   {
-
+#####  BUTTONDOC:FILT:'Filter trace'
     ### print( data.frame(g$filters) )
 
      
@@ -350,6 +390,7 @@ FILT<-function(nh, g)
 
 UNFILT<-function(nh, g)
   {
+    #####  BUTTONDOC:UNFILT:'Unfilter traces'
     dev.set( g$MAINdev)
     g$SUBTIT = NA
     g$action = "revert"
@@ -363,6 +404,8 @@ UNFILT<-function(nh, g)
 
 fspread<-function(nh, g)
   {
+    #####  BUTTONDOC:fspread:'do a filter spread on selection' 
+
     ###  click on a trace panel and do a filter spread
     
 
@@ -455,6 +498,8 @@ fspread<-function(nh, g)
 
 SPEC<-function(nh, g)
   {
+    #####  BUTTONDOC:SPEC:'Display Spectrum' 
+
     nclick = length(g$zloc$x)
 
     if(nclick>=3)
@@ -546,6 +591,7 @@ SPEC<-function(nh, g)
 
 WWIN<-function(nh, g)
   {
+    #####  BUTTONDOC:WWIN:'Window' 
     nclick = length(g$zloc$x)
 
     if(nclick>=3)
@@ -630,6 +676,8 @@ WWIN<-function(nh, g)
 
 SGRAM<-function(nh, g)
   {
+    #####  BUTTONDOC:SGRAM:'Spectrogram' 
+
  zenclick = length(g$zloc$x)
 
 
@@ -695,6 +743,7 @@ SGRAM<-function(nh, g)
 
 WLET<-function(nh, g)
   {
+    #####  BUTTONDOC:WLET:'Wavelet Transform'
  zenclick = length(g$zloc$x)
 
 
@@ -771,6 +820,7 @@ WLET<-function(nh, g)
 
 XTR<-function(nh, g)
   {
+    #####  BUTTONDOC:XTR:'Extract single trace' 
     zenclick = length(g$zloc$x)
 
 
@@ -831,6 +881,7 @@ XTR<-function(nh, g)
 
 Pinfo<-function(nh, g)
   {
+    #####  BUTTONDOC:Pinfo:'Pick information' 
     zenclick = length(g$zloc$x)
 
     if(zenclick>=2)
@@ -946,6 +997,7 @@ Pinfo<-function(nh, g)
 #################################
 TSHIFT<-function(nh, g)
   {
+    #####  BUTTONDOC:TSHIFT:'Shift traces to line up with first pick'
     zenclick = length(g$zloc$x)
           if(zenclick>=2)
             {
@@ -1005,6 +1057,7 @@ TSHIFT<-function(nh, g)
 #################################
 RMS<-function(nh, g)
   {
+    #####  BUTTONDOC:RMS:'Root Mean Square of selection'
     zenclick = length(g$zloc$x)
     sel = g$sel
     if(zenclick>=2)
@@ -1115,6 +1168,7 @@ RMS<-function(nh, g)
 ###############################
 LocStyle<-function(nh, g)
   {
+    #####  BUTTONDOC:LocStyle:'choose the locator style for picking in swig' 
     ###  choose the locator style for picking in swig
 
     g$ilocstyle = -1

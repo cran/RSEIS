@@ -24,7 +24,7 @@ JGRAY(n)
 
 \seealso{shade.col, rainbow, colors }
 \examples{
-pal = JGRAY(100)
+pal <- JGRAY(100)
 data(volcano)
 image(volcano, col=pal)
 

@@ -6,7 +6,8 @@
   Use MTM spectrum to estimate phase lag between two signals. 
 }
 \usage{
-getphaselag2(y1, y2, DT = 0.008, frange = c(0, 20), PLOT = FALSE, PLOT1 = FALSE, PLOT2 = FALSE)
+getphaselag2(y1, y2, DT = 0.008, frange = c(0, 20),
+PLOT = FALSE, PLOT1 = FALSE, PLOT2 = FALSE)
 }
 
 \arguments{
@@ -32,15 +33,16 @@ getphaselag2(y1, y2, DT = 0.008, frange = c(0, 20), PLOT = FALSE, PLOT1 = FALSE,
 \examples{
 data("GH")
 
-Xamp1=GH$JSTR[[1]]
-Xamp1=Xamp1[1123:2000]
+Xamp1<-GH$JSTR[[1]]
+Xamp1<-Xamp1[1123:2000]
 
-Xamp2= GH$JSTR[[4]]
-Xamp2=Xamp2[1123:2000]
+Xamp2<- GH$JSTR[[4]]
+Xamp2<-Xamp2[1123:2000]
 plot(Xamp1,type='l')
 lines(Xamp2,type='l',col='red')
 
- pshift = getphaselag2(Xamp1, Xamp2,  DT=GH$info$dt[1],  frange=c(5, 15),  PLOT=TRUE)
+ pshift <- getphaselag2(Xamp1, Xamp2,  DT=GH$info$dt[1],
+ frange=c(5, 15),  PLOT=TRUE)
 
 }
 

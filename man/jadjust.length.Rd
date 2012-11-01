@@ -10,7 +10,7 @@
 \usage{
 jadjust.length(inputdata)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{inputdata}{either a text file or an S object containing data }
 }

@@ -47,22 +47,23 @@ brune.search(infreq, inspec, f1, f2, omega0, fcorn, tstar0, gamma)
 data(CE1)
 
 ####   set frequency range for modeling
-f1 = 0.01
-f2 = 14.0
+f1  <-  0.01
+f2  <-  14.0
 
 ##  set up data and parameters
-amp =  CE1$y
-len2 = 2*next2(length(amp))
-a = list(y=amp, dt=CE1$dt)
+amp  <-   CE1$y
+len2  <-  2*next2(length(amp))
+a  <-  list(y=amp, dt=CE1$dt)
 
-Spec =MTMdisp(a, f1=f1, f2=f2, len2=len2, PLOT=FALSE )
+Spec  <- MTMdisp(a, f1=f1, f2=f2, len2=len2, PLOT=FALSE )
  
-lspec = Spec$displ
+lspec  <-  Spec$displ
 
 ###  get initial estimate of parameters
-xc = get.corner(  Spec$f , lspec, dt, f1, f2, PLOT=FALSE)
+xc  <-  get.corner(  Spec$f , lspec, dt, f1, f2, PLOT=FALSE)
 
-jmod = brune.search(Spec$f, lspec, f1, f2,  xc$omega0, xc$corn, xc$tstar0, 2.0)
+jmod  <-  brune.search(Spec$f, lspec, f1, f2,
+                 xc$omega0, xc$corn, xc$tstar0, 2.0)
 
 }
 

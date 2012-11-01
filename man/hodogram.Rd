@@ -6,7 +6,8 @@
   HodoGram Plot
 }
 \usage{
-hodogram(nbaz, dt = dt, labs = c("Vertical", "North", "East"), COL =rainbow(140)[1:100] , STAMP = "")
+hodogram(nbaz, dt = dt, labs = c("Vertical", "North", "East"),
+COL =rainbow(140)[1:100] , STAMP = "")
 }
 
 \arguments{
@@ -30,13 +31,14 @@ hodogram(nbaz, dt = dt, labs = c("Vertical", "North", "East"), COL =rainbow(140)
 
 data("GH")
 
-temp = cbind(GH$JSTR[[1]][1168:1500], GH$JSTR[[2]][1168:1500],
+temp <- cbind(GH$JSTR[[1]][1168:1500], GH$JSTR[[2]][1168:1500],
 GH$JSTR[[3]][1168:1500])
 
-pmolabs = c("Vertical", "North", "East")
+pmolabs <- c("Vertical", "North", "East")
 
 
-sx = hodogram(temp, dt=GH$dt[1]  ,labs=pmolabs,  STAMP="Example",  COL=rainbow(100) )
+sx <- hodogram(temp, dt=GH$dt[1]  ,labs=pmolabs,
+STAMP="Example",  COL=rainbow(100) )
 
 
 }

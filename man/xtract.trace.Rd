@@ -29,7 +29,7 @@ xtract.trace(GH, sel = 1, WIN = c(0, 1))
 
 data(GH)
 
-x1  = xtract.trace(GH, sel = 1, WIN = c(0, 1))
+x1  <- xtract.trace(GH, sel = 1, WIN = c(0, 1))
 plot(x1, type='l')
 
 }

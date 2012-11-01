@@ -32,7 +32,7 @@ Program calls R routines to gather important statistics for later use.
 \seealso{boxplot, mean, median}
 \examples{
 
-x  = rnorm(100, m=43)
+x   <-  rnorm(100, m=43)
 jstats(x)
 
 }

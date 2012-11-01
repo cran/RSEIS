@@ -31,11 +31,11 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 \seealso{addWPX, catWPX, deleteWPX, selWPX
 }
 \examples{
-s1 = setWPX(name="HI", yr=2011, jd=231, hr=4, mi=3, sec = runif(5)) 
-s2 = setWPX(name="HI", yr=2011, jd=231, hr=4, mi=3, sec = runif(1)) 
+s1 <- setWPX(name="HI", yr=2011, jd=231, hr=4, mi=3, sec = runif(5)) 
+s2 <- setWPX(name="HI", yr=2011, jd=231, hr=4, mi=3, sec = runif(1)) 
 
 
-s4 = replaceWPX(s1,s2, ind=4)
+s4 <- replaceWPX(s1,s2, ind=4)
 
 }
 \keyword{misc}

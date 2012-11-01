@@ -6,9 +6,9 @@ getseis24<-function(DB, iyear=2009, iday=1, usta="", acomp="", kind = 1,  Iendia
       if(missing(Iendian)) { Iendian=1 }
      if(missing(BIGLONG)) { BIGLONG=FALSE}
 
-    DB$origyr = min(DB$yr, na.rm = TRUE)
-    
-    eday = EPOCHday(iyear, jd = iday, origyr = DB$origyr)
+    origyr = min(DB$yr, na.rm = TRUE)
+    attr(DB, "origyr")<- origyr
+    eday = EPOCHday(iyear, jd = iday, origyr = origyr)
 
     M1 = eday$jday
 
@@ -83,7 +83,7 @@ getseis24<-function(DB, iyear=2009, iday=1, usta="", acomp="", kind = 1,  Iendia
       KNOTE[i] = paste(sep = ".", GG[[i]]$sta, GG[[i]]$comp)
       gdt[i] = GG[[i]]$dt
       YRS[i] = GG[[i]]$DATTIM$yr
-      eday1 = EPOCHday(GG[[i]]$DATTIM$yr, jd = GG[[i]]$DATTIM$jd, origyr = DB$origyr)
+      eday1 = EPOCHday(GG[[i]]$DATTIM$yr, jd = GG[[i]]$DATTIM$jd, origyr = origyr)
       gt1[i] = eday1$jday + GG[[i]]$DATTIM$hr/24 + GG[[i]]$DATTIM$mi/(24 *
           60) + GG[[i]]$DATTIM$sec/(24 * 3600) + GG[[i]]$DATTIM$msec/(1000 *
                                                                       24 * 3600)

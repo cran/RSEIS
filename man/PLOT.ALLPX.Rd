@@ -6,7 +6,8 @@
  plot all phase arrival picks
 }
 \usage{
-PLOT.ALLPX(t0, STNS, COMPS, YPX, PHASE = NULL, POLS = TRUE, FILL = FALSE, FORCE = TRUE, cex = cex, srt = srt)
+PLOT.ALLPX(t0, STNS, COMPS, YPX, PHASE = NULL, POLS = TRUE,
+ FILL = FALSE, FORCE = TRUE, cex = cex, srt = srt)
 }
 
 \arguments{
@@ -34,7 +35,8 @@ PLOT.ALLPX(t0, STNS, COMPS, YPX, PHASE = NULL, POLS = TRUE, FILL = FALSE, FORCE 
 \examples{
 
 
-\dontrun{ PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE,
+\dontrun{
+PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE,
 FORCE=forcepix) }
 
 }

@@ -5,7 +5,8 @@
  MTM analysis of signals
 }
 \usage{
-MTM.drive(a, f1 = f1, f2 = f2, len2 = 1024, COL = 2, PLOT = FALSE, PADDLAB = NULL, GUI = TRUE)
+MTM.drive(a, f1 = f1, f2 = f2, len2 = 1024, COL = 2, PLOT = FALSE,
+PADDLAB = NULL, GUI = TRUE)
 }
 
 \arguments{
@@ -29,27 +30,27 @@ MTM.drive(a, f1 = f1, f2 = f2, len2 = 1024, COL = 2, PLOT = FALSE, PADDLAB = NUL
 \examples{
 
 data("GH")
-sel= which(GH$COMPS=="V")
+sel <-  which(GH$COMPS=="V")
 
-amp = list()
-dees = list()
-stamps = list()
+amp  <-  list()
+dees  <-  list()
+stamps  <-  list()
 
 for( i in 1:3)
 {
-amp[[i]] = GH$JSTR[[sel[i]]]
-dees[i] = GH$dt[sel[i]]
-stamps[i] = paste(GH$STNS[sel[i]], GH$COMPS[sel[i]])
+amp[[i]]  <-  GH$JSTR[[sel[i]]]
+dees[i]  <-  GH$dt[sel[i]]
+stamps[i]  <-  paste(GH$STNS[sel[i]], GH$COMPS[sel[i]])
 }
 
- a = list(y=amp, dt=dees, stamps=stamps)
+ a  <-  list(y=amp, dt=dees, stamps=stamps)
 
 
- f1 = 0.1
+ f1  <-  0.1
 
-f2 = floor(0.33*(1/a$dt[[1]]))
+f2  <-  floor(0.33*(1/a$dt[[1]]))
 
-speccol  = c('red', 'blue', 'purple')
+speccol   <-  c('red', 'blue', 'purple')
 
 
 MTM.drive(a, f1, f2, COL=speccol, PLOT=TRUE)

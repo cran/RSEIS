@@ -1,6 +1,7 @@
 
 ROT.RT<-function(nh, g)
   {
+    #####  BUTTONDOC:ROT.RT:'Rotate seismogram to Radial Transverse' 
     ####  get azimuth from event and station information
     ###  these are stored in list elements in nh
     ####  under pickfile (event location)
@@ -58,7 +59,7 @@ ROT.RT<-function(nh, g)
 
 JustV<-function(nh, g)
   {
-
+#####  BUTTONDOC:JustV:'Show only vertical'
     kix = legitpix(g$sel, g$zloc, g$zenclick)
     ypick =  kix$ypick
     ppick = kix$ppick
@@ -82,6 +83,7 @@ JustV<-function(nh, g)
 
 JustE<-function(nh, g)
   {
+#####  BUTTONDOC:JustE:'Show only East' 
 
     kix = legitpix(g$sel, g$zloc, g$zenclick)
     ypick =  kix$ypick
@@ -106,7 +108,7 @@ JustE<-function(nh, g)
 
 JustN<-function(nh, g)
   {
-
+#####  BUTTONDOC:JustN:'Show only North' 
     kix = legitpix(g$sel, g$zloc, g$zenclick)
     ypick =  kix$ypick
     ppick = kix$ppick

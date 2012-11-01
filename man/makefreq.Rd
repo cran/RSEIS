@@ -22,9 +22,9 @@ makefreq(n, dt)
 
 \seealso{INVRft}
 \examples{
-N = 256
-dt = 0.008
-f=makefreq(N,dt)
+N <- 256
+dt <- 0.008
+f <- makefreq(N,dt)
 
 
 }

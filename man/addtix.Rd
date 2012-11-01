@@ -1,6 +1,6 @@
 \name{addtix}
 \alias{addtix}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{add tix to plot}
 \description{
  Add tick marks to edge of plot
@@ -8,7 +8,7 @@
 \usage{
 addtix(side = 3, pos = 0, tck = 0.005, at =c(0, 1), labels = FALSE, col = 2, ...)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{side}{side of plot 1-4}
   \item{pos}{position relative to side}

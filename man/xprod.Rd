@@ -1,6 +1,6 @@
 \name{xprod}
 \alias{xprod}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Vector Cross Product}
 \description{
   Cross product of two vectors
@@ -20,8 +20,8 @@ xprod(A1, A2)
 
 \author{Jonathan M. Lees <jonathan.lees@unc.edu>}
 \examples{
-B1 = c(4,9,2)
-B2 = c(2,-5,4)
+B1 <- c(4,9,2)
+B2 <- c(2,-5,4)
 
 xprod(B1, B2)
 

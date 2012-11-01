@@ -40,8 +40,8 @@ tung.pulse(r, q, dt)
 \dontrun{
 data(CE1)
 
-ex = CE1$x[CE1$x>5.453291 &CE1$x< 5.507338]
-why = CE1$y[CE1$x>5.453291 &CE1$x< 5.507338]
+ex <- CE1$x[CE1$x>5.453291 &CE1$x< 5.507338]
+why <- CE1$y[CE1$x>5.453291 &CE1$x< 5.507338]
 plot(ex, why, type='l')
 tung.pulse(ex, why, CE1$dt)
 }

@@ -31,11 +31,11 @@ addWPX,	setWPX,	checkWPX,	cleanWPX,	clusterWPX,	repairWPX,	saveWPX
 }
 \examples{
 
-s1 = setWPX(name="HI", yr=2011, jd=231, hr=4, mi=3, sec = runif(5)) 
+s1  <-  setWPX(name="HI", yr=2011, jd=231, hr=4, mi=3, sec = runif(5)) 
 
-s2 = setWPX(name="BYE", yr=2011, jd=231, hr=4, mi=3, sec = runif(5)) 
+s2  <-  setWPX(name="BYE", yr=2011, jd=231, hr=4, mi=3, sec = runif(5)) 
 
-s3 = catWPX(s1, s2)
+s3  <-  catWPX(s1, s2)
 
 }
 \keyword{misc}

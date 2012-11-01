@@ -33,7 +33,7 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 \dontrun{
 data("GH")
 
-sel= which(GH$COMPS == "V" & GH$STNS=="CE1"  )
+sel <-  which(GH$COMPS == "V" & GH$STNS=="CE1"  )
 ASCII.SEISN(GH, sel = 1, HEAD = TRUE)
 }
 }

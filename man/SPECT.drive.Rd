@@ -6,7 +6,8 @@
   Interactive Spectrogram Driver
 }
 \usage{
-SPECT.drive(Xamp, DT = 0.008, NEW = TRUE, STAMP = NULL , freqlim=c(0, 20, 0, 20), winparams=c(4096,256, 204 ))
+SPECT.drive(Xamp, DT = 0.008, NEW = TRUE, STAMP = NULL ,
+ freqlim=c(0, 20, 0, 20), winparams=c(4096,256, 204 ))
 }
 
 \arguments{
@@ -67,23 +68,24 @@ SPECT.drive(Xamp, DT = DT, NEW = TRUE, STAMP = NULL)
 \dontrun{
 data(KH)
 
-Xamp = KH$JSTR[[1]]
-DT =  KH$dt[1]
+Xamp  <-  KH$JSTR[[1]]
+DT  <-   KH$dt[1]
 SPECT.drive(Xamp, DT = DT, NEW = TRUE, STAMP = NULL)
 
-SPECT.drive(Xamp, DT = DT, NEW = FALSE, STAMP = NULL, freqlim=c(0, 8,
-0, 8) , winparams=c(4*1024, 6*250, 6*250-1) )
+SPECT.drive(Xamp, DT = DT, NEW = FALSE, STAMP = NULL,
+freqlim=c(0, 8,0, 8) , winparams=c(4*1024, 6*250, 6*250-1) )
 
 
 
 
-TWIN = 100 # seconds
-NWIN = TWIN/DT  # samples
-NSKIP = 1/DT    ##  samples
+TWIN  <-  100 # seconds
+NWIN  <-  TWIN/DT  # samples
+NSKIP  <-  1/DT    ##  samples
 
 
-SPECT.drive(Xamp, DT = DT, NEW = FALSE, STAMP = NULL, freqlim=c(0, 8,
-0, 8) , winparams=c(8*1024, NWIN, NWIN-NSKIP) )
+SPECT.drive(Xamp, DT = DT, NEW = FALSE,
+ STAMP = NULL, freqlim=c(0, 8,0, 8) ,
+winparams=c(8*1024, NWIN, NWIN-NSKIP) )
 
 
 

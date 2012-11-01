@@ -1,6 +1,6 @@
 \name{PICK.DOC}
 \alias{PICK.DOC}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Documentation for swig}
 \description{
 Prints brief documentation for buttons in swig
@@ -8,7 +8,7 @@ Prints brief documentation for buttons in swig
 \usage{
 PICK.DOC(w)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{w}{vector of buttons needed}
 }

@@ -1,12 +1,14 @@
 \name{wlet.do}
 \alias{wlet.do}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Return Wavelet transform}
 \description{
   Wavelet transform
 }
 \usage{
-wlet.do(why, dt, noctave = 6, nvoice = 20, flip = TRUE, ploty = TRUE, zscale = 1, col = terrain.colors(100), STAMP = STAMP)
+wlet.do(why, dt, noctave = 6, nvoice = 20,
+flip = TRUE, ploty = TRUE, zscale = 1,
+col = terrain.colors(100), STAMP = STAMP)
 }
 
 \arguments{
@@ -51,29 +53,30 @@ wlet.do(why, dt, noctave = 6, nvoice = 20, flip = TRUE, ploty = TRUE, zscale = 1
 
 \seealso{Rwave,  cwt , plotwlet, contwlet , pwlet2freqs, wlet.drive}
 \examples{
-
+\dontrun{
 data(CE1)
 
 plot(CE1$x, CE1$y, type='l')
 
 require(Rwave)
 
-out = wlet.do(CE1$y, CE1$dt, flip = FALSE, ploty = TRUE)
+out <- wlet.do(CE1$y, CE1$dt, flip = FALSE, ploty = TRUE)
 
-\dontrun{
+
 ####  show with different scalings:
-plotwlet(out$baha, CE1$y, CE1$dt , zscale=3,  col=rainbow(100) ,  ygrid=FALSE)
+plotwlet(out$baha, CE1$y, CE1$dt , zscale=3,
+col=rainbow(100) ,  ygrid=FALSE)
 
 plotwlet(out$baha, CE1$y, CE1$dt , zscale=1,  col=terrain.colors(100) ,
 ygrid=TRUE)
 
 ##############  add frequency scale on the right hand side of image
-pfreqs = c(0.5, 1, 2,3,4,5, 10, 14)
+pfreqs <- c(0.5, 1, 2,3,4,5, 10, 14)
 
-     zp = pwlet2freqs(noctave=out$baha$noctave , nvoice=out$baha$nvoice,
-CE1$dt,
-flip = TRUE, pfreqs, plot = TRUE,
-perc = 0.85)
+ zp <- pwlet2freqs(noctave=out$baha$noctave , nvoice=out$baha$nvoice,
+     CE1$dt,
+     flip = TRUE, pfreqs, plot = TRUE,
+     perc = 0.85)
 
 
 

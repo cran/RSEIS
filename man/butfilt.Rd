@@ -6,7 +6,8 @@
  design and apply butterworth low/high/band pass filters.
 }
 \usage{
-butfilt(a, fl=0, fh=0.5, deltat=1, type="BP", proto="BU", npoles=5, chebstop=30.0, trbndw=0.3)
+butfilt(a, fl=0, fh=0.5, deltat=1, type="BP", proto="BU",
+ npoles=5, chebstop=30.0, trbndw=0.3)
 }
 
 \arguments{
@@ -48,8 +49,8 @@ filtered time series
 \examples{
 data(CE1)
 
-ts1 = CE1$y
-zz = butfilt(ts1, 1, 15,  CE1$dt, "LP" ,  "BU")
+ts1  <-  CE1$y
+zz  <-  butfilt(ts1, 1, 15,  CE1$dt, "LP" ,  "BU")
 
 
 }

@@ -19,6 +19,6 @@ Single Seismogram from Coso California
 data(CE1)
 plot(CE1$x, CE1$y, type='l')
 
-## maybe str(CE1) ; plot(CE1) ...
+
 }
 \keyword{datasets}

@@ -1,6 +1,6 @@
 \name{MTMplot}
 \alias{MTMplot}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{Plot Multi-taper Spectrum}
 \description{
   Plots output of MTM specturm
@@ -8,7 +8,7 @@
 \usage{
 MTMplot(a, f1 = f1, f2 = f2, len2 = 1024, PLOT = FALSE, PADDLAB = NULL, GUI = TRUE)
 }
-%- maybe also 'usage' for other objects documented here.
+
 \arguments{
   \item{a}{signal}
   \item{f1}{lower frequency}

@@ -6,7 +6,9 @@
  Contour Wavelet Transform
 }
 \usage{
-contwlet(baha, Ysig, dt, clev = 0.75, NLEV = 12, zscale = 1, zbound = NULL, col = col, ygrid = FALSE, WUNITS = "Volts", PEAX = NULL)
+contwlet(baha, Ysig, dt, clev = 0.75, NLEV = 12,
+ zscale = 1, zbound = NULL, col = col, ygrid = FALSE,
+ WUNITS = "Volts", PEAX = NULL)
 }
 
 \arguments{

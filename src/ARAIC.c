@@ -1,6 +1,5 @@
 #include <math.h>
 #include <stdlib.h>
-#include <stdlib.h>
 #include <R.h> 
 
 /*
@@ -76,7 +75,7 @@ void memcof(double  data[], int n, int m, double  *xms, double  d[])
         }
         /* nrerror("never get here in memcof."); */
 }
-#undef NRANSI
+/*#undef NRANSI*/
 
 double  evlmem(double  fdt, double  d[], int m, double  xms)
 {
@@ -155,7 +154,6 @@ double  evlmem(double  fdt, double  d[], int m, double  xms)
    
    int  IW;
 
-  
    double *z1;
    double *win1;
    double  *cof1, *cof2, pm;
@@ -192,7 +190,8 @@ double  evlmem(double  fdt, double  d[], int m, double  xms)
 
    k1=T1-floor(O1/deltat)-IW;
    k2 = k1+IW;
-
+   if(k1<0) return(-1);
+   if(k2>num_points) return(-1);
 
    win1  = dvector(0, IW);
    for(i=0; i<IW; i++) {  win1[i] = y1[k1+i]; }
@@ -206,8 +205,9 @@ double  evlmem(double  fdt, double  d[], int m, double  xms)
    
    k1=T1+floor(O2/deltat)+1;
    k2 = k1+IW;
+  if(k2>num_points) return(-1);
 
-   
+   /* Rprintf("k1=%d k2=%d IW=%d N=%d\n", k1, k2, IW, N); */
 
    for(i=0; i<IW; i++) {  win1[i] = y1[k1+i]; }
 
@@ -298,6 +298,8 @@ double  evlmem(double  fdt, double  d[], int m, double  xms)
    double dt ;
    double O1,  O2, W;
 
+   int IOUT;
+
 
    num_points = *inum;
    dt = *deltat;
@@ -307,7 +309,7 @@ double  evlmem(double  fdt, double  d[], int m, double  xms)
    O2 = *iO2;
    W = *iW;
 
- araic(y1, num_points, dt, M, 
+IOUT =  araic(y1, num_points, dt, M, 
        T1, O1, O2, W, kout);
 
  return;
