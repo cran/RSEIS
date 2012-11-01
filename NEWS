@@ -44,3 +44,6 @@ NEWS for Rwave package
        JSEGY.seis: Iendian can be a vector now when files have different byte order
        
        
+3.2-5  Thu Oct 31 09:58:13 EDT 2013
+       Fix bug in makeDB with dirs 
+       

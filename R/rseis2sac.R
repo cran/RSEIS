@@ -1,4 +1,4 @@
-rseis2sac<-function(GH, sel=1, win=c(0,1), dir="." )
+rseis2sac<-function(GH, sel=1, win=c(0,1), dir=".", BIGLONG=FALSE )
   {
 ##############  convert an RSEIS structure to SAC format
 ########   if dir is provided, the individual files will be
@@ -6,7 +6,7 @@ rseis2sac<-function(GH, sel=1, win=c(0,1), dir="." )
     
     if(missing(sel)) { sel = 1:length(GH$STNS) }
 
-    BIGLONG=FALSE
+    
     theENDIAN =  .Platform$endian
 
     aunits = "volts"
@@ -46,7 +46,7 @@ rseis2sac<-function(GH, sel=1, win=c(0,1), dir="." )
         
         a1 = list(fn=fn, sta=thesta,  comp=thecomp, dt=dt, DATTIM=tstart,
           N=N, units=aunits , amp=sig , IO=list(kind=2, Iendian=theENDIAN,  BIGLONG=BIGLONG))
-        write1sac(a1, BIGLONG=FALSE  , fn=NULL)
+        write1sac(a1, BIGLONG=BIGLONG  , fn=NULL)
       }
 
 

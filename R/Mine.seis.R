@@ -92,6 +92,14 @@
  ## here we must insure that the channel names are unique
 
   
+ if(verbose)
+   { print(length(KG4) )
+for(k in 1:length(KG4)) {
+ cat( paste(KG4[[k]]$sta, KG4[[k]]$comp ), sep="\n")
+
+}
+     
+   }
 
   
 

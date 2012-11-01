@@ -3,8 +3,7 @@ function(why, dt, noctave=6, nvoice=20, flip=TRUE, ploty=TRUE, zscale=1, col=ter
   {
     ### usage: wlet.do(x,  delta, noctave = 4, nvoice = 20,  flip=FALSE,  col=rainbow(100))
 
-     require("Rwave")
-    
+   
 
     if(missing(col)) { col=rainbow(100) }
     if(missing(noctave)) { noctave=6 }

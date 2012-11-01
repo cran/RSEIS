@@ -33,7 +33,8 @@ prefilt=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL,
   \item{forcepix}{logical, force all phase picks to be shown on all
     traces }
   \item{pcex}{ Pick label size expansion (cex), default=0.7 }
-  \item{SCALE}{flag, 1,0= scale according to window or trace }
+  \item{SCALE}{flag, 1,2= scale according to window or trace (default=1,
+  scale by trace)}
   \item{ilocstyle}{integer, style of click graphic, one of -1, 0, 1, 2,
     3, indicating: 
     points, abline, segs, segs+abline,

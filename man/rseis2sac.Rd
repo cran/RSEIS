@@ -8,7 +8,7 @@
   
 }
 \usage{
-rseis2sac(GH, sel = 1, win = c(0, 1), dir = ".")
+rseis2sac(GH, sel = 1, win = c(0, 1), dir = ".", BIGLONG=FALSE)
 }
 \arguments{
   \item{GH}{RSEIS list
@@ -18,7 +18,11 @@ rseis2sac(GH, sel = 1, win = c(0, 1), dir = ".")
   \item{win}{vector, start and end times to dump out (not active) 
 }
   \item{dir}{character, path to destination directory
-}
+  }
+ \item{BIGLONG}{whether to use LONG=short when dumping
+  }
+
+  
 }
 \details{
   Dumps out each trace individually as a SAC file in the destination

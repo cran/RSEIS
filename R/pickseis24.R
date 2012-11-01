@@ -2,13 +2,16 @@ pickseis24<-function(pjj, DB, usta, ucomp )
 {
   w = list(hr=c(1,1) )
 
+  
+origyr=attr(DB, "origyr")
+  
   while(length(w$hr)>1)
     {
       dev.set(2)
       w = winseis24(pjj)
       print(w)
 
-      eday = EPOCHday(w$yr, jd =w$jd, origyr = DB$origyr)
+      eday = EPOCHday(w$yr, jd =w$jd, origyr = origyr)
 
 
       at1 = eday$jday + (w$hr[1]) /24 

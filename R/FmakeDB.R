@@ -15,9 +15,8 @@ FmakeDB<-function(LF2, kind =1, Iendian=1, BIGLONG=FALSE)
       t1=0,
       t2=0,
       sta="", 
-      comp="", 
-      origyr=0)
-
+      comp="")
+    attr(ADB, "origyr")<- 1972
     N = 0
     
     
@@ -48,7 +47,7 @@ FmakeDB<-function(LF2, kind =1, Iendian=1, BIGLONG=FALSE)
     
        
          origyr = min(ADB$yr)
-        eday = EPOCHday(ADB$yr, jd = ADB$jd, origyr = ADB$origyr)
+        eday = EPOCHday(ADB$yr, jd = ADB$jd, origyr = origyr)
         ADB$t1 = eday$jday + ADB$hr/24 + ADB$mi/(24 * 60) + ADB$sec/(24 *
           3600)
         ADB$t2 = ADB$t1 + ADB$dur/(24 * 3600)
@@ -57,6 +56,8 @@ FmakeDB<-function(LF2, kind =1, Iendian=1, BIGLONG=FALSE)
     attr(ADB, "kind")=kind
     attr(ADB, "Iendian")=Iendian
     attr(ADB, "BIGLONG")=BIGLONG
+
+    
     
         invisible(ADB)
         

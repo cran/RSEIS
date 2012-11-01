@@ -2,12 +2,7 @@
 function(Xamp, DT=0.008, STAMP=NULL)
   {
 
-       if(require("Rwave")==FALSE)
-        {
-           return
-         }
-
-       
+      
  
     if(missing(DT)) { DT=1 }
      if(missing(STAMP)) { STAMP=NULL }

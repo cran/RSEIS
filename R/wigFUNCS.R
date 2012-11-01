@@ -782,19 +782,8 @@ WLET<-function(nh, g)
 
 
   
-          if(require("Rwave")==TRUE)
-            {
-            
               wlet.drive(Xamp, nh$dt[ipick], STAMP=ftime)
-            }
-           else
-            {
-              
-             cat("WLET WARNING: NEED package RWAVE to do wavelet analysis (not available on MAC", sep="\n")
-              
-            }
-          
-
+            
 
               
         ###   plotevol(DEV, log=1, fl=0, fh=15, col=rainbow(50))

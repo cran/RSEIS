@@ -72,7 +72,7 @@ write1sac<-function(a1, BIGLONG=FALSE  , fn=NULL)
 
 
     
-    A4 =format(a1$sta, width=8, justify="right" )
+    A4 =format(a1$sta, width=8, justify="left" )
     NAM4 = sacheadnames[111]
     A5 = format("-12345", width=16, justify="left" )
     NAM5 = sacheadnames[112]
@@ -130,8 +130,11 @@ write1sac<-function(a1, BIGLONG=FALSE  , fn=NULL)
           comp3,
           "SAC")
 
-        
+      }
+    else
+      {
 
+        sacfn = fn
       }
 
 
@@ -167,6 +170,6 @@ write1sac<-function(a1, BIGLONG=FALSE  , fn=NULL)
 
     close(zz)
 
-    
+    invisible(sacfn)
 
   }

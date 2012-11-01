@@ -6,7 +6,9 @@ makeDB<-function(path="." , pattern="R", dirs="", kind =1, Iendian=1, BIGLONG=FA
        if(missing(BIGLONG)) { BIGLONG=FALSE }
         if(missing(path)) { path="." }
      
-
+if(dirs=="")
+  {
+  
     if(is.na(pattern) | is.null(pattern)  )
       {
         LF1 = list.files(path=path)
@@ -19,13 +21,18 @@ makeDB<-function(path="." , pattern="R", dirs="", kind =1, Iendian=1, BIGLONG=FA
         NDIRS = length(LF1)
 
       }
+    ####
+   #### if(dirs=="") { dirs="." }
 
-    if(length(dirs)>0)
+  }
+    else
+      {
+    if(length(dirs)>1)
       {
            LF1 = dirs
            NDIRS = length(LF1)
       }
- 
+  }
     
     
     
@@ -39,9 +46,10 @@ makeDB<-function(path="." , pattern="R", dirs="", kind =1, Iendian=1, BIGLONG=FA
       t1=0,
       t2=0,
       sta="", 
-      comp="", 
-      origyr=0)
+      comp="")
+    attr(ADB, "origyr")<- 1972
 
+    
     N = 0
     for(i in 1:NDIRS)
       {
@@ -81,7 +89,7 @@ makeDB<-function(path="." , pattern="R", dirs="", kind =1, Iendian=1, BIGLONG=FA
     ADB$t1 = eday$jday + ADB$hr/24 + ADB$mi/(24 * 60) + ADB$sec/(24 *
         3600)
     ADB$t2 = ADB$t1 + ADB$dur/(24 * 3600)
-    attr(ADB, "origyr")<- min(origyr)
+    attr(ADB, "origyr")<- min(origyr,na.rm = TRUE )
     attr(ADB, "kind")=kind
     attr(ADB, "Iendian")=Iendian
     attr(ADB, "BIGLONG")=BIGLONG
