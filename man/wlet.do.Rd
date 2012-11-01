@@ -8,7 +8,7 @@
 \usage{
 wlet.do(why, dt, noctave = 6, nvoice = 20,
 flip = TRUE, ploty = TRUE, zscale = 1,
-col = terrain.colors(100), STAMP = STAMP)
+col = terrain.colors(100), STAMP = STAMP, units="", scaleloc=c(0.4,0.95))
 }
 
 \arguments{
@@ -21,16 +21,23 @@ col = terrain.colors(100), STAMP = STAMP)
   \item{zscale}{scale of the image }
   \item{col}{color palette}
   \item{STAMP}{cahracter stamp for identification}
+  \item{units}{character, units to put on plot}
+    \item{scaleloc}{2-vector, percentatge of bottom margin for the color
+  scale}
 }
 \details{
-  wlet.do uses the cwt (package:Rwave) code to calculate the continuous wavelet
+  This function uses the cwt (package:Rwave) code to calculate the continuous wavelet
   transform,
   but plots it differently.
  Morelet wavelet is used by default.   The cwt produces an
  image, the modulus of the transform, which is passed on to wlet.do
  along with the number of octaves and the number of voices.
  Plotting parameters are passed to the function so that replotting can
- be accomplished (use plotwlet) without having to recalculate the transform.
+ be accomplished (use plotwlet) without having to recalculate the
+ transform.
+
+ Plotting parameters are passed on to the plotting function, plotwlet.
+ 
  
 }
 \value{

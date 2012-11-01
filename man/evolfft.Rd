@@ -7,7 +7,7 @@
 }
 \usage{
 evolfft(a, dt = 0, Nfft = 0, Ns = 0, Nov = 0, fl = 0, fh = 10, pcttap =
-0.05 )
+0.05, adjust=TRUE )
 }
 
 \arguments{
@@ -19,6 +19,8 @@ evolfft(a, dt = 0, Nfft = 0, Ns = 0, Nov = 0, fl = 0, fh = 10, pcttap =
   \item{fl}{ low frequency to display }
   \item{fh}{high frequency to display  }
   \item{pcttap}{Percent cosine taper for each window  }
+  \item{adjust}{logical, if TRUE adjust the parameters
+  so the plot looks good (DEFAULT).  If FALSE, keep user parameters. }
 
   
 }
@@ -27,6 +29,12 @@ evolfft(a, dt = 0, Nfft = 0, Ns = 0, Nov = 0, fl = 0, fh = 10, pcttap =
   applies Welsh's Method.
   Each mini-window is tapered with a cosine window.
 }
+\note{
+  Parameter adjust is by default TRUE so that the
+  choice of Ns, Nov, and kcol will be optimized, more or less.
+  Set this logical to FALSE to force the function to
+  use user input parameters.
+  }
 \value{
   List
 

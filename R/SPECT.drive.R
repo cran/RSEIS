@@ -20,7 +20,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
      
    ###  pal = FUN(NCOL)
 
-    pal = Gcols(plow=5, phi=0,  N=100, pal=TPALS[1])
+    pal = RPMG::Gcols(plow=5, phi=0,  N=100, pal=TPALS[1])
     scale.def = 0
    
     colabs = c(rep(1,2) , rep(2, length(APALS) ), rep(4,length(ADDBUTS) ))
@@ -98,7 +98,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
     
     PE = plotevol(DEV, log=scale.def, fl=flshow, fh=fhshow, col=pal, ygrid=gridon, STAMP=STAMP)
     
-    buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+    buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
 
     pstyle=3
    
@@ -116,21 +116,21 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
       {
 
 
-    iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=0)
+    iloc = RPMG::ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=0)
            Nclick = length(iloc$x)
            
           if(Nclick>0)
             {
               zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
               zenclick = length(zloc$x)
-              K =  whichbutt(iloc ,buttons)
+              K =  RPMG::whichbutt(iloc ,buttons)
               sloc = zloc
             }
           else
             {
               Nclick = 0
               K = 0
-              buttons = rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
+              buttons = RPMG::rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
               title("Return to Calling Program")
               break;
             }
@@ -139,7 +139,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
         
         if(K[Nclick] == match("DONE", labs, nomatch = NOLAB))
           {
-            buttons = rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
+            buttons = RPMG::rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
             title("Return to Calling Program")
             
             break;
@@ -147,7 +147,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
 
         if(K[Nclick] == match("SAVE", labs, nomatch = NOLAB))
           {
-            buttons = rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
+            buttons = RPMG::rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
             title("Return to Calling Program")
             invisible(DEV)
             break;
@@ -163,7 +163,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
 
           print(paste(sep=' ' ,"Starting postscript file plotevol"))
            jdev = dev.cur()
-           plfname = local.file("sgram","eps")
+           plfname = RPMG::local.file("sgram","eps")
            P = round(par('pin'))
 
            postscript(file=plfname , width=P[1], height=P[2], paper = "special", horizontal=FALSE, onefile=TRUE,print.it=FALSE)
@@ -184,10 +184,10 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
             
             ##FUN = match.fun(TPALS[J])
             ##  pal = FUN(NCOL)
-            pal = Gcols(plow=5, phi=0,  N=100, pal=TPALS[J])
+            pal = RPMG::Gcols(plow=5, phi=0,  N=100, pal=TPALS[J])
             
               PE = plotevol(DEV, log=scale.def, fl= flshow, fh=fhshow, col=pal, ygrid=gridon, STAMP=STAMP)
-            buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
             zloc = list(x=NULL, y=NULL) 
           }
 
@@ -199,21 +199,21 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
             scale.def = 0
          
               PE = plotevol(DEV, log=scale.def, fl= flshow, fh=fhshow, col=pal, ygrid=gridon, STAMP=STAMP)
-            buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
              zloc = list(x=NULL, y=NULL) 
         }
         if(K[Nclick]==match("LOG", labs, nomatch = NOLAB))
           {
             scale.def = 1
            PE =  plotevol(DEV, log=scale.def, fl= flshow, fh=fhshow, col=pal, ygrid=gridon, STAMP=STAMP)
-            buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
              zloc = list(x=NULL, y=NULL) 
         }
         if(K[Nclick]==match("SQRT", labs, nomatch = NOLAB))
           {
             scale.def = 2
             PE = plotevol(DEV, log=scale.def, fl=flshow, fh=fhshow, col=pal, ygrid=gridon, STAMP=STAMP)
-            buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
              zloc = list(x=NULL, y=NULL) 
         }
 
@@ -224,7 +224,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
             
             
            PE =  plotevol(DEV, log=scale.def, fl= flshow, fh=fhshow, col=pal, ygrid=gridon, STAMP=STAMP)
-            buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
              zloc = list(x=NULL, y=NULL) 
         }
 
@@ -243,7 +243,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
              DEV = evolfft(Xamp,DT , Nfft=Nfft, Ns=NS , Nov=NOV,  fl=fl, fh=fh  )
   
             PE = plotevol(DEV, log=scale.def, fl=flshow, fh=fhshow, col=pal, ygrid=gridon, STAMP=STAMP)
-            buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
               zloc = list(x=NULL, y=NULL) 
         }
 
@@ -272,7 +272,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
                {
                  PE =  plotevol(DEV, log=scale.def, fl=flshow, fh=fhshow, col=pal, ygrid=gridon, STAMP=STAMP)
                }
-             buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+             buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
               zloc = list(x=NULL, y=NULL) 
         }
 

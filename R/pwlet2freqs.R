@@ -23,7 +23,7 @@ function(noctave, nvoice,  dt, flip=TRUE, tab.FREQ, plot=FALSE,  perc = 0.85)
 
   Iat = nvoice*(log2(sa[IA])-1)/(nvoice*noctave)
 
-   why   = RESCALE(Iat , 0 , perc , 0, 1 )
+   why   = RPMG::RESCALE(Iat , 0 , perc , 0, 1 )
 
   
   if(plot==TRUE)
@@ -31,8 +31,9 @@ function(noctave, nvoice,  dt, flip=TRUE, tab.FREQ, plot=FALSE,  perc = 0.85)
       abline(h=why, lty=2, col=rgb(0.5, 0.5, 0.5) )
       alabs = as.character(tab.FREQ)
       ###  alabs[length(alabs)] = paste(sep=" ", alabs[length(alabs)], "Hz")
+      alabs[length(why)]  = paste(alabs[length(why)], "Hz")
       axis(side = 4, at=why, labels=alabs)
-      mtext(side=4, line=1, at = why[length(why)] , text="Hz", adj=(-1))
+      ## mtext(side=4, line=1, at = why[length(why)] , text="Hz", adj=(-1.1))
     }
 
   FOUT = why

@@ -52,7 +52,7 @@ function(baha, Ysig, dt , clev=0.75,  NLEV=12, zscale=1,  zbound=NULL, col=col, 
     IMAT =baha$img
 
  ##print(y)
-    why   = sort( RESCALE( 1:ncol(baha$img) , 0 , perc , 1, ncol(baha$img) ))
+    why   = sort( RPMG::RESCALE( 1:ncol(baha$img) , 0 , perc , 1, ncol(baha$img) ))
  ##print(why)
     
 
@@ -122,12 +122,12 @@ function(baha, Ysig, dt , clev=0.75,  NLEV=12, zscale=1,  zbound=NULL, col=col, 
         
       }
     
-    trace = RESCALE( a, perc , 1.0  , min(a), max(a) )
+    trace = RPMG::RESCALE( a, perc , 1.0  , min(a), max(a) )
 
     
    lines(tim, trace)
 
-    ##  sy = RESCALE( a, perc  , 1.0  , min(a), max(a) )
+    ##  sy = RPMG::RESCALE( a, perc  , 1.0  , min(a), max(a) )
     Tdiff = max(tim)-min(tim)
     
     ##   segments(max(tim)-Tdiff*.04-DEVOL$wpars$Ns*dt, 0.76, max(tim)-Tdiff*.04, 0.76, lwd=2)
@@ -156,7 +156,7 @@ function(baha, Ysig, dt , clev=0.75,  NLEV=12, zscale=1,  zbound=NULL, col=col, 
 
       
 
-    raxspec= RESCALE(yax , 0 , perc , 0, 1 )
+    raxspec= RPMG::RESCALE(yax , 0 , perc , 0, 1 )
       
     axis(2, at=raxspec, labels=2^(1:baha$noctave))
     
@@ -175,7 +175,7 @@ function(baha, Ysig, dt , clev=0.75,  NLEV=12, zscale=1,  zbound=NULL, col=col, 
 
     
     axtrace = range(a)
-    raxtrace= RESCALE( axtrace, perc , 1.0 , min(a), max(a) )
+    raxtrace= RPMG::RESCALE( axtrace, perc , 1.0 , min(a), max(a) )
 
 
     if( !is.na(WUNITS)  )
@@ -185,7 +185,7 @@ function(baha, Ysig, dt , clev=0.75,  NLEV=12, zscale=1,  zbound=NULL, col=col, 
           }
     
     
-   ###  HOZscale( ImPlot, col, units=units, s1=0.4, s2=0.95)
+   ###  RPMG::HOZscale( ImPlot, col, units=units, s1=0.4, s2=0.95)
 
     invisible(list(y=y[yflag], why=why, yBounds=c(0,perc), x=x, yat=raxspec))
 

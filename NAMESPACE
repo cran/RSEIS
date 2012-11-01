@@ -1,4 +1,7 @@
 # Export all names
 exportPattern(".")
 useDynLib(RSEIS)
-
+import(RPMG)
+importFrom(Rwave , cwt)
+importFrom(Rwave ,crc)
+importFrom(Rwave ,cfamily)

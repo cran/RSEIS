@@ -54,7 +54,7 @@ BUTREPLOT<- function(opts , ncol=5, HOZ=TRUE, TOP=TRUE, cols="white", main="", x
 
     if(missing(cols))
       {
-        cols =pastel.colors(N, seed=1)
+        cols =RPMG::pastel.colors(N, seed=1)
 
         cols[is.na(lab)] = NA
       }
@@ -64,7 +64,7 @@ BUTREPLOT<- function(opts , ncol=5, HOZ=TRUE, TOP=TRUE, cols="white", main="", x
 
     ##print(c(ncol, nrow))
     
-    ##  B =  itoxyz(1:N, ncol, nrow, 1)
+    ##  B =  RPMG::itoxyz(1:N, ncol, nrow, 1)
 
     if(newplot)
       {
@@ -78,7 +78,7 @@ BUTREPLOT<- function(opts , ncol=5, HOZ=TRUE, TOP=TRUE, cols="white", main="", x
 
     y = seq(from=ylim[1], length=nrow, by=dy)
 
-    M =   meshgrid(x, y)
+    M =   RPMG::meshgrid(x, y)
 
   ######  ind = seq(from=1:length(lab))
 

@@ -20,7 +20,7 @@ function(APX, ista=NULL , icomp=c("V", "N", "E") )
     else
       {
         
-        M = meshgrid(1:length(ista), 1:length(icomp) )
+        M = RPMG::meshgrid(1:length(ista), 1:length(icomp) )
         itag =  paste(sep=".",ista[M$x], icomp[M$y])
         atag = paste(sep=".", APX$name, APX$comp)
         m =  which(!is.na(match(atag, itag)))

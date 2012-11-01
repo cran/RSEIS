@@ -478,7 +478,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
 
   global.vars$buttoncex = 0.8
   
-  buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs, cex=global.vars$buttoncex )
+  buttons = RPMG::rowBUTTONS(BLABS, col=colabs, pch=pchlabs, cex=global.vars$buttoncex )
 
   global.vars$MAINdev = dev.cur()
 
@@ -511,7 +511,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
   while(TRUE) {
       ####### start while: each mouse click is recorded and tested for what to do next
       #######
-      iloc = ilocator(global.vars$ilocnum ,COL=global.vars$iloccol ,NUM=FALSE , YN=length(global.vars$sel), style=global.vars$ilocstyle )
+      iloc = RPMG::ilocator(global.vars$ilocnum ,COL=global.vars$iloccol ,NUM=FALSE , YN=length(global.vars$sel), style=global.vars$ilocstyle )
       Nclick = length(iloc$x)
 ####  cat(paste(sep=" ", zenclick, Nclick), sep="\n")
       
@@ -520,7 +520,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
           #######  add last click to list of clicks, continue 
           zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
           global.vars$zenclick = length(zloc$x)
-          K =  whichbutt(iloc ,buttons)
+          K =  RPMG::whichbutt(iloc ,buttons)
           sloc = zloc
           
           
@@ -538,7 +538,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
 
            #######  No left mouse click was executed - stop and return to main 
  
-              buttons = rowBUTTONS(global.vars$BLABS, col=rep(grey(.8), length(global.vars$BLABS)),
+              buttons = RPMG::rowBUTTONS(global.vars$BLABS, col=rep(grey(.8), length(global.vars$BLABS)),
                 pch=rep("NULL", length(global.vars$BLABS)), cex=global.vars$buttoncex)
               title("Done, Return to Calling Program")
               
@@ -551,7 +551,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
               
               YN = YNreplot()
               
-              buttons = rowBUTTONS(global.vars$BLABS, col=global.vars$colabs, pch=global.vars$pchlabs, cex=global.vars$buttoncex)
+              buttons = RPMG::rowBUTTONS(global.vars$BLABS, col=global.vars$colabs, pch=global.vars$pchlabs, cex=global.vars$buttoncex)
               u = par("usr")
               
               sloc = list(x=c(u[1],u[2]), y=c(u[3],u[4]))
@@ -568,7 +568,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
               global.vars$WIN  = sort(zloc$x[c(global.vars$zenclick-1, global.vars$zenclick)])
               YN = YNreplot()
               
-              buttons = rowBUTTONS(BLABS, col=global.vars$colabs, pch=global.vars$pchlabs, cex=global.vars$buttoncex)
+              buttons = RPMG::rowBUTTONS(BLABS, col=global.vars$colabs, pch=global.vars$pchlabs, cex=global.vars$buttoncex)
               
               Nclick=1
               K = 0
@@ -621,7 +621,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
           
           YN = YNreplot()
           
-          buttons = rowBUTTONS(global.vars$BLABS, col=global.vars$colabs, pch=global.vars$pchlabs, cex=global.vars$buttoncex)
+          buttons = RPMG::rowBUTTONS(global.vars$BLABS, col=global.vars$colabs, pch=global.vars$pchlabs, cex=global.vars$buttoncex)
           Nclick = 0
           K = 0
           zloc = list(x=NULL, y=NULL)
@@ -633,7 +633,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
         {
           YN = YNreplot()
           ## print("clicked REPLOT")
-          buttons = rowBUTTONS(global.vars$BLABS, col=global.vars$colabs, pch=global.vars$pchlabs, cex=global.vars$buttoncex)
+          buttons = RPMG::rowBUTTONS(global.vars$BLABS, col=global.vars$colabs, pch=global.vars$pchlabs, cex=global.vars$buttoncex)
           Nclick = 0
           K = 0
           zloc = list(x=NULL, y=NULL)
@@ -645,7 +645,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
       
       if(K[Nclick] == match("DONE", BLABS, nomatch = NOLAB))
         {
-          buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)), cex=global.vars$buttoncex)
+          buttons = RPMG::rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)), cex=global.vars$buttoncex)
           title("Return to Calling Program")
 
           if(global.vars$zenclick>1)
@@ -666,7 +666,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
 
       if(K[Nclick] == match("QUIT", BLABS, nomatch = NOLAB))
         {
-          buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)), cex=global.vars$buttoncex)
+          buttons = RPMG::rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)), cex=global.vars$buttoncex)
           title("Return to Calling Program")
 
 
@@ -689,7 +689,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
         {
           print(paste(sep=' ' ,"Start swig postscript"))
           jdev = dev.cur()
-          plfname = local.file("swig","eps")
+          plfname = RPMG::local.file("swig","eps")
           
           ### postscript(file=plfname, horizontal=TRUE, print.it=FALSE,  onefile=FALSE)
            P = round(par('pin'))
@@ -768,7 +768,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
                   
                   YN = YNreplot()
                   
-                  buttons = rowBUTTONS(global.vars$BLABS, col=global.vars$colabs,
+                  buttons = RPMG::rowBUTTONS(global.vars$BLABS, col=global.vars$colabs,
                     pch=global.vars$pchlabs, cex=global.vars$buttoncex)
                   zloc = global.vars$zloc
                 }
@@ -785,7 +785,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
                        if(length(grep("NH",NGL)))     NH = GL$NH
                     }
                   YN = YNreplot()   
-                  buttons = rowBUTTONS(global.vars$BLABS, col=global.vars$colabs,
+                  buttons = RPMG::rowBUTTONS(global.vars$BLABS, col=global.vars$colabs,
                     pch=global.vars$pchlabs, cex=global.vars$buttoncex)
                   zloc = global.vars$zloc
                 }
@@ -795,7 +795,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
                   if(exists("OLDH"))NH = OLDH
                  
                   YN = YNreplot()   
-                  buttons = rowBUTTONS(global.vars$BLABS, col=global.vars$colabs,
+                  buttons = RPMG::rowBUTTONS(global.vars$BLABS, col=global.vars$colabs,
                     pch=global.vars$pchlabs, cex=global.vars$buttoncex)
                   zloc = global.vars$zloc
                 }
@@ -836,7 +836,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
 #### print(WIN)
 
   
-  PushI =  whichbutt(zloc ,buttons)
+  PushI =  RPMG::whichbutt(zloc ,buttons)
 ####  print(zloc)
 ####  print(sloc)
 ####  print(PushI)

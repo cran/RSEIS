@@ -34,7 +34,7 @@ SELBUT<-function(OPTS, onoff=1, ocols ="white", default="opt"  )
     
     YN = BUTREPLOT(OPTS, cols=ocols)
     
-    buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+    buttons = RPMG::rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
     u = par("usr")
     sloc = list(x=c(u[1],u[2]), y=c(u[3],u[4]))
     zloc =list(x=NULL, y=NULL)
@@ -78,7 +78,7 @@ SELBUT<-function(OPTS, onoff=1, ocols ="white", default="opt"  )
     
     while(TRUE)
       {
-    ##    iloc = ilocator(1, COL=rgb(1,0.6, 0.6), NUM=FALSE , YN=length(gvars$sel), style=-1)
+    ##    iloc = RPMG::ilocator(1, COL=rgb(1,0.6, 0.6), NUM=FALSE , YN=length(gvars$sel), style=-1)
          iloc = locator(1, type='p',  pch=21, cex=3,  col='red', bg='yellow')
         Nclick = length(iloc$x)
         
@@ -87,7 +87,7 @@ SELBUT<-function(OPTS, onoff=1, ocols ="white", default="opt"  )
           #######  add last click to list of clicks, continue 
           zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
           gvars$zenclick = length(zloc$x)
-          K =  whichbutt(iloc ,buttons)
+          K =  RPMG::whichbutt(iloc ,buttons)
           sloc = zloc
           
           
@@ -105,7 +105,7 @@ SELBUT<-function(OPTS, onoff=1, ocols ="white", default="opt"  )
 
            #######  No left mouse click was executed - stop and return to main 
  
-              buttons = rowBUTTONS(gvars$BLABS, col=rep(grey(.8), length(gvars$BLABS)),
+              buttons = RPMG::rowBUTTONS(gvars$BLABS, col=rep(grey(.8), length(gvars$BLABS)),
                 pch=rep("NULL", length(gvars$BLABS)))
               title("Done, Return to Calling Program")
               
@@ -129,7 +129,7 @@ SELBUT<-function(OPTS, onoff=1, ocols ="white", default="opt"  )
               }
           }
             
-            buttons = rowBUTTONS(gvars$BLABS, col=rep(grey(.8), length(gvars$BLABS)), pch=rep("NULL", length(gvars$BLABS)))
+            buttons = RPMG::rowBUTTONS(gvars$BLABS, col=rep(grey(.8), length(gvars$BLABS)), pch=rep("NULL", length(gvars$BLABS)))
             title("Return to Calling Program")
           
 
@@ -162,7 +162,7 @@ SELBUT<-function(OPTS, onoff=1, ocols ="white", default="opt"  )
             gvars = list(BLABS=BLABS, opts=kOPTS, onoff=konoff, ocols=kocols, default=gvars$default )
 
             YN = BUTREPLOT(gvars$opts, cols=gvars$ocols)
-            buttons = rowBUTTONS(gvars$BLABS, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(gvars$BLABS, col=colabs, pch=pchlabs)
             
             u = par("usr")
             
@@ -196,7 +196,7 @@ SELBUT<-function(OPTS, onoff=1, ocols ="white", default="opt"  )
             gvars = list(BLABS=BLABS, opts=kOPTS, onoff=konoff, ocols=kocols, default=gvars$default )
 
             YN = BUTREPLOT(gvars$opts, cols=gvars$ocols)
-            buttons = rowBUTTONS(gvars$BLABS, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(gvars$BLABS, col=colabs, pch=pchlabs)
             
             u = par("usr")
             
@@ -217,7 +217,7 @@ SELBUT<-function(OPTS, onoff=1, ocols ="white", default="opt"  )
          
         if(K[Nclick] == match("CANCEL", gvars$BLABS, nomatch = NOLAB))
           {
-            buttons = rowBUTTONS(gvars$BLABS, col=rep(grey(.8), length(gvars$BLABS)), pch=rep("NULL", length(gvars$BLABS)))
+            buttons = RPMG::rowBUTTONS(gvars$BLABS, col=rep(grey(.8), length(gvars$BLABS)), pch=rep("NULL", length(gvars$BLABS)))
             title("Return to Calling Program")
             blist = zloc
             invisible(NULL)
@@ -236,7 +236,7 @@ SELBUT<-function(OPTS, onoff=1, ocols ="white", default="opt"  )
             gvars$ocols[w] = addcol
             
             YN = BUTREPLOT(gvars$opts, cols=gvars$ocols)
-            buttons = rowBUTTONS(gvars$BLABS, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(gvars$BLABS, col=colabs, pch=pchlabs)
             
             u = par("usr")
               
@@ -260,7 +260,7 @@ SELBUT<-function(OPTS, onoff=1, ocols ="white", default="opt"  )
             gvars$ocols[w] = addcol
             
             YN = BUTREPLOT(gvars$opts, cols=gvars$ocols)
-            buttons = rowBUTTONS(gvars$BLABS, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(gvars$BLABS, col=colabs, pch=pchlabs)
             
             u = par("usr")
               
@@ -284,7 +284,7 @@ SELBUT<-function(OPTS, onoff=1, ocols ="white", default="opt"  )
             gvars$ocols[w] = defaultcol
             
             YN = BUTREPLOT(gvars$opts, cols=gvars$ocols)
-            buttons = rowBUTTONS(gvars$BLABS, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(gvars$BLABS, col=colabs, pch=pchlabs)
             
             u = par("usr")
             
@@ -309,7 +309,7 @@ SELBUT<-function(OPTS, onoff=1, ocols ="white", default="opt"  )
 
             
             YN = BUTREPLOT(gvars$opts, cols=gvars$ocols)
-            buttons = rowBUTTONS(gvars$BLABS, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(gvars$BLABS, col=colabs, pch=pchlabs)
             
             u = par("usr")
             
@@ -336,7 +336,7 @@ SELBUT<-function(OPTS, onoff=1, ocols ="white", default="opt"  )
 
             
             YN = BUTREPLOT(gvars$opts, cols=gvars$ocols)
-            buttons = rowBUTTONS(gvars$BLABS, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(gvars$BLABS, col=colabs, pch=pchlabs)
             
             u = par("usr")
             
@@ -361,7 +361,7 @@ SELBUT<-function(OPTS, onoff=1, ocols ="white", default="opt"  )
             
            
             YN = BUTREPLOT(gvars$opts, cols=gvars$ocols)
-            buttons = rowBUTTONS(gvars$BLABS, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(gvars$BLABS, col=colabs, pch=pchlabs)
             
             u = par("usr")
             

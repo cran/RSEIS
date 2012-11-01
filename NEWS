@@ -47,3 +47,7 @@ NEWS for Rwave package
 3.2-5  Thu Oct 31 09:58:13 EDT 2013
        Fix bug in makeDB with dirs 
        
+
+3.3-1  Sun Dec 15 12:28:47 EST 2013
+       Fix bug in plt.MTM0 with sample rates(Jake A.)
+       Added Adjust parameter in evolfft  to allow for user control of parameters

@@ -49,7 +49,7 @@ wiggleimage(0.1*G1, dt = -S1$dt, dx = S1$x, col = "black")
 wavelet <- genrick(25,S1$dt,35)
 klem <- 11
 ### 
-nwave <- RESCALE(wavelet, 0, 1, wavelet[1], max(wavelet))
+nwave <- RPMG::RESCALE(wavelet, 0, 1, wavelet[1], max(wavelet))
 
 ##############  convolve the wavelet with the set of spikes
 H1 <- sigconv(G1, nwave)

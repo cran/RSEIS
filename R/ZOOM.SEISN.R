@@ -15,13 +15,13 @@ function(GH, sel=1:length(GH$dt), WIN=NULL)
   #### mtext( ftime, side = 3, at = 0, line=0.5, adj=0)
   
  ####  title("LEFT 0 Click = done; 1 Click=replot;   2 Click=zoom")
-  buttons = rowBUTTONS(labs)
+  buttons = RPMG::rowBUTTONS(labs)
   
   ####  NV = LabelBAR(labs)
   zloc = plocator(COL=rgb(1,0.8, 0.8))
   Nclick = length(zloc$x)
   if(is.null(zloc$x)) { return(NULL) }
-  K = whichbutt(zloc ,buttons)
+  K = RPMG::whichbutt(zloc ,buttons)
 
   sloc = zloc
 
@@ -107,12 +107,12 @@ function(GH, sel=1:length(GH$dt), WIN=NULL)
           
         }
           
-      buttons = rowBUTTONS(labs)
+      buttons = RPMG::rowBUTTONS(labs)
      ###  NV = LabelBAR(labs)
       zloc = plocator(COL=rgb(1,0.8, 0.8))
       Nclick = length(zloc$x)
       if(is.null(zloc$x)) { return(sloc) }
-      K =  whichbutt(zloc ,buttons)
+      K =  RPMG::whichbutt(zloc ,buttons)
       ### K = ValBAR(NV, zloc)
      ###  print(paste(sep=" ", "K=",K))
       

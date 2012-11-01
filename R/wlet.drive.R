@@ -22,7 +22,7 @@ function(Xamp, DT=0.008, STAMP=NULL)
 
    ###    pal = FUN(NCOL)
 
-    pal = Gcols(plow=5, phi=0,  N=100, pal=TPALS[1])
+    pal = RPMG::Gcols(plow=5, phi=0,  N=100, pal=TPALS[1])
     
     scale.def = 3
     colabs = c(rep(1,2) , rep(2, length(APALS) ), rep(4,length(ADDBUTS) ))
@@ -43,11 +43,11 @@ function(Xamp, DT=0.008, STAMP=NULL)
     pwlet2freqs(faha$noctave, faha$nvoice, DT, flip=faha$flip, pfreqs , plot=TRUE)
 
     
-    buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+    buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
     
    
     PEAXBoxes = NULL
- ####    iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=NSEL, style=1)
+ ####    iloc = RPMG::ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=NSEL, style=1)
     
        zloc = list(x=NULL, y=NULL)
        sloc = zloc 
@@ -55,21 +55,21 @@ function(Xamp, DT=0.008, STAMP=NULL)
        while(TRUE)
          {
            
-           iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=0)
+           iloc = RPMG::ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=0)
            Nclick = length(iloc$x)
            
           if(Nclick>0)
             {
               zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
               zenclick = length(zloc$x)
-              K =  whichbutt(iloc ,buttons)
+              K =  RPMG::whichbutt(iloc ,buttons)
               sloc = zloc
             }
           else
             {
               Nclick = 0
               K = 0
-              buttons = rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
+              buttons = RPMG::rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
               title("Return to Calling Program")
               break;
             }
@@ -81,7 +81,7 @@ function(Xamp, DT=0.008, STAMP=NULL)
            #### PE =plotwlet(faha, Xamp, DT, zscale=scale.def,  col=pal, STAMP=STAMP)
            #### pwlet2freqs(faha$noctave, faha$nvoice, DT, flip=faha$flip,  pfreqs , plot=TRUE)
 
-            buttons = rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
+            buttons = RPMG::rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
             title("Return to Calling Program")
             break;
           }
@@ -164,7 +164,7 @@ function(Xamp, DT=0.008, STAMP=NULL)
           {
             print(paste(sep=' ' ,"Start postscript file plotwlet"))
             jdev = dev.cur()
-            plfname = local.file("wlet","eps")
+            plfname = RPMG::local.file("wlet","eps")
 
 
             P = round(par('pin'))
@@ -192,7 +192,7 @@ function(Xamp, DT=0.008, STAMP=NULL)
           {
             print(paste(sep=' ' ,"Start postscript file plotwlet"))
             jdev = dev.cur()
-            plfname = local.file("wletc","eps")
+            plfname = RPMG::local.file("wletc","eps")
 
             
             dbounds = range(faha$img )
@@ -239,11 +239,11 @@ function(Xamp, DT=0.008, STAMP=NULL)
             ##  FUN = match.fun(TPALS[J])
              ##  pal = FUN(NCOL)
             
-            pal = Gcols(plow=5, phi=0,  N=100, pal=TPALS[J])
+            pal = RPMG::Gcols(plow=5, phi=0,  N=100, pal=TPALS[J])
  
            PE = plotwlet(faha, Xamp, DT, zscale=scale.def, col=pal,  ygrid=FALSE, STAMP=STAMP )
             pwlet2freqs(faha$noctave, faha$nvoice, DT, flip=faha$flip, pfreqs , plot=TRUE)
-            buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
              zloc = list(x=NULL, y=NULL) 
           }
 
@@ -252,7 +252,7 @@ function(Xamp, DT=0.008, STAMP=NULL)
             scale.def = 1
             PE =plotwlet(faha, Xamp, DT, zscale=scale.def,  col=pal, STAMP=STAMP)
             pwlet2freqs(faha$noctave, faha$nvoice, DT, flip=faha$flip,  pfreqs , plot=TRUE)
-            buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
              zloc = list(x=NULL, y=NULL) 
           }
         if(K[Nclick]==match("LOG", labs, nomatch = NOLAB))
@@ -260,7 +260,7 @@ function(Xamp, DT=0.008, STAMP=NULL)
             scale.def = 2
             PE =plotwlet(faha, Xamp, DT, zscale=scale.def,  col=pal, STAMP=STAMP)
             pwlet2freqs(faha$noctave, faha$nvoice, DT, flip=faha$flip,  pfreqs , plot=TRUE)
-            buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
              zloc = list(x=NULL, y=NULL) 
           }
         if(K[Nclick]==match("SQRT", labs, nomatch = NOLAB))
@@ -268,7 +268,7 @@ function(Xamp, DT=0.008, STAMP=NULL)
             scale.def = 3
             PE =plotwlet(faha, Xamp, DT, zscale=scale.def,  col=pal, STAMP=STAMP)
             pwlet2freqs(faha$noctave, faha$nvoice, DT, flip=faha$flip,  pfreqs , plot=TRUE)
-            buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
              zloc = list(x=NULL, y=NULL) 
           }
         
@@ -276,7 +276,7 @@ function(Xamp, DT=0.008, STAMP=NULL)
           {
             PE = plotwlet(faha, Xamp, DT, zscale=scale.def,  col=pal, STAMP=STAMP)
             pwlet2freqs(faha$noctave, faha$nvoice, DT, flip=faha$flip,  pfreqs , plot=TRUE)
-            buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
 
             clHOW = crc(faha$img, nbclimb=1000)
             cfHOW = cfamily(clHOW)

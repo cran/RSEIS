@@ -44,7 +44,7 @@ M <- 1
 f2 <- 100
  plxy <- ''
  flag <- f>=f1 & f <= f2;
-    freqs <- f[flag]
+    freqs <- list(f[flag])
  mydof <- NULL
       myFv <- NULL
  amp <- Mspec$spec[1:length(f)]
@@ -56,7 +56,7 @@ a <- list(y=CE1$y, dt=CE1$dt)
 frange <- range(freqs, na.rm = TRUE)
  prange <- range(amp  , na.rm = TRUE)
 
-###  plot(freqs, amp[[1]])
+###  plot(freqs[[1]], amp[[1]])
 
 
  plt.MTM0(frange, prange, plxy, M, freqs, amp, a,

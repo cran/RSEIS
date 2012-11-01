@@ -51,15 +51,15 @@ function(nbaz, dt=dt, labs=c("Vertical", "North", "East"), COL=rainbow(100) , ST
     plot(c(0, 3), c(0,2), type='n', asp=TRUE, axes=FALSE, ann=FALSE, yaxs='i', xaxs='i', xlab="", ylab="")
    #### title(sub=STAMP)
 
-   ver  = RESCALE(V, 1.66, 2, zz[1], zz[2])
-   nor  = RESCALE(N, 1.33, 1.66, yy[1], yy[2])
-    eas  = RESCALE(E, 1, 1.33, xx[1], xx[2])
+   ver  = RPMG::RESCALE(V, 1.66, 2, zz[1], zz[2])
+   nor  = RPMG::RESCALE(N, 1.33, 1.66, yy[1], yy[2])
+    eas  = RPMG::RESCALE(E, 1, 1.33, xx[1], xx[2])
     timvec = seq(from=0, length=length(V), by=dt)
 
     pax = pretty(timvec, n=10)
     
-    xt = RESCALE(timvec, 0, 3, min(timvec), max(timvec) )
-    axt = RESCALE(pax, 0, 3, min(timvec), max(timvec) )
+    xt = RPMG::RESCALE(timvec, 0, 3, min(timvec), max(timvec) )
+    axt = RPMG::RESCALE(pax, 0, 3, min(timvec), max(timvec) )
 
    ####  axis(side=1, pos=2, at=axt, labels=pax)
     axis(side=3, tck=0.01, at=axt, labels=pax)
@@ -85,7 +85,7 @@ text(0, 2-0.1*.33, labels=STAMP, pos=4)
 
     tics = pretty(sx)
 
-    atics = RESCALE(tics, 0, 1, sx[1], sx[2])
+    atics = RPMG::RESCALE(tics, 0, 1, sx[1], sx[2])
     w = which(atics>0.0 & atics<1)
 
     tics = tics[w]
@@ -93,8 +93,8 @@ text(0, 2-0.1*.33, labels=STAMP, pos=4)
 
     rect(0, 0, 1, 1)
 
-   x  = RESCALE(E, 0, 1, sx[1], sx[2])
-   y  = RESCALE(N, 0, 1, sx[1], sx[2])
+   x  = RPMG::RESCALE(E, 0, 1, sx[1], sx[2])
+   y  = RPMG::RESCALE(N, 0, 1, sx[1], sx[2])
 
    ## lines(x,y)
     points(x[1], y[1], pch=6) 
@@ -114,8 +114,8 @@ DO.PMOT.ARR(x,y)
     
       rect(1, 0, 2, 1)
 
-   x  = RESCALE(E, 1, 2, sx[1], sx[2])
-   y  = RESCALE(V, 0, 1, sx[1], sx[2])
+   x  = RPMG::RESCALE(E, 1, 2, sx[1], sx[2])
+   y  = RPMG::RESCALE(V, 0, 1, sx[1], sx[2])
 
   #####  lines(x,y)
     points(x[1], y[1], pch=6)
@@ -124,20 +124,20 @@ DO.PMOT.ARR(x,y)
 
 
 
-    atics = RESCALE(tics, 1, 2, sx[1], sx[2])
+    atics = RPMG::RESCALE(tics, 1, 2, sx[1], sx[2])
 
         gaddtix(side=1, pos=0,   tck=-0.01, at=atics, labels=tics, col=1)
     text(1, 0.8, labels=labs[1], srt=90,  pos=4, offset=.75)
     text(1.8, 0, labels=labs[3],  pos=3)
 
      rect(2, 0, 3, 1)
-  x  = RESCALE(N, 2, 3, sx[1], sx[2])
-   y  = RESCALE(V, 0, 1, sx[1], sx[2])
+  x  = RPMG::RESCALE(N, 2, 3, sx[1], sx[2])
+   y  = RPMG::RESCALE(V, 0, 1, sx[1], sx[2])
      points(x[1], y[1], pch=6)
 segments(x[1:(n-1)],y[1:(n-1)],x[2:n],y[2:n], col=cols)
 DO.PMOT.ARR(x,y)
 
-   atics = RESCALE(tics, 2, 3, sx[1], sx[2])
+   atics = RPMG::RESCALE(tics, 2, 3, sx[1], sx[2])
 
         gaddtix(side=1, pos=0,   tck=-0.01, at=atics, labels=tics, col=1)
       text(2, 0.8, labels=labs[1], srt=90, pos=4, offset=.75)

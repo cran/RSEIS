@@ -8,7 +8,7 @@ selpgen<-function(MH, newdev=TRUE, STAY=FALSE)
     ucomps = unique(MH$COMPS)
 
 
-    pastcols = pastel.colors(10, seed = 1)
+    pastcols = RPMG::pastel.colors(10, seed = 1)
 
 
     ns = length(ustas)
@@ -72,7 +72,7 @@ selpgen<-function(MH, newdev=TRUE, STAY=FALSE)
     cols[match(ustas,  PP  ) ] = pastcols[6]
 
       
-      P2 = chooser( PP, ncol=5, nsel=NA, cols =cols, newdev=newdev, STAY=STAY, main="" , pch=21, cex=3,  col='red', bg='blue' )
+      P2 = RPMG::chooser( PP, ncol=5, nsel=NA, cols =cols, newdev=newdev, STAY=STAY, main="" , pch=21, cex=3,  col='red', bg='blue' )
 
     selp = 0
     

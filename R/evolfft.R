@@ -1,5 +1,5 @@
 `evolfft` <-
-function(a, dt=0, Nfft=0,  Ns=0, Nov=0, fl=0, fh=10, pcttap = 0.05 )
+function(a, dt=0, Nfft=0,  Ns=0, Nov=0, fl=0, fh=10, pcttap = 0.05, adjust=TRUE )
   {
     ###  Nfft=1024;Ns=250;Nov=240;fl=0; fh=10
     if(missing(dt)) { dt=1;}
@@ -9,6 +9,7 @@ function(a, dt=0, Nfft=0,  Ns=0, Nov=0, fl=0, fh=10, pcttap = 0.05 )
     if(missing(fl)) { fl=0;}
     if(missing(fh)) { fh=1/(2*dt);}
     if(missing(pcttap)) { pcttap = 0.05  }
+    if(missing(adjust)) { adjust = TRUE  } #Adjust Ns and Nov automatically (TRUE) or do exactly as I say (FALSE)
 
     NT = length(a);
     nyquistf = 1/(2*dt);
@@ -30,7 +31,7 @@ function(a, dt=0, Nfft=0,  Ns=0, Nov=0, fl=0, fh=10, pcttap = 0.05 )
     kcol =floor( (NT-floor(Nov) )/(Ns-floor(Nov)))
 
     
-    if(kcol<Ns)
+    if(kcol<Ns & adjust)
       {
         cat("NOTE: Making an adjustment in input parameters", sep="\n")
          Ns = kcol

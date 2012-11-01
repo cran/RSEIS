@@ -121,12 +121,12 @@ bigmin = min(miny, na.rm=TRUE)
           {
             if(SCALE==0)
               {
-                zee  = RESCALE(fy,  -1,   1, miny[i], maxy[i])
+                zee  = RPMG::RESCALE(fy,  -1,   1, miny[i], maxy[i])
               }
             else
               {
                 ##    w
-                zee  = RESCALE(fy, -1 ,  1, bigmin, bigmax)       
+                zee  = RPMG::RESCALE(fy, -1 ,  1, bigmin, bigmax)       
               }
             tmean = mean(zee, na.rm=TRUE)
             

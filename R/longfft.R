@@ -14,8 +14,8 @@ function(DB, DAYS=c(233,234), HRS=1:24 , sta="KR1", comp=c("V", "I"), NPP=6 , CS
  if(missing(HRS)) { HRS=1:24 }
  if(missing(pal)) {
 
-   pal = list(p1=Gcols(plow=5, phi=0,  N=100, pal="topo.colors", mingray=0.8),
-     p2=Gcols(plow=5, phi=0,  N=100, pal="rainbow", mingray=0.8))
+   pal = list(p1=RPMG::Gcols(plow=5, phi=0,  N=100, pal="topo.colors", mingray=0.8),
+     p2=RPMG::Gcols(plow=5, phi=0,  N=100, pal="rainbow", mingray=0.8))
  }
      
 ### if(missing(Use)) { Use = seq(from=1, to=length(gnam), by=2) }

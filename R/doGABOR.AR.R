@@ -14,7 +14,7 @@ doGABOR.AR<-function(Xamp, DT = 0.008, multi = 1, scale.def =0, TWIN=2, TSKIP=.2
   
   gridon = FALSE
   TPALS = c("rainbow", "topo.colors", "terrain.colors", "heat.colors", "tomo.colors")
-  pal = Gcols(plow=5, phi=0,  N=100, pal=TPALS[1])
+  pal = RPMG::Gcols(plow=5, phi=0,  N=100, pal=TPALS[1])
 
 
   fl=0

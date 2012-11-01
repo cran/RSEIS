@@ -711,7 +711,10 @@ SGRAM<-function(nh, g)
 
           Xamp =   temp-mean(temp)
 
-          ftime = Zdate(nh$info, g$sel[ypick], pwin[1])
+       #   ftime = Zdate(nh$info, g$sel[ypick], pwin[1])
+            ftime =  ghstamp(nh, sel=g$sel[ypick], WIN=pwin )
+
+              
 	print(paste(sep=" ",min(ex), max(ex)))
 	
 	print(paste(sep=" ",pwin[1], pwin[2]))
@@ -777,8 +780,9 @@ WLET<-function(nh, g)
 
           Xamp =   temp-mean(temp)
 
-          ftime = Zdate(nh$info, g$sel[ypick], pwin[1])
+          ## ftime = Zdate(nh$info, g$sel[ypick], pwin[1])
 
+              ftime =  ghstamp(nh, sel=g$sel[ypick], WIN=pwin )
 
 
   
@@ -1165,7 +1169,7 @@ LocStyle<-function(nh, g)
     achoice = c("points", "abline", "segs(default)", "segs+abline", "segs+long-abline")
 
 
-    P2 = chooser(achoice, ncol=5, nsel=1, newdev=TRUE, STAY=FALSE,
+    P2 = RPMG::chooser(achoice, ncol=5, nsel=1, newdev=TRUE, STAY=FALSE,
       cols =rgb(1, .7, .7) , main="" , pch=21, cex=3,  col='red' , bg='blue' )
 
     i = which(P2==achoice)

@@ -180,7 +180,7 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
 
   MSTA = match( GH$STNS[sel], STAXY$name)
   ###   STAXY$distxyz[MSTA]
- ###ADIST =RESCALE(STAXY$dist[MSTA], 0.05, 0.95, mindist, maxdist)
+ ###ADIST =RPMG::RESCALE(STAXY$dist[MSTA], 0.05, 0.95, mindist, maxdist)
 ADIST =STAXY$dist[MSTA]
 
 ###  sel =  which(GH$COMPS == "V")
@@ -228,7 +228,7 @@ ADIST =STAXY$dist[MSTA]
 
      ### if(add!=3) addtix(side=3, pos=y3+dy,   tck=0.005, at=ttics, labels=FALSE, col=gray(0.8) )
       
-      z = RESCALE(amp, y3-(dy/2), y3+(dy/2), minamp, maxamp )
+      z = RPMG::RESCALE(amp, y3-(dy/2), y3+(dy/2), minamp, maxamp )
       
     ###  if(add!=3)abline(h=y3, lty=2, col=grey(0.8))
       #############  draw seismograms

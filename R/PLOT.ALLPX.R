@@ -68,7 +68,7 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
         qerr = YPX$err[mpicks ]
         LABS = YPX$phase[mpicks]
         
-###   M = meshgrid(1:length(STNS), 1:length(COMPS) )
+###   M = RPMG::meshgrid(1:length(STNS), 1:length(COMPS) )
         ypixA = (length(STNS)-wmd)*du
         
         
@@ -104,7 +104,7 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
           qerr = YPX$err[mpicks ]
           LABS = YPX$phase[mpicks]
           
-###   M = meshgrid(1:length(STNS), 1:length(COMPS) )
+###   M = RPMG::meshgrid(1:length(STNS), 1:length(COMPS) )
           ypixA = (length(STNS)-wmd)*du
 
       }
@@ -174,14 +174,14 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
           gLABS = tLABS[[ipixB]]
           gpcol = tpcol[[ipixB]]
           
-      RMAT =   textrect( gx1, gypixB,
+      RMAT =   RPMG::textrect( gx1, gypixB,
          gLABS , textcol=gpcol   ,xpd=TRUE, add=FALSE, font=1, cex=cex, brd = 0.03 )
 
         newjitx = jitter.lab(RMAT[,1]  , RMAT[,3]-RMAT[,1])
         newy = (gypixB)-newjitx*(RMAT[,4]-RMAT[,2])        
 
         
-        RMAT =   textrect(gx1 , newy,gLABS , textcol=gpcol,
+        RMAT =   RPMG::textrect(gx1 , newy,gLABS , textcol=gpcol,
           xpd=TRUE, add=TRUE, font=1, cex=cex, brd = 0.03 )
         
 

@@ -58,12 +58,12 @@ function(a, f1=f1, f2=f2, len2=1024, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
       sloc = list(x=c(u[1],u[2]))
       
       
-      buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+      buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
       
       zloc = zlocator(COL=rgb(1,0.8, 0.8), ID=TRUE, NUM=FALSE , YN=1, style=0)
       Nclick = length(zloc$x)
       if(is.null(zloc$x)) { return(NULL) }
-      K = whichbutt(zloc ,buttons)
+      K = RPMG::whichbutt(zloc ,buttons)
 
       sloc = zloc
       plogx=''
@@ -115,12 +115,12 @@ function(a, f1=f1, f2=f2, len2=1024, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
       axis(2, las=2)
       axis(1)
       box()
-        buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+        buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
  
       zloc = zlocator(COL=rgb(1,0.8, 0.8), NUM=FALSE , ID=TRUE ,YN=1, style=0)
       Nclick = length(zloc$x)
       if(is.null(zloc$x)) { return(sloc) }
-      K =  whichbutt(zloc ,buttons) 
+      K =  RPMG::whichbutt(zloc ,buttons) 
       
     }
 

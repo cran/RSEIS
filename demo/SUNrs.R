@@ -1,5 +1,6 @@
 #######  read in data sunspot  and plot
-######  using PICK.GEN
+######  using swig
+options(demo.ask=FALSE)
 
 data(sunspots)
 
@@ -13,18 +14,18 @@ ES = prep1wig(wig=sunspots, dt=1/12, sta="STA", comp="CMP", units="UNITS"    )
 EH=prepSEIS(ES)
 
 
-########  pop up the signals using PICK.GEN
+########  pop up the signals using swig
 STDLAB = c("DONE",  "zoom in", "zoom out", "refresh", "restore",
  "XTR", "SPEC", "SGRAM" ,"WLET", "FILT",  "Pinfo")
 ######## 
 ######## 
 ######## 
-######## PICK.GEN is a generic Picking program
+######## swig is a generic Picking program
 ######## Use left Mouse click to select traces and windows.
 ######## Use the buttons to operate on the selected traces/windows
 ########  To zoom, click twice with the left mouse on the traces, then right mouse zooms
 ########  Right Mouse with no left mouse clicks is equivalent to "Done"
 ######## 
 
-xx =  PICK.GEN( EH, STDLAB = STDLAB)
+xx =  swig( EH, STDLAB = STDLAB)
 

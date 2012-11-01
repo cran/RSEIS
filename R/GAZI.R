@@ -231,7 +231,7 @@ axis(2, at=seq(0,90, by=10), tck=1, las=1, lty=2, lwd=0.5)
 #####   Azimuth
    par(mai=c(0.2, .5, 0.15, 0.5) )
 
-   azims =     fmod(aaz[1:jall], 180)
+   azims =     RPMG::fmod(aaz[1:jall], 180)
 
   plot(aex[1:jall], azims ,xlim=range(ex),ylim=c(0,180),axes=FALSE, xlab="Time, s",ylab="Az, deg")
 
@@ -240,7 +240,7 @@ axis(2, at=seq(0,90, by=10), tck=1, las=1, lty=2, lwd=0.5)
   axis(3,at=xtics,tck=.03,labels=FALSE)
    axis(1,at=xtics,tck=.03, las=1,   mgp=c(.1,.1,0))
 
-  AZ=  fmod(az, 180)
+  AZ=  RPMG::fmod(az, 180)
 
 ###    if(AZ>180) AZ<-AZ-360
 					# abline(h=c(0))

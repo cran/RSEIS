@@ -1,6 +1,9 @@
 `plotwlet` <-
-function(baha, Ysig, dt , zscale=1,  zbound=NULL, col=rainbow(100) , ygrid=FALSE, STAMP="")
+function(baha, Ysig, dt , zscale=1,  zbound=NULL, col=rainbow(100) , ygrid=FALSE, STAMP="", xlab="Time, s" , units="", scaleloc=c(0.4,0.95) )
   {
+    
+   
+
     if(missing(zscale)) { zscale = 1 }
     
     if(missing(col)) { col=rainbow(50) }
@@ -48,17 +51,26 @@ function(baha, Ysig, dt , zscale=1,  zbound=NULL, col=rainbow(100) , ygrid=FALSE
     IMAT =baha$img
 
  ##print(y)
-    why   = sort( RESCALE( 1:ncol(baha$img) , 0 , perc , 1, ncol(baha$img) ))
+    why   = sort( RPMG::RESCALE( 1:ncol(baha$img) , 0 , perc , 1, ncol(baha$img) ))
  ##print(why)
     
 
-    if(zscale<=1){ ImPlot = IMAT; units="Amp" } 
-    if(zscale==2){ ImPlot =     log10(IMAT) ; units="Log Amp"}
-    if(zscale==3){ ImPlot = sqrt(IMAT) ; units="SQRT Amp"}
-    if(zscale==4){ ImPlot = 20*log10( IMAT/ max( IMAT, na.rm=TRUE) ) ; units="DB"}
-       if(zscale>4){ ImPlot = IMAT; units="Amp" }  
+    if(zscale<=1){ ImPlot = IMAT; Iunits="Amp" } 
+    if(zscale==2){ ImPlot =     log10(IMAT) ; Iunits="Log Amp"}
+    if(zscale==3){ ImPlot = sqrt(IMAT) ; Iunits="SQRT Amp"}
+    if(zscale==4){ ImPlot = 20*log10( IMAT/ max( IMAT, na.rm=TRUE) ) ; Iunits="DB"}
+       if(zscale>4){ ImPlot = IMAT; Iunits="Amp" }  
 
    ##   par(mfrow=c(1,1))
+
+  ##   old.par <- par(no.readonly = TRUE)
+  ##   on.exit(par(old.par))
+
+    MAI = par("mai")
+    MAI[4] = MAI[2]
+    par(mai=MAI)
+
+    
     par(xaxs='i', yaxs='i')
 
     plot(range(tim), c(0,1), axes=FALSE, type='n', xlab='', ylab='log(scale)')
@@ -81,12 +93,12 @@ function(baha, Ysig, dt , zscale=1,  zbound=NULL, col=rainbow(100) , ygrid=FALSE
 
       }
     
-    trace = RESCALE( a, perc , 1.0  , min(a), max(a) )
+    trace = RPMG::RESCALE( a, perc , 1.0  , min(a), max(a) )
 
     
    lines(tim, trace)
 
-    ##  sy = RESCALE( a, perc  , 1.0  , min(a), max(a) )
+    ##  sy = RPMG::RESCALE( a, perc  , 1.0  , min(a), max(a) )
     Tdiff = max(tim)-min(tim)
     
     ##   segments(max(tim)-Tdiff*.04-DEVOL$wpars$Ns*dt, 0.76, max(tim)-Tdiff*.04, 0.76, lwd=2)
@@ -96,8 +108,14 @@ function(baha, Ysig, dt , zscale=1,  zbound=NULL, col=rainbow(100) , ygrid=FALSE
                                         #  axis(3)
     
     xtix = pretty(x, n=10)
-  #   xtix = xtix[xtix>=min(x)&xtix<=max(x)]
 
+    xedge = (x[2]-x[1])
+    xleft = min(x)-xedge
+    xright = max(x)+xedge
+     xtix = xtix[xtix>=xleft & xtix<=xright]
+
+    ### print(xtix)
+    
  #    xtix = c(floor(min(x)),xtix,  floor(max(x)))
     
     axis(3,tck=.01,at=xtix,labels=FALSE)
@@ -109,7 +127,7 @@ function(baha, Ysig, dt , zscale=1,  zbound=NULL, col=rainbow(100) , ygrid=FALSE
 
    
                                         #  title(xlab="Time, s")
-    mtext(side=1, at=max(x), text="Time, s" , line=1.5, adj=1)
+    mtext(side=1, at=max(x), text=xlab , line=1.5, adj=1)
 
 
     if(!is.null(STAMP))
@@ -122,7 +140,7 @@ function(baha, Ysig, dt , zscale=1,  zbound=NULL, col=rainbow(100) , ygrid=FALSE
     
       
 
-    raxspec= RESCALE(yax , 0 , perc , 0, 1 )
+    raxspec= RPMG::RESCALE(yax , 0 , perc , 0, 1 )
       
     axis(2, at=raxspec, labels=2^(1:baha$noctave))
     
@@ -136,21 +154,44 @@ function(baha, Ysig, dt , zscale=1,  zbound=NULL, col=rainbow(100) , ygrid=FALSE
 
       }
 
+    ###  right axis plotted on the time series
+    ##   need a new version here that looks like the matlab axis
 
-  
 
     
     axtrace = range(a)
-    raxtrace= RESCALE( axtrace, perc , 1.0 , min(a), max(a) )
-    axis(4, at=raxtrace, labels=format.default(axtrace, digits=3), pos=max(tim))
+    ## print(axtrace)
+    
+    raxtrace= RPMG::RESCALE( axtrace, perc , 1.0 , min(a), max(a) )
 
+    Elabs =  RPMG::endSCALE(axtrace)
+
+    exp = parse(text = Elabs[3])
+ ##   mtext(Elabs[1], side = 4,at = perc , line=0.5, cex=0.8,las=2)
+ ##   mtext(Elabs[2], side = 4,at = 1, line=0.5, , cex=0.8,las=2)
+ 
+    
+    axis(4, at=raxtrace , labels=Elabs[1:2] , pos=max(tim), tick=TRUE , line=0.5, cex.axis=0.8,las=2)
+
+       mtext(exp, side = 3, at = max(tim), line=0.5, adj=-1  , cex=0.8)
+
+    mtext(units, side = 4, at =mean(raxtrace) , line=0.5   , cex=0.8 ,las=1 )
+
+
+    
+   # axis(4, at=mean(c(perc, 1)) , labels=wiglab , pos=max(tim), tick=FALSE , line=-0.5, cex.axis=0.8)
+
+####
+
+
+    
     if(!is.null(zbound))
       {
-        HOZscale(zbound, col, units=units, s1=0.4, s2=0.95)
+        RPMG::HOZscale(zbound, col, units=Iunits, s1=scaleloc[1], s2=scaleloc[2])
       }
     else
       {
-        HOZscale( ImPlot, col, units=units, s1=0.4, s2=0.95)
+        RPMG::HOZscale( ImPlot, col, units=Iunits, s1=scaleloc[1], s2=scaleloc[2])
         
       }
     invisible(list(y=y[yflag], why=why, yBounds=c(0,perc), x=x, yat=raxspec))

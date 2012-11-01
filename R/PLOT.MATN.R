@@ -200,7 +200,7 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost=
       yhigh= y3+dy+ampboost
 
       
-      z = RESCALE(amp, ylow, yhigh, minamp, maxamp )
+      z = RPMG::RESCALE(amp, ylow, yhigh, minamp, maxamp )
 
 
       
@@ -267,7 +267,7 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost=
       
       flg = yy>minamp & yy<maxamp
       yt = yy[flg]
-      yts = RESCALE(yt, y3, y3+dy, minamp, maxamp )
+      yts = RPMG::RESCALE(yt, y3, y3+dy, minamp, maxamp )
       
 
 

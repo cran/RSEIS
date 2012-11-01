@@ -21,7 +21,7 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
 
     
 ###  FUN = match.fun(TPALS[1])
-     pal = Gcols(plow=0, phi=0,  N=100, pal=TPALS[1])
+     pal = RPMG::Gcols(plow=0, phi=0,  N=100, pal=TPALS[1])
     scale.def = 0
    
     colabs = c(rep(1,2) , rep(2, length(APALS) ), rep(4,length(ADDBUTS) ))
@@ -114,18 +114,18 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
 
     global.vars$buttoncex = 0.8
     
-    buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs, cex=global.vars$buttoncex )
+    buttons = RPMG::rowBUTTONS(BLABS, col=colabs, pch=pchlabs, cex=global.vars$buttoncex )
     
     global.vars$MAINdev = dev.cur()
 
-   ##   buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+   ##   buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
       zloc = list(x=NULL, y=NULL)
     sloc = zloc
 
     
     while(TRUE)
       {
-        iloc = ilocator(global.vars$ilocnum ,COL=global.vars$iloccol ,NUM=FALSE , style=global.vars$ilocstyle )
+        iloc = RPMG::ilocator(global.vars$ilocnum ,COL=global.vars$iloccol ,NUM=FALSE , style=global.vars$ilocstyle )
         
         Nclick = length(iloc$x)
            
@@ -133,14 +133,14 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
             {
               zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
               zenclick = length(zloc$x)
-              K =  whichbutt(iloc ,buttons)
+              K =  RPMG::whichbutt(iloc ,buttons)
               sloc = zloc
             }
           else
             {
               Nclick = 0
               K = 0
-              buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)))
+              buttons = RPMG::rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)))
               title("Return to Calling Program")
               break;
             }
@@ -150,7 +150,7 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
         
         if(K[Nclick] == match("DONE", BLABS, nomatch = NOLAB))
           {
-            buttons = rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)), cex=global.vars$buttoncex)
+            buttons = RPMG::rowBUTTONS(BLABS, col=rep(grey(.8), length(BLABS)), pch=rep("NULL", length(BLABS)), cex=global.vars$buttoncex)
             title("Return to Calling Program")
 
             
@@ -161,7 +161,7 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
         {
           YN = DOreplot()
           ## print("clicked REPLOT")
-          buttons = rowBUTTONS(global.vars$BLABS, col=global.vars$colabs, pch=global.vars$pchlabs, cex=global.vars$buttoncex)
+          buttons = RPMG::rowBUTTONS(global.vars$BLABS, col=global.vars$colabs, pch=global.vars$pchlabs, cex=global.vars$buttoncex)
           Nclick = 0
           K = 0
           zloc = list(x=NULL, y=NULL)
@@ -177,9 +177,9 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
         {
 
           print("Start postscript plot.ts")
-          plfname = local.file("pmot","eps")
+          plfname = RPMG::local.file("pmot","eps")
           jdev = dev.cur()
-          jpostscript("pmot")
+          RPMG::jpostscript("pmot")
           YN = DOreplot()
           
            print("Done creating postscript")
@@ -194,7 +194,7 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
            
             YN = DOreplot()
           ###  sx = complex.hodo(temp, dt=dt, labs=pmolabs, COL=pal, STAMP=STAMP)
-            buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
             zloc = list(x=NULL, y=NULL) 
             
 
@@ -230,8 +230,8 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
             if(LN>=2)
               {
                 Timex =  zloc$x[1:(zenclick-1)]
-                TEES = RESCALE(Timex , 0,  txlen , 0, 3)
-                NEES = round( RESCALE(Timex , 0,  ddim[1] , 0, 3) )
+                TEES = RPMG::RESCALE(Timex , 0,  txlen , 0, 3)
+                NEES = round( RPMG::RESCALE(Timex , 0,  ddim[1] , 0, 3) )
 
                 print(NEES)
 
@@ -262,7 +262,7 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
                 arrows(0,0 ,efact[1]*eg$vectors[1,1] , efact[1]*eg$vectors[2,1], col='red')
 
                princdir =  90-180*atan2(eg$vectors[2,1], eg$vectors[1,1])/pi
-               princdir =  fmod(princdir , 180)
+               princdir =  RPMG::fmod(princdir , 180)
                 
                 slop = paste(global.vars$stamp , format(princdir))
                 cat(slop, sep="\n")
@@ -354,7 +354,7 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
            
             YN = DOreplot()
           ###  sx = complex.hodo(temp, dt=dt, labs=pmolabs, COL=pal, STAMP=STAMP)
-            buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
             zloc = list(x=NULL, y=NULL) 
             
 
@@ -365,7 +365,7 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
         if(K[Nclick]==match("More", BLABS, nomatch = NOLAB))
           {
             YN = DOreplot()
-             buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+             buttons = RPMG::rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
             zloc = list(x=NULL, y=NULL) 
             
            
@@ -378,10 +378,10 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
             ##  pal = FUN(NCOL)
 
             
-            global.vars$pal = Gcols(plow=0, phi=0,  N=100, pal=TPALS[J])
+            global.vars$pal = RPMG::Gcols(plow=0, phi=0,  N=100, pal=TPALS[J])
             
             YN = DOreplot()
-            buttons = rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(BLABS, col=colabs, pch=pchlabs)
              zloc = list(x=NULL, y=NULL) 
           }
 

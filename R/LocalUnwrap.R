@@ -9,7 +9,7 @@ m = length(p);
 ###% by constraining it to the range [-pi,pi]
 dp = diff(p);
 ##% Incremental phase variations
-dps = (  fmod(dp+pi, 2*pi) ) - pi;      ##% Equivalent phase variations in [-pi,pi)
+dps = (  RPMG::fmod(dp+pi, 2*pi) ) - pi;      ##% Equivalent phase variations in [-pi,pi)
 
 
 

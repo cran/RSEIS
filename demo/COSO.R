@@ -1,6 +1,7 @@
 
 #######  read in data from the coso geothermal field and plot
-######  using PICK.GEN
+######  using swig
+options(demo.ask=FALSE)
 
 data("GH")
 
@@ -14,7 +15,7 @@ STDLAB = c("DONE",  "zoom in", "zoom out", "refresh", "restore",
 gsel = getvertsorder(GH$pickfile, GH)
 
 
-###PICK.GEN(GH, sel=sel,    STDLAB=STDLAB)
+###swig(GH, sel=sel,    STDLAB=STDLAB)
 
 
 upix = uwpfile2ypx(GH$pickfile)
@@ -28,4 +29,4 @@ upix = uwpfile2ypx(GH$pickfile)
 pickgeninfo()
 
 #########  
-PICK.GEN(GH, sel=gsel$sel, APIX =upix,    STDLAB =STDLAB, WIN =c(4,13) )
+swig(GH, sel=gsel$sel, APIX =upix,    STDLAB =STDLAB, WIN =c(4,13) )

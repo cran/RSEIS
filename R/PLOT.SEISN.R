@@ -276,7 +276,7 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
            ###  print( paste(sep=' ', "IN PLOT.SEISN", minamp, maxamp))
 
       if(add!=3) addtix(side=3, pos=y3+dy,   tck=0.005, at=ttics, labels=FALSE, col=gray(0.8) )
-      z = RESCALE(amp, y3, y3+dy, minamp, maxamp )
+      z = RPMG::RESCALE(amp, y3, y3+dy, minamp, maxamp )
 
       
       if(add!=3)abline(h=y3, lty=2, col=grey(0.8))
@@ -298,7 +298,7 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
       
       flg = yy>minamp & yy<maxamp
       yt = yy[flg]
-      yts = RESCALE(yt, y3, y3+dy, minamp, maxamp )
+      yts = RPMG::RESCALE(yt, y3, y3+dy, minamp, maxamp )
       
        ### print(paste(sep =  ' ' ,minamp,maxamp,  paste(collapse=" ", yt) ))
                                         #

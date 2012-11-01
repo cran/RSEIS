@@ -126,7 +126,7 @@ symshot1<-function(PLOT=FALSE)
     wavelet = genrick(rickfreq,dt,ricklen)
     klem = 11
 ### nwave = -1 + 2 * (wavelet - min(wavelet) )/diff(range(wavelet))
-    nwave = RESCALE(wavelet, 0, 1, wavelet[1], max(wavelet))
+    nwave = RPMG::RESCALE(wavelet, 0, 1, wavelet[1], max(wavelet))
 
 
 

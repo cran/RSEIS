@@ -53,7 +53,7 @@ PHS  <-  basicPHASE[1:25]
 x  <-  s
 y  <-  rep(0, length(x))
 
-RMAT  <-    textrect(x,y, PHS, xpd=TRUE, add=FALSE, font=1, cex=.8 )
+RMAT  <-    RPMG::textrect(x,y, PHS, xpd=TRUE, add=FALSE, font=1, cex=.8 )
 
     newjitx  <-  jitter.lab(RMAT[,1]  , RMAT[,3]-RMAT[,1])
     y  <-  y+newjitx*(RMAT[,4]-RMAT[,2])
@@ -62,7 +62,7 @@ RMAT  <-    textrect(x,y, PHS, xpd=TRUE, add=FALSE, font=1, cex=.8 )
 MCOL  <- length(PHS)
 
     PASTCOL <- APAL[1:MCOL]
-    RMAT <- textrect(x,y, PHS, xpd=TRUE,
+    RMAT <- RPMG::textrect(x,y, PHS, xpd=TRUE,
             add=TRUE, textcol=PASTCOL,  font=1, cex=.8 )
 
 

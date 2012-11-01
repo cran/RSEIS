@@ -40,6 +40,7 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
     amp = list()
     dof = list()
     Fv = list()
+    Freqs = list()
     
     i = 1
 
@@ -64,7 +65,7 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
     amp[[i]] = Mspec$spec[1:length(f)]
     dof[[i]] = Mspec$dof[1:length(f)]
     Fv[[i]] = Mspec$Fv[1:length(f)]
-
+    Freqs[[i]] = Mspec$freq[1:length(f)]
     
    ##### plot(f , amp[[i]]); locator()
     
@@ -87,7 +88,7 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
             amp[[i]] = Mspec$spec[1:length(f)]
             dof[[i]] = Mspec$dof[1:length(f)]
             Fv[[i]] = Mspec$Fv[1:length(f)]
-            
+             Freqs[[i]] = Mspec$freq[1:length(f)]
             
            ##### plot(f , amp[[i]]); locator()
           }
@@ -111,12 +112,15 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
     
     for(i in 1:M)
       {
-
+        f = Freqs[[i]]
+        flag = f>=f1 & f <= f2;
         
         amp[[i]]  = amp[[i]][ flag]
         dof[[i]] = dof[[i]][ flag]
         Fv[[i]] = Fv[[i]][ flag]
+         Freqs[[i]] =   Freqs[[i]][ flag]
         prange = range(c(prange, range(unlist(amp[[i]]),na.rm = TRUE )))
+        frange = range(c(frange, range(unlist(Freqs[[i]]),na.rm = TRUE )))
         
         ##    abline(h=qf(ppoints/100, 2, 8))
 
@@ -124,6 +128,21 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
    ##### print(prange )
     
   displ = ma ;
+
+
+   plogx=''
+      plogy=''
+      
+    DoREPLOT<-function()
+      {
+
+        plxy = paste(sep='', plogx , plogy)
+        YN = plt.MTM0(frange,prange, plxy, M, Freqs, amp , a, dof=mydof, Fv=myFv, COL=COL)
+         invisible(YN)
+        
+      }
+
+    
   
   if(PLOT==TRUE)
     {
@@ -141,8 +160,8 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
       mydof = NULL
       myFv = NULL
       
-      plt.MTM0(frange,prange, plxy, M, freqs, amp , a, dof=mydof, Fv=myFv, COL=COL)
-      
+     ##  plt.MTM0(frange,prange, plxy, M, Freqs, amp , a, dof=mydof, Fv=myFv, COL=COL)
+      DoREPLOT()
      
       if(GUI==FALSE) { return( list(len2=len2, f=f, f1=f1, f2=f2, displ=displ, ampsp=amp, flag=flag ) ) }
       
@@ -150,34 +169,32 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
       sloc = list(x=c(u[1],u[2]))
       
       
-      buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+      buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
       
      zloc  = list(x=NULL, y=NULL)
 
-##  iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=1)
+##  iloc = RPMG::ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=1)
 ##  zloc = iloc
 ##    Nclick = length(iloc$x)
 ##   zenclick =  length(zloc$x)
 ##   if(is.null(zloc$x)) { return(NULL) }
-##      K = whichbutt(iloc ,buttons)
+##      K = RPMG::whichbutt(iloc ,buttons)
 ##      sloc = zloc
       
-      plogx=''
-      plogy=''
-      
+   
       MAINdev = dev.cur()
       
       while(TRUE)
         {
 
-          iloc = ilocator(1, COL=rgb(1,0.6, 0.6), NUM=FALSE , YN=1, style=0)
+          iloc = RPMG::ilocator(1, COL=rgb(1,0.6, 0.6), NUM=FALSE , YN=1, style=0)
           Nclick = length(iloc$x)
           
           if(Nclick>0)
             {
               zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
               zenclick = length(zloc$x)
-              K =  whichbutt(iloc ,buttons)
+              K =  RPMG::whichbutt(iloc ,buttons)
               sloc = zloc
             }
           else
@@ -188,7 +205,7 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
           
           
 
-              buttons = rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
+              buttons = RPMG::rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
               title("Return to Calling Program")
               
               break;
@@ -199,7 +216,7 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
    
           if(K[Nclick] == match("DONE", labs, nomatch = NOLAB))
             {
-              buttons = rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
+              buttons = RPMG::rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
               title("Return to Calling Program")
         
               break;
@@ -207,9 +224,11 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
           
           if(K[Nclick] == match("REFRESH", labs, nomatch = NOLAB))
             {
-             plt.MTM0(frange,prange, plxy, M, freqs, amp, a , dof=mydof, Fv=myFv, COL=COL)
-              buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
-             zloc = list(x=NULL, y=NULL) 
+              DoREPLOT()
+          ##    plt.MTM0(frange,prange, plxy, M, freqs, amp, a , dof=mydof, Fv=myFv, COL=COL)
+              buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
+             zloc = list(x=NULL, y=NULL)
+              next;
             }
           
           
@@ -217,11 +236,12 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
             {
               if( (plogx=='x')==TRUE ) { plogx = '' }
               else { plogx = "x" }
-              
-              plxy = paste(sep='', plogx , plogy)
-              plt.MTM0(frange,prange, plxy, M, freqs, amp , a, dof=mydof, Fv=myFv, COL=COL)
-              buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
-              zloc = list(x=NULL, y=NULL) 
+              DoREPLOT()
+            ##  plxy = paste(sep='', plogx , plogy)
+            ##  plt.MTM0(frange,prange, plxy, M, Freqs, amp , a, dof=mydof, Fv=myFv, COL=COL)
+              buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
+              zloc = list(x=NULL, y=NULL)
+              next;
               
             }
           if(K[Nclick] == match("Y-LOG", labs, nomatch = NOLAB))
@@ -229,47 +249,54 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
               if( (plogy=='y')==TRUE) { plogy = '' }
               else { plogy = "y" }
 
-
-              plxy = paste(sep='', plogx , plogy)
-              plt.MTM0(frange,prange, plxy, M, freqs, amp, a, dof=mydof, Fv=myFv, COL=COL )
-              buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+              DoREPLOT()
+            ##   plxy = paste(sep='', plogx , plogy)
+            ##   plt.MTM0(frange,prange, plxy, M, Freqs, amp, a, dof=mydof, Fv=myFv, COL=COL )
+              buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
               zloc = list(x=NULL, y=NULL) 
-              
+               next;
             }
           
           if(K[Nclick] == match("Y-Db", labs, nomatch = NOLAB))
             {
               if( (plogy=='D')==TRUE) { plogy = '' }
               else { plogy = "D" }
-
-
-              plxy = paste(sep='', plogx , plogy)
-              plt.MTM0(frange,prange, plxy, M, freqs, amp, a, dof=mydof, Fv=myFv, COL=COL )
-              buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+              DoREPLOT()
+              ##   plxy = paste(sep='', plogx , plogy)
+            ##   plt.MTM0(frange,prange, plxy, M, Freqs, amp, a, dof=mydof, Fv=myFv, COL=COL )
+              buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
               zloc = list(x=NULL, y=NULL) 
-              
+               next;
+      
             }
 
           if(K[Nclick] == match("AR", labs, nomatch = NOLAB))
             {
-
+              pord = 500
+              print(paste("AutoRegresive", M))
+              pscal =  prange
+              
+               print(pscal )
               for(i in 1:M)
                 {
                   squig = list(y=a$y[[i]], dt=a$dt[[i]])
-                  ZIM = autoreg(squig , numf=length(freqs) , pord = 500, PLOT=FALSE,  f1=.01, f2=50)
-                  pscal =  prange
+                  ZIM = autoreg(squig , numf=length(Freqs[[i]] ) , pord = pord, PLOT=FALSE,  f1=frange[2], f2=frange[2] )
+                  
                   if(plogy == "D")
                     {
                       pmax = max(prange)
                       pscal = 10*log10(prange/pmax )
  
                     }
-                  
-                  why   = RESCALE(ZIM$amp , pscal[1]  ,pscal[2] , min(ZIM$amp, na.rm = TRUE)  , max(ZIM$amp, na.rm = TRUE)  )
+                  ARmin = min(ZIM$amp, na.rm = TRUE)
+                  ARmax = max(ZIM$amp, na.rm = TRUE)
+                  print(c(ARmin, ARmax))
+                  why   = RPMG::RESCALE(ZIM$amp , pscal[1]  ,pscal[2] , ARmin, ARmax  )
                   
                   lines(ZIM$freq, why, col=i)
                 }
-              zloc = list(x=NULL, y=NULL) 
+              zloc = list(x=NULL, y=NULL)
+              next;
             }
 
           if(K[Nclick] == match("DOF", labs, nomatch = NOLAB))
@@ -285,10 +312,11 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
 
               print("mydof")
               print(mydof)
-              
-               plt.MTM0(frange,prange, plxy, M, freqs, amp, a, dof=mydof, Fv=myFv, COL=COL )
-                buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
-              zloc = list(x=NULL, y=NULL) 
+              DoREPLOT()
+            
+                buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
+              zloc = list(x=NULL, y=NULL)
+              next
           
             }
 
@@ -307,8 +335,8 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
                 {
               dev.new()
               par(mfrow=c(2,1))
-              plot(freqs,dof[[1]],type='l',xlab="Frequency",ylab="Effective Degrees of Freedom")
-              plot(freqs, Fv[[i]],type='l',xlab="Frequency",ylab="F-test")
+              plot(Freqs[[1]],dof[[1]],type='l',xlab="Frequency",ylab="Effective Degrees of Freedom")
+              plot(Freqs[[1]], Fv[[1]],type='l',xlab="Frequency",ylab="F-test")
               
               u=par("usr")
               #####  see Percival and Walden p. 499-500 for degrees of freedom
@@ -321,23 +349,24 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
 
               dev.set( MAINdev)
             }
-              plt.MTM0(frange,prange, plxy, M, freqs, amp, a, dof=mydof, Fv=myFv, COL=COL )
-
+           
+              DoREPLOT()
               
-                buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+                buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
               zloc = list(x=NULL, y=NULL) 
-          
+              next
               
             }
 
          if(K[Nclick] == match("Postscript", labs, nomatch = NOLAB))
             {
-              jpostscript("SPEC")
-              plt.MTM0(frange,prange, plxy, M, freqs, amp, a, dof=mydof, Fv=myFv, COL=COL )
+              RPMG::jpostscript("SPEC")
+              DoREPLOT()
+           
               dev.off()
               dev.set( MAINdev)
               zloc = list(x=NULL, y=NULL) 
-              
+               next
             }
 
 
@@ -388,7 +417,7 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
                 ####  dev.set(jdev)
                 }
               zloc = list(x=NULL, y=NULL) 
-              
+              next
               
             }
           
@@ -409,12 +438,13 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
              M = M + 1
              amp[[M]] = Jamp/M
              COL[M] = 'black'
+             DoREPLOT()
              
-              plt.MTM0(frange,prange, plxy, M, freqs, amp, a , dof=mydof, Fv=myFv, COL=COL)
-              buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+              buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
              zloc = list(x=NULL, y=NULL) 
      
-              zloc = list(x=NULL, y=NULL) 
+              zloc = list(x=NULL, y=NULL)
+             next
              }
 
       
@@ -432,19 +462,24 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
 
                 }
 
-              plt.MTM0(frange,prange, plxy, M, freqs, amp, a, dof=mydof, Fv=myFv, COL=COL )
-              buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+          ##     DoREPLOT()
+            
+          ##     buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
 
 
               
               abline(v=selef, col=rgb(.6,.6,1.0) )
-             ##   u=par("usr")
+                u=par("usr")
             ##    ytop = rep(u[4], times=length(selef))
              ##   textrect(selef, ytop, alabs, textcol=rgb(.6,.6,1.0))
               
-               mtext(alabs, at=selef, side=3, line=0, col=rgb(.6,.6,1.0))
+               mtext(alabs, at=selef, side=3, line=0, col=rgb(.6,.6,1.0), las=2 , cex=0.8)
+
+                 ##  text(selef, rep(u[4], length(selef)), labels=alabs, srt=45, xpd=TRUE)
+                     
+              
               zloc = list(x=NULL, y=NULL) 
-        
+              next
             }
          
        

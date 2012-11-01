@@ -22,7 +22,7 @@ function(y, ex, dt, TIT="")
     title(main=TIT)
     
    ###    title(main="click middle mouse to end session")
-    buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+    buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
     ###  zloc = plocator(col=rgb(1,0, 0), NUM=TRUE , YN=NSEL, style=-1)
    zloc = locator(1, type='p', col=pcol)
 
@@ -30,7 +30,7 @@ function(y, ex, dt, TIT="")
     
     Nclick = length(zloc$x)
     if(is.null(zloc$x)) { return(NULL) }
-    K = whichbutt(zloc ,buttons)
+    K = RPMG::whichbutt(zloc ,buttons)
    sloc = zloc
    while(Nclick>0)
      {
@@ -209,7 +209,7 @@ function(y, ex, dt, TIT="")
             lines(ex, y, col=1)
             title(main=TIT)
 ###    title(main="click middle mouse to end session")
-            buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
           }
         if(K[Nclick] == match("POINTS", labs, nomatch = NOLAB))
           {
@@ -237,12 +237,12 @@ function(y, ex, dt, TIT="")
       
       
        
-       #### buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+       #### buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
        ####  zloc = plocator(col=rgb(1,0, 0), NUM=TRUE , YN=NSEL, style=-1)
         zloc = locator(1, type='p', col=pcol)
        Nclick = length(zloc$x)
        if(is.null(zloc$x)) { return(sloc) }
-       K =  whichbutt(zloc ,buttons)
+       K =  RPMG::whichbutt(zloc ,buttons)
       ###  print(paste("Button",K, Nclick))
      }
    

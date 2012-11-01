@@ -138,7 +138,7 @@ lolab[thefilts$flo<1] = paste(sep=' ', 1/thefilts$flo[thefilts$flo<1], "s")
 hilab = paste(sep=' ', thefilts$fhi, "Hz")
 hilab[thefilts$fhi<1] = paste(sep=' ', 1/thefilts$fhi[thefilts$fhi<1], "s") 
 
- B =  itoxyz(1:N, ncol, nrow, 1)
+ B =  RPMG::itoxyz(1:N, ncol, nrow, 1)
     x = (B$ix-1)*dx
         y = (B$iy-1)*dy
         rect(x , y , x+dx, y+dy, lty=1, col=thecols )

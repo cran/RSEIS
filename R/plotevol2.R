@@ -55,14 +55,14 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
       {
         Yplmin = min(log10(y[yflag]))
         Yplmax = max(log10(y[yflag])) 
-        why   = RESCALE( log10(y[yflag]), 0 , perc ,Yplmin ,  Yplmax )
+        why   = RPMG::RESCALE( log10(y[yflag]), 0 , perc ,Yplmin ,  Yplmax )
       }
     else
       {
 
         Yplmin =min(y[yflag], na.rm=TRUE)
         Yplmax =max(y[yflag], na.rm=TRUE)
-        why   = RESCALE( (y[yflag]), 0 , perc , Yplmin ,  Yplmax  )
+        why   = RPMG::RESCALE( (y[yflag]), 0 , perc , Yplmin ,  Yplmax  )
 
       }
 
@@ -91,14 +91,14 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
 
     if(add==TRUE) { return(NULL) }
     
-    trace = RESCALE( a, perc , 1.0  , min(a, na.rm=TRUE), max(a, na.rm=TRUE) )
+    trace = RPMG::RESCALE( a, perc , 1.0  , min(a, na.rm=TRUE), max(a, na.rm=TRUE) )
 
      print(paste(sep=" ", "in plotevol...2  ADD=", add))
     print(range( trace))
        
     if(WIG) lines(tim, trace)
 
-    ##  sy = RESCALE( a, perc , 1.0  , min(a), max(a) )
+    ##  sy = RPMG::RESCALE( a, perc , 1.0  , min(a), max(a) )
     Tdiff = max(tim, na.rm=TRUE)-min(tim, na.rm=TRUE)
     
     segments(max(tim)-Tdiff*.04-DEVOL$wpars$Ns*dt, perc+0.01, max(tim)-Tdiff*.04, perc+0.01, lwd=2)
@@ -132,7 +132,7 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
         axspec = axspec[axspec<=max(log10(y[yflag])) ]
 
         
-        raxspec= RESCALE( axspec, 0 , perc , min(log10(y[yflag]), na.rm=TRUE), max(log10(y[yflag]), na.rm=TRUE) )
+        raxspec= RPMG::RESCALE( axspec, 0 , perc , min(log10(y[yflag]), na.rm=TRUE), max(log10(y[yflag]), na.rm=TRUE) )
 
         axspec = 10^(axspec[axspec<=max(log10(y[yflag])) ])
         axspec[ axspec<1] = 1/axspec[ axspec<1]
@@ -142,7 +142,7 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
       {
         axspec = pretty(y[yflag], n=10)
         axspec = axspec[axspec<=max(y[yflag], na.rm=TRUE) ]
-        raxspec= RESCALE( axspec, 0 , perc , min(y[yflag], na.rm=TRUE), max(y[yflag], na.rm=TRUE) )
+        raxspec= RPMG::RESCALE( axspec, 0 , perc , min(y[yflag], na.rm=TRUE), max(y[yflag], na.rm=TRUE) )
       }
     
     axis(2, at=raxspec, labels=format.default(axspec, digits=3), pos=min(x, na.rm=TRUE))
@@ -178,7 +178,7 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
     axtrace = range(a, na.rm=TRUE)
     if(axtrace[1]< axtrace[2])
       {
-        raxtrace= RESCALE( axtrace, perc , 1.0 , axtrace[1],  axtrace[2])
+        raxtrace= RPMG::RESCALE( axtrace, perc , 1.0 , axtrace[1],  axtrace[2])
         axis(4, at=raxtrace, labels=format.default(axtrace, digits=3), pos=max(tim, na.rm=TRUE))
 
         if( !is.null(WUNITS)  )
@@ -199,7 +199,7 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
       {
         if(IMAGE)
           { 
-            HOZscale( ImPlot, col, units=units, s1=0.4, s2=0.95)
+            RPMG::HOZscale( ImPlot, col, units=units, s1=0.4, s2=0.95)
           }
         
       }

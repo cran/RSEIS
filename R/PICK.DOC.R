@@ -101,7 +101,7 @@ J = 1:N
     else
       {
 
-        cp =  chooser(ALLLABS, nsel=NA)
+        cp =  RPMG::chooser(ALLLABS, nsel=NA)
         
         ma = match(cp, ALLLABS)
         J = ma
@@ -122,8 +122,8 @@ J = 1:N
     
 #####      kli   = system("grep NOLAB /home/lees/R_PAX/RSEIS/R/swig.R | grep match", intern=TRUE)
 
-#####     cp =  chooser(blibs, nsel=NA)
-#####     cp =  chooser(blibs, nsel=0)
+#####     cp =  RPMG::chooser(blibs, nsel=NA)
+#####     cp =  RPMG::chooser(blibs, nsel=0)
 
   }   
 

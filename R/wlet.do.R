@@ -1,5 +1,5 @@
 `wlet.do` <-
-function(why, dt, noctave=6, nvoice=20, flip=TRUE, ploty=TRUE, zscale=1, col=terrain.colors(100), STAMP=STAMP)
+function(why, dt, noctave=6, nvoice=20, flip=TRUE, ploty=TRUE, zscale=1, col=terrain.colors(100), STAMP=STAMP, units="", scaleloc=c(0.4,0.95) )
   {
     ### usage: wlet.do(x,  delta, noctave = 4, nvoice = 20,  flip=FALSE,  col=rainbow(100))
 
@@ -50,7 +50,7 @@ function(why, dt, noctave=6, nvoice=20, flip=TRUE, ploty=TRUE, zscale=1, col=ter
     ##  wlet.plot(baha, why, dt, col=col, zscale=zscale)
 
 
-    PE = plotwlet(baha, why, dt , zscale=zscale,  col=col,  ygrid=FALSE, STAMP=STAMP)
+    PE = plotwlet(baha, why, dt , zscale=zscale,  col=col,  ygrid=FALSE, STAMP=STAMP, units=units, scaleloc=scaleloc)
 
     
  

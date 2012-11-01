@@ -21,7 +21,7 @@ function(intempmat, pmolabs=c("Vertical", "North", "East"), STAMP="")
     NLABS = length(labs)
     NOLAB = NLABS +1000
 ###  FUN = match.fun(TPALS[1])
-     pal = Gcols(plow=0, phi=0,  N=100, pal=TPALS[1])
+     pal = RPMG::Gcols(plow=0, phi=0,  N=100, pal=TPALS[1])
     scale.def = 0
    
     colabs = c(rep(1,2) , rep(2, length(APALS) ), rep(4,length(ADDBUTS) ))
@@ -40,7 +40,7 @@ function(intempmat, pmolabs=c("Vertical", "North", "East"), STAMP="")
     
     sx = partmotnet(temp, STAMP=STAMP, LINES=ADDLINES, COL=pal)
 
-    buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+    buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
 
 
 
@@ -54,21 +54,21 @@ function(intempmat, pmolabs=c("Vertical", "North", "East"), STAMP="")
       {
 
 
-iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=-1)
+iloc = RPMG::ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=-1)
  Nclick = length(iloc$x)
            
           if(Nclick>0)
             {
               zloc  = list(x=c(zloc$x,iloc$x), y=c(zloc$y, iloc$y))
               zenclick = length(zloc$x)
-              K =  whichbutt(iloc ,buttons)
+              K =  RPMG::whichbutt(iloc ,buttons)
               sloc = zloc
             }
           else
             {
               Nclick = 0
               K = 0
-              buttons = rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
+              buttons = RPMG::rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
               title("Return to Calling Program")
               break;
             }
@@ -80,7 +80,7 @@ iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=-1)
         if(K[Nclick] == match("DONE", labs, nomatch = NOLAB))
           {
            
-            buttons = rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
+            buttons = RPMG::rowBUTTONS(labs, col=rep(grey(.8), length(labs)), pch=rep("NULL", length(labs)))
             title("Return to Calling Program")
         
             
@@ -92,7 +92,7 @@ iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=-1)
             ###print(K[Nclick])
             
            sx = partmotnet(temp, STAMP=STAMP, LINES=ADDLINES, COL=pal)
-            buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
            zloc = list(x=NULL, y=NULL) 
            
           }
@@ -103,9 +103,9 @@ iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=-1)
         {
 
           print("Start postscript plot.ts")
-          plfname = local.file("pmotnet","eps")
+          plfname = RPMG::local.file("pmotnet","eps")
           jdev = dev.cur()
-          jpostscript("pmot")
+          RPMG::jpostscript("pmot")
           sx = partmotnet(temp, STAMP=STAMP, LINES=ADDLINES, COL=pal)
            print("Done creating postscript")
           dev.off()
@@ -117,7 +117,7 @@ iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=-1)
           {
             ADDLINES=!ADDLINES
             sx = partmotnet(temp, STAMP=STAMP, LINES=ADDLINES, COL=pal)
-            buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
             zloc = list(x=NULL, y=NULL) 
           }
 
@@ -129,7 +129,7 @@ iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=-1)
           {
            
             sx = partmotnet(temp, STAMP=STAMP, LINES=ADDLINES, COL=pal)
-            buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
           }
         if( length(which(K[Nclick] == match(APALS, labs, nomatch = NOLAB)))>0 )
           {
@@ -137,10 +137,10 @@ iloc = ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=-1)
             
             ##FUN = match.fun(TPALS[J])
             ##  pal = FUN(NCOL)
-            pal = Gcols(plow=0, phi=0,  N=100, pal=TPALS[J])
+            pal = RPMG::Gcols(plow=0, phi=0,  N=100, pal=TPALS[J])
             
             sx = partmotnet(temp, STAMP=STAMP, LINES=ADDLINES, COL=pal)
-            buttons = rowBUTTONS(labs, col=colabs, pch=pchlabs)
+            buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
 
               zloc = list(x=NULL, y=NULL) 
           }

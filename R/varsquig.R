@@ -20,9 +20,9 @@ varsquig<-function(x,y, L=locator(2) , FLIP=FALSE, filcol="blue", tracecol="red"
   if(FLIP==TRUE)
     {
 
-      rx = RESCALE(y, min(L$x), max(L$x), min(y), max(y))
-      ry = RESCALE(x, max(L$y), min(L$y), min(x), max(x))
-      zer =RESCALE(zee, min(L$x), max(L$x), min(y), max(y))
+      rx = RPMG::RESCALE(y, min(L$x), max(L$x), min(y), max(y))
+      ry = RPMG::RESCALE(x, max(L$y), min(L$y), min(x), max(x))
+      zer =RPMG::RESCALE(zee, min(L$x), max(L$x), min(y), max(y))
 
       yup = rx>zer
       g = rx
@@ -34,9 +34,9 @@ varsquig<-function(x,y, L=locator(2) , FLIP=FALSE, filcol="blue", tracecol="red"
     }
   else
     {
-      rx = RESCALE(x, L$x[1], L$x[2], min(x), max(x))
-      ry = RESCALE(y, L$y[1], L$y[2], min(y), max(y))
-      zer =RESCALE(zee, L$y[1], L$y[2], min(y), max(y))
+      rx = RPMG::RESCALE(x, L$x[1], L$x[2], min(x), max(x))
+      ry = RPMG::RESCALE(y, L$y[1], L$y[2], min(y), max(y))
+      zer =RPMG::RESCALE(zee, L$y[1], L$y[2], min(y), max(y))
 
       yup = ry>zer
       g = ry

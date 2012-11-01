@@ -38,8 +38,8 @@
 
       wout = (olat==tlat &  olon ==tlon) | is.na(tlat)
 
-      olon = fmod(olon,360)
-      tlon = fmod(tlon,360)
+      olon = RPMG::fmod(olon,360)
+      tlon = RPMG::fmod(tlon,360)
 
       KLAT = olat
       KLON = olon
@@ -62,7 +62,7 @@
       clat = 90. - KLAT;
       clon = KLON ;
 ####    if(clon < 0.) { clon =clon+ 360.; }
-      clon = fmod(clon,360)
+      clon = RPMG::fmod(clon,360)
       clar = DEG2RAD*clat;
       clor = DEG2RAD*clon ;
       stho = sin(clar);
@@ -70,7 +70,7 @@
       ctlat = 90. - MLAT;
       ctlon = MLON;
 #### if(clon < 0.) ctlon =ctlon+ 360.;
-      ctlon = fmod(ctlon,360)
+      ctlon = RPMG::fmod(ctlon,360)
       
       ctlar = DEG2RAD*ctlat ;
       ctlor = DEG2RAD*ctlon;
@@ -92,7 +92,7 @@
       azr = rep(0, length(sdph))
       azr[sth!=0.0] = atan2(sdph,stho*cth/sth-ctho*cdph);
       az = RAD2DEG*azr;
-      azr = fmod(azr,360)
+      azr = RPMG::fmod(azr,360)
 
 ###/* compute back azimuth */
       bazr = rep(0, length(sdph))
@@ -101,7 +101,7 @@
       bazr[stho!=0.0] = bazr = atan2(-sdph,sth*ctho/stho-cth*cdph);
 
       baz = RAD2DEG*bazr;
-      bazr = fmod(bazr,360)
+      bazr = RPMG::fmod(bazr,360)
 
       L$err[!wout] = 1
       L$del[!wout] = del
