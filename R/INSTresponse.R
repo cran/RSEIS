@@ -27,9 +27,16 @@ function(Kal,key,ff,tt=tt,plotkey=NULL)
         print('zeros')
         print(zeroes)
       }
-    
-    bb    =gpoly(zeroes);             ##  convert zeros to polynomial coefficients 
-    aa    =gpoly(poles);              ##  convert poles to polynomial coefficients
+
+    if(is.null(zeroes))
+      {
+       bb = 1
+      }
+    else
+      {
+    bb    =gpoly(zeroes); ##  convert zeros to polynomial coefficients
+  }
+    aa    =gpoly(poles);  ##  convert poles to polynomial coefficients
 
 
     if(length(ff)==2)

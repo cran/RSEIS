@@ -74,7 +74,12 @@ if(identical(PLOT, TRUE))
   {
     par(mfrow=c(3,1))
 
-    plot(MTS1$freq, nphase,  main=paste(sep=' ', "thelag=",phaselag) )
+    
+    plot(MTS1$freq[flag], nphase[flag],  main=paste(sep=' ', "thelag=",phaselag) )
+ plot(MTS1$freq[flag], phase[flag],  main=paste(sep=' ', "Unwrapped" ) )
+ plot(MTS1$freq[flag], nphase[flag],  main=paste(sep=' ', "Unwrapped" ) )
+
+    
     abline(MOD)
     ex = seq(from=0, length=length(ts1), by=DT)
     

@@ -1,4 +1,4 @@
-`JSEGY.seis` <-function(fnames, Iendian=1 , HEADONLY=FALSE, BIGLONG=TRUE,  PLOT=-1, RAW=FALSE )
+`JSEGY.seis` <-function(fnames, Iendian=1 , HEADONLY=FALSE, BIGLONG=FALSE,  PLOT=-1, RAW=FALSE )
 {
   ###  get a bunch of segy files from a directory and store in structure
   ####  
@@ -7,7 +7,7 @@
   
   if(missing(Iendian)) { Iendian=1 }
   if(missing(HEADONLY)) {HEADONLY=FALSE }
-  if(missing(BIGLONG)) { BIGLONG=TRUE}
+  if(missing(BIGLONG)) { BIGLONG=FALSE}
   if(missing(RAW)) { RAW=FALSE }
 
   GIVE = as.list(1:length(fnames))

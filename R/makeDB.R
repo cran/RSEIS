@@ -27,7 +27,7 @@ if(dirs=="")
   }
     else
       {
-    if(length(dirs)>1)
+    if(length(dirs)>=1)
       {
            LF1 = dirs
            NDIRS = length(LF1)

@@ -1,7 +1,7 @@
-rseis2sac<-function(GH, sel=1, win=c(0,1), dir=".", BIGLONG=FALSE )
+rseis2sac<-function(GH, sel=1, win=c(0,1), path=".", BIGLONG=FALSE )
   {
 ##############  convert an RSEIS structure to SAC format
-########   if dir is provided, the individual files will be
+########   if path is provided, the individual files will be
 #########    written in that directory
     
     if(missing(sel)) { sel = 1:length(GH$STNS) }
@@ -11,11 +11,33 @@ rseis2sac<-function(GH, sel=1, win=c(0,1), dir=".", BIGLONG=FALSE )
 
     aunits = "volts"
 
-    if( !identical(dir, ".")) 
+
+    OLDir = getwd()
+    RDT = rangedatetime(GH$info)
+    newdir  = paste(path,filedatetime(RDT$min), sep="/")
+
+    if(file.exists(newdir))
+      {
+        setwd(newdir)
+      }
+    else
+      {
+        tdir = dir.create(newdir, recursive=TRUE )
+        if(tdir==TRUE) { setwd(newdir)  }
+        else
+          {
+            print("ERROR: CANNOT create or write in this directory")
+          }
+      }
+    
+
+
+    
+    if( !identical(path, ".")) 
       {
         OLDir = getwd()
-        dir.create(dir)
-        setwd(dir)
+        dir.create(path)
+        setwd(path)
       }
 
     for(j in 1:length(sel))
@@ -43,18 +65,30 @@ rseis2sac<-function(GH, sel=1, win=c(0,1), dir=".", BIGLONG=FALSE )
         N = GH$info$n[i]
 
         sig = GH$JSTR[[i]]
+
+    sacfn = paste(sep=".",
+          formatC(GH$info$yr[i] , width = 4, flag = "0") ,
+          formatC(GH$info$jd[i], width = 3, flag = "0"),
+          formatC(GH$info$hr[i], width = 2, flag = "0") ,
+          formatC(GH$info$mi[i], width = 2, flag = "0") ,
+          formatC(GH$info$sec[i], width = 2, flag = "0")  ,
+          thesta ,
+          thecomp,
+          "SAC")
+
+     
         
         a1 = list(fn=fn, sta=thesta,  comp=thecomp, dt=dt, DATTIM=tstart,
-          N=N, units=aunits , amp=sig , IO=list(kind=2, Iendian=theENDIAN,  BIGLONG=BIGLONG))
-        write1sac(a1, BIGLONG=BIGLONG  , fn=NULL)
-      }
+          N=N, units=aunits , amp=sig , IO=list(kind=2, Iendian=theENDIAN,
+                                          BIGLONG=BIGLONG))
 
-
-
-    if( !identical(dir, ".")) 
-      {
+        ######################  write out the SAC file
+        write1sac(a1, fn=sacfn, BIGLONG=BIGLONG )
         
-        setwd(  OLDir)
       }
 
+
+
+        setwd(  OLDir)
+    
   }

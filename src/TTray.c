@@ -948,7 +948,7 @@ L9500:
 
   int i, N;
   double tt;
-  double indelta, inhpz,  instaz;
+  double  inhpz,  instaz;
   double  ddr, ddz, dang, dist;
 
   int inlay;
@@ -1003,7 +1003,7 @@ L9500:
   int inlay;
 
   int jerr, lolev, indpth;
-  int i, j;
+  int j;
 
   indelta= *delta;
   inhpz=*hpz;

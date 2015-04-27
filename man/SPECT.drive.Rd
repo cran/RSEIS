@@ -63,7 +63,7 @@ plot(Xamp, type='l')
 
 DT = CE1$dt
 
-SPECT.drive(Xamp, DT = DT, NEW = TRUE, STAMP = NULL)
+if(interactive() ) SPECT.drive(Xamp, DT = DT, NEW = TRUE, STAMP = NULL)
 
 \dontrun{
 data(KH)

@@ -18,12 +18,15 @@ FmakeDB<-function(LF2, kind =1, Iendian=1, BIGLONG=FALSE)
       comp="")
     attr(ADB, "origyr")<- 1972
     N = 0
-    
-    
+
+    if(length(kind)==1) kind = rep(kind, times=length(LF2) )
+    if(length(Iendian)==1) Iendian = rep(Iendian, times=length(LF2) )
+    if(length(BIGLONG)==1) BIGLONG = rep(BIGLONG, times=length(LF2) )
+     
     ##   OLD: sinfo  =  getseisinfo(LF2, kind=kind)
     for(i in 1:length(LF2))
       {
-        sinfo  = JGET.seis(LF2[i], kind=kind, Iendian=Iendian, BIGLONG=BIGLONG , HEADONLY=TRUE , PLOT=-1)
+        sinfo  = GET.seis(LF2[i], kind=kind[i], Iendian=Iendian[i], BIGLONG=BIGLONG[i] , HEADONLY=TRUE , PLOT=-1)
         
         for(j in 1:length(sinfo))
           {

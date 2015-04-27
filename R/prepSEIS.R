@@ -40,8 +40,15 @@ function(GG)
                     
          }
 
+      if(is.null(GG[[i]]$gain))
+         {
+           GG[[i]]$gain = 1
+         }
+     if(is.null(GG[[i]]$scalefac))
+         {
+           GG[[i]]$scalefac = 1
+         }
 
-         
       GG[[i]]$DATTIM$dt = dt
 
       eday = EPOCHday(GG[[i]]$DATTIM$yr, jd=GG[[i]]$DATTIM$jd, origyr = eyear )
@@ -84,7 +91,10 @@ function(GG)
   info = list(fn=rep(NA, length(ma)), name=rep(NA, length(ma)), yr=rep(NA, length(ma)), jd=rep(NA, length(ma)),
     mo=rep(NA, length(ma)), dom=rep(NA, length(ma)), hr=rep(NA, length(ma)), mi=rep(NA, length(ma)),
     sec=rep(NA, length(ma)), msec=rep(0, length(ma)),dt=rep(0, length(ma)),t1=rep(0, length(ma)) ,t2=rep(0, length(ma)),
-    off=rep(0, length(ma)), n1=rep(0, length(ma)), n2=rep(0, length(ma)), n3=rep(0, length(ma)), n=rep(0, length(ma)) )
+    off=rep(0, length(ma)), n1=rep(0, length(ma)), n2=rep(0, length(ma)), n3=rep(0, length(ma)), n=rep(0, length(ma)),
+    gain=rep(1, length(ma))   , scalefac=rep(1, length(ma))
+ 
+    )
   ###  fill up data structure and information
   ############   the NA padding of traces occurs here
   ###   source("/home/lees/Progs/R_stuff/seis.R"); save.image()
@@ -97,7 +107,6 @@ function(GG)
           
 	  ascd[[j]] = c(rep(NA, r1[ ima ]) , GG[[ima]]$amp,    rep(NA,r2[ ima ]))
 
-          
 	  notes[j] = paste(sep=' ', GG[[ima]]$sta, GG[[ima]]$comp)
 	  stns[j] = GG[[ima]]$sta
 	  comps[j] = GG[[ima]]$comp
@@ -105,8 +114,6 @@ function(GG)
           
         ##   print(paste(sep=' ', GG[[ima]]$sta, GG[[ima]]$comp, GG[[ima]]$units))
 	 
-
-          
 	  info$fn[j] = GG[[ima]]$fn
 	  info$name[j] = GG[[ima]]$fn
 	  info$yr[j] = GG[[ima]]$DATTIM$yr
@@ -122,12 +129,15 @@ function(GG)
  	  info$t1[j] = 0
  	  info$t2[j] = gdt[ima]*(length(ascd[[j]])-1)
            
-           
 	  info$off[j] =  r1[ ima ]*gdt[ima]
 	  info$n1[j] =  length(ascd[[j]])
 	  info$n2[j] =  info$n1[j]
  	  info$n3[j] =  info$n1[j]
  	  info$n[j] =  info$n1[j]
+
+ 	  info$gain[j] =  GG[[ima]]$gain
+
+ 	  info$scalefac[j] = GG[[ima]]$scalefac
           
 	}
  
@@ -168,7 +178,8 @@ function(GG)
  Orig.comps = comps
   comps = fixcomps(Orig.comps)
   
-  GFIL = list(JSTR=ascd, STNS=stns, dir=dir, ifile=fn1, COMPS=comps, OCOMPS=Orig.comps,  dt=dt, KNOTES=notes, info=info,dat=dat, nn=nn, ex=ex, pcol=pcol, ok=ok, wintim=wintim,  ftime=ftime, units=units )
+  GFIL = list(JSTR=ascd, STNS=stns, dir=dir, ifile=fn1, COMPS=comps, OCOMPS=Orig.comps,
+    dt=dt, KNOTES=notes, info=info,dat=dat, nn=nn, ex=ex, pcol=pcol, ok=ok, wintim=wintim,  ftime=ftime, units=units )
   
   invisible(GFIL)
   

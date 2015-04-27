@@ -6,7 +6,7 @@ convert2Rseis<-function(FLS, NEWDIR=".", kind = 1, Iendian="little" , BIGLONG=FA
 ####    later use and storage
     if(missing(kind)) { kind=1 }
     if(missing(Iendian)) { Iendian=1 }
-    if(missing(BIGLONG)) { BIGLONG=TRUE}
+    if(missing(BIGLONG)) { BIGLONG=FALSE}
     if(missing(NEWDIR)) {NEWDIR="." }
     if(missing(NEWsta)) {NEWsta=NULL }
     if(missing(NEWcomp)) {NEWcomp=NULL }

@@ -8,9 +8,9 @@
 }
 \usage{
 JSAC.seis(fnames, Iendian = 1 , HEADONLY=FALSE,
-BIGLONG=TRUE, PLOT = -1, RAW=FALSE)
+BIGLONG=FALSE, PLOT = -1, RAW=FALSE)
 JSEGY.seis(fnames, Iendian = 1 , HEADONLY=FALSE,
-BIGLONG=TRUE, PLOT = -1, RAW=FALSE)
+BIGLONG=FALSE, PLOT = -1, RAW=FALSE)
 }
 \arguments{
   \item{fnames}{vector of file names to be extracted and converted.

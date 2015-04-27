@@ -56,7 +56,7 @@ choosfilt(thefilts = thefilts, ncol = 5)
                  "HP", "HP","HP", "HP","HP",
                  "None"))
 
-choosfilt(thefilts = thefilts, ncol = 5)
+if(interactive() ) choosfilt(thefilts = thefilts, ncol = 5)
 
 
 }

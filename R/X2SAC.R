@@ -33,7 +33,7 @@ X2SAC<-function(nh, g)
 
         cat(paste("Creating SAC files in dir:", pstamp[1]), sep="\n")
         
-        rseis2sac(jh,   dir = pstamp[1], BIGLONG=FALSE )
+        rseis2sac(jh,   path = pstamp[1], BIGLONG=FALSE )
 
 
         

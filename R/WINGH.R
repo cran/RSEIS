@@ -26,6 +26,8 @@ WINGH<-function(GH, sel=1 , WIN = c(0,1) )
       GH$info$sec[i] + GH$info$t1[i] + GH$info$msec[i]/1000 +
       WIN[1] - GH$info$off[i], GH$info$yr[i])
     GDOM = getmoday(RDATE$jd, RDATE$yr)
+    NEWH$info$fn[ii] = GH$info$fn[i]
+    NEWH$info$name[ii] = GH$info$fn[i]
     NEWH$info$yr[ii] = RDATE$yr
     NEWH$info$jd[ii] = RDATE$jd
     NEWH$info$mo[ii] = GDOM$mo

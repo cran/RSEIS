@@ -19,6 +19,7 @@ function(GG)
         YRS =  rep(NA, N)
 
         
+        
 
         ##############  find the minimum start time for all traces
         #######   if traces cross a year boundary need to make special
@@ -62,7 +63,7 @@ function(GG)
 
         UK = unique(KNOTE)
 
-        RR = as.list(NA)
+        RR = vector(mode="list")
 
         for(i in 1:length(UK))
           {
@@ -76,7 +77,7 @@ function(GG)
 
             ###  this combines the length of all matches
 
-        ###    print(c(i, j[w1], t1[j[w1]], t2[j[w1]], j[w2],  t1[j[w2]], t2[j[w2]] ))
+          ### print(c(i, j[w1], t1[j[w1]], t2[j[w1]], j[w2],  t1[j[w2]], t2[j[w2]] ))
 
                   
             temy = rep(NA, length(seq(from=0, to=(t2[j[w2]]-mint)*24*3600  , by=dt[j[w1]])))
@@ -93,12 +94,27 @@ function(GG)
 
             nsamp=length(temy)
             tem2 = nsamp*dt[j[w1]]
+
+            if(is.null(GG[[j[w1]]]$HEAD$scale_fac))
+              { scalefac = 1 } else {scalefac =GG[[j[w1]]]$HEAD$scale_fac} 
             
-            RR[[i]] = list(fn=GG[[j[w1]]]$fn, sta=GG[[j[w1]]]$sta, units=GG[[j[w1]]]$units , comp=GG[[j[w1]]]$comp, dt=GG[[j[w1]]]$dt,
-                DATTIM=list(yr=GG[[j[w1]]]$DATTIM$yr, jd=GG[[j[w1]]]$DATTIM$jd,   mo=GG[[j[w1]]]$DATTIM$mo,  dom=GG[[j[w1]]]$DATTIM$dom,
-                  hr=GG[[j[w1]]]$DATTIM$hr ,   mi=GG[[j[w1]]]$DATTIM$mi ,   sec=GG[[j[w1]]]$DATTIM$sec ,  msec=GG[[j[w1]]]$DATTIM$msec ,
-                  dt=GG[[j[w1]]]$DATTIM$dt ,   t1=GG[[j[w1]]]$DATTIM$t1 ,  t2=tem2 ,   off=GG[[j[w1]]]$DATTIM$off),
-                N=nsamp   , amp=temy)
+            if(is.null(GG[[j[w1]]]$HEAD$gainConst))
+              { gain = 1 } else {gain = GG[[j[w1]]]$HEAD$gainConst} 
+
+       
+
+            
+            RR[[i]] = list(fn=GG[[j[w1]]]$fn, sta=GG[[j[w1]]]$sta,
+                units=GG[[j[w1]]]$units , comp=GG[[j[w1]]]$comp, dt=GG[[j[w1]]]$dt,
+                DATTIM=list(yr=GG[[j[w1]]]$DATTIM$yr, jd=GG[[j[w1]]]$DATTIM$jd,
+                  mo=GG[[j[w1]]]$DATTIM$mo,  dom=GG[[j[w1]]]$DATTIM$dom,
+                  hr=GG[[j[w1]]]$DATTIM$hr ,   mi=GG[[j[w1]]]$DATTIM$mi ,
+                  sec=GG[[j[w1]]]$DATTIM$sec ,  msec=GG[[j[w1]]]$DATTIM$msec ,
+                  dt=GG[[j[w1]]]$DATTIM$dt ,
+                  t1=GG[[j[w1]]]$DATTIM$t1 ,  t2=tem2 ,   off=GG[[j[w1]]]$DATTIM$off),
+                N=nsamp ,
+                gain=gain, scalefac=scalefac, 
+                amp=temy)
             
           }
 

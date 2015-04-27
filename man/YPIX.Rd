@@ -20,6 +20,7 @@
 \alias{JustE}
 \alias{JustN}
 \alias{iNEXT}
+\alias{noPS}
 
 \title{PICK Buttons for swig
 }

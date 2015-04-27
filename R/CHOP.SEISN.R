@@ -34,6 +34,8 @@ CHOP.SEISN = function (GH, sel = 1:4, WIN = NULL)
     NEWH$info$n2 = NULL
     NEWH$info$n3 = NULL
     NEWH$info$n = NULL
+    NEWH$info$gain = NULL
+    NEWH$info$scalefac = NULL
 
     NEWH$STNS = GH$STNS[sel]
     NEWH$COMPS = GH$COMPS[sel]
@@ -72,7 +74,16 @@ CHOP.SEISN = function (GH, sel = 1:4, WIN = NULL)
         NEWH$info$n3[ii] = n1
         NEWH$info$n[ii] = n1
        
+ NEWH$info$gain[ii] =  GH$info$gain[i]
+
+ 	  NEWH$info$scalefac[ii] = GH$info$scalefac[i]
+          
+       
     }
+     NEWH$wintim = NEWH$info$jd[1] + NEWH$info$hr[1]/24 + NEWH$info$mi[1]/(24 * 60) +
+          (NEWH$info$sec[1] + NEWH$info$msec[1]/1000 + NEWH$info$t1[1] - NEWH$info$off[1])/(24 * 3600)
+
+        
     NEWH$ex = NEWH$dt[1] * seq(from = 0, to = length(NEWH$JSTR[[1]]) -
         1)
     invisible(NEWH)

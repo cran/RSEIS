@@ -23,7 +23,7 @@ printed side effect
 
 \seealso{swig}
 \examples{
-PICK.DOC(6:23)
+if(interactive() ) PICK.DOC(6:23)
 }
 
 \keyword{misc}

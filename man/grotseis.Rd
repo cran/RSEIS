@@ -38,6 +38,21 @@ grotseis(ang, flip = FALSE)
 }
 
 \examples{
+
+####  simple case:
+vecs  <- rbind(c(0,0,1), c(0,1,0))
+rbaz <- grotseis(21.76, flip=FALSE) 
+bvec  <- vecs %*%  rbaz
+
+plot(c(-2,2) , c(-2,2) , asp=1, xaxs="r"  , yaxs="r" )
+
+  arrows(0, 0, 0+bvec[,2], 0+bvec[,3],
+     col=c("red", "blue"), length=.08)
+     
+  arrows(0, 0, vecs[,2], vecs[,3],
+     col=c("red", "blue"), length=.08)
+ 
+####  realistic case:
 STAXY<-list()
 
 STAXY$'x'<-c(-2.9162198461534,-2.49599248511068,

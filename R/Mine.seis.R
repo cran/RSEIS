@@ -86,7 +86,7 @@
    if(verbose) print(fn2)
 
   
-  KG4 = JGET.seis(fn2, kind = kind,  Iendian=Iendian, BIGLONG= BIGLONG, HEADONLY=FALSE ,PLOT = -1, RAW=RAW)
+  KG4 = GET.seis(fn2, kind = kind,  Iendian=Iendian, BIGLONG= BIGLONG, HEADONLY=FALSE ,PLOT = -1, RAW=RAW)
 
 
  ## here we must insure that the channel names are unique

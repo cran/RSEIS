@@ -36,7 +36,7 @@ list:
 plot(c(0,1), c(0,1), type='n')
 for(i in 1:5) { abline(h=i/6) }
 
-plocator(COL = 1, NUM = 4, YN = 6, style = 2)
+if(interactive()) plocator(COL = 1, NUM = 4, YN = 6, style = 2)
 
 }
 

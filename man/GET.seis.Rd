@@ -1,4 +1,5 @@
-\name{JGET.seis}
+\name{GET.seis}
+\alias{GET.seis}
 \alias{JGET.seis}
 
 \title{Reads various seismic file formats}
@@ -6,6 +7,9 @@
   This fuction calls binary routines to read in \sQuote{segy}, \sQuote{sac}.
 }
 \usage{
+GET.seis(fnames, kind = 1, Iendian=1, BIGLONG=FALSE ,
+HEADONLY=FALSE,  PLOT = -1, RAW=FALSE)
+
 JGET.seis(fnames, kind = 1, Iendian=1, BIGLONG=FALSE ,
 HEADONLY=FALSE,  PLOT = -1, RAW=FALSE)
 
@@ -127,24 +131,24 @@ HEADONLY=FALSE,  PLOT = -1, RAW=FALSE)
 Lname  <-  list.files(path='/data/wadati/bourbon/LaurelCanNC/R005.01' ,
          pattern="08.005.01.41.23.9024", full.names=TRUE)
 
-S1   <-  JGET.seis(Lname, kind = 1, PLOT = -1)
+S1   <-  GET.seis(Lname, kind = 1, PLOT = -1)
 
 ###   for data created on UNIX (SUN) but read on linux:
 
-S1   <-  JGET.seis(Lname, kind = 1, Iendian="swap", BIGLONG=FALSE, PLOT = -1)
+S1   <-  GET.seis(Lname, kind = 1, Iendian="swap", BIGLONG=FALSE, PLOT = -1)
 
 ###   for data created on linux (32 bit)  but read on linux 64 bit:
 
-S1   <-  JGET.seis(Lname, kind = 1, Iendian="little", BIGLONG=FALSE, PLOT = -1)
+S1   <-  GET.seis(Lname, kind = 1, Iendian="little", BIGLONG=FALSE, PLOT = -1)
 
 ###   for SEGY data created on linux (64 bit)  but read on linux 32 bit:
 
-S1   <-  JGET.seis(Lname, kind = 1, Iendian="little", BIGLONG=TRUE, PLOT = -1)
+S1   <-  GET.seis(Lname, kind = 1, Iendian="little", BIGLONG=TRUE, PLOT = -1)
 
 
 ###   for SAC data created on MAC-OS (64 bit)  but read on linux 32 bit:
 
-S1   <-  JGET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = -1)
+S1   <-  GET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = -1)
 
 
 ##################   

@@ -123,8 +123,11 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
     
     
     
-    x1 = secdif(   t0$jd, t0$hr, t0$mi, t0$sec, YPX$jd[ mpicks], YPX$hr[mpicks ],YPX$mi[mpicks ], YPX$sec[mpicks ])
+    x1 = YRsecdif(   t0$jd, t0$hr, t0$mi, t0$sec, YPX$jd[ mpicks], YPX$hr[mpicks ],YPX$mi[mpicks ], YPX$sec[mpicks ], yr1=t0$yr, yr2=YPX$yr[ mpicks] )
 
+   ## print(x1)
+
+    
 #############  set the color of the pix 
     if(is.null(YPX$col))
       {

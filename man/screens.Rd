@@ -23,7 +23,7 @@ screens(n)
 
 \seealso{devices}
 \examples{
-screens(2)
+if(interactive() ) screens(2)
 }
 
 \keyword{misc}

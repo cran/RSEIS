@@ -333,7 +333,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
   
   isel = sel[1]
   
-  Torigin = list(jd=NH$info$jd[isel], hr=NH$info$hr[isel],
+  Torigin = list(yr=NH$info$yr[isel], jd=NH$info$jd[isel], hr=NH$info$hr[isel],
     mi=NH$info$mi[isel],
     sec=(NH$info$sec[isel]+NH$info$msec[isel]/1000+NH$info$t1[isel]-NH$info$off[isel]))
 
@@ -359,6 +359,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
     mark = FALSE,
     STDLAB =  STDLAB,
     stdlab =  STDLAB,
+    PADDLAB = PADDLAB,
     SUBTIT=NA,
     TIT = TIT,
     Pickdev = NULL,
@@ -386,6 +387,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
     du=du,
     STNS=STNS,
     COMPS=COMPS,
+    UNIsta = UNIsta,
     NADDPIX=NADDPIX,
     ADDPIX=ADDPIX,
     RIDPIX=RIDPIX,
@@ -395,7 +397,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
     fillpix=FALSE,
     srtpix=0,
     polspix=TRUE,
-    pcex=1,
+    pcex=pcex,
     xtickfactor = xtickfactor,
     YAX =  YAX,
  
@@ -432,7 +434,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
       
       if(global.vars$NPX>0)
         {
-        ###  print("plot the pix")
+          
           
           swig.ALLPX(global.vars$Torigin, YN$STNS, YN$COMPS, global.vars$WPX,
                      PHASE=global.vars$PHASE,  POLS=global.vars$polspix,

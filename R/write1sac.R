@@ -1,4 +1,4 @@
-write1sac<-function(a1, BIGLONG=FALSE  , fn=NULL)
+write1sac<-function(alist, fn=NULL, BIGLONG=FALSE  )
   {
 
     sacheadnames = c("delta", "depmin", "depmax", "scale", "odelta", "b", 
@@ -61,7 +61,7 @@ write1sac<-function(a1, BIGLONG=FALSE  , fn=NULL)
       }
 
 
-    N = length(a1$amp)
+    N = length(alist$amp)
     
     A1 = rep(-12345, length=70)
     NAM1 = sacheadnames[1:70]
@@ -72,7 +72,7 @@ write1sac<-function(a1, BIGLONG=FALSE  , fn=NULL)
 
 
     
-    A4 =format(a1$sta, width=8, justify="left" )
+    A4 =format(alist$sta, width=8, justify="left" )
     NAM4 = sacheadnames[111]
     A5 = format("-12345", width=16, justify="left" )
     NAM5 = sacheadnames[112]
@@ -82,23 +82,23 @@ write1sac<-function(a1, BIGLONG=FALSE  , fn=NULL)
     NAMB =  sacheadnames[113:length(sacheadnames) ]
 
     
-    A1[1] = a1$dt
+    A1[1] = alist$dt
     
-    A1[6] =a1$DATTIM$t1
-    A1[7] = a1$DATTIM$t2
+    A1[6] =alist$DATTIM$t1
+    A1[7] = alist$DATTIM$t2
 
 
 ####  "stla", "stlo", "stel"
 
     
-    A2[1] = a1$DATTIM$yr
-    A2[2]=  a1$DATTIM$jd
-    A2[3] = a1$DATTIM$hr
-    A2[4] = a1$DATTIM$mi
+    A2[1] = alist$DATTIM$yr
+    A2[2]=  alist$DATTIM$jd
+    A2[3] = alist$DATTIM$hr
+    A2[4] = alist$DATTIM$mi
 
     
-    A2[5]  =trunc( a1$DATTIM$sec)
-    A2[6] =  (a1$DATTIM$sec-A2[5])*1000
+    A2[5]  =trunc( alist$DATTIM$sec)
+    A2[6] =  (alist$DATTIM$sec-A2[5])*1000
     A2[7]  =6
     
     A2[10]  =  N
@@ -106,19 +106,19 @@ write1sac<-function(a1, BIGLONG=FALSE  , fn=NULL)
 
     A2[ which(NAM2=="leven") ] = 1
 
-    B[ NAMB=="kcmpnm"] = format(a1$comp, width=8, justify="left" )
+    B[ NAMB=="kcmpnm"] = format(alist$comp, width=8, justify="left" )
     
-    sig = a1$amp
+    sig = alist$amp
 
     if(is.null(fn))
       {
-        staname =  a1$sta
-        comp3 = a1$comp
-        yr = a1$DATTIM$yr
-        jd=  a1$DATTIM$jd
-        hr= a1$DATTIM$hr
-        mi = a1$DATTIM$mi
-        trsec =trunc( a1$DATTIM$sec)
+        staname =  alist$sta
+        comp3 = alist$comp
+        yr = alist$DATTIM$yr
+        jd=  alist$DATTIM$jd
+        hr= alist$DATTIM$hr
+        mi = alist$DATTIM$mi
+        trsec =trunc( alist$DATTIM$sec)
         
         sacfn = paste(sep=".",
            formatC(yr , width = 4, flag = "0") ,
