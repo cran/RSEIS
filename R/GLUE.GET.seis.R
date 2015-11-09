@@ -46,12 +46,12 @@ function(GG)
             t1[i] = eday$jday+GG[[i]]$DATTIM$hr/24+GG[[i]]$DATTIM$mi/(24*60)+
               GG[[i]]$DATTIM$sec/(24*3600)+GG[[i]]$DATTIM$msec/(1000*24*3600)
 
-            
-            dur[i] =  (GG[[i]]$N*GG[[i]]$dt)/(24*3600)
+             LENS[i] = length(GG[[i]]$amp)
+            dur[i] =  (LENS[i]*GG[[i]]$dt)/(24*3600)
 
             
             
-            LENS[i] = GG[[i]]$N
+           
           }
 
 

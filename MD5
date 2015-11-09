@@ -1,5 +1,5 @@
-0965caedce979d7b6f25ffee088b9981 *DESCRIPTION
-6888557619d3363ff7fe2445b34eedaf *NAMESPACE
+e4ab843df136b3a091a4f4ca66e9e38e *DESCRIPTION
+9e50fd28073aeea5de541850e192830e *NAMESPACE
 112c14e362dd431df085733f9971ce91 *NEWS
 27b1bab432b598f16c11274ea29b9e3d *R/ASCII.SEISN.R
 86ba5eabfd5472dc859d9ac977a9b258 *R/BUTREPLOT.R
@@ -25,7 +25,7 @@ e46a5a4675885eb6c0a1729e44585553 *R/FRWDft.R
 551120218e451852f72c98442596602c *R/GET.seis.R
 0ed14fa43a5de3f4715e2ba6c7d5be8f *R/GETARAIC.R
 afcce5973d2131165e07118e3bd77d81 *R/GETUWCARDS.R
-fa6a395448bf9d1fad42b87f46402800 *R/GLUE.GET.seis.R
+2b7cf8400bc30c84a50bd6487f4c6bf1 *R/GLUE.GET.seis.R
 a0c7e8b930241b2f12d210aa228e53cd *R/GLUEseisMAT.R
 f561ffc65672a825be7132640df8dcf5 *R/Get1Dvel.R
 9d5990024c71490a0f07fd8f5298dfc5 *R/GreatDist.R
@@ -36,7 +36,7 @@ a7d7d820b5d5c3e3705d5a28e9c217db *R/JBLACK.R
 cabcefaa0e188f5cce5c5fbc539f591f *R/JGET.seis.R
 ec68c215c40e3290ca42d08ae8503960 *R/JGRAY.R
 26dbfcca9d963900f0068cf7e12725c3 *R/JSAC.seis.R
-059d70458c2454410436b0de6c41c66e *R/JSEGY.seis.R
+d1f258f7a74be8640e14914f5e5688ed *R/JSEGY.seis.R
 954d450ca0892c8e01fe9dd6fab1d7a2 *R/Jtim.R
 670c7ed43514fb3460e3e134b2cc5119 *R/JtimL.R
 1f42a3a70a899be3873341c1e1e2b696 *R/LocalUnwrap.R
@@ -53,7 +53,7 @@ df13e79762eff2bf4700fe9850c22776 *R/NEWPLOT.WPX.R
 b180d5dcc978feb1412cf01b3da32810 *R/PICK.DOC.R
 c260effb6bd7ad3f791a1ce0f5c4e172 *R/PLOT.ALLPX.R
 6dbcc0af86ca7afa19f8e818e5704b76 *R/PLOT.MATN.R
-81fbc9248e55e83d7745fb6cc5d02b29 *R/PLOT.SEISN.R
+29d26f7901b6abb87e337fe7b55ab619 *R/PLOT.SEISN.R
 3dcae64fb8579820f85ef44e74cc23aa *R/PLOT.TTCURVE.R
 65f00c88df9d7f7c7c7d477f708138b1 *R/PLTpicks.R
 1da8351f8a4fb39bb372ab1fee4b69d4 *R/PMOT.drive.R
@@ -211,14 +211,14 @@ f15371f5d81f8cee21f7412abbbe7454 *R/prepSEIS.R
 12cae5ad106c274538d6b4088b0da4ab *R/rangedatetime.R
 a79e47646e674de86ed414dab0b0c499 *R/rdistaz.R
 caea44f33016ef97bf6bc03e73355a55 *R/read1sac.R
-26210e05d6a8ec8c966141cd4f912a73 *R/read1segy.R
+5d5a03929c14fd253d660683acef75c0 *R/read1segy.R
 67f2cf2850eb955f28c38a3bf9469ea4 *R/readUW.OSTAS.R
 e68bb77f9b113a38db6e74186b494c0a *R/recdate.R
 ce385aa6c5257b72614b622d12f1ae27 *R/recdatel.R
 d5ca4c80ca153f88c0b69358d6e9eef9 *R/repairWPX.R
 4fb22865425447d21e6d04e05e64807d *R/replaceWPX.R
 9393c6a676d2097230fc5c58c24a87c9 *R/rseis2sac.R
-2d8863d6449b5987b92bd5a94aff64d3 *R/rseis2segy.R
+730fdb7c1695b75b93b07d82a269f225 *R/rseis2segy.R
 e0482ff001083c3fbabbd2ddd4cd3b5b *R/rsspec.taper.R
 42577ed72672f2a44f07e30db3ae34f3 *R/ruler.R
 f2f240cd93015ce6f4629fcaa1871059 *R/sac2rseis.R
@@ -245,9 +245,9 @@ db81aa800e5b1bfdfcc7b42d4e4e2ba7 *R/setwelch.R
 a1fbad0403bde9eb8631c6d522e6886f *R/setypx.R
 6e2e4606a836f845593632082e5326b0 *R/showdatetime.R
 9f51670f7681205bd73fbe276a5af22b *R/sigconv.R
-f8e3b397d88b21ae94b7df907fbe5992 *R/sigconvGR.R
+9f0e5f887776d10f23921111ccdb52e0 *R/sigconvGR.R
 c5049c5106acc9f655a0f3b1ed38f135 *R/swig.ALLPX.R
-870dd6aeab2e8494602c586c3b0c378a *R/swig.R
+30eaac82e867f02fdec24702fd9b799a *R/swig.R
 154752c946c5d14c9f51f40d957a41e0 *R/symshot1.R
 d48dc24031ff2297db99ce60bb3587b5 *R/sysinfo.R
 fa9fe3ee25849bac69a13d7988afcdee *R/tojul.R
@@ -270,7 +270,7 @@ d01fb249c8ceb84cd3f7e0d6d8f0490c *R/winseis24.R
 21171d5717f61cb3c2a3f1ccc6be5695 *R/wlet.do.R
 c9c682ba03453b06786f0d6c5a84c972 *R/wlet.drive.R
 d9aa1b16f2d394faaed2fa1d74a04b5e *R/write1sac.R
-36333f63eedf07a08663fcf186bb646d *R/write1segy.R
+c0e4fa27eb615ed35f24e4abbf984bb5 *R/write1segy.R
 1ee49de63ff6c259a00616febdaf900d *R/xcor2.R
 c204c807d92ac3ebf05e32b2609a0bf8 *R/xprod.R
 b620a21485deb82fa538f1072d77af8f *R/xtract.trace.R
@@ -345,7 +345,7 @@ f40a1fbc6a2f235277c37239a2ef3d14 *man/PDE2list.Rd
 7bae03a54ecd5b96b67672372ecbdea5 *man/PICK.DOC.Rd
 b3d337dfa2fe9f7b38ad9f866df96a89 *man/PLOT.ALLPX.Rd
 f71572e9c972492ead6756bbb883beff *man/PLOT.MATN.Rd
-41dd803fedefd6254e45657b9d5c428a *man/PLOT.SEISN.Rd
+1e97261e57e54a975ee9c8e9b9a565c7 *man/PLOT.SEISN.Rd
 a655ac7114e0553ad7adaa5bc4af7381 *man/PLOT.TTCURVE.Rd
 aee3548c21835eec07c1ca67bf762f5b *man/PLTpicks.Rd
 1860cf7e60cb17635fa4e201bf10151e *man/PMOT.drive.Rd
@@ -442,7 +442,7 @@ f7950445d44c26e7be9de5e1acb4fca8 *man/getseis24.Rd
 82fd37bcf95775f9d870fc4e250cb6c5 *man/getvertsorder.Rd
 269265f78f006dcc59a9ef88858b0291 *man/ghstamp.Rd
 6ae0c7854e290e25a747d15b82e72042 *man/gpoly.Rd
-a39ba726a0b03e32af2c5aac24eb9442 *man/grotseis.Rd
+8a6e34cc0021fd6f91f086a5679ad1dc *man/grotseis.Rd
 ac5603298e01a50c412bbec974ff1dcf *man/hilbert.Rd
 701b83f77dd19b6380e7891a78eca3dd *man/hilow.Rd
 524f7795615c124d984d7e7a37450949 *man/hodogram.Rd
@@ -523,7 +523,7 @@ cf37a1707f7dd4f1876312e25dc1cb4c *man/setwpix.Rd
 d9aa3713b29bce0e2485e99e3e03684a *man/setypx.Rd
 8c2988606f743344e781df809560d30e *man/showdatetime.Rd
 fc75626107701bfc19925c929fb1c56b *man/sigconv.Rd
-23b48f0e872abc690c780a1257970c99 *man/sigconvGR.Rd
+46c5a18915606e54265f85425106fd52 *man/sigconvGR.Rd
 e5a9731f80f0e690029c427c30234277 *man/swig.ALLPX.Rd
 fa1228fa7e7a2ee0977b0bb27a239c61 *man/swig.Rd
 1d4bb8104e10687a673ff27ba03fb458 *man/symshot1.Rd
@@ -534,7 +534,7 @@ c6ddf5a63cc720d325b7153d94143b16 *man/tojul.Rd
 467bbaf242606b23ad64ce172e1dfe2d *man/travel.time1D.Rd
 3577f4543f80ecf18b95259b02d3871e *man/tung.pulse.Rd
 956adb5de5a6b717e1f97f3de085593a *man/unpackAcard.Rd
-797e875dc393cec4366c2808973d5081 *man/uwpfile2ypx.Rd
+e994a9d800838af6f579f9c4329158e1 *man/uwpfile2ypx.Rd
 3e99e3e9c3a962162994cd8c04b1b6c6 *man/varsquig.Rd
 28a45938283f1c9c608e2a8bc98b5053 *man/varsquiggle.Rd
 b6b14d4dd8594eb539b4be34e7de2b61 *man/view.seis.Rd

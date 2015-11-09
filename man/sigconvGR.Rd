@@ -7,12 +7,14 @@
   for extended ground roll.  This is a special case of sigconv.
 }
 \usage{
-sigconvGR(wigmat, wavepulse)
+sigconvGR(wigmat, wavepulse, dt)
 }
 \arguments{
   \item{wigmat}{matrix of traces with spikes
 }
   \item{wavepulse}{wavelet
+}
+ \item{dt}{sampling interval
 }
 }
 \details{This is similar to the sigconv program but it
@@ -34,8 +36,6 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 \seealso{wiggleimage, symshot1, genrick, sigconv
 }
 \examples{
-
-
 
 S1 <- symshot1()
 dt <- S1$dt
@@ -59,18 +59,10 @@ tgr <- seq(from=0, by=dt, length=grlen)
 siggr <- tape*sin(2*pi*fgr*tgr)
 
 ##############  convolve the wavelet with the set of spikes
-H1 <- sigconvGR(G1, siggr)
+H1 <- sigconvGR(G1, siggr, dt)
 
 ############  plot
 wiggleimage(0.1*H1, dt = -S1$dt, dx = S1$x, col = "black")
-
-
-
-
-
-
-
-
 
 }
 \keyword{misc}

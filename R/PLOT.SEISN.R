@@ -1,5 +1,7 @@
 `PLOT.SEISN` <-
-function(GH, tim=1, dt=1,  sel=c(1:4), WIN=c(1,0), labs=c("CE1"), notes="CE1.V", subnotes=NA, tags="CE1.V", sfact=1, LOG="", COL='red', add=1, pts=FALSE, YAX=1, TIT=NULL, SHIFT=NULL , rm.mean=TRUE, UNITS="volts", MARK=TRUE, xtickfactor = 1 )
+    function(GH, tim=1, dt=1,  sel=c(1:4), WIN=c(1,0), labs=c("CE1"), notes="CE1.V", subnotes=NA, tags="CE1.V",
+             sfact=1, LOG="", COL='red', add=1, pts=FALSE, YAX=1, TIT=NULL, SHIFT=NULL , COLLAPSE=FALSE, 
+             rm.mean=TRUE, UNITS="volts", MARK=TRUE, xtickfactor = 1 )
 {
   ### plot a matrix of seismograms on a simple panel display
   ###   GH = structure of traces
@@ -10,6 +12,8 @@ function(GH, tim=1, dt=1,  sel=c(1:4), WIN=c(1,0), labs=c("CE1"), notes="CE1.V",
 
   ###   sfact >= 2 = scale by window
 
+####  COLLAPSE = TRUE means plot all traces on same panel
+    
   if(missing(sel)) { sel = 1:length(GH$JSTR) }
   if(missing(sfact)) { sfact=1}
   
@@ -162,8 +166,10 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
            atics[1] = paste(sep=' ', atics[1],"s")
  
       
-    }
+  }
+  ########  here we must set the params for the individualized traces
   dy = (1/nn)
+  if(COLLAPSE) dy = 1
   maxS = rep(0,nn)
   minS = rep(0,nn)
   diffS = rep(0,nn)
@@ -249,10 +255,21 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
       if(rm.mean==TRUE) amp = amp - meanS[i]
       tcol = COL[ii]
       lamp = length(amp[!is.na(amp)])
-      ###### print(paste(sep=' ',i, ii, lamp))
+     ##  print(paste(sep=' ',i, ii, lamp))
+      y3 = 1-(dy*i)
+      if(COLLAPSE) y3 = 0
+         if(note.flag==TRUE)
+        {
+                                      ##   print( paste(sep=' ', "IN PLOT.MATN", i, notes[i]))
+          
+          if(add!=3)text(max(tim[tflag]), y3+dy-dy*0.1, notes[i], adj=1)
+          
+        }
+
       if(lamp<1)
         {
-
+            ##  if the trace is empty we have a problem.
+           ##   print( paste(sep=' ', "IN PLOT.SEISN", "PROBLEMS: no samples?" ))
           next;
         }
 
@@ -260,7 +277,7 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
       ###  amp = amp-mean(amp[!is.na(amp)])
 
       
-      y3 = 1-(dy*i)
+     
       if(sfact==1)
         {
           minamp =  min(amp[!is.na(amp)]);
@@ -290,16 +307,25 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
       dmm = maxamp-minamp
       if( lcmm < 2   | dmm<=0)
         {
-          
-                                        #   print( paste(sep=' ', "IN PLOT.SEISN", "PROBLEMS", lcmm ,dmm ))
-          next;
+            ##    print( paste(sep=' ', "IN PLOT.SEISN", "PROBLEMS", lcmm ,dmm ))
+            cmm = c(0, 1)
+            yy = c(minamp, maxamp)
+      
+            
+            yt = yy 
+      
+            yts = RPMG::RESCALE(yt, y3, y3+dy, minamp, maxamp )
+          ## next;
         }
+      else
+          {
       yy = pretty(cmm, n = 5)
       
       flg = yy>minamp & yy<maxamp
       yt = yy[flg]
-      yts = RPMG::RESCALE(yt, y3, y3+dy, minamp, maxamp )
       
+      yts = RPMG::RESCALE(yt, y3, y3+dy, minamp, maxamp )
+  }
        ### print(paste(sep =  ' ' ,minamp,maxamp,  paste(collapse=" ", yt) ))
                                         #
 
@@ -318,16 +344,9 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
             {
               ##   mtext(side=axis.side, at=y3+dy/2, text=ylab , line=-1)
              ## text(x=axis.pos, y=y3+dy/2, labels=ylab , vfont=vfonts , srt=90,  pos=4)
-              text(x=axis.pos, y=y3+dy/2, labels=ylab , vfont=vfonts, srt=90  , adj=c(.5, lab.pos  ), xpd=TRUE )
-
-              
+              text(x=axis.pos, y=y3+dy/2, labels=ylab , vfont=vfonts, srt=90  , adj=c(.5, lab.pos  ), xpd=TRUE )  
             }
-          
-
         }
-
-
-
       #####################  alternate axis side if YAX == 3
       if(YAX == 3) {
 
@@ -387,14 +406,7 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
       
                                         #    print( paste(sep=' ', "IN PLOT.SEISN",note.flag))
       
-      if(note.flag==TRUE)
-        {
-                                        #  print( paste(sep=' ', "IN PLOT.MATN", notes[i]))
-          
-          if(add!=3)text(max(tim[tflag]), y3+dy-dy*0.1, notes[i], adj=1)
-          
-        }
-
+   
       if(subnote.flag==TRUE)
         {
                                         #  print( paste(sep=' ', "IN PLOT.MATN", notes[i]))

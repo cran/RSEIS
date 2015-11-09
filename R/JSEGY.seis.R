@@ -365,46 +365,58 @@ SEGYall = c(A1, A2, A3, A4, A5, A6, sampleLength,
       
 
       if(HEADONLY==TRUE)
-        {
-          
-        ####   print(paste("headonly ", i))
-          
-          x = NULL
-          aunits=NA
-          
-          
-          
-        }
+          {
+              
+####   print(paste("headonly ", i))
+              
+              x = NULL
+              aunits=NA
+              
+              
+              
+          }
       else
-        {
-####################################   read in floating point samples
-          
-          D1 = readBin(zz, integer() , n = N , size =iint ,  endian = theENDIAN, signed = TRUE)
-          
-
-          
+          {
+####################################   read in integer  samples
+####################################   
+####################################            
+              D1 = readBin(zz, integer() , n = N , size =iint ,  endian = theENDIAN, signed = TRUE)
+              
+####################################
+####################################      
+              
 ###    i1 = unlist( strsplit(split=" ", B4[4]) )
 
 
-          if(RAW)
-            {
-             
-              
-              x = as.vector(D1)
+              if(RAW)
+                  {
+                      
+####################################
+####################################      
+                      
+                      x = as.vector(D1)
 
-              aunits="counts"
-            ###  print("using RAW (counts), range:")
-            ###  print(range(x))
-              
-            }
-          else
-            {
-          x = scalefac * as.vector(D1)
+                      aunits="counts"
+###  print("using RAW (counts), range:")
+###  print(range(x))
+                      
+                  }
+              else
+                  {
 
-          aunits="volts"
-        }
+####################################
+####################################      
+                      
+#########  convert to floating point numbers with physical units
+                      x =   as.vector(D1)/scalefac
+####################################
+####################################      
 
-        }
+
+                      aunits="volts"
+                  }
+
+          }
 
 
 

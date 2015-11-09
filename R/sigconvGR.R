@@ -1,13 +1,11 @@
 sigconvGR <-
-function(wigmat, wavepulse)
+function(wigmat, wavepulse, dt)
   {
    
     d = dim(wigmat)
     Ntrace = d[2]
 
     NLEN=d[1]
-
-    
     
     for(i in 1:Ntrace)
       {

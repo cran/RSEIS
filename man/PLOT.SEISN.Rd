@@ -10,7 +10,7 @@ PLOT.SEISN(GH, tim = 1, dt = 1, sel =c(1:4) , WIN =c(1,0) ,
 labs=c("CE1") ,
 notes = "CE1.V", subnotes=NA, tags ="CE1.V" ,
 sfact = 1, LOG = "", COL = 'red', add = 1, pts = FALSE,
-YAX = 1, TIT = NULL, SHIFT = NULL, rm.mean = TRUE, UNITS = "volts",
+YAX = 1, TIT = NULL, SHIFT = NULL,COLLAPSE=FALSE,   rm.mean = TRUE, UNITS = "volts",
 MARK = TRUE, xtickfactor = 1)
 }
 
@@ -40,6 +40,7 @@ MARK = TRUE, xtickfactor = 1)
   alternating left and right}
   \item{TIT}{title}
   \item{SHIFT}{vector, shift each trace along x-axis by associated moveout time}
+   \item{COLLAPSE}{logical, Collapse all traces onto one panel, default=FALSE}, 
   \item{rm.mean}{remove mean from traces}
   \item{UNITS}{character, units of traces (see labs) }
   \item{MARK}{character marking for earthquake}

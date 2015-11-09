@@ -42,7 +42,7 @@ grotseis(ang, flip = FALSE)
 ####  simple case:
 vecs  <- rbind(c(0,0,1), c(0,1,0))
 rbaz <- grotseis(21.76, flip=FALSE) 
-bvec  <- vecs %*%  rbaz
+bvec  <- vecs \%*\%  rbaz
 
 plot(c(-2,2) , c(-2,2) , asp=1, xaxs="r"  , yaxs="r" )
 

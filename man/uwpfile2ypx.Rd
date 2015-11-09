@@ -3,7 +3,9 @@
 
 \title{UW pickfile to pphase pick data.frame}
 \description{
- Read in ASCII version of pickfile.
+ Read in ASCII version of pickfile.  This is the
+ output list used to plot picks on swig, often called WPX or YPX
+ in other functions.
 }
 \usage{
 uwpfile2ypx(P)
@@ -29,4 +31,17 @@ uwpfile2ypx(P)
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
+\examples{
+data("GH")
+WW = RSEIS::uwpfile2ypx(GH$pickfile)
+vertord <-  getvertsorder(GH$pickfile, GH)
+R1 = rangedatetime(WW)
+R2 = rangedatetime(GH$info)
+S1 = secdifL(R2$min, R1$min)
+
+
+
+swig(GH, sel=vertord$sel, APIX=WW, WIN=c(S1-1, 15) , SHOWONLY=0)
+
+}
 \keyword{misc}

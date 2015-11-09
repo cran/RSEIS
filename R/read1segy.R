@@ -200,7 +200,7 @@ zz <- file(fname , "rb")
 
 for(i in 1:length(formsegy) )
   {
-
+##    print(paste(i,SEGYhead.names[i], formsegy[i]) )
        if(formsegy[i]=="char")
          {
            ## fchar =  paste(format(SEGYhead.vals[i] , width=charlen[i]-1), "\\0" , sep="" )
@@ -209,16 +209,32 @@ for(i in 1:length(formsegy) )
            HEAD[[i]] = fchar
          }
        else
-         {
-           A1 =  readBin(zz, integer() , n = 1, size = isize[i] , signed = TRUE,
-        endian = theENDIAN)
-      HEAD[[i]] = A1
+           {
+
+
+               if(formsegy[i]!='float')
+                   {
+                       A1 =  readBin(zz, integer() , n = 1, size = isize[i] , signed = TRUE,
+                           endian = theENDIAN)
+                       
+                       
+                   }
+               else
+                   {
+                       
+                      ##   print(i, isize[i] )
+                       A1 =  readBin(zz, numeric() , n = 1, size = isize[i] , signed = TRUE,
+                           endian = theENDIAN)
+                   }
                
-     }
-  }
-
-names(HEAD) = SEGYhead.names
-
+               
+               HEAD[[i]] = A1
+               
+           }
+   }
+ 
+ names(HEAD) = SEGYhead.names
+ 
  segyLIST=list(HEAD=HEAD, amp=NULL)
  
  if(HEADONLY==TRUE)

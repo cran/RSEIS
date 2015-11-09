@@ -5,3 +5,17 @@ import(RPMG)
 importFrom(Rwave , cwt)
 importFrom(Rwave ,crc)
 importFrom(Rwave ,cfamily)
+importFrom("grDevices", "boxplot.stats", "dev.cur", "dev.list",
+             "dev.new", "dev.next", "dev.off", "dev.set", "gray", "grey",
+             "hsv", "postscript", "rainbow", "rgb", "terrain.colors",
+             "topo.colors")
+importFrom("graphics", "abline", "arrows", "axis", "box", "contour",
+             "grid", "image", "image.default", "legend", "lines",
+             "locator", "mtext", "par", "plot", "points", "polygon",
+             "rect", "segments", "strheight", "strwidth", "text",
+             "title", "xinch", "yinch")
+importFrom("stats", "ccf", "coef", "convolve", "deltat", "dt", "embed",
+             "fft", "is.ts", "lm", "median", "mvfft", "plot.ts", "qf",
+             "quantile", "runif", "runmed", "smooth.spline", "spline",
+             "ts", "var")
+importFrom("utils", "write.table")

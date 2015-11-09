@@ -144,12 +144,13 @@ write1segy<-function(alist,  fn=NULL , BIGLONG=FALSE )
     ivals  =  mnames[!is.na(mnames)]
 
     
-
+################  DUMP the header into the output file
     zz <- file(fn , "wb")
 
     for(i in 1:length(ivals) )
       {
-        val = SEGY[[ ivals[i] ]]
+          val = SEGY[[ ivals[i] ]]
+          
         
         if(formsegy[i]=="char")
           {
@@ -169,12 +170,18 @@ write1segy<-function(alist,  fn=NULL , BIGLONG=FALSE )
               {
                 fput = as.numeric(val)
               }
-            
+            ## print(paste(i, val, fput, formsegy[i]) )
             writeBin(fput , zz, size = isize[i], 
                      endian = theENDIAN)
           }
       }
 
+#####  dump the amplitude in the output file
+####  the amplitude data should be integer format for SEGY
+####  this means we need a conversion factor:
+
+    
+    
     isig = as.integer( alist$amp )
 
     writeBin(isig , zz,  size =iint,  endian =theENDIAN)

@@ -1,5 +1,6 @@
 rseis2segy<-function(GH, sel=1, win=c(0,1), path=".", BIGLONG=FALSE )
-  {
+    {
+        MAX32bit = 2147483647
 ##############  convert an RSEIS structure to SEGY format
 ########   if dir is provided, the individual files will be
 #########    written in that directory
@@ -52,7 +53,8 @@ rseis2segy<-function(GH, sel=1, win=c(0,1), path=".", BIGLONG=FALSE )
         return(h)
       }
 
-    
+        ####   this is a bogus fix, but it is the convention I have used in past
+      
     
     if(missing(sel)) { sel = 1:length(GH$STNS) }
 
@@ -80,8 +82,10 @@ rseis2segy<-function(GH, sel=1, win=c(0,1), path=".", BIGLONG=FALSE )
 
 
     ############# for back compatability, need something in here if its missing
-     if(is.null(  GH$info$scalefac )) GH$info$scalefac = rep(1, times = length(GH$info$sec) )
-     if(is.null(  GH$info$gain ))     GH$info$gain=   rep(1, times = length(GH$info$sec) )
+    if(is.null(  GH$info$scalefac )) GH$info$scalefac = rep(NA, times = length(GH$info$sec) )
+        if(is.null(  GH$info$gain ))     GH$info$gain=   rep(1, times = length(GH$info$sec) )
+
+        UComps = unique(GH$COMPS)
     
     for(j in 1:length(sel))
       {
@@ -91,80 +95,160 @@ rseis2segy<-function(GH, sel=1, win=c(0,1), path=".", BIGLONG=FALSE )
         thesta = GH$STNS[i]
         thecomp = GH$COMPS[i]
         dt = GH$dt[i]
+
+         ####  this is artificial
+        CHN.NUM = which(thecomp==UComps)
+
+
         
-        tstart = list(yr=GH$info$yr[i]  ,
-          jd=GH$info$jd[i]  ,
-          mo=GH$info$mo[i]  ,
-          dom=GH$info$dom[i]  ,
-          hr=GH$info$hr[i]  ,
-          mi=GH$info$mi[i]  ,
-          sec=GH$info$sec[i]  ,
-          msec=GH$info$msec[i]  ,
-          dt=GH$info$dt[i]  ,
-          t1=GH$info$t1[i]  ,
-          t2=GH$info$t2[i]  ,
-          off=GH$info$off[i]  
-          )
-        N = GH$info$n[i]
+        ## N = GH$info$n[i]
 
         sig = GH$JSTR[[i]]
-        
+        N = length(sig)
+       
         ##  a1 = list(fn=fn, sta=thesta,  comp=thecomp, dt=dt, DATTIM=tstart,
         ##     N=N, units=aunits , amp=sig , IO=list(kind=2, Iendian=theENDIAN,  BIGLONG=BIGLONG))
 
+
+####  here we need to take care of the NA's that are either
+###  before or after the main signals....
+
+        STARTDATE =  recdate(GH$info$jd[i] , GH$info$hr[i], GH$info$mi[i], GH$info$sec[i]+GH$info$msec[i]/1000,    GH$info$yr[i])
+
+        wawa =  is.na(sig)
+        if(any(wawa))
+            {
+### check if signal is contiguous:
+                
+                w1 = which(wawa)
+                w2 = which(!wawa)
+                w1 = which(wawa)
+            if(any(diff(w1)>1) ) { print('discontiguous NA sequence') }
+                w2 = which(!wawa)
+                
+                rw1 =  range(w1)
+                rw2 =  range(w2)
+                
+                
+####### repair blank spots in signal
+                if(  any(w1>rw2[1] & w1<rw2[2]) )
+                    { #### need to do some repair work
+                        ##  for now replace the NA with a legit value : mean value?
+                        sig[w1>rw2[1] & w1<rw2[2]] = mean(sig[w2])
+                    }
+
+                sig = sig[w2]
+                N = length(sig)
+### repair the start of the trace: change the start time
+                
+                begchunk =  w1<rw2[1]
+                if(all(begchunk) )
+                    {
+                        nsampbeg = length(w1)
+                        mw1 = max(w1)
+### these should be the same
+                        newSTARTsec= GH$info$sec[i]+(mw1)*GH$dt[i]
+                        STARTDATE =  recdate(GH$info$jd[i] , GH$info$hr[i], GH$info$mi[i], newSTARTsec,GH$info$yr[i])
+                    }
+         
+                
+            }
+
         
+        
+       
+        
+        r = range(sig, na.rm=TRUE)
+        scale2 = max(abs(r))
+        scale3 = MAX32bit/scale2
+        scalefac=scale3
+  
+         if(any(is.na(sig) ) )
+            {
+                cat('ERROR!', sep='\n')
+                 cat(paste(c(i,scalefac, range(sig, na.rm=TRUE) ), collapse= ' ') , sep='\n')
+
+                break
+            }
+
         a1 =  initsegy()
 
 ###  cat(paste("a1$HEAD$",SEGYhead.names,"=",  sep="")  , sep="\n")
 
+        sec = floor(STARTDATE$sec)
+        msec = (STARTDATE$sec - sec)*1000
+
         a1$HEAD$lineSeq=i
-        a1$HEAD$year=GH$info$yr[i]
-        a1$HEAD$day=GH$info$jd[i] 
-        a1$HEAD$hour=GH$info$hr[i]
-        a1$HEAD$minute=GH$info$mi[i]
-        a1$HEAD$second=GH$info$sec[i]
+        a1$HEAD$year=STARTDATE$yr
+        a1$HEAD$day=STARTDATE$jd
+        a1$HEAD$hour=STARTDATE$hr
+        a1$HEAD$minute=STARTDATE$mi
+        a1$HEAD$second=STARTDATE$sec
         a1$HEAD$gainConst= 1
+        a1$HEAD$gainType= 1
+        
         a1$HEAD$station_name=thesta
         a1$HEAD$sensor_serial="12345"
         a1$HEAD$channel_name=thecomp
-        a1$HEAD$channel_number=thecomp
-        a1$HEAD$inst_no=thesta
+        a1$HEAD$channel_number=CHN.NUM
+        a1$HEAD$inst_no=999
+
+        a1$HEAD$timeBasisCode = 2
+
+        a1$HEAD$deltaSample = dt*1000000
         
         a1$HEAD$samp_rate=dt*1000000
-        a1$HEAD$m_secs=GH$info$msec[i]
+        a1$HEAD$m_secs=msec
 
-        if(is.null(GH$info$scalefac[i])|is.na(GH$info$scalefac[i]) )GH$info$scalefac[i]=1
-        if(is.null(GH$info$gain[i] )|is.na(GH$info$gain[i] )   )GH$info$gain[i]=1
+
+#####  here we need to determine the scale factor
+####   turn the doubles (floating point)  to ints 
+####        if(is.null(GH$info$scalefac[i]) | is.na(GH$info$scalefac[i]) )
+            
+                
+                ################   GH$info$scalefac[i]=1
+
+        if(is.null(GH$info$gain[i] )|is.na(GH$info$gain[i] )) GH$info$gain[i]=1
         
-        a1$HEAD$scale_fac=GH$info$scalefac[i]
+        a1$HEAD$scale_fac=scalefac
         a1$HEAD$num_samps=N
         
         a1$HEAD$gainConst = GH$info$gain[i]
 
         
-        scalefac =  GH$info$scalefac[i] / GH$info$gain[i]
 
+        scalefac =  scalefac / GH$info$gain[i]
 
-        Kounts = sig*scalefac
+        Kounts = round(sig*scalefac)
+        
+        a1$amp = as.integer(Kounts)
 
-        a1$amp = Kounts 
+        a1$HEAD$min = min(a1$amp, na.rm=TRUE)
+        a1$HEAD$max = max(a1$amp, na.rm=TRUE)
+        a1$HEAD$data_form =1
 
+         a1$HEAD$lineSeq= 1 
+         a1$HEAD$event_number= 1
+         a1$HEAD$reelSeq= 1
+         a1$HEAD$traceID = 1
+        
         segyfn = paste(sep=".",
-          formatC(GH$info$yr[i] , width = 4, flag = "0") ,
-          formatC(GH$info$jd[i], width = 3, flag = "0"),
-          formatC(GH$info$hr[i], width = 2, flag = "0") ,
-          formatC(GH$info$mi[i], width = 2, flag = "0") ,
-          formatC(GH$info$sec[i], width = 2, flag = "0")  ,
+          formatC(STARTDATE$yr , width = 4, flag = "0") ,
+          formatC(STARTDATE$jd, width = 3, flag = "0"),
+          formatC(STARTDATE$hr, width = 2, flag = "0") ,
+          formatC(STARTDATE$mi, width = 2, flag = "0") ,
+          formatC(STARTDATE$sec, width = 2, flag = "0")  ,
           thesta ,
           thecomp,
           "SEGY")
 
 
-        print(segyfn)
+        cat(segyfn, sep='\n')
+        ########cat(paste(c(i, scalefac, range(sig) , range(a1$amp) ), collapse= ' ') , sep='\n')
 
         ######################  write out the SEGY file
         write1segy(a1, fn=segyfn , BIGLONG=BIGLONG  )
-        
+        ###  cat('done write1segy1' , sep='\n')
       }
 
 

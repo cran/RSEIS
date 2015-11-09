@@ -57,7 +57,7 @@
       STDLAB = c("REPLOT","DONE", "SELBUT", "PSEL","LocStyle",
         "ZOOM.out", "ZOOM.in", "LEFT", "RIGHT", "RESTORE",  "Pinfo","WINFO",
                       "Xwin",    "XTR", "SPEC", "SGRAM" ,"WLET",
-        "FILT", "UNFILT", "SCALE", "Postscript")
+        "FILT", "UNFILT", "SCALE", "Postscript", "PREV")
   }
   
   if(missing(PADDLAB)) {
@@ -157,7 +157,7 @@
     }
 
 
-  defaultLAB = c("REPLOT", "DONE", "SELBUT", "PSEL", "LocStyle", "ZOOM.out", "ZOOM.in", "LEFT", "RIGHT", "RESTORE",  "Pinfo","WINFO",
+  defaultLAB = c("REPLOT", "DONE", "PREV", "SELBUT", "PSEL", "LocStyle", "ZOOM.out", "ZOOM.in", "LEFT", "RIGHT", "RESTORE",  "Pinfo","WINFO",
                           "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "UNFILT", "SCALE", "Postscript")
    
   
