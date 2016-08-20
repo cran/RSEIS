@@ -19,65 +19,96 @@
 #define DSQR(a) ((dsqrarg=(a)) == 0.0 ? 0.0 : dsqrarg*dsqrarg)
 
 
-double *dvector(long nl, long nh)
+double *dvector(long nl)
 /* allocate a double vector with subscript range v[nl..nh] */
 {
         double *v;
-
-        v=(double *)R_alloc((size_t) (nh-nl+1+NR_END), sizeof(double));
+	v=(double *)Calloc((size_t) (nl) , double);
+	
         if (!v) Rprintf("allocation failure in dvector()");
-        return v-nl+NR_END;
+        return v;
 }
 
-void free_dvector(double *v, long nl, long nh)
+void free_dvector(double *v)
 /* free a double vector allocated with dvector() */
 {
-        free((FREE_ARG) (v+nl-NR_END));
+        /* free((FREE_ARG) (v+nl-NR_END)); */
+  Free( v );
 }
 
-void memcof(double  data[], int n, int m, double  *xms, double  d[])
+/** FUNC DEF */ void memcof(double  data[], int n, int m, double  *xms, double  d[])
 {
-        int k,j,i;
+  int k,j,i;
         double  p=0.0,*wk1,*wk2,*wkm;
+	double num=0.0,denom=0.0;
 
-        wk1=dvector(1,n);
-        wk2=dvector(1,n);
-        wkm=dvector(1,m);
-        for (j=1;j<=n;j++) p += (data[j])*(data[j]);
+	/* REprintf("ALLOC memcof 0: n=%d m=%d \n", n, m ); */
+        wk1=dvector(n);
+        wk2=dvector(n);
+        wkm=dvector(m);
+	/* REprintf("DONE ALLOC 0\n"); */
+	
         *xms=p/n;
-        wk1[1]=data[1];
-        wk2[n-1]=data[n];
-        for (j=2;j<=n-1;j++) {
+        wk1[0]=data[0];
+        wk2[n-2]=data[n-1];
+        for (j=1;j<(n-1);j++) {
                 wk1[j]=data[j];
                 wk2[j-1]=data[j];
         }
-        for (k=1;k<=m;k++) {
-                float num=0.0,denom=0.0;
-                for (j=1;j<=(n-k);j++) {
+
+
+	
+	
+	
+        for (k=0;k<m;k++) {
+	  
+	  num=0.0; denom=0.0;
+                for (j=0;j<(n-k-1);j++) {
                         num += wk1[j]*wk2[j];
                         denom += (wk1[j])*(wk1[j])+(wk2[j])*(wk2[j]);
                 }
+		
+		
+
                 d[k]=2.0*num/denom;
                 *xms *= (1.0-(d[k])*(d[k]));
-                for (i=1;i<=(k-1);i++)
-                        d[i]=wkm[i]-d[k]*wkm[k-i];
-                if (k == m) {
-                        /* free_dvector(wkm,1,m); */
-/*                         free_dvector(wk2,1,n); */
-/*                         free_dvector(wk1,1,n); */
+		
+                for (i=0;i<=(k-1);i++)
+		  {
+		   	
+		    d[i]=wkm[i]-d[k]*wkm[k-i-1];
+
+
+		  } 
+			
+
+			
+                if (k == (m-1) ) {
+		  /* REprintf("FREE memcof 1: %d %d \n", k, m); */
+                        free_dvector(wkm); 
+                        free_dvector(wk2);
+                        free_dvector(wk1);
+			/* REprintf("DONE FREE memcof 1 \n"); */
                         return;
                 }
-                for (i=1;i<=k;i++) wkm[i]=d[i];
-                for (j=1;j<=(n-k-1);j++) {
+		
+
+		 for (i=0;i<=k;i++) { wkm[i]=d[i]; }
+
+		
+		
+                for (j=0;j<(n-k-2);j++) {
+		  
                         wk1[j] -= wkm[k]*wk2[j];
-                        wk2[j]=wk2[j+1]-wkm[k]*wk1[j+1];
+                        wk2[j] =  wk2[j+1]-wkm[k]*wk1[j+1];
                 }
+	
         }
         /* nrerror("never get here in memcof."); */
 }
 /*#undef NRANSI*/
 
-double  evlmem(double  fdt, double  d[], int m, double  xms)
+/** FUNC DEF */  double  evlmem(double  fdt, double  d[], int m, double  xms)
 {
         int i;
         double  sumr=1.0,sumi=0.0;
@@ -86,7 +117,7 @@ double  evlmem(double  fdt, double  d[], int m, double  xms)
         theta=6.28318530717959*fdt;
         wpr=cos(theta);
         wpi=sin(theta);
-        for (i=1;i<=m;i++) {
+        for (i=0;i<m;i++) {
                 wr=(wtemp=wr)*wpr-wi*wpi;
                 wi=wi*wpr+wtemp*wpi;
                 sumr -= d[i]*wr;
@@ -109,11 +140,11 @@ double  evlmem(double  fdt, double  d[], int m, double  xms)
 
 
      sum = 0;
-
-     for(i=p+1 ; i<n; i++)
+     /* REprintf("W=%d n=%d\n", p, n); */
+     for(i=p ; i<(n-1); i++)
      {
 	pred = 0;
-	for(j=1 ; j<=p   ; j++)
+	for(j=0 ; j<p   ; j++)
 	{
 	   pred += (ar[j] * x[i - j - 1]) + xint;
 	}
@@ -152,7 +183,7 @@ double  evlmem(double  fdt, double  d[], int m, double  xms)
   
 /*****  parameters for AR-AIC   ****/
    
-   int  IW;
+   int  IW=1;
 
    double *z1;
    double *win1;
@@ -168,21 +199,25 @@ double  evlmem(double  fdt, double  d[], int m, double  xms)
    double kdat;
    int kmin;
 
+   
    M = p;
   
    N = num_points;
     
    num_cof = M;
-
+   /* REprintf("W=%lf deltat=%lf\n", W, deltat); */
    IW = floor(W/deltat + 0.5);    /** round the wind length */
-
-/***********************************/
-
-   cof1 = dvector(1,M);
-   cof2 = dvector(1,M);
-
-   z1 = dvector(0,N);
-
+   /* REprintf("IW = %d\n", IW); */
+/**************** memory *******************/
+ /* REprintf("ALLOC 1.1\n"); */
+   cof1 = dvector(M);
+   /* REprintf("ALLOC 1.2\n"); */
+   cof2 = dvector(M);
+   /* REprintf("ALLOC 1.3\n"); */
+   z1 = dvector(N);
+/* REprintf("ALLOC: 4 vectors IW=%d\n", IW); */
+   win1  = dvector(IW);
+/* REprintf("ALLOC 3 vectors\n"); */
 /***********************************/
 
 /*   select window for noise part  window 1 */
@@ -190,13 +225,32 @@ double  evlmem(double  fdt, double  d[], int m, double  xms)
 
    k1=T1-floor(O1/deltat)-IW;
    k2 = k1+IW;
-   if(k1<0) return(-1);
-   if(k2>num_points) return(-1);
+   if(k1<0)
+     {
+         /* REprintf("FREE 2\n"); */
+       free_dvector(cof1);
+       free_dvector(cof2);
+       free_dvector(z1);
+       free_dvector(win1);
+       return(-1);
+     }
+   if(k2>num_points)
+     {
+         /* REprintf("FREE 3\n"); */
+       free_dvector(cof1);
+       free_dvector(cof2);
+       free_dvector(z1);
+       free_dvector(win1);
+       return(-1);
+     }
+   
+   
 
-   win1  = dvector(0, IW);
+   
+   
    for(i=0; i<IW; i++) {  win1[i] = y1[k1+i]; }
-
-   memcof(win1-1, IW, num_cof, &pm, cof1);
+   
+   memcof(win1, IW, num_cof, &pm, cof1);
 
    
 /***********************************/
@@ -205,13 +259,22 @@ double  evlmem(double  fdt, double  d[], int m, double  xms)
    
    k1=T1+floor(O2/deltat)+1;
    k2 = k1+IW;
-  if(k2>num_points) return(-1);
+   if(k2>num_points) {
+       /* REprintf("FREE 4\n"); */
+     free_dvector(cof1);
+     free_dvector(cof2);
+     free_dvector(z1);
+     free_dvector(win1);
+     
+     return(-1);
+
+   }
 
    /* Rprintf("k1=%d k2=%d IW=%d N=%d\n", k1, k2, IW, N); */
 
    for(i=0; i<IW; i++) {  win1[i] = y1[k1+i]; }
 
-   memcof(win1-1, IW, num_cof, &pm, cof2);
+   memcof(win1, IW, num_cof, &pm, cof2);
 
 
 /***********************************/
@@ -222,7 +285,7 @@ double  evlmem(double  fdt, double  d[], int m, double  xms)
   
    kdat = 0;
    kmin = 0;
-
+ /* REprintf("READY 4\n"); */
    for(K=k1; K<=k2; K++)
     {
 
@@ -279,12 +342,20 @@ double  evlmem(double  fdt, double  d[], int m, double  xms)
 
     }
 
-
-   /* free_dvector(cof1, 1, M); */
-/*    free_dvector(cof2, 1, M); */
-/*    free_dvector(z1, 0, N); */
+  /* REprintf("END of CODE FREE 6\n"); */
+   free_dvector(cof1);
+   /* REprintf("FREE 6.1\n"); */
+   free_dvector(cof2);
+   /* REprintf("FREE 6.2\n"); */
+ 
+   free_dvector(z1);
+    
+   /* REprintf("FREE 6.3\n"); */
+   free_dvector(win1);
+   /* REprintf("DONE 6.4\n"); */
 
    return(kmin);
+
 
 }
 
@@ -345,7 +416,9 @@ IOUT =  araic(y1, num_points, dt, M,
   
 
    norm = 1/(double)num_freqs;
-   cof = dvector(1,num_cof);
+   
+   cof = dvector(num_cof);
+   
    memcof(data-1, num_points, num_cof, &pm, cof);
 
 
@@ -356,8 +429,8 @@ IOUT =  araic(y1, num_points, dt, M,
       series[i] =  norm*f0;
       
    }
-
-  /* free_dvector(cof, 1,num_cof); */
+  /* REprintf("FREE 7\n"); */
+   free_dvector(cof); 
 
 
   return(0);

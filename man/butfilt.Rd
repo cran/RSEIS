@@ -50,7 +50,13 @@ filtered time series
 data(CE1)
 
 ts1  <-  CE1$y
-zz  <-  butfilt(ts1, 1, 15,  CE1$dt, "LP" ,  "BU")
+zz  <-  butfilt(ts1, fl=1, fh=15,  deltat=CE1$dt, type="LP" ,  proto="BU",
+npoles=5 )
+###  try plotting:
+\dontrun{
+plot(seq(from=0, by=CE1$dt, length=length(ts1)),  ts1, type='l')
+lines(seq(from=0, by=CE1$dt, length=length(ts1)), zz, col='red')
+}
 
 
 }

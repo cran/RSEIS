@@ -149,8 +149,10 @@ segy2rseis<-function(fnames, Iendian=1 , HEADONLY=FALSE, BIGLONG=FALSE,  PLOT=-1
         }
       else
         {
-          
-      y = ONEsegy$amp/conversionfac
+#####  NOTE: the gainConstant is already divided into the conversion factor
+####  the scale factor is multiplied. Be aware of the amplitude of this sensor - should be volts
+            
+      y = ONEsegy$amp*conversionfac
        aunits="volts"
     }
       

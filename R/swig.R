@@ -57,7 +57,7 @@
       STDLAB = c("REPLOT","DONE", "SELBUT", "PSEL","LocStyle",
         "ZOOM.out", "ZOOM.in", "LEFT", "RIGHT", "RESTORE",  "Pinfo","WINFO",
                       "Xwin",    "XTR", "SPEC", "SGRAM" ,"WLET",
-        "FILT", "UNFILT", "SCALE", "Postscript", "PREV")
+        "FILT", "UNFILT", "SCALE", "Postscript","PNG", "PREV")
   }
   
   if(missing(PADDLAB)) {
@@ -158,7 +158,7 @@
 
 
   defaultLAB = c("REPLOT", "DONE", "PREV", "SELBUT", "PSEL", "LocStyle", "ZOOM.out", "ZOOM.in", "LEFT", "RIGHT", "RESTORE",  "Pinfo","WINFO",
-                          "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "UNFILT", "SCALE", "Postscript")
+                          "XTR", "SPEC", "SGRAM" ,"WLET", "FILT", "UNFILT", "SCALE", "Postscript", "PNG" )
    
   
   stdlab =  STDLAB
@@ -711,7 +711,30 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
           next
         }
 
-      
+          if(K[Nclick] == match("PNG", BLABS, nomatch = NOLAB))
+        {
+          print(paste(sep=' ' ,"Start swig postscript"))
+          jdev = dev.cur()
+          plfname = RPMG::local.file("swig","png")
+          
+          ### postscript(file=plfname, horizontal=TRUE, print.it=FALSE,  onefile=FALSE)
+           P = round(par('pin'))
+
+          opar = par(no.readonly = TRUE) 
+
+           RPMG::jpng(file=plfname , width=P[1], height=P[2])
+
+          ### par(OPAR)
+          print(paste(sep=' ' ,"Doing png", plfname))
+           YN = YNreplot()
+          
+          print(paste(sep=' ' ,"Done creating png file: ", plfname))
+          dev.off()
+          dev.set(jdev)
+             zloc = list(x=NULL, y=NULL)
+          next
+        }
+
 
 ############################################################################3
 ############################################################################3

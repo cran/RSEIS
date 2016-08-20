@@ -37,7 +37,7 @@ sel <-  which(GH$COMPS=="V")
 
 sel  <-  1:3
  KF  <-  FILT.SEISN(GH, sel = sel, FILT=Fdef)
-swig(KF)
+swig(KF, SHOWONLY=0)
 }
 
 \keyword{misc}

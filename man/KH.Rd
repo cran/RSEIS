@@ -45,7 +45,8 @@ Lees, J. M., J. B. Johnson, M. Ruiz, L. Troncoso, M. Welsh, Reventador Volcano 2
 }
 \examples{
 data(KH)
-swig(KH)
+######  set SHOWONLY=FALSE for interactive
+swig(KH, SHOWONLY=0)
 
 }
 \keyword{datasets}

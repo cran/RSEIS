@@ -165,7 +165,7 @@ S1   <-  JGET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = -1)
 
  GH <- prepSEIS(S1)
 ####   plot the data, and interact with the data
-swig(GH)
+swig(GH, SHOWONLY=0)
 
 ###  or simply:
 

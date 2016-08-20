@@ -1,7 +1,7 @@
 
 ###############  reproduce the figures, more or less from Lees and Park, 1995
 
-
+require(RSEIS)
 ##############  Slepian Tapers:
  nwin = 5
      npi = 3

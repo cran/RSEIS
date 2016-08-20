@@ -41,22 +41,22 @@ gc = get.corner(  log10(Spec$f) , log10(lspec), dt, f1, f2)
 #define FREE_ARG char*
 
 
-double *advector(long nl, long nh)
+double *advector(long nl)
 /* allocate a double vector with subscript range v[nl..nh] */
 {
         double *v;
 
         /* v=(double *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(double))); */
-	v=(double *) (size_t) R_alloc(nh-nl+1+NR_END , sizeof(double));
-
+	/* v=(double *) (size_t) R_alloc(nh-nl+1+NR_END , sizeof(double)); */
+	v=(double *) (size_t) R_alloc(nl , sizeof(double)); 
 
         if (!v) Rprintf("allocation failure in advector()");
-        return v-nl+NR_END;
+        return v;
 }
-void free_advector(double *v, long nl, long nh)
+void free_advector(double *v)
 /* free a double vector allocated with advector() */
 {
-        free((FREE_ARG) (v+nl-NR_END));
+        Free( v);
 }
 
 
@@ -137,8 +137,8 @@ y = log10 displacement spectrum
 		
 	score_old = 1e99;
 	
-	dtempy = advector((long) 0, (long) num_freqs);
-	dtempx = advector((long) 0, (long) num_freqs);
+	dtempy = advector((long) num_freqs);
+	dtempx = advector( (long) num_freqs);
 	
 	
 	i1 = 0;            //  initial point

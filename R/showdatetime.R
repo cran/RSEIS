@@ -1,4 +1,4 @@
-showdatetime<-function(rd, AMPM=FALSE)
+showdatetime<-function(rd, AMPM=FALSE, verbose=TRUE )
 {
   if(missing(AMPM)) { AMPM=FALSE    }
 
@@ -33,7 +33,7 @@ showdatetime<-function(rd, AMPM=FALSE)
 
   charvec = paste(gdates, gtimes, amcrsec, A)
 
-  cat(charvec, sep="\n")
+  if(verbose) cat(charvec, sep="\n")
 
   invisible(charvec)
 

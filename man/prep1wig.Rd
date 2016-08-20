@@ -62,7 +62,9 @@ EH<-prepSEIS(ES)
 STDLAB <- c("DONE",  "zoom out", "refresh", "restore",
  "XTR", "SPEC", "SGRAM" ,"WLET")
 
-xx <-  swig( EH, STDLAB = STDLAB)
+######  set SHOWONLY=FALSE for interactive
+xx <-  swig( EH, STDLAB = STDLAB, SHOWONLY=0)
+
 ####################
 ####################
 ####################   example with multiple signals

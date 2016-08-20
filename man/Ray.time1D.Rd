@@ -40,8 +40,13 @@
 data(VELMOD1D)
 
 v <-  VELMOD1D
-tees  <-  travel.time1D(23, 7, 0, length(v$zp) , v$zp , v$vp)
-rays  <-  Ray.time1D(23, 7, 0, length(v$zp) , v$zp , v$vp)
+indelta=23.;
+ inhpz=7.;
+ instaz=0.;
+nz = length(v$zp)
+
+tees  <-  travel.time1D(indelta, inhpz, instaz, nz , v$zp , v$vp)
+rays  <-  Ray.time1D(indelta, inhpz, instaz, nz , v$zp , v$vp)
 
 
 

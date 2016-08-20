@@ -225,7 +225,7 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
           {
 
             
-            print(zloc$x)
+            cat(paste(zloc$x, collapse=' '), sep='\n')
             LN = length(zloc$x[1:(zenclick-1)])
             if(LN>=2)
               {

@@ -86,7 +86,7 @@ typedef struct {float r, i;} complex;
 static float c_b12 = (float)2.;
 static complex c_b43 = {(float)1.,(float)0.};
 static float sn[50],sd[50];
-static int nsects;
+static int nsects=0;
 
 /* Local function prototypes */
 static double warp();
@@ -224,7 +224,9 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
     float omegar, ripple;
     float fhw, eps, flw, dcvalue;
 
+    /*  following VALGRIND need to have this initialized  */
 
+    strncpy(stype + 3, type, 2);
     /*  Analog prototype selection */
 
     if (strncmp(aproto, "BU", 2) == 0) {
@@ -396,12 +398,7 @@ float *eps, *ripple;
 /*      IORD           DESIRED FILTER ORDER */
 /*      EPS            CHEBYSHEV PARAMETER RELATED TO PASSBAND RIPPLE */
 
-/* FUNC DEF */ static int c1roots(p, rtype, dcvalue, iord, eps)
-complex *p;
-char *rtype;
-float *dcvalue;
-int iord;
-float *eps;
+/* FUNC DEF */ static int c1roots(complex *p, char *rtype, float *dcvalue, int iord, float *eps)
 {
     /* System generated locals */
     int i__1, i__2;
@@ -623,10 +620,14 @@ float *fl, *fh;
     a = twopi * twopi * *fl * *fh;
     b = twopi * (*fh - *fl);
 
-    n = nsects;
+   
     nsects = 0;
+ n = nsects;
     iptr = 1;
     i__1 = n;
+
+    /* REprintf( "lptbp %s %d\n", rtype, n); */
+
     for (i = 1; i <= i__1; ++i) {
 	if (strncmp(rtype + i * 3, "CPZ", 3) == 0) {
 	    i__2 = i;
@@ -808,11 +809,7 @@ float *fl, *fh;
 /*    SD                      Denominator polynomials for second order */
 /*                              sections. */
 
-/* FUNC DEF */ static int lp(p, z, rtype, dcvalue, sn, sd)
-complex *p, *z;
-char *rtype;
-float *dcvalue;
-float *sn, *sd;
+/* FUNC DEF */ static int lp(complex *p, complex *z, char *rtype, float *dcvalue, float *sn, float *sd)
 {
     /* System generated locals */
     int i__1, i__2, i__3;
@@ -828,7 +825,7 @@ float *sn, *sd;
     rtype -= 3;
     --z;
     --p;
-
+    nsects = 0;
     /* Function Body */
     iptr = 1;
     i__1 = nsects;
@@ -956,8 +953,9 @@ float *fl, *fh, *sn, *sd;
     twopi = pi * (float)2.;
     a = twopi * twopi * *fl * *fh;
     b = twopi * (*fh - *fl);
-    n = nsects;
+   
     nsects = 0;
+    n = nsects;
     iptr = 1;
     i__1 = n;
     for (i = 1; i <= i__1; ++i) {
@@ -1494,9 +1492,9 @@ complex a,b;
  float *why;
  double  mean;
 char ktype[3], kproto[3];
+ int myord;
 
-
-
+ myord = (int)(*iord)  ;
  a=(float)(*aa);
 
  trbndw=(float)(*atrbndw);
@@ -1519,7 +1517,7 @@ char ktype[3], kproto[3];
 
 
 
-design(*iord, ktype, kproto, a, trbndw, fl, fh, ts);
+design(myord, ktype, kproto, a, trbndw, fl, fh, ts);
 
 
  mean = 0;

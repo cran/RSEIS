@@ -6,11 +6,14 @@
 \description{Print information about the seismic database
 }
 \usage{
-infoDB(DB)
+infoDB(DB, verbose=TRUE)
 }
 \arguments{
   \item{DB}{Database list
 }
+  \item{verbose}{logical, print information to screen, default=TRUE
+}
+
 }
 
 \value{

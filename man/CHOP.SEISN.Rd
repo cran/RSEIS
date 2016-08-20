@@ -28,7 +28,8 @@ sel <-  which(GH$COMPS=="V")
 
 KF  <-  CHOP.SEISN(GH, sel=sel, WIN = c(0 , 5)  )
 
-swig(KF)
+swig(KF, SHOWONLY=0)
+
 }
 
 \keyword{misc}

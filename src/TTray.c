@@ -395,10 +395,10 @@ int revarr(int *n, double *a)
 	
 
 
-   	dtds = (double *) calloc(nnodes, sizeof(double));
-	d = (double *) calloc(nnodes, sizeof(double));
-   	h = (double *) calloc(nnodes, sizeof(double));
-     	top = (double *) calloc(nnodes, sizeof(double));
+   	dtds =Calloc(nnodes, double);
+	d =  Calloc(nnodes, double);
+   	h =  Calloc( nnodes, double);
+     	top = Calloc(nnodes, double);
  
 
 
@@ -779,10 +779,10 @@ L320:
     }
     /* REprintf( "a ccinvr rnod 1 nnod %f %f\n", rnod[0],rnod[*nnod-1]); */
     if (sflg == 1.0) {
-	free(dtds);
-	free(h);
-	free(d);
-	free(top);
+	Free(dtds);
+	Free(h);
+	Free(d);
+	Free(top);
        *iret1 = lowlr-1;
        *iret2 = indpth;
 	return ret_val;
@@ -804,10 +804,10 @@ L320:
     revarr(nnod, &znod[1]);
 /*      write(0,*)'b ccinvr rnod 1 nnod',rnod(1),rnod(nnod) */
       /* REprintf("b ccinvr rnod 1 nnod %f %f\n", rnod[0], rnod[*nnod-1]);   */
-	free(dtds);
-	free(h);
-	free(d);
-	free(top);
+	Free(dtds);
+	Free(h);
+	Free(d);
+	Free(top);
        *iret1 = lowlr-1;
        *iret2 = indpth;
     return ret_val;
@@ -891,10 +891,10 @@ L350:
     ret_val = ttime;
 /*      write(0,*)'c ccinvr rnod 1 nnod',rnod(1),rnod(*nnod) */
     if (sflg == 1.0) {
-	free(dtds);
-	free(h);
-	free(d);
-	free(top);
+	Free(dtds);
+	Free(h);
+	Free(d);
+	Free(top);
        *iret1 = lowlr-1;
        *iret2 = indpth;
 	return ret_val;
@@ -915,10 +915,10 @@ L350:
 /*      write(0,*)'d ccinvr rnod 1 nnod',rnod(1),rnod(nnod) */
     /* REprintf( "d ccinvr rnod 1 nnod %f %f\n", rnod[0],rnod[*nnod-1]); */
 
-	free(dtds);
-	free(h);
-	free(d);
-	free(top);
+	Free(dtds);
+	Free(h);
+	Free(d);
+	Free(top);
        *iret1 = lowlr-1;
        *iret2 = indpth;
     return ret_val;
@@ -927,10 +927,10 @@ L9500:
     *jerr = -1;
 /*      write(0,*)'error in ccinv1: p=pold jerr = -1' */
     REprintf( "error in ccinv1: p=pold jerr = -1 \n");
-	free(dtds);
-	free(h);
-	free(d);
-	free(top);
+	Free(dtds);
+	Free(h);
+	Free(d);
+	Free(top);
        *iret1 = lowlr-1;
        *iret2 = indpth;
     return ret_val;
@@ -948,7 +948,8 @@ L9500:
 
   int i, N;
   double tt;
-  double  inhpz,  instaz;
+  /* double indelta; */
+    double inhpz,  instaz;
   double  ddr, ddz, dang, dist;
 
   int inlay;
@@ -1003,7 +1004,7 @@ L9500:
   int inlay;
 
   int jerr, lolev, indpth;
-  int j;
+  int  j;
 
   indelta= *delta;
   inhpz=*hpz;
