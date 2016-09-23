@@ -7,7 +7,7 @@
 }
 \usage{
 butfilt(a, fl=0, fh=0.5, deltat=1, type="BP", proto="BU",
- npoles=5, chebstop=30.0, trbndw=0.3)
+ npoles=5, chebstop=30.0, trbndw=0.3, RM=FALSE, zp=TRUE )
 }
 
 \arguments{
@@ -20,9 +20,11 @@ butfilt(a, fl=0, fh=0.5, deltat=1, type="BP", proto="BU",
   \item{npoles}{number of poles or order, DEFAULT=5}
   \item{chebstop}{Chebyshev stop band attenuation, DEFAULT=30.0}
   \item{trbndw}{Chebyshev transition bandwidth, DEFAULT=0.3}
+  \item{RM}{Remove mean value from trace, default=FALSE}
+  \item{zp}{zero phase filter, default=TRUE}
 }
 \details{
-  creation of butfilt is a described by the following arguments:
+  Creation of butfilt is a described by the following arguments:
   \describe{
     \item{LP}{low pass  }
     \item{HP}{high pass }
@@ -38,9 +40,17 @@ butfilt(a, fl=0, fh=0.5, deltat=1, type="BP", proto="BU",
   LP and HP filters are seet by specifying fl for HP filters and fh for
   LP filters, the other argumentin each case is ignored.
 
+  Mean values should be removed prior to calling this function, and then set RM=FALSE.
+  This is true especially if tapering is applied prior to filtering.
+
+  Zero phase filter is achived by running filter back and forth.  Otherwise
+  a single pass is returned.  This should be equivalent to package signal filtfilt (from MATLAB).
+
+
+
 }
 \value{
-filtered time series 
+Filtered time series. 
 }
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
@@ -52,10 +62,28 @@ data(CE1)
 ts1  <-  CE1$y
 zz  <-  butfilt(ts1, fl=1, fh=15,  deltat=CE1$dt, type="LP" ,  proto="BU",
 npoles=5 )
+
+
+
 ###  try plotting:
 \dontrun{
-plot(seq(from=0, by=CE1$dt, length=length(ts1)),  ts1, type='l')
-lines(seq(from=0, by=CE1$dt, length=length(ts1)), zz, col='red')
+### the above, by default, is zero phase.
+#####  next filter with non-zero-phase
+z2  <-  butfilt(ts1, fl=1, fh=15,  deltat=CE1$dt, type="LP" ,  proto="BU",
+npoles=5, zp=FALSE )
+ex = seq(from=0, by=CE1$dt, length=length(ts1))
+
+plot(ex,  ts1, type='l')
+lines(ex, zz, col='red')
+lines(ex, z2, col='blue')
+
+
+plot(ex[ex<0.5],  ts1[ex<0.5], type='l')
+lines(ex[ex<0.5], zz[ex<0.5], col='red')
+lines(ex[ex<0.5], z2[ex<0.5], col='blue')
+
+
+
 }
 
 

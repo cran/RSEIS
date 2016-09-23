@@ -8,7 +8,7 @@
 \usage{
 DISPLACE.SEISN(TH, sel = 1:length(TH$JSTR), inst = 1,
 Kal = Kal,waterlevel = 1e-08,  FILT = list(ON = FALSE,
- fl = 1/30, fh = 7, type = "HP", proto = "BU"))
+ fl = 1/30, fh = 7, type = "HP", proto = "BU",RM=FALSE, zp=TRUE))
 }
 
 \arguments{
@@ -20,7 +20,7 @@ Kal = Kal,waterlevel = 1e-08,  FILT = list(ON = FALSE,
 
   \item{waterlevel}{waterlevel for low frequency division }
 
-  \item{FILT}{filter output, after instrumentation}
+  \item{FILT}{filter output, after instrumentation, see butfilt}
 }
 \details{
   Instrument responses are lists of poles and zeros for each instrument defined.
@@ -31,7 +31,7 @@ Same as input list with new traces representing displacement versus velocity
 
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}
 
-\seealso{VELOCITY.SEISN, deconinst }
+\seealso{VELOCITY.SEISN, deconinst, butfilt }
 \examples{
 
 \dontrun{

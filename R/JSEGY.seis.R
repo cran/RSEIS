@@ -273,8 +273,8 @@ if(is.character(Iendian))
       if(scalefac == 0) scalefac  = 1
 
       
-
-      scalefac = scalefac / gainConst;
+###########  this conversion factor is used to convert counts to volts
+      conversionfac  = scalefac / gainConst;
 
       
       
@@ -408,7 +408,7 @@ SEGYall = c(A1, A2, A3, A4, A5, A6, sampleLength,
 ####################################      
                       
 #########  convert to floating point numbers with physical units
-                      x =   as.vector(D1)/scalefac
+                      x =   as.vector(D1)*conversionfac
 ####################################
 ####################################      
 

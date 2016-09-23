@@ -74,7 +74,7 @@ plotseis24<-function(JJ, dy=1/18, FIX=24, SCALE=0, FILT=list(ON=FALSE, fl=0.05 ,
            ###      print("filtering")
                 if(!any(is.na(ked)))
                   {
-                    fy = butfilt(ked,FILT$fl, FILT$fh , adt, FILT$type , FILT$proto )
+                      fy = butfilt(ked,fl=FILT$fl, fh=FILT$fh , deltat = adt, type=FILT$type , proto=FILT$proto , RM=FILT$RM, zp=FILT$zp )
                   }
                 else
                   {

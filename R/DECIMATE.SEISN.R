@@ -1,5 +1,5 @@
 `DECIMATE.SEISN` <-
-function(TH, sel=1:length(TH$JSTR), dec=5 , type="LP", proto="C1" , fl=2,  fh=10 )
+function(TH, sel=1:length(TH$JSTR), dec=5 , type="LP", proto="C1" , fl=2,  fh=10, RM=FALSE, zp=TRUE  )
   {
     if(missing(sel)) { sel = 1:length(TH$JSTR) }
     if(missing(fh)) { fh=10 }
@@ -16,7 +16,7 @@ function(TH, sel=1:length(TH$JSTR), dec=5 , type="LP", proto="C1" , fl=2,  fh=10
         
         dt = TH$dt[ii]
         
-        ynew = butfilt(xamp, fl=fl, fh=fh, deltat=dt, type=type, proto=proto )
+        ynew = butfilt(xamp, fl=fl, fh=fh, deltat=dt, type=type, proto=proto, RM=RM, zp=zp  )
         
         ynew[nacop] = NA
         TH$JSTR[[ii]] = ynew[seq(from=1, to=length(ynew), by=dec)]

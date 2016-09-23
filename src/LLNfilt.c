@@ -51,20 +51,20 @@
 	               "BE" for Bessel
 	               "C1" for Chebyshev type 1
        	               "C2" for Chebyshev type 2
-	float a:       Chebyshev stop band attenuation (ignored for others)
+	double a:       Chebyshev stop band attenuation (ignored for others)
 	               (SAC uses 30.0 for the default)
-	float trbndw:  Chebyshev transition bandwidth (ignored for others)
+	double trbndw:  Chebyshev transition bandwidth (ignored for others)
 	               (SAC uses 0.3 for the default)
-	float fl:      high pass corner freq. (ignored if type LP)
+	double fl:      high pass corner freq. (ignored if type LP)
 	               (SAC default = 0.5)
-	float fh:      low pass corner freq. (ignored if type HP)
+	double fh:      low pass corner freq. (ignored if type HP)
 	               (SAC default = 5.0)
-	float ts:      time sample interval in secs (e.g.,0.01 = 100 samp/sec)
+	double ts:      time sample interval in secs (e.g.,0.01 = 100 samp/sec)
 	               (SAC default = 0.01)
 
    apply(data, ndata, zp)
 
-	float data[]:  input data array
+	double data[]:  input data array
 	int ndata:     length of data
 	int zp:        = 1 (TRUE) for zero phase filtering;
 	               = 0 (FALSE) for normal forward filtering
@@ -80,12 +80,12 @@
 #define TRUE 1
 #define FALSE 0
 
-typedef struct {float r, i;} complex;
+typedef struct {double r, i;} complex;
 
 /* Table of constant values */
-static float c_b12 = (float)2.;
-static complex c_b43 = {(float)1.,(float)0.};
-static float sn[50],sd[50];
+static double c_b12 = (double)2.;
+static complex c_b43 = {(double)1.,(double)0.};
+static double sn[50],sd[50];
 static int nsects=0;
 
 /* Local function prototypes */
@@ -110,7 +110,7 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 /*  ----------------- */
 /*    DATA                          Data array (same as input) */
 
-/* FUNC DEF */ void apply(float *data, int  nsamps, int zp)
+/* FUNC DEF */ void apply(double *data, int  nsamps, int zp)
 
 {
     /* System generated locals */
@@ -118,7 +118,7 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 
     /* Local variables */
     int jptr, i, j;
-    float b0, b1, b2, a1, a2, x1, x2, y1, y2, output;
+    double b0, b1, b2, a1, a2, x1, x2, y1, y2, output;
 
     /* Parameter adjustments */
     --data;
@@ -127,10 +127,10 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
     jptr = 1;
     i__1 = nsects;
     for (j = 1; j <= i__1; ++j) {
-	x1 = (float)0.;
-	x2 = (float)0.;
-	y1 = (float)0.;
-	y2 = (float)0.;
+	x1 = (double)0.;
+	x2 = (double)0.;
+	y1 = (double)0.;
+	y2 = (double)0.;
 	b0 = sn[jptr];
 	b1 = sn[jptr + 1];
 	b2 = sn[jptr + 2];
@@ -158,10 +158,10 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 	jptr = 1;
 	i__1 = nsects;
 	for (j = 1; j <= i__1; ++j) {
-	    x1 = (float)0.;
-	    x2 = (float)0.;
-	    y1 = (float)0.;
-	    y2 = (float)0.;
+	    x1 = (double)0.;
+	    x2 = (double)0.;
+	    y1 = (double)0.;
+	    y2 = (double)0.;
 	    b0 = sn[jptr];
 	    b1 = sn[jptr + 1];
 	    b2 = sn[jptr + 2];
@@ -212,17 +212,17 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 /*                        of second-order sections packed head-to-tail. */
 
 /* FUNC DEF */ void design(int iord, char *type, char *aproto,
-        float a, float trbndw, float fl, float fh,float ts)
+        double a, double trbndw, double fl, double fh,double ts)
 {
     /* System generated locals */
      /*  int i; */
-    float r__1;
+    double r__1;
 
     /* Local variables */
     complex p[10], z[10];
-    char stype[3*10];
-    float omegar, ripple;
-    float fhw, eps, flw, dcvalue;
+    char stype[3*10]={0};
+    double omegar, ripple;
+    double fhw, eps, flw, dcvalue;
 
     /*  following VALGRIND need to have this initialized  */
 
@@ -237,31 +237,31 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 	chebparm(a, trbndw, iord, &eps, &ripple);
 	c1roots(p, stype, &dcvalue, iord, &eps);
     } else if (strncmp(aproto, "C2", 2) == 0) {
-	omegar = trbndw + (float)1.;
+	omegar = trbndw + (double)1.;
 	c2roots(p, z, stype, &dcvalue, iord, a, omegar);
     }
 
     /*  Analog mapping selection */
 
     if (strncmp(type, "BP", 2) == 0) {
-	r__1 = fl * ts / (float)2.;
+	r__1 = fl * ts / (double)2.;
 	flw = warp(&r__1, &c_b12);
-	r__1 = fh * ts / (float)2.;
+	r__1 = fh * ts / (double)2.;
 	fhw = warp(&r__1, &c_b12);
 	lptbp(p, z, stype, &dcvalue, &flw, &fhw);
     } else if (strncmp(type, "BR", 2) == 0) {
-	r__1 = fl * ts / (float)2.;
+	r__1 = fl * ts / (double)2.;
 	flw = warp(&r__1, &c_b12);
-	r__1 = fh * ts / (float)2.;
+	r__1 = fh * ts / (double)2.;
 	fhw = warp(&r__1, &c_b12);
 	lptbr(p, z, stype, &dcvalue, &flw, &fhw, &sn[1], &sd[1]);
     } else if (strncmp(type, "LP", 2) == 0) {
-	r__1 = fh * ts / (float)2.;
+	r__1 = fh * ts / (double)2.;
 	fhw = warp(&r__1, &c_b12);
 	lp(p, z, stype, &dcvalue, &sn[1], &sd[1]);
 	cutoffs(&sn[1], &sd[1], &fhw);
     } else if (strncmp(type, "HP", 2) == 0) {
-	r__1 = fl * ts / (float)2.;
+	r__1 = fl * ts / (double)2.;
 	flw = warp(&r__1, &c_b12);
 	lpthp(p, z, stype, &dcvalue, &sn[1], &sd[1]);
 	cutoffs(&sn[1], &sd[1], &flw);
@@ -293,7 +293,7 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 /*  ---------------- */
 /*      IORD           DESIRED FILTER ORDER */
 
-/* FUNC DEF */ static int buroots(complex *p, char *rtype, float *dcvalue, int iord)
+/* FUNC DEF */ static int buroots(complex *p, char *rtype, double *dcvalue, int iord)
 {
     /* System generated locals */
     int i__1, i__2;
@@ -302,14 +302,14 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 
     /* Local variables */
     int half, k;
-    float angle, pi;
+    double angle, pi;
 
     /* Parameter adjustments */
     rtype -= 3;
     --p;
 
     /* Function Body */
-    pi = (float)3.14159265;
+    pi = (double)3.14159265;
 
     half = iord / 2;
 
@@ -317,13 +317,13 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 
     nsects = 0;
     if (half << 1 < iord) {
-	p[1].r = (float)-1., p[1].i = (float)0.;
+	p[1].r = (double)-1., p[1].i = (double)0.;
 	strncpy(rtype + 3, "SP", 2);
 	nsects = 1;
     }
     i__1 = half;
     for (k = 1; k <= i__1; ++k) {
-	angle = pi * ((float) ((k << 1) - 1)/(float) (iord << 1)+(float).5);
+	angle = pi * ((double) ((k << 1) - 1)/(double) (iord << 1)+(double).5);
 	++(nsects);
 	i__2 = nsects;
 	d__1 = cos(angle);
@@ -332,7 +332,7 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 	p[i__2].r = q__1.r, p[i__2].i = q__1.i;
         strncpy(rtype + nsects * 3, "CP", 2);
     }
-    *dcvalue = (float)1.;
+    *dcvalue = (double)1.;
     return TRUE;
 }
 
@@ -350,15 +350,15 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 /*       RIPPLE           Passband ripple */
 
 /* FUNC DEF */ static int chebparm(a, trbndw, iord, eps, ripple)
-float a, trbndw;
+double a, trbndw;
 int iord;
-float *eps, *ripple;
+double *eps, *ripple;
 {
     /* System generated locals */
-    float r__1, r__2;
+    double r__1, r__2;
 
     /* Local variables */
-    float g, alpha, omegar;
+    double g, alpha, omegar;
 
     omegar = trbndw + 1.;
     /* Computing 2nd power */
@@ -367,13 +367,13 @@ float *eps, *ripple;
     alpha = pow((double)r__1, (double)iord);
     /* Computing 2nd power */
     r__1 = alpha;
-    g = (r__1 * r__1 + (float)1.) / (alpha * (float)2.);
+    g = (r__1 * r__1 + (double)1.) / (alpha * (double)2.);
     /* Computing 2nd power */
     r__1 = a;
-    *eps = sqrt(r__1 * r__1 - (float)1.) / g;
+    *eps = sqrt(r__1 * r__1 - (double)1.) / g;
     /* Computing 2nd power */
     r__1 = *eps;
-    *ripple = (float)1. / sqrt(r__1 * r__1 + (float)1.);
+    *ripple = (double)1. / sqrt(r__1 * r__1 + (double)1.);
 
     return TRUE;
 }
@@ -398,35 +398,35 @@ float *eps, *ripple;
 /*      IORD           DESIRED FILTER ORDER */
 /*      EPS            CHEBYSHEV PARAMETER RELATED TO PASSBAND RIPPLE */
 
-/* FUNC DEF */ static int c1roots(complex *p, char *rtype, float *dcvalue, int iord, float *eps)
+/* FUNC DEF */ static int c1roots(complex *p, char *rtype, double *dcvalue, int iord, double *eps)
 {
     /* System generated locals */
     int i__1, i__2;
-    float r__1;
+    double r__1;
     double d__1;
     complex q__1;
 
     /* Local variables */
     int half;
-    float c;
+    double c;
     int i;
-    float gamma, s, angle, omega, sigma, pi;
+    double gamma, s, angle, omega, sigma, pi;
 
     /* Parameter adjustments */
     rtype -= 3;
     --p;
 
     /* Function Body */
-    pi = (float)3.14159265;
+    pi = (double)3.14159265;
     half = iord / 2;
 
     /*  INTERMEDIATE DESIGN PARAMETERS */
 
-    gamma = (sqrt(*eps * *eps + (float)1.) + (float)1.) / *eps;
-    gamma = log(gamma) / (float) (iord);
+    gamma = (sqrt(*eps * *eps + (double)1.) + (double)1.) / *eps;
+    gamma = log(gamma) / (double) (iord);
     gamma = exp(gamma);
-    s = (gamma - (float)1. / gamma) * (float).5;
-    c = (gamma + (float)1. / gamma) * (float).5;
+    s = (gamma - (double)1. / gamma) * (double).5;
+    c = (gamma + (double)1. / gamma) * (double).5;
 
     /*  CALCULATE POLES */
 
@@ -434,7 +434,7 @@ float *eps, *ripple;
     i__1 = half;
     for (i = 1; i <= i__1; ++i) {
 	strncpy(rtype + i * 3, "CP", 2);
-	angle = (float) ((i << 1) - 1) * pi / (float) (iord << 1);
+	angle = (double) ((i << 1) - 1) * pi / (double) (iord << 1);
 	sigma = -(double)s * sin(angle);
 	omega = c * cos(angle);
 	i__2 = i;
@@ -446,14 +446,14 @@ float *eps, *ripple;
 	strncpy(rtype + (half + 1) * 3, "SP", 2);
 	i__1 = half + 1;
 	d__1 = -(double)s;
-	q__1.r = d__1, q__1.i = (float)0.;
+	q__1.r = d__1, q__1.i = (double)0.;
 	p[i__1].r = q__1.r, p[i__1].i = q__1.i;
 	++(nsects);
-	*dcvalue = (float)1.;
+	*dcvalue = (double)1.;
     } else {
     /* Computing 2nd power */
 	r__1 = *eps;
-	*dcvalue = (float)1. / sqrt(r__1 * r__1 + 1);
+	*dcvalue = (double)1. / sqrt(r__1 * r__1 + 1);
     }
     return TRUE;
 }
@@ -487,9 +487,9 @@ float *eps, *ripple;
 /* FUNC DEF */ static int c2roots(p, z, rtype, dcvalue, iord, a, omegar)
 complex *p, *z;
 char *rtype;
-float *dcvalue;
+double *dcvalue;
 int iord;
-float a, omegar;
+double a, omegar;
 {
     /* System generated locals */
     int i__1, i__2;
@@ -498,9 +498,9 @@ float a, omegar;
 
     /* Local variables */
     int half;
-    float beta, c;
+    double beta, c;
     int i;
-    float gamma, s, alpha, angle, omega, sigma, denom, pi;
+    double gamma, s, alpha, angle, omega, sigma, denom, pi;
 
     /* Parameter adjustments */
     rtype -= 3;
@@ -508,16 +508,16 @@ float a, omegar;
     --p;
 
     /* Function Body */
-    pi = (float)3.14159265;
+    pi = (double)3.14159265;
     half = iord / 2;
 
 /*  INTERMEDIATE DESIGN PARAMETERS */
 
-    gamma = a + sqrt(a * a - (float)1.);
-    gamma = log(gamma) / (float) (iord);
+    gamma = a + sqrt(a * a - (double)1.);
+    gamma = log(gamma) / (double) (iord);
     gamma = exp(gamma);
-    s = (gamma - (float)1. / gamma) * (float).5;
-    c = (gamma + (float)1. / gamma) * (float).5;
+    s = (gamma - (double)1. / gamma) * (double).5;
+    c = (gamma + (double)1. / gamma) * (double).5;
     nsects = 0;
     i__1 = half;
     for (i = 1; i <= i__1; ++i) {
@@ -525,7 +525,7 @@ float a, omegar;
 /*  CALCULATE POLES */
 
 	strncpy(rtype + i * 3, "CPZ", 3);
-	angle = (float) ((i << 1) - 1) * pi / (float) (iord << 1);
+	angle = (double) ((i << 1) - 1) * pi / (double) (iord << 1);
 	alpha = -(double)s * sin(angle);
 	beta = c * cos(angle);
 	denom = alpha * alpha + beta * beta;
@@ -539,7 +539,7 @@ float a, omegar;
 
 	omega = omegar / cos(angle);
 	i__2 = i;
-	q__1.r = (float)0., q__1.i = omega;
+	q__1.r = (double)0., q__1.i = omega;
 	z[i__2].r = q__1.r, z[i__2].i = q__1.i;
 	++(nsects);
     }
@@ -550,7 +550,7 @@ float a, omegar;
 	strncpy(rtype + (half + 1) * 3, "SP", 2);
 	i__1 = half + 1;
 	d__1 = -(double)(omegar) / s;
-	q__1.r = d__1, q__1.i = (float)0.;
+	q__1.r = d__1, q__1.i = (double)0.;
 	p[i__1].r = q__1.r, p[i__1].i = q__1.i;
 	++(nsects);
     }
@@ -589,8 +589,8 @@ float a, omegar;
 /* FUNC DEF */ static int lptbp(p, z, rtype, dcvalue, fl, fh)
 complex *p, *z;
 char *rtype;
-float *dcvalue;
-float *fl, *fh;
+double *dcvalue;
+double *fl, *fh;
 {
     /* System generated locals */
     int i__1, i__2, i__3, i__4, i__5, i__6, i__7;
@@ -599,15 +599,15 @@ float *fl, *fh;
 
     /* Local variables */
     int iptr;
-    float a, b;
+    double a, b;
     complex h;
     int i, n;
     complex s;
-    float scale;
+    double scale;
     complex ctemp, p1, p2;
-    float twopi;
+    double twopi;
     complex z1, z2;
-    float pi;
+    double pi;
 
     /* Parameter adjustments */
     rtype -= 3;
@@ -615,14 +615,15 @@ float *fl, *fh;
     --p;
 
     /* Function Body */
-    pi = (float)3.14159265;
-    twopi = pi * (float)2.;
+    pi = (double)3.14159265;
+    twopi = pi * (double)2.;
     a = twopi * twopi * *fl * *fh;
     b = twopi * (*fh - *fl);
 
    
-    nsects = 0;
+    
  n = nsects;
+ nsects = 0;
     iptr = 1;
     i__1 = n;
 
@@ -633,7 +634,7 @@ float *fl, *fh;
 	    i__2 = i;
 	    q__3.r = b * z[i__2].r, q__3.i = b * z[i__2].i;
             q__2 = cpowi(q__3, 2);
-	    d__1 = a * (float)4.;
+	    d__1 = a * (double)4.;
 	    q__1.r = q__2.r - d__1, q__1.i = q__2.i;
 	    ctemp.r = q__1.r, ctemp.i = q__1.i;
             q__1 = jcsqrt(ctemp);
@@ -641,17 +642,17 @@ float *fl, *fh;
 	    i__2 = i;
 	    q__3.r = b * z[i__2].r, q__3.i = b * z[i__2].i;
 	    q__2.r = q__3.r + ctemp.r, q__2.i = q__3.i + ctemp.i;
-	    q__1.r = q__2.r * (float).5, q__1.i = q__2.i * (float).5;
+	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    z1.r = q__1.r, z1.i = q__1.i;
 	    i__2 = i;
 	    q__3.r = b * z[i__2].r, q__3.i = b * z[i__2].i;
 	    q__2.r = q__3.r - ctemp.r, q__2.i = q__3.i - ctemp.i;
-	    q__1.r = q__2.r * (float).5, q__1.i = q__2.i * (float).5;
+	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    z2.r = q__1.r, z2.i = q__1.i;
 	    i__2 = i;
 	    q__3.r = b * p[i__2].r, q__3.i = b * p[i__2].i;
             q__2 = cpowi(q__3, 2);
-	    d__1 = a * (float)4.;
+	    d__1 = a * (double)4.;
 	    q__1.r = q__2.r - d__1, q__1.i = q__2.i;
 	    ctemp.r = q__1.r, ctemp.i = q__1.i;
             q__1 = jcsqrt(ctemp);
@@ -659,45 +660,45 @@ float *fl, *fh;
 	    i__2 = i;
 	    q__3.r = b * p[i__2].r, q__3.i = b * p[i__2].i;
 	    q__2.r = q__3.r + ctemp.r, q__2.i = q__3.i + ctemp.i;
-	    q__1.r = q__2.r * (float).5, q__1.i = q__2.i * (float).5;
+	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    p1.r = q__1.r, p1.i = q__1.i;
 	    i__2 = i;
 	    q__3.r = b * p[i__2].r, q__3.i = b * p[i__2].i;
 	    q__2.r = q__3.r - ctemp.r, q__2.i = q__3.i - ctemp.i;
-	    q__1.r = q__2.r * (float).5, q__1.i = q__2.i * (float).5;
+	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    p2.r = q__1.r, p2.i = q__1.i;
             q__2 = conjg(z1);
 	    q__1.r = z1.r * q__2.r - z1.i * q__2.i, q__1.i = z1.r * q__2.i + 
 		    z1.i * q__2.r;
 	    sn[iptr] = q__1.r;
-	    sn[iptr + 1] = z1.r * (float)-2.;
-	    sn[iptr + 2] = (float)1.;
+	    sn[iptr + 1] = z1.r * (double)-2.;
+	    sn[iptr + 2] = (double)1.;
             q__2 = conjg(p1);
 	    q__1.r = p1.r * q__2.r - p1.i * q__2.i, q__1.i = p1.r * q__2.i + 
 		    p1.i * q__2.r;
 	    sd[iptr] = q__1.r;
-	    sd[iptr + 1] = p1.r * (float)-2.;
-	    sd[iptr + 2] = (float)1.;
+	    sd[iptr + 1] = p1.r * (double)-2.;
+	    sd[iptr + 2] = (double)1.;
 	    iptr += 3;
             q__2 = conjg(z2);
 	    q__1.r = z2.r * q__2.r - z2.i * q__2.i, q__1.i = z2.r * q__2.i + 
 		    z2.i * q__2.r;
 	    sn[iptr] = q__1.r;
-	    sn[iptr + 1] = z2.r * (float)-2.;
-	    sn[iptr + 2] = (float)1.;
+	    sn[iptr + 1] = z2.r * (double)-2.;
+	    sn[iptr + 2] = (double)1.;
             q__2 = conjg(p2);
 	    q__1.r = p2.r * q__2.r - p2.i * q__2.i, q__1.i = p2.r * q__2.i + 
 		    p2.i * q__2.r;
 	    sd[iptr] = q__1.r;
-	    sd[iptr + 1] = p2.r * (float)-2.;
-	    sd[iptr + 2] = (float)1.;
+	    sd[iptr + 1] = p2.r * (double)-2.;
+	    sd[iptr + 2] = (double)1.;
 	    iptr += 3;
 	    nsects += 2;
 	} else if (strncmp(rtype + i * 3, "CP", 2) == 0) {
 	    i__2 = i;
 	    q__3.r = b * p[i__2].r, q__3.i = b * p[i__2].i;
             q__2 = cpowi(q__3, 2);
-	    d__1 = a * (float)4.;
+	    d__1 = a * (double)4.;
 	    q__1.r = q__2.r - d__1, q__1.i = q__2.i;
 	    ctemp.r = q__1.r, ctemp.i = q__1.i;
             q__1 = jcsqrt(ctemp);
@@ -705,42 +706,42 @@ float *fl, *fh;
 	    i__2 = i;
 	    q__3.r = b * p[i__2].r, q__3.i = b * p[i__2].i;
 	    q__2.r = q__3.r + ctemp.r, q__2.i = q__3.i + ctemp.i;
-	    q__1.r = q__2.r * (float).5, q__1.i = q__2.i * (float).5;
+	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    p1.r = q__1.r, p1.i = q__1.i;
 	    i__2 = i;
 	    q__3.r = b * p[i__2].r, q__3.i = b * p[i__2].i;
 	    q__2.r = q__3.r - ctemp.r, q__2.i = q__3.i - ctemp.i;
-	    q__1.r = q__2.r * (float).5, q__1.i = q__2.i * (float).5;
+	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    p2.r = q__1.r, p2.i = q__1.i;
-	    sn[iptr] = (float)0.;
+	    sn[iptr] = (double)0.;
 	    sn[iptr + 1] = b;
-	    sn[iptr + 2] = (float)0.;
+	    sn[iptr + 2] = (double)0.;
             q__2 = conjg(p1);
 	    q__1.r = p1.r * q__2.r - p1.i * q__2.i, q__1.i = p1.r * q__2.i + 
 		    p1.i * q__2.r;
 	    sd[iptr] = q__1.r;
-	    sd[iptr + 1] = p1.r * (float)-2.;
-	    sd[iptr + 2] = (float)1.;
+	    sd[iptr + 1] = p1.r * (double)-2.;
+	    sd[iptr + 2] = (double)1.;
 	    iptr += 3;
-	    sn[iptr] = (float)0.;
+	    sn[iptr] = (double)0.;
 	    sn[iptr + 1] = b;
-	    sn[iptr + 2] = (float)0.;
+	    sn[iptr + 2] = (double)0.;
             q__2 = conjg(p2);
 	    q__1.r = p2.r * q__2.r - p2.i * q__2.i, q__1.i = p2.r * q__2.i + 
 		    p2.i * q__2.r;
 	    sd[iptr] = q__1.r;
-	    sd[iptr + 1] = p2.r * (float)-2.;
-	    sd[iptr + 2] = (float)1.;
+	    sd[iptr + 1] = p2.r * (double)-2.;
+	    sd[iptr + 2] = (double)1.;
 	    iptr += 3;
 	    nsects += 2;
 	} else if (strncmp(rtype + i * 3, "SP", 2) == 0) {
-	    sn[iptr] = (float)0.;
+	    sn[iptr] = (double)0.;
 	    sn[iptr + 1] = b;
-	    sn[iptr + 2] = (float)0.;
+	    sn[iptr + 2] = (double)0.;
 	    sd[iptr] = a;
 	    i__2 = i;
 	    sd[iptr + 1] = -(double)b * p[i__2].r;
-	    sd[iptr + 2] = (float)1.;
+	    sd[iptr + 2] = (double)1.;
 	    iptr += 3;
 	    ++(nsects);
 	}
@@ -748,9 +749,9 @@ float *fl, *fh;
 /* Scaling - use fact that the bandpass filter amplitude at sqrt( omega_l **/
 /*            equals the amplitude of the lowpass prototype at d.c. */
     d__1 = sqrt(a);
-    q__1.r = (float)0., q__1.i = d__1;
+    q__1.r = (double)0., q__1.i = d__1;
     s.r = q__1.r, s.i = q__1.i;
-    h.r = (float)1., h.i = (float)0.;
+    h.r = (double)1., h.i = (double)0.;
 
     iptr = 1;
     i__1 = nsects;
@@ -777,7 +778,7 @@ float *fl, *fh;
 	h.r = q__1.r, h.i = q__1.i;
 	iptr += 3;
     }
-    q__2.r = *dcvalue, q__2.i = (float)0.;
+    q__2.r = *dcvalue, q__2.i = (double)0.;
     d__1 = h.r;
     q__5 = conjg(h);
     q__4.r = d__1 * q__5.r, q__4.i = d__1 * q__5.i;
@@ -809,7 +810,7 @@ float *fl, *fh;
 /*    SD                      Denominator polynomials for second order */
 /*                              sections. */
 
-/* FUNC DEF */ static int lp(complex *p, complex *z, char *rtype, float *dcvalue, float *sn, float *sd)
+/* FUNC DEF */ static int lp(complex *p, complex *z, char *rtype, double *dcvalue, double *sn, double *sd)
 {
     /* System generated locals */
     int i__1, i__2, i__3;
@@ -817,7 +818,7 @@ float *fl, *fh;
 
     /* Local variables */
     int iptr, i;
-    float scale;
+    double scale;
 
     /* Parameter adjustments */
     --sd;
@@ -825,7 +826,7 @@ float *fl, *fh;
     rtype -= 3;
     --z;
     --p;
-    nsects = 0;
+    
     /* Function Body */
     iptr = 1;
     i__1 = nsects;
@@ -846,16 +847,16 @@ float *fl, *fh;
 		    .r * q__2.i + z[i__2].i * q__2.r;
 	    sn[iptr] = q__1.r * scale;
 	    i__2 = i;
-	    sn[iptr + 1] = z[i__2].r * (float)-2. * scale;
-	    sn[iptr + 2] = scale * (float)1.;
+	    sn[iptr + 1] = z[i__2].r * (double)-2. * scale;
+	    sn[iptr + 2] = scale * (double)1.;
 	    i__2 = i;
 	    q__2 = conjg(p[i]);
 	    q__1.r = p[i__2].r * q__2.r - p[i__2].i * q__2.i, q__1.i = p[i__2]
 		    .r * q__2.i + p[i__2].i * q__2.r;
 	    sd[iptr] = q__1.r;
 	    i__2 = i;
-	    sd[iptr + 1] = p[i__2].r * (float)-2.;
-	    sd[iptr + 2] = (float)1.;
+	    sd[iptr + 1] = p[i__2].r * (double)-2.;
+	    sd[iptr + 2] = (double)1.;
 	    iptr += 3;
 	} else if (strncmp(rtype + i * 3, "CP", 2) == 0) {
 	    i__2 = i;
@@ -864,27 +865,27 @@ float *fl, *fh;
 		    .r * q__2.i + p[i__2].i * q__2.r;
 	    scale = q__1.r;
 	    sn[iptr] = scale;
-	    sn[iptr + 1] = (float)0.;
-	    sn[iptr + 2] = (float)0.;
+	    sn[iptr + 1] = (double)0.;
+	    sn[iptr + 2] = (double)0.;
 	    i__2 = i;
 	    q__2 = conjg(p[i]);
 	    q__1.r = p[i__2].r * q__2.r - p[i__2].i * q__2.i, q__1.i = p[i__2]
 		    .r * q__2.i + p[i__2].i * q__2.r;
 	    sd[iptr] = q__1.r;
 	    i__2 = i;
-	    sd[iptr + 1] = p[i__2].r * (float)-2.;
-	    sd[iptr + 2] = (float)1.;
+	    sd[iptr + 1] = p[i__2].r * (double)-2.;
+	    sd[iptr + 2] = (double)1.;
 	    iptr += 3;
 	} else if (strncmp(rtype + i * 3, "SP", 2) == 0) {
 	    i__2 = i;
 	    scale = -(double)p[i__2].r;
 	    sn[iptr] = scale;
-	    sn[iptr + 1] = (float)0.;
-	    sn[iptr + 2] = (float)0.;
+	    sn[iptr + 1] = (double)0.;
+	    sn[iptr + 2] = (double)0.;
 	    i__2 = i;
 	    sd[iptr] = -(double)p[i__2].r;
-	    sd[iptr + 1] = (float)1.;
-	    sd[iptr + 2] = (float)0.;
+	    sd[iptr + 1] = (double)1.;
+	    sd[iptr + 2] = (double)0.;
 	    iptr += 3;
 	}
     }
@@ -922,8 +923,8 @@ float *fl, *fh;
 /* FUNC DEF */ static int lptbr(p, z, rtype, dcvalue, fl, fh, sn, sd)
 complex *p, *z;
 char *rtype;
-float *dcvalue;
-float *fl, *fh, *sn, *sd;
+double *dcvalue;
+double *fl, *fh, *sn, *sd;
 {
     /* System generated locals */
     int i__1, i__2;
@@ -933,13 +934,13 @@ float *fl, *fh, *sn, *sd;
     /* Local variables */
     complex cinv;
     int iptr;
-    float a, b, h;
+    double a, b, h;
     int i, n;
-    float scale;
+    double scale;
     complex ctemp, p1, p2;
-    float twopi;
+    double twopi;
     complex z1, z2;
-    float pi;
+    double pi;
 
     /* Parameter adjustments */
     --sd;
@@ -949,13 +950,14 @@ float *fl, *fh, *sn, *sd;
     --p;
 
     /* Function Body */
-    pi = (float)3.14159265;
-    twopi = pi * (float)2.;
+    pi = (double)3.14159265;
+    twopi = pi * (double)2.;
     a = twopi * twopi * *fl * *fh;
     b = twopi * (*fh - *fl);
    
-    nsects = 0;
+    
     n = nsects;
+    nsects = 0;
     iptr = 1;
     i__1 = n;
     for (i = 1; i <= i__1; ++i) {
@@ -964,61 +966,61 @@ float *fl, *fh, *sn, *sd;
 	    cinv.r = q__1.r, cinv.i = q__1.i;
 	    q__3.r = b * cinv.r, q__3.i = b * cinv.i;
             q__2 = cpowi(q__3, 2);
-	    d__1 = a * (float)4.;
+	    d__1 = a * (double)4.;
 	    q__1.r = q__2.r - d__1, q__1.i = q__2.i;
 	    ctemp.r = q__1.r, ctemp.i = q__1.i;
 	    q__1 = jcsqrt(ctemp);
 	    ctemp.r = q__1.r, ctemp.i = q__1.i;
 	    q__3.r = b * cinv.r, q__3.i = b * cinv.i;
 	    q__2.r = q__3.r + ctemp.r, q__2.i = q__3.i + ctemp.i;
-	    q__1.r = q__2.r * (float).5, q__1.i = q__2.i * (float).5;
+	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    z1.r = q__1.r, z1.i = q__1.i;
 	    q__3.r = b * cinv.r, q__3.i = b * cinv.i;
 	    q__2.r = q__3.r - ctemp.r, q__2.i = q__3.i - ctemp.i;
-	    q__1.r = q__2.r * (float).5, q__1.i = q__2.i * (float).5;
+	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    z2.r = q__1.r, z2.i = q__1.i;
 	    q__1 = cdiv(c_b43, p[i]);
 	    cinv.r = q__1.r, cinv.i = q__1.i;
 	    q__3.r = b * cinv.r, q__3.i = b * cinv.i;
             q__2 = cpowi(q__3, 2);
-	    d__1 = a * (float)4.;
+	    d__1 = a * (double)4.;
 	    q__1.r = q__2.r - d__1, q__1.i = q__2.i;
 	    ctemp.r = q__1.r, ctemp.i = q__1.i;
 	    q__1 = jcsqrt(ctemp);
 	    ctemp.r = q__1.r, ctemp.i = q__1.i;
 	    q__3.r = b * cinv.r, q__3.i = b * cinv.i;
 	    q__2.r = q__3.r + ctemp.r, q__2.i = q__3.i + ctemp.i;
-	    q__1.r = q__2.r * (float).5, q__1.i = q__2.i * (float).5;
+	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    p1.r = q__1.r, p1.i = q__1.i;
 	    q__3.r = b * cinv.r, q__3.i = b * cinv.i;
 	    q__2.r = q__3.r - ctemp.r, q__2.i = q__3.i - ctemp.i;
-	    q__1.r = q__2.r * (float).5, q__1.i = q__2.i * (float).5;
+	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    p2.r = q__1.r, p2.i = q__1.i;
 	    q__2 = conjg(z1);
 	    q__1.r = z1.r * q__2.r - z1.i * q__2.i, q__1.i = z1.r * q__2.i + 
 		    z1.i * q__2.r;
 	    sn[iptr] = q__1.r;
-	    sn[iptr + 1] = z1.r * (float)-2.;
-	    sn[iptr + 2] = (float)1.;
+	    sn[iptr + 1] = z1.r * (double)-2.;
+	    sn[iptr + 2] = (double)1.;
 	    q__2 = conjg(p1);
 	    q__1.r = p1.r * q__2.r - p1.i * q__2.i, q__1.i = p1.r * q__2.i + 
 		    p1.i * q__2.r;
 	    sd[iptr] = q__1.r;
-	    sd[iptr + 1] = p1.r * (float)-2.;
-	    sd[iptr + 2] = (float)1.;
+	    sd[iptr + 1] = p1.r * (double)-2.;
+	    sd[iptr + 2] = (double)1.;
 	    iptr += 3;
 	    q__2 = conjg(z2);
 	    q__1.r = z2.r * q__2.r - z2.i * q__2.i, q__1.i = z2.r * q__2.i + 
 		    z2.i * q__2.r;
 	    sn[iptr] = q__1.r;
-	    sn[iptr + 1] = z2.r * (float)-2.;
-	    sn[iptr + 2] = (float)1.;
+	    sn[iptr + 1] = z2.r * (double)-2.;
+	    sn[iptr + 2] = (double)1.;
 	    q__2 = conjg(p2);
 	    q__1.r = p2.r * q__2.r - p2.i * q__2.i, q__1.i = p2.r * q__2.i + 
 		    p2.i * q__2.r;
 	    sd[iptr] = q__1.r;
-	    sd[iptr + 1] = p2.r * (float)-2.;
-	    sd[iptr + 2] = (float)1.;
+	    sd[iptr + 1] = p2.r * (double)-2.;
+	    sd[iptr + 2] = (double)1.;
 	    iptr += 3;
 	    nsects += 2;
 	} else if (strncmp(rtype + i * 3, "CP", 2) == 0) {
@@ -1026,44 +1028,44 @@ float *fl, *fh, *sn, *sd;
 	    cinv.r = q__1.r, cinv.i = q__1.i;
 	    q__3.r = b * cinv.r, q__3.i = b * cinv.i;
             q__2 = cpowi(q__3, 2);
-	    d__1 = a * (float)4.;
+	    d__1 = a * (double)4.;
 	    q__1.r = q__2.r - d__1, q__1.i = q__2.i;
 	    ctemp.r = q__1.r, ctemp.i = q__1.i;
 	    q__1 = jcsqrt(ctemp);
 	    ctemp.r = q__1.r, ctemp.i = q__1.i;
 	    q__3.r = b * cinv.r, q__3.i = b * cinv.i;
 	    q__2.r = q__3.r + ctemp.r, q__2.i = q__3.i + ctemp.i;
-	    q__1.r = q__2.r * (float).5, q__1.i = q__2.i * (float).5;
+	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    p1.r = q__1.r, p1.i = q__1.i;
 	    q__3.r = b * cinv.r, q__3.i = b * cinv.i;
 	    q__2.r = q__3.r - ctemp.r, q__2.i = q__3.i - ctemp.i;
-	    q__1.r = q__2.r * (float).5, q__1.i = q__2.i * (float).5;
+	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    p2.r = q__1.r, p2.i = q__1.i;
 	    sn[iptr] = a;
-	    sn[iptr + 1] = (float)0.;
-	    sn[iptr + 2] = (float)1.;
+	    sn[iptr + 1] = (double)0.;
+	    sn[iptr + 2] = (double)1.;
 	    q__2 = conjg(p1);
 	    q__1.r = p1.r * q__2.r - p1.i * q__2.i, q__1.i = p1.r * q__2.i + 
 		    p1.i * q__2.r;
 	    sd[iptr] = q__1.r;
-	    sd[iptr + 1] = p1.r * (float)-2.;
-	    sd[iptr + 2] = (float)1.;
+	    sd[iptr + 1] = p1.r * (double)-2.;
+	    sd[iptr + 2] = (double)1.;
 	    iptr += 3;
 	    sn[iptr] = a;
-	    sn[iptr + 1] = (float)0.;
-	    sn[iptr + 2] = (float)1.;
+	    sn[iptr + 1] = (double)0.;
+	    sn[iptr + 2] = (double)1.;
 	    q__2 = conjg(p2);
 	    q__1.r = p2.r * q__2.r - p2.i * q__2.i, q__1.i = p2.r * q__2.i + 
 		    p2.i * q__2.r;
 	    sd[iptr] = q__1.r;
-	    sd[iptr + 1] = p2.r * (float)-2.;
-	    sd[iptr + 2] = (float)1.;
+	    sd[iptr + 1] = p2.r * (double)-2.;
+	    sd[iptr + 2] = (double)1.;
 	    iptr += 3;
 	    nsects += 2;
 	} else if (strncmp(rtype + i * 3, "SP", 2) == 0) {
 	    sn[iptr] = a;
-	    sn[iptr + 1] = (float)0.;
-	    sn[iptr + 2] = (float)1.;
+	    sn[iptr + 1] = (double)0.;
+	    sn[iptr + 2] = (double)1.;
 	    i__2 = i;
 	    sd[iptr] = -(double)a * p[i__2].r;
 	    sd[iptr + 1] = b;
@@ -1075,7 +1077,7 @@ float *fl, *fh, *sn, *sd;
     }
 /*  Scaling - use the fact that the bandreject filter amplitude  at d.c. */
 /*            equals the lowpass prototype amplitude at d.c. */
-    h = (float)1.;
+    h = (double)1.;
     iptr = 1;
     i__1 = nsects;
     for (i = 1; i <= i__1; ++i) {
@@ -1104,22 +1106,22 @@ float *fl, *fh, *sn, *sd;
 /*                              sections. */
 
 /* FUNC DEF */ static int cutoffs(sn, sd, f)
-float *sn, *sd;
-float *f;
+double *sn, *sd;
+double *f;
 {
     /* System generated locals */
     int i__1;
 
     /* Local variables */
     int iptr, i;
-    float scale;
+    double scale;
 
     /* Parameter adjustments */
     --sd;
     --sn;
 
     /* Function Body */
-    scale = *f * (float)6.2831853000000004;
+    scale = *f * (double)6.2831853000000004;
 
     iptr = 1;
     i__1 = nsects;
@@ -1158,8 +1160,8 @@ float *f;
 /* FUNC DEF */ static int lpthp(p, z, rtype, dcvalue, sn, sd)
 complex *p, *z;
 char *rtype;
-float *dcvalue;
-float *sn, *sd;
+double *dcvalue;
+double *sn, *sd;
 {
     /* System generated locals */
     int i__1, i__2, i__3;
@@ -1167,7 +1169,7 @@ float *sn, *sd;
 
    /* Local variables */
     int iptr, i;
-    float scale;
+    double scale;
 
     /* Parameter adjustments */
     --sd;
@@ -1190,17 +1192,17 @@ float *sn, *sd;
 	    q__3.r = z[i__3].r * q__4.r - z[i__3].i * q__4.i, q__3.i = z[i__3]
 		    .r * q__4.i + z[i__3].i * q__4.r;
 	    scale = q__1.r / q__3.r;
-	    sn[iptr] = scale * (float)1.;
+	    sn[iptr] = scale * (double)1.;
 	    i__2 = i;
-	    sn[iptr + 1] = z[i__2].r * (float)-2. * scale;
+	    sn[iptr + 1] = z[i__2].r * (double)-2. * scale;
 	    i__2 = i;
 	    q__2 = conjg(z[i]);
 	    q__1.r = z[i__2].r * q__2.r - z[i__2].i * q__2.i, q__1.i = z[i__2]
 		    .r * q__2.i + z[i__2].i * q__2.r;
 	    sn[iptr + 2] = q__1.r * scale;
-	    sd[iptr] = (float)1.;
+	    sd[iptr] = (double)1.;
 	    i__2 = i;
-	    sd[iptr + 1] = p[i__2].r * (float)-2.;
+	    sd[iptr + 1] = p[i__2].r * (double)-2.;
 	    i__2 = i;
 	    q__2 = conjg(p[i]);
 	    q__1.r = p[i__2].r * q__2.r - p[i__2].i * q__2.i, q__1.i = p[i__2]
@@ -1213,12 +1215,12 @@ float *sn, *sd;
 	    q__1.r = p[i__2].r * q__2.r - p[i__2].i * q__2.i, q__1.i = p[i__2]
 		    .r * q__2.i + p[i__2].i * q__2.r;
 	    scale = q__1.r;
-	    sn[iptr] = (float)0.;
-	    sn[iptr + 1] = (float)0.;
+	    sn[iptr] = (double)0.;
+	    sn[iptr + 1] = (double)0.;
 	    sn[iptr + 2] = scale;
-	    sd[iptr] = (float)1.;
+	    sd[iptr] = (double)1.;
 	    i__2 = i;
-	    sd[iptr + 1] = p[i__2].r * (float)-2.;
+	    sd[iptr + 1] = p[i__2].r * (double)-2.;
 	    i__2 = i;
 	    q__2 = conjg(p[i]);
 	    q__1.r = p[i__2].r * q__2.r - p[i__2].i * q__2.i, q__1.i = p[i__2]
@@ -1228,13 +1230,13 @@ float *sn, *sd;
 	} else if (strncmp(rtype + i * 3, "SP", 2) == 0) {
 	    i__2 = i;
 	    scale = -(double)p[i__2].r;
-	    sn[iptr] = (float)0.;
+	    sn[iptr] = (double)0.;
 	    sn[iptr + 1] = scale;
-	    sn[iptr + 2] = (float)0.;
-	    sd[iptr] = (float)1.;
+	    sn[iptr + 2] = (double)0.;
+	    sd[iptr] = (double)1.;
 	    i__2 = i;
 	    sd[iptr + 1] = -(double)p[i__2].r;
-	    sd[iptr + 2] = (float)0.;
+	    sd[iptr + 2] = (double)0.;
 	    iptr += 3;
 	}
     }
@@ -1259,14 +1261,14 @@ or*/
 /*                           second order sections.  Packed head-to-tail. */
 
 /* FUNC DEF */ static int bilin2(sn, sd)
-float *sn, *sd;
+double *sn, *sd;
 {
     /* System generated locals */
     int i__1;
 
     /* Local variables */
     int iptr, i;
-    float scale, a0, a1, a2;
+    double scale, a0, a1, a2;
 
     /* Parameter adjustments */
     --sd;
@@ -1280,14 +1282,14 @@ float *sn, *sd;
 	a1 = sd[iptr + 1];
 	a2 = sd[iptr + 2];
 	scale = a2 + a1 + a0;
-	sd[iptr] = (float)1.;
-	sd[iptr + 1] = (a0 - a2) * (float)2. / scale;
+	sd[iptr] = (double)1.;
+	sd[iptr + 1] = (a0 - a2) * (double)2. / scale;
 	sd[iptr + 2] = (a2 - a1 + a0) / scale;
 	a0 = sn[iptr];
 	a1 = sn[iptr + 1];
 	a2 = sn[iptr + 2];
 	sn[iptr] = (a2 + a1 + a0) / scale;
-	sn[iptr + 1] = (a0 - a2) * (float)2. / scale;
+	sn[iptr + 1] = (a0 - a2) * (double)2. / scale;
 	sn[iptr + 2] = (a2 - a1 + a0) / scale;
 	iptr += 3;
     }
@@ -1303,17 +1305,17 @@ float *sn, *sd;
 /*  LAST MODIFIED:  SEPTEMBER 20, 1990 */
 
 /* FUNC DEF */ static double warp(f, ts)
-float *f, *ts;
+double *f, *ts;
 {
     /* System generated locals */
-    float ret_val;
+    double ret_val;
 
     /* Local variables */
-    float angle, twopi;
+    double angle, twopi;
 
-    twopi = (float)6.2831853;
-    angle = twopi * *f * *ts / (float)2.;
-    ret_val = tan(angle) * (float)2. / *ts;
+    twopi = (double)6.2831853;
+    angle = twopi * *f * *ts / (double)2.;
+    ret_val = tan(angle) * (double)2. / *ts;
     ret_val /= twopi;
     return ret_val;
 }
@@ -1340,7 +1342,7 @@ float *f, *ts;
 /* FUNC DEF */ static int beroots(p, rtype, dcvalue, iord)
 complex *p;
 char *rtype;
-float *dcvalue;
+double *dcvalue;
 int iord;
 {
     /* Parameter adjustments */
@@ -1349,56 +1351,56 @@ int iord;
 
     /* Function Body */
     if (iord == 1) {
-	p[1].r = (float)-1., p[1].i = (float)0.;
+	p[1].r = (double)-1., p[1].i = (double)0.;
 	strncpy(rtype + 3, "SP", 2);
     } else if (iord == 2) {
-	p[1].r = (float)-1.1016013, p[1].i = (float).6360098;
+	p[1].r = (double)-1.1016013, p[1].i = (double).6360098;
 	strncpy(rtype + 3, "CP", 2);
     } else if (iord == 3) {
-	p[1].r = (float)-1.0474091, p[1].i = (float).9992645;
+	p[1].r = (double)-1.0474091, p[1].i = (double).9992645;
 	strncpy(rtype + 3, "CP", 2);
-	p[2].r = (float)-1.3226758, p[2].i = (float)0.;
+	p[2].r = (double)-1.3226758, p[2].i = (double)0.;
 	strncpy(rtype + 6, "SP", 2);
     } else if (iord == 4) {
-	p[1].r = (float)-.9952088, p[1].i = (float)1.2571058;
+	p[1].r = (double)-.9952088, p[1].i = (double)1.2571058;
 	strncpy(rtype + 3, "CP", 2);
-	p[2].r = (float)-1.3700679, p[2].i = (float).4102497;
+	p[2].r = (double)-1.3700679, p[2].i = (double).4102497;
 	strncpy(rtype + 6, "CP", 2);
     } else if (iord == 5) {
-	p[1].r = (float)-.9576766, p[1].i = (float)1.4711244;
+	p[1].r = (double)-.9576766, p[1].i = (double)1.4711244;
 	strncpy(rtype + 3, "CP", 2);
-	p[2].r = (float)-1.3808774, p[2].i = (float).7179096;
+	p[2].r = (double)-1.3808774, p[2].i = (double).7179096;
 	strncpy(rtype + 6, "CP", 2);
-	p[3].r = (float)-1.502316, p[3].i = (float)0.;
+	p[3].r = (double)-1.502316, p[3].i = (double)0.;
 	strncpy(rtype + 9, "SP", 2);
     } else if (iord == 6) {
-	p[1].r = (float)-.9306565, p[1].i = (float)1.6618633;
+	p[1].r = (double)-.9306565, p[1].i = (double)1.6618633;
 	strncpy(rtype + 3, "CP", 2);
-	p[2].r = (float)-1.3818581, p[2].i = (float).9714719;
+	p[2].r = (double)-1.3818581, p[2].i = (double).9714719;
 	strncpy(rtype + 6, "CP", 2);
-	p[3].r = (float)-1.5714904, p[3].i = (float).3208964;
+	p[3].r = (double)-1.5714904, p[3].i = (double).3208964;
 	strncpy(rtype + 9, "CP", 2);
     } else if (iord == 7) {
-	p[1].r = (float)-.9098678, p[1].i = (float)1.8364514;
+	p[1].r = (double)-.9098678, p[1].i = (double)1.8364514;
 	strncpy(rtype + 3, "CP", 2);
-	p[2].r = (float)-1.3789032, p[2].i = (float)1.1915667;
+	p[2].r = (double)-1.3789032, p[2].i = (double)1.1915667;
 	strncpy(rtype + 6, "CP", 2);
-	p[3].r = (float)-1.6120388, p[3].i = (float).5892445;
+	p[3].r = (double)-1.6120388, p[3].i = (double).5892445;
 	strncpy(rtype + 9, "CP", 2);
-	p[4].r = (float)-1.6843682, p[4].i = (float)0.;
+	p[4].r = (double)-1.6843682, p[4].i = (double)0.;
 	strncpy(rtype + 12, "SP", 2);
     } else if (iord == 8) {
-	p[1].r = (float)-.892871, p[1].i = (float)1.9983286;
+	p[1].r = (double)-.892871, p[1].i = (double)1.9983286;
 	strncpy(rtype + 3, "CP", 2);
-	p[2].r = (float)-1.3738431, p[2].i = (float)1.3883585;
+	p[2].r = (double)-1.3738431, p[2].i = (double)1.3883585;
 	strncpy(rtype + 6, "CP", 2);
-	p[3].r = (float)-1.6369417, p[3].i = (float).8227968;
+	p[3].r = (double)-1.6369417, p[3].i = (double).8227968;
 	strncpy(rtype + 9, "CP", 2);
-	p[4].r = (float)-1.7574108, p[4].i = (float).2728679;
+	p[4].r = (double)-1.7574108, p[4].i = (double).2728679;
 	strncpy(rtype + 12, "CP", 2);
     }
     nsects = iord - iord / 2;
-    *dcvalue = (float)1.;
+    *dcvalue = (double)1.;
     return TRUE;
 }
 
@@ -1428,7 +1430,7 @@ int n;
 /* FUNC DEF */ static complex jcsqrt(z)
 complex z;
 {	complex c;
-	float x,y,w,r;
+	double x,y,w,r;
 	if ((z.r == 0.0) && (z.i == 0.0)) {
 		c.r=0.0;
 		c.i=0.0;
@@ -1465,7 +1467,7 @@ complex z;
 /* FUNC DEF */ static complex cdiv(a,b)
 complex a,b;
 {	complex c;
-	float r,den;
+	double r,den;
 	if (fabs(b.r) >= fabs(b.i)) {
 		r=b.i/b.r;
 		den=b.r+r*b.i;
@@ -1481,30 +1483,34 @@ complex a,b;
 }
 
 
-/** FUNC DEF */ void CALL_JFILT(float *input, int *na, int *iord, char **type, char **aproto,
-        double *aa, double *atrbndw, double *afl, double *afh, double *ats, float  *output)
+/** FUNC DEF */ void CALL_JFILT(double *input, int *na, int *iord, char **type, char **aproto,
+				double *aa, double *atrbndw, double *afl, double *afh, double *ats,int *RemM, int *zerop, double  *output)
 {
    int i;
 
    int k=*na;
- float a=30.0, trbndw=0.3, fl=59.0, fh=61.0 ;
- float ts;
- float *why;
+ double a=30.0, trbndw=0.3, fl=59.0, fh=61.0 ;
+ double ts;
+ double *why;
  double  mean;
 char ktype[3], kproto[3];
  int myord;
+ int RM = *RemM;
+ int zp = *zerop;
 
+
+ 
  myord = (int)(*iord)  ;
- a=(float)(*aa);
+ a=(double)(*aa);
 
- trbndw=(float)(*atrbndw);
- fl=(float)(*afl);
- fh=(float)(*afh);
- ts=(float)(*ats);
+ trbndw=(double)(*atrbndw);
+ fl=(double)(*afl);
+ fh=(double)(*afh);
+ ts=(double)(*ats);
 
-/* copy trace over to a float array */
+/* copy trace over to a double array */
 
-   why  = (float *)R_alloc( k, sizeof(float));
+   why  = (double *)R_alloc( k, sizeof(double));
 
 
 
@@ -1519,27 +1525,30 @@ char ktype[3], kproto[3];
 
 design(myord, ktype, kproto, a, trbndw, fl, fh, ts);
 
-
+ if(RM==1)
+   {
+     /**** remove mean ***/
  mean = 0;
   for(i=0; i<k; i++)
    {
-    
       mean += input[i];
       why[i] = input[i];
-
    }
   mean /= k;
 
   for(i=0; i<k; i++)
    {
-   
-      
       why[i] -= mean;
-      
    }
+   } else {
+   /*** just copy it ***/
+for(i=0; i<k; i++)
+   {
+      why[i] = input[i];
+   }
+ }
 
-
-apply(why, k, 1);
+apply(why, k, zp);
 
 
  for(i=0; i< k; i++)

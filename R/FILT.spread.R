@@ -1,5 +1,5 @@
 `FILT.spread` <-
-function(x,y, dt, fl=fl, fh=fh, sfact=1, WIN=NULL, PLOT=TRUE, TIT=NULL, TAPER=0.05, POSTTAPER=0.05  )
+function(x,y, dt, fl=fl, fh=fh, sfact=1, WIN=NULL, PLOT=TRUE, TIT=NULL, TAPER=0.05, POSTTAPER=0.05, RM=FALSE, zp=TRUE   )
   {
     ####  filter sweep 
     if(missing(fl))
@@ -13,7 +13,10 @@ function(x,y, dt, fl=fl, fh=fh, sfact=1, WIN=NULL, PLOT=TRUE, TIT=NULL, TAPER=0.
         if(missing(TAPER))  { TAPER=NULL }
         if(missing(POSTTAPER))  { POSTTAPER=0.05 }
 
+    if(missing(RM))  { RM=FALSE }
+    if(missing(zp))  { zp=TRUE }
 
+    
     
     n=length(fl)
     ##  graphics.off()
@@ -51,7 +54,7 @@ function(x,y, dt, fl=fl, fh=fh, sfact=1, WIN=NULL, PLOT=TRUE, TIT=NULL, TAPER=0.
             y = tapy
           }
         
-        fy = butfilt(y[oky],fl[i], fh[i], dt, "BP", "BU" )
+        fy = butfilt(y[oky],fl=fl[i], fh=fh[i], deltat=dt, type="BP", proto="BU", RM=RM, zp=zp  )
 
         
           if(!is.null(POSTTAPER))

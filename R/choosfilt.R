@@ -115,10 +115,7 @@ if( length(thefilts$type) != length(thefilts$flo ) &   length(thefilts$type)  !=
      thecols =  colrgb[mcol]
           
    ### get(getOption("device"))()
-    dev.new()
-    
-   ### X11()
-    
+    dev.new()  
 
     cols = topo.colors(1.5*N)
    
@@ -147,7 +144,8 @@ hilab[thefilts$fhi<1] = paste(sep=' ', 1/thefilts$fhi[thefilts$fhi<1], "s")
  lab[thefilts$type=="LP"] = paste(sep='\n',thefilts$type[thefilts$type=="LP"],  hilab[thefilts$type=="LP"] )
  lab[thefilts$type=="HP"] = paste(sep='\n',thefilts$type[thefilts$type=="HP"],  lolab[thefilts$type=="HP"] )
 
-  lab[thefilts$type=="BP"] =paste(sep='\n',thefilts$type[thefilts$type=="BP"],  lolab[thefilts$type=="BP"],  hilab[thefilts$type=="BP"] )
+    lab[thefilts$type=="BP"] =paste(sep='\n',thefilts$type[thefilts$type=="BP"],
+           lolab[thefilts$type=="BP"],  hilab[thefilts$type=="BP"] )
      text(x+dx/2, y+dy/2, lab)      
    
     z = locator(n=1, type='p')

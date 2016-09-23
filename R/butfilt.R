@@ -1,5 +1,5 @@
 `butfilt` <-
-function(a, fl=0, fh=0.5, deltat=1, type="BP", proto="BU", npoles=5, chebstop=30.0, trbndw=0.3 )
+function(a, fl=0, fh=0.5, deltat=1, type="BP", proto="BU", npoles=5, chebstop=30.0, trbndw=0.3, RM=FALSE, zp=TRUE )
 {
 #####  comments from the C code in /home/lees/Progs/Rc/LLNfilt.c
    #####  int iord:      number of poles for filter (< 10; preferably < 5)
@@ -31,8 +31,11 @@ function(a, fl=0, fh=0.5, deltat=1, type="BP", proto="BU", npoles=5, chebstop=30
   if(missing(fl)) { fl = 0.01 }
   if(missing(trbndw)) { trbndw=0.3 }
     if(missing(chebstop)) { chebstop=30.0 }
+    if(missing(RM)) { RM = FALSE }
+    if(missing(zp)) { zp = TRUE }
 
-  
+  if(RM) { removemean=1 } else { removemean=0 }
+  if(zp) { zerophase=1 } else { zerophase=0 }
 
   if(any(is.na(a))){ print("ERROR in BUTFILT: NA in data"); return(NULL)      }
   if(any(is.null(a))){ print("ERROR in BUTFILT: NULL in data"); return(NULL)      }
@@ -42,10 +45,12 @@ function(a, fl=0, fh=0.5, deltat=1, type="BP", proto="BU", npoles=5, chebstop=30
   if(is.null(fl) ){ print("ERROR in BUTFILT: filter definition"); return(NULL)      }
   if(is.null(fh) ){ print("ERROR in BUTFILT: filter definition"); return(NULL)      }
   if(is.null(deltat) ){ print("ERROR in BUTFILT: deltat null"); return(NULL)      }
+
+
   
   
 .C("CALL_JFILT", PACKAGE = "RSEIS",
-as.single(a),
+as.double(a),
 as.integer(length(a)),
 as.integer(npoles),
 as.character(type) ,
@@ -54,7 +59,7 @@ as.double(chebstop) ,
 as.double(trbndw) ,
 as.double(fl) ,
 as.double(fh) ,
-as.double(deltat) ,
-output  = single(length(a)))$output
+as.double(deltat) , as.integer(removemean),as.integer(zerophase),
+output  = double(length(a)))$output
 }
 

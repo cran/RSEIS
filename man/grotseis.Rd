@@ -22,6 +22,9 @@ grotseis(ang, flip = FALSE)
   are rotated, North component is assumed to be in position 2
   and the east compnent is assumed to be in position 3.
   The vertical component can be flipped.
+
+  If Back-Azimuth is used, radial is directed towards the source. If azimuth is used,
+  radial is directed away from the source.
   
 }
 \value{
@@ -40,17 +43,26 @@ grotseis(ang, flip = FALSE)
 \examples{
 
 ####  simple case:
+
+
 vecs  <- rbind(c(0,0,1), c(0,1,0))
 rbaz <- grotseis(21.76, flip=FALSE) 
 bvec  <- vecs \%*\%  rbaz
 
-plot(c(-2,2) , c(-2,2) , asp=1, xaxs="r"  , yaxs="r" )
+plot(c(-2,2) , c(-2,2) , asp=1, xaxs="r"  , yaxs="r" , type='n' )
 
   arrows(0, 0, 0+bvec[,2], 0+bvec[,3],
      col=c("red", "blue"), length=.08)
      
   arrows(0, 0, vecs[,2], vecs[,3],
-     col=c("red", "blue"), length=.08)
+     col=c("red", "blue"), length=.08, lty=2)
+
+text(0+bvec[1,2], 0+bvec[1,3], labels='radial', pos=3)
+text(0+bvec[2,2], 0+bvec[2,3], labels='transverse', pos=4)
+
+text(0+vecs[1,2], 0+vecs[1,3], labels='North', pos=3)
+text(0+vecs[2,2], 0+vecs[2,3], labels='East', pos=4)
+
  
 ####  realistic case:
 STAXY<-list()
@@ -96,24 +108,25 @@ DAZ <- rdistaz( sguitoXY$lat, sguitoXY$lon ,       STAXY$lat, STAXY$lon)
 
 STAXY$az <- DAZ$baz
 
+####  plotting
 plot(STAXY$x, STAXY$y, asp=1, xaxs="r"  , yaxs="r" )
-
 text(STAXY$x, STAXY$y,STAXY$name, pos=3)
-
 points(0,0, pch=3)
 points(sguitoXY$x,sguitoXY$y , pch=8)
-
 segments(sguitoXY$x, sguitoXY$y, STAXY$x, STAXY$y, col="green", lty=2)
 
-vecs  <- rbind(c(0,0,1), c(0,1,0))
+#### be aware of the convention used: (V-N-E) or (V-E-N)
+### here first vector is east, second vector is north
+###       if you use the V-N-E convention
+vecs  <- rbind( c(0,1,0), c(0,0,1))
 
 for( i in 1:length(STAXY$x))
   {
 rbaz <- grotseis(STAXY$az[i], flip=FALSE)
 bvec  <- vecs \%*\%  rbaz
 ##############   red is north, blue east
-########  red is radial positive away from source, blue is transverse
-##########   blue is positive to the right, if facing away from source
+########         red is radial positive away or toward  source, blue is transverse
+##########       blue is positive rotated to the right of red
 ##
 arrows(STAXY$x[i],STAXY$y[i], STAXY$x[i]+bvec[,2], STAXY$y[i]+bvec[,3],
 col=c("red", "blue"), length=.08)

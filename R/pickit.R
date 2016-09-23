@@ -21,11 +21,11 @@ function(ay, deltat=0.008 ,  MED=225, FRWD=8,  BKWD=8,  sbef=1, saft=6, thresh=2
 
     if(fhi > 1/(2*deltat)) { fhi = (1/(2*deltat))- 0.05*(1/(2*deltat)) }
 
-    
+    ########  NOTE:::: do not do a zero phase filter so we can get the first arrival better.
     ##########   bandpass filter the data, if both flo and fhi are negative, do not filter
     if(flo>0 & fhi>0)
       {
-        fy = butfilt(ay , flo , fhi , deltat , "BP" , "BU" )
+        fy = butfilt(ay , fl=flo , fh=fhi , deltat=deltat , type="BP" , proto="BU", RM=FALSE, zp=FALSE  )
       }
     else
       {

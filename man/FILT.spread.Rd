@@ -9,7 +9,7 @@
 \usage{
 FILT.spread(x, y, dt, fl = fl, fh = fh, sfact = 1,
  WIN = NULL, PLOT = TRUE, TIT = NULL, TAPER = 0.05,
- POSTTAPER=0.05)
+ POSTTAPER=0.05, RM=FALSE, zp=TRUE )
 }
 
 \arguments{
@@ -24,6 +24,8 @@ FILT.spread(x, y, dt, fl = fl, fh = fh, sfact = 1,
   \item{TIT}{title}
   \item{TAPER}{taper data prior to filter, percent cosine, default=NULL}
   \item{POSTTAPER}{taper output after filter, percent cosine, default=0.05}
+    \item{RM}{Remove mean value from trace, default=FALSE}
+  \item{zp}{zero phase filter, default=TRUE}
     
 }
 \details{

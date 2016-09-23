@@ -18,8 +18,8 @@ rdistaz(olat, olon, tlat, tlon)
   List:
   \item{del}{Delta, angle in degrees}
   \item{az}{Azimuth, angle in degrees}
-  \item{baz}{back Azimuth, (az+180) in degrees}
-  \item{dist}{distance in km}
+  \item{baz}{Back-Azimuth, (az+180) in degrees}
+  \item{dist}{Distance in km}
   \item{err}{0 or 1, error flag.  0=error, 1=no error, see details}
   
 }
@@ -32,7 +32,7 @@ rdistaz(olat, olon, tlat, tlon)
   If multiple olat and olon are given, the program returns a list
   of outputs for each.
 
-  If olat or any tlat is greater than 90 or less than -90 NA is returned
+  If olat or any tlat is greater than 90 or less than -90,  NA is returned
   and error flag is 0.
 
   If any tlat and tlon is equal to olat and olon, the points are

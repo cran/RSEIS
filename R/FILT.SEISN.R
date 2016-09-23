@@ -1,5 +1,5 @@
 `FILT.SEISN` <-
-function(TH, sel=1:length(TH$JSTR), FILT=list(ON=TRUE, fl=0.5, fh=7.0, type="HP", proto="BU"), TAPER=0.1, POSTTAPER=0.1)
+function(TH, sel=1:length(TH$JSTR), FILT=list(ON=TRUE, fl=0.5, fh=7.0, type="HP", proto="BU", RM=FALSE, zp=TRUE ), TAPER=0.1, POSTTAPER=0.1)
   {
     ###  TH = seismic structure
     ###  sel = vector of selected time series in structure
@@ -14,11 +14,13 @@ function(TH, sel=1:length(TH$JSTR), FILT=list(ON=TRUE, fl=0.5, fh=7.0, type="HP"
     ### FILT = list(ON=FALSE, fl=0.5, fh=7.0, type="HP", proto="BU")
 
     if(missing(sel)) { sel = 1:length(TH$JSTR) }
-    if(missing(FILT)) { FILT = list(ON=TRUE, fl=0.5, fh=7.0, type="HP", proto="BU")  }
+    if(missing(FILT)) { FILT = list(ON=TRUE, fl=0.5, fh=7.0, type="HP", proto="BU", RM=FALSE, zp=TRUE)  }
     if(missing(TAPER)) { TAPER = NULL }
     if(missing(POSTTAPER)) { POSTTAPER = NULL }
 
-    
+    if(is.null(FILT$RM)) { FILT$RM = FALSE }
+     if(is.null(FILT$zp)) { FILT$zp = TRUE }
+   
     if(is.null(FILT$npoles)) { FILT$npoles = 2 }
     NEWH = TH
 
@@ -31,12 +33,13 @@ function(TH, sel=1:length(TH$JSTR), FILT=list(ON=TRUE, fl=0.5, fh=7.0, type="HP"
         
         y = TH$JSTR[[ii]]
         dt = TH$dt[ii]
+        y = fixNA(y)
         ny = is.na(y)
         ry = y[!ny]
 
         if(!is.null(TAPER)) { ry = applytaper(ry, p=TAPER) }
 
-        fy = butfilt(ry, fl=FILT$fl, fh=FILT$fh , deltat=dt, type=FILT$type , proto=FILT$proto, npoles=FILT$npoles )
+        fy = butfilt(ry, fl=FILT$fl, fh=FILT$fh , deltat=dt, type=FILT$type , proto=FILT$proto, npoles=FILT$npoles, RM=FILT$RM, zp=FILT$zp   )
         ## ex = dt*0:(length(y)-1)
         ##  plot(ex, fy, type='l')
         if(!is.null(POSTTAPER)) { fy = applytaper(fy, p=POSTTAPER) }

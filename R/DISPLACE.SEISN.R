@@ -1,13 +1,15 @@
 `DISPLACE.SEISN`<-
-function(TH, sel=1:length(TH$JSTR), inst=1, Kal=Kal, waterlevel=1.e-8, FILT=list(ON=FALSE, fl=1/30, fh=7.0, type="HP", proto="BU") )
+function(TH, sel=1:length(TH$JSTR), inst=1, Kal=Kal, waterlevel=1.e-8, FILT=list(ON=FALSE, fl=1/30, fh=7.0, type="HP", proto="BU",RM=FALSE, zp=TRUE ) )
 {
   ########  convert the seismic to displacement
   if(missing(Kal)) {   Kal = PreSet.Instr() }
   if(missing(inst)) {   inst = rep(1,length=length(TH$JSTR))  }
 
   if(missing(sel)) { sel = 1:length(TH$JSTR) }
-    if(missing(FILT)) { FILT = list(ON=FALSE, fl=1/30, fh=7.0, type="HP", proto="BU")  }
- 
+    if(missing(FILT)) { FILT = list(ON=FALSE, fl=1/30, fh=7.0, type="HP", proto="BU",RM=FALSE, zp=TRUE )  }
+  if(is.null(FILT$RM)) { FILT$RM = FALSE }
+  if(is.null(FILT$zp)) { FILT$zp = TRUE  }
+  
   Calibnew = c(1,1.0, 0.0 )
 
   
@@ -56,7 +58,7 @@ if(is.logical(sel)) { sel = which(sel) }
 
      if(FILT$ON==TRUE)
        {
-         fy = butfilt(damp, FILT$fl, FILT$fh , dt, FILT$type , FILT$proto )
+         fy = butfilt(damp, fl=FILT$fl, fh=FILT$fh , deltat=dt, type=FILT$type , proto=FILT$proto,  RM=FILT$RM, zp=FILT$zp  )
        }
      else
        {
