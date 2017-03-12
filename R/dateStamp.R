@@ -1,5 +1,5 @@
 `dateStamp` <-
-function(datelist)
+function(datelist, sep=":")
   {
 
 if(is.null(datelist$msec)) { datelist$msec = rep(0, length(datelist$sec) ) }
@@ -10,7 +10,7 @@ if(is.null(datelist$msec)) { datelist$msec = rep(0, length(datelist$sec) ) }
     t1 =   (msec-floor(msec))/1000
     msec = floor(msec)
     
-    ftime = paste(sep=":", rd$yr,
+    ftime = paste(sep=sep, rd$yr,
       formatC(rd$jd, width=3 , flag = "0")  ,
       formatC(rd$hr, width=2 , flag = "0"),
       formatC(rd$mi, width=2 , flag = "0"),

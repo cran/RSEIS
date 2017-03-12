@@ -1,4 +1,4 @@
-826b7f9fea18791bf60877b70f673d3c *DESCRIPTION
+9e69bae854dcaa4e47713cf94a8ff4e7 *DESCRIPTION
 9e50fd28073aeea5de541850e192830e *NAMESPACE
 112c14e362dd431df085733f9971ce91 *NEWS
 27b1bab432b598f16c11274ea29b9e3d *R/ASCII.SEISN.R
@@ -44,7 +44,7 @@ b58c77444cc50d088adc5006aaeb56db *R/JSEGY.seis.R
 f6862f14c28b1858b68ef0a1ba94f227 *R/MTMdisp.R
 ce8c5353bb777311a20ece15485313c6 *R/MTMgabor.R
 b1fd678d60d844a3e31591134538ec88 *R/MTMplot.R
-bc4a35d1606fbbe166a8be1dbf8c9ce0 *R/Mine.seis.R
+3be6c5c5eb80071cfbe9f3dae358cf03 *R/Mine.seis.R
 2bc2543dc2b14ae62c0b6d8bb28df949 *R/Mmorlet.R
 f29147334ac3d5db925bdf40e26955a9 *R/NEW.getUWSTAS.R
 df13e79762eff2bf4700fe9850c22776 *R/NEWPLOT.WPX.R
@@ -85,7 +85,7 @@ c3a9948866c2d51651cb3ae46d7f1c09 *R/Thresh.J.R
 7c20782999561537070bc715e9409e7b *R/YRsecdif.R
 7cae05f25730c56380f25ffe930f46d3 *R/YRsecdifL.R
 d97a55d575d43060075c4f951389458a *R/ZOOM.SEISN.R
-14edd1e1c864d100f4e0fe9d57f8f100 *R/Zdate.R
+05fd2f8ea02106cd00de095fd3253d36 *R/Zdate.R
 5be6b83e132e186619d847a9498cd4da *R/addWPX.R
 c722cd3d3c0198defea682addc05f4f5 *R/addpoints.hodo.R
 b7ea6c8a0727d283d2f13ed08620c7d9 *R/addtix.R
@@ -109,9 +109,10 @@ b47fa21752d45ce3ec0a89f5432ed65e *R/cleanWPX.R
 d6fe6c370ae89da85fc3b0102142a364 *R/complex.hodo.R
 20965d130489fba6b5e906d3a234b98b *R/contwlet.R
 f23de9090cde435ab5204e892765288f *R/convert2Rseis.R
+1ab4dede50e4f0213c79902ecc7358e9 *R/convertATT.R
 a4347adbd08b9948b145f179ae3d21af *R/correct.moveout.R
 0b4c3087b0f20b97afc2a5e22eacf63e *R/dateList.R
-c859965369f80a1c4805548dbfa789c8 *R/dateStamp.R
+4b4af5a8a0e03e2b8e9931a76e464692 *R/dateStamp.R
 8f745d9c40696d488b1f1b9518ee627f *R/deconinst.R
 b980115c07fa60cab298e1e0ab11d6cf *R/deleteWPX.R
 2a37e8426d4922ebbe6866bd983461ba *R/detail.pick.R
@@ -160,9 +161,10 @@ a62471c3fd71a82bbaa0d58841d1c0b4 *R/hilbert.R
 d5362a2dbb2a0751b59e6f4f4d78e864 *R/hypot.R
 d19370850a9d7168816a7ca7e8313dcb *R/idpoints.hodo.R
 dfb2907645f35146d7ac729c4a63a8a8 *R/info.seis.R
-dbd931c6b84b3d44e63f63abee36db8f *R/infoDB.R
+14274640be77d0387d5ba2756df40764 *R/infoDB.R
 29d01977aa2006aa35564537a45850d1 *R/insertNAs.R
 81055dc1730d227ce639937a9b9e9501 *R/integ1.R
+a69de04741286885307ed951768462ad *R/j2posix.R
 bcca2c5c7219edb154492efa828cf664 *R/jadjust.length.R
 bd160ec4e7b822a13ff8b9ae355e5590 *R/jitter.lab.R
 2cc2eec54fd2751bad4d635780c95682 *R/jlegend.R
@@ -378,13 +380,13 @@ e7b2efb3fa552cec71f05ad0f1d4be53 *man/X2RSEIS.Rd
 cc5729a13e731fa96049a530ad7d16e0 *man/YPIX.Rd
 d4b504519c9ba12f64344a558249b27f *man/YRsecdif.Rd
 0a48c797d0bc71d0667c689e686f7a72 *man/ZOOM.SEISN.Rd
-6a05fc3a75602fb3578fe213b7691e69 *man/Zdate.Rd
+698a8f584ef303ccc32e4e20b1e25030 *man/Zdate.Rd
 7d4c9505f4a328725d7f9a6bfcc35e9e *man/addWPX.Rd
 4e33965542a868fc0781400c745dc468 *man/addpoints.hodo.Rd
 b96a81183530e42c9a7506835d3ff744 *man/addtix.Rd
 737e4219e87d915f77700d3fd9018bb9 *man/applytaper.Rd
 34bd89cb01d8316104e4178ecb804f83 *man/attime12.Rd
-6169b0a7406e37d2ac5f994261fe9289 *man/autoreg.Rd
+c75fba21c005ff7e1dbb177c6dbab74b *man/autoreg.Rd
 642b860f9c41cef097550636e4db17e9 *man/brune.doom.Rd
 9e58eb01904b862e7b4931976288dabd *man/brune.func.Rd
 4b61961eebdb3ae42fa6d4b6a08efae4 *man/brune.search.Rd
@@ -400,6 +402,7 @@ b07c384908c01519dd4827976e14caa0 *man/colorwig.Rd
 ec4b3faa7313959b7fa7df11c48b470a *man/complex.hodo.Rd
 1e55cb052441dffe5fd997760c2ae109 *man/contwlet.Rd
 e1a3738a217ec3b2f958b111f7e94a7c *man/convert2Rseis.Rd
+29c15d46d845d82d564cf01c6540dfb0 *man/convertATT.Rd
 4904da20ca1bbc00948cab015a920f76 *man/correct.moveout.Rd
 fa4f5fd48c9e59af58e6be19aeacb917 *man/deconinst.Rd
 6b6939adfc5506329092c4c5449935e5 *man/deleteWPX.Rd
@@ -454,6 +457,7 @@ a2d2e2325ba757e360fa19c360d29c69 *man/info.seis.Rd
 ef7b6166c4d47b5d7cfba5eb91539331 *man/infoDB.Rd
 79b9f4d79aea8250a814723124004d79 *man/insertNAs.Rd
 13572ab65252a24853ad7fd725652e01 *man/integ1.Rd
+b1e4253dcf9bfecf551b6cf8fd021d86 *man/j2posix.Rd
 a41240f48b7358f7ccd969811df82241 *man/jadjust.length.Rd
 ebe5426324faec2c045f5daa34dd5881 *man/jitter.lab.Rd
 99bd2d78fe2a797c083210c6c4901b28 *man/jlegend.Rd
@@ -563,12 +567,13 @@ ca9bb30475c07cd41a0e2e342b483866 *man/writeUW.OSTAScard.Rd
 d847b07f2e54df4a73bfb6a3c629ed08 *man/xtract.trace.Rd
 8b461b5635464232b3b921f969e69d16 *man/yeardate.Rd
 4717188723520fc01d75ebd6e5dd175c *man/zlocator.Rd
-a15ccf9dfd02dc9c3fc385cb6879fb7d *src/ARAIC.c
+e2ada561fbd2ab61f1f023a9a7742399 *src/ARAIC.c
 5688677d0004f58f6d90e8cfe7073817 *src/GetCornerFreq.c
 501246d24f2d3cf25810c05da2b939cb *src/LLNfilt.c
 197f4620a03953d7d3c619c4db622e11 *src/MTAPSRC.c
 52be0f47584e77c4fc8f283c9bc988e0 *src/TTray.c
 ad505caa9e4f09fda103226718e6d3eb *src/defines.h
+84f6eba99f70e583ddf40bbcd96b9802 *src/init.c
 f50c2847945ae7013551148e6739505a *src/jl.h
 ce8fa14d183bb51d3b9ab9c6092c8ec4 *src/jlproto.h
 472afc7f207dfbe9f84bd92a9c310722 *src/jpiki.c

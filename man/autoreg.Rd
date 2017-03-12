@@ -28,12 +28,12 @@ autoreg(a, numf = 1024, pord = 100, PLOT = FALSE, f1 = 0.01, f2 = 50)
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
-\seealso{fft}
+\seealso{fft, mtapspec, plt.MTM0 }
 \examples{
 data(CE1)
 Xamp <- CE1$y[CE1$x>5.443754 & CE1$x<5.615951]
 
-ZIM <- autoreg(Xamp , numf=100 , pord = 500, PLOT=FALSE,  f1=.01, f2=50)
+ZIM <- autoreg(Xamp , numf=length(Xamp) , pord = 100, PLOT=FALSE,  f1=.01, f2=50)
 
 }
 

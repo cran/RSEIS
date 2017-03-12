@@ -63,7 +63,7 @@ void free_dvector(double *v)
         for (k=0;k<m;k++) {
 	  
 	  num=0.0; denom=0.0;
-                for (j=0;j<(n-k-1);j++) {
+                for (j=0;j<(n-k);j++) {
                         num += wk1[j]*wk2[j];
                         denom += (wk1[j])*(wk1[j])+(wk2[j])*(wk2[j]);
                 }
@@ -73,17 +73,17 @@ void free_dvector(double *v)
                 d[k]=2.0*num/denom;
                 *xms *= (1.0-(d[k])*(d[k]));
 		
-                for (i=0;i<=(k-1);i++)
+                for (i=0;i<(k-1);i++)
 		  {
 		   	
-		    d[i]=wkm[i]-d[k]*wkm[k-i-1];
+		    d[i]=wkm[i]-d[k]*wkm[k-i];
 
 
 		  } 
 			
 
 			
-                if (k == (m-1) ) {
+                if (k == (m) ) {
 		  /* REprintf("FREE memcof 1: %d %d \n", k, m); */
                         free_dvector(wkm); 
                         free_dvector(wk2);
@@ -93,11 +93,11 @@ void free_dvector(double *v)
                 }
 		
 
-		 for (i=0;i<=k;i++) { wkm[i]=d[i]; }
+		 for (i=0;i<k;i++) { wkm[i]=d[i]; }
 
 		
 		
-                for (j=0;j<(n-k-2);j++) {
+                for (j=0;j<(n-k-1);j++) {
 		  
                         wk1[j] -= wkm[k]*wk2[j];
                         wk2[j] =  wk2[j+1]-wkm[k]*wk1[j+1];

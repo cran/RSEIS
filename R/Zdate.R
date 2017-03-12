@@ -1,5 +1,5 @@
 `Zdate` <-
-function(info, sel=1, t1=0)
+function(info, sel=1, t1=0, sep=':' )
   {
     if(missing(sel)) { sel = 1:length(info$jd) }
     if(missing(t1)) { t1 = 0 }
@@ -11,7 +11,7 @@ function(info, sel=1, t1=0)
     t1 =   (msec-floor(msec))/1000
     msec = floor(msec)
     
-    ftime = paste(sep=":", rd$yr,
+    ftime = paste(sep=sep, rd$yr,
       formatC(rd$jd, width=3 , flag = "0")  ,
       formatC(rd$hr, width=2 , flag = "0"),
       formatC(rd$mi, width=2 , flag = "0"),

@@ -203,6 +203,7 @@ for(k in 1:length(KG4)) {
       for(i in 1:length(HH$JSTR)) { print(paste(i, length(HH$JSTR[[i]]))) }
     }
 
+  HH$DBindex = gi
   return(HH)
   
 }
