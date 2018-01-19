@@ -1,10 +1,17 @@
 `trapz` <-
-function(y, dt)
+function(y, dt, rm.mean=TRUE )
   {
     # integrate a signal to get displacement plot
     #  using trapezoidal rule
     #  remove mean
-     z = y - mean(y, na.rm =TRUE )
+      if(rm.mean)
+          {
+              z = y - mean(y, na.rm =TRUE )
+          }
+      else
+          {
+              z = y
+          }
      n = length(z)
 
      if(any(is.na(z)))

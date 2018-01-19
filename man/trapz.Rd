@@ -6,12 +6,14 @@
   Integrate using trapezoidal rule
 }
 \usage{
-trapz(y, dt)
+trapz(y, dt, rm.mean=TRUE)
 }
 
 \arguments{
   \item{y}{Input signal}
   \item{dt}{sample interval time, seconds}
+  \item{rm.mean}{logical, whether to remove the mean prior to integration (TRUE) }
+ 
 }
 
 \value{

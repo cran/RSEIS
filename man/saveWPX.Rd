@@ -41,8 +41,9 @@ addWPX,	catWPX,	checkWPX,	cleanWPX,	clusterWPX,	repairWPX,	setWPX
 \examples{
 
 \dontrun{
+tdir = tempdir()
 s1 <- setWPX(name="HI", yr=2011, jd=231, hr=4, mi=3, sec = runif(5)) 
-hh <- saveWPX(s1)
+hh <- saveWPX(s1, destdir = tdir )
 
 ###   read in the data
 

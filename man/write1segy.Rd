@@ -47,10 +47,11 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 }
 \examples{
 \dontrun{
+tdir = tempdir()
 
 bed =  read1segy(fn1   , Iendian = 1 , HEADONLY=FALSE, BIGLONG=FALSE)
 
-haname =  write1segy(bed  , fn="jimmy.SEGY", BIGLONG=FALSE)
+haname =  write1segy(bed  , fn=paste(tdir,"jimmy.SEGY", sep='/') , BIGLONG=FALSE)
 
 }
 

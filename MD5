@@ -1,7 +1,7 @@
-9e69bae854dcaa4e47713cf94a8ff4e7 *DESCRIPTION
+5a225daa7cd6f45b7a5d85db14fce38b *DESCRIPTION
 9e50fd28073aeea5de541850e192830e *NAMESPACE
 112c14e362dd431df085733f9971ce91 *NEWS
-27b1bab432b598f16c11274ea29b9e3d *R/ASCII.SEISN.R
+b844c8be886f6cbbb4e9b134967df6eb *R/ASCII.SEISN.R
 86ba5eabfd5472dc859d9ac977a9b258 *R/BUTREPLOT.R
 774ef19521ad8912ace43de9120a9dde *R/CHOP.SEISN.R
 924c47a869fa0a0d01d9fdc51e8ab3d2 *R/COMPorder.R
@@ -73,6 +73,7 @@ e7d2ee626a1c2de2b76c2f9be177a947 *R/SELSTA.R
 ad14e69a1f088346da94d235f956b8f2 *R/SNET.drive.R
 811ad4b48942a171d21849f13710fd60 *R/SPECT.drive.R
 8f1edff8f38cff5a7455078c97cc5081 *R/STLTcurve.R
+09bbf56c2632e02aa5c15e0d4d0d4d6b *R/Spectrum.R
 fdb8f220a8674382179216d6962e3351 *R/T12.pix.R
 c7680873cdd21ca62243a2d85590353e *R/TOCART.R
 c3a9948866c2d51651cb3ae46d7f1c09 *R/Thresh.J.R
@@ -239,7 +240,6 @@ a322d259c8fec0ba29465069fa1c1778 *R/seisorder.R
 9f30f596466800fafba2758090bae0d4 *R/selWPX.R
 4b845392509fa2a4933315318d7103e1 *R/selpgen.R
 82a20b8b8093ed54db5681610175efc2 *R/selstas.R
-514a237f984d3a3a4fd234709ede1364 *R/setLQUAKE.R
 90232fae0bfb67b442ce0cbcdebf3709 *R/setWPX.R
 33ef9890d78cefea92133bb9a81d7be3 *R/setstas.R
 f7e224df2cc73b9c650a641be34211f4 *R/setupDB.R
@@ -255,7 +255,7 @@ c5049c5106acc9f655a0f3b1ed38f135 *R/swig.ALLPX.R
 d48dc24031ff2297db99ce60bb3587b5 *R/sysinfo.R
 fa9fe3ee25849bac69a13d7988afcdee *R/tojul.R
 a850a0500b19227b88ded29d911ce305 *R/tomo.colors.R
-12df43708dda9a3b2bc2e7ead98fed12 *R/trapz.R
+b061556f8b86e88af2951df533adebc9 *R/trapz.R
 f07ed54d34895dbd678f68f0bd44067d *R/travel.time1D.R
 3ebc2577f1d55329cefb3fd21d5c3048 *R/tung.pulse.R
 66734b51de918a9e2a0f9c80de7f6323 *R/unpackAcard.R
@@ -291,13 +291,14 @@ a95114173db5ae9feb05addad0369ee2 *demo/MTM.R
 d0a9ff448e6867726d10a019abb7f471 *demo/REVENT.R
 fa68dbea5d4e116224177232c8022fa3 *demo/SPECT.R
 1a78d2c0c58de554f15e270a22f84b58 *demo/SUNrs.R
+f2600dc23781cd5ca32d6b76399b2ba1 *inst/COPYRIGHTS
 bbc51f557f1d4270660184f4014e3dd6 *inst/vignettes/hodo.R
 92d7128ff34a647b813380a17f663c20 *inst/vignettes/hodo.Rnw
 4f4c0d13f7c9d822dae1d65c824bb395 *inst/vignettes/hodo.pdf
 a8f3391ad9f7d93561580d7c40d444c4 *inst/vignettes/rseis.R
 c2eed0689abd92bc78f915b27fc4f6db *inst/vignettes/rseis.Rnw
 6c2820d53c8fbe23d11eb1a4a68132f7 *inst/vignettes/rseis.pdf
-9476327a52ddeccdec0b8209c553aa75 *man/ASCII.SEISN.Rd
+320413563724f1905ea8dd398d0eea47 *man/ASCII.SEISN.Rd
 b2de15faf030d1386f70a199db0615ba *man/BUTREPLOT.Rd
 d4ae86429c1a1103256fee2af93bf179 *man/CE1.Rd
 b984a345e2ed2226c9a5b22a7c201ac8 *man/CHOP.SEISN.Rd
@@ -368,6 +369,7 @@ daa2c4563dfe169f14f7660a1c08c906 *man/SENSORsensitivity.Rd
 b3d8611a5026fa3006d3cac281db2e82 *man/SNET.drive.Rd
 e1426072589cd850953ec6b700f8b775 *man/SPECT.drive.Rd
 851a8d31ac27a69ad551c2e065f434d8 *man/STLTcurve.Rd
+b0650be6af86d06dcf4319aff118d573 *man/Spectrum.Rd
 479f0f6a0904c104024eff5ded4155ad *man/T12.pix.Rd
 9be3bd8c0fa54fb584a3955eb3f45122 *man/TOCART.Rd
 d73a2a577b2286179b693d10e9866ffa *man/Thresh.J.Rd
@@ -508,7 +510,7 @@ e1803b5d2f0f81f3da985585084d9c73 *man/pwlet2freqs.Rd
 473dc0bcd96bedefe4d4d9095b8c3b3e *man/rsspec.taper.Rd
 7f18a48d7e053300699374bdaf52060a *man/ruler.Rd
 6e9cddde592b95a85ee8497877459546 *man/save.wpix.Rd
-c0265ed7c7d8d6fcc1b8e7e266ab3b8f *man/saveWPX.Rd
+9389dfcffbcac9d67c6638f1deaf55e8 *man/saveWPX.Rd
 699da9e39e607170b5729feb2b3c3c38 *man/scal2freqs.Rd
 1e69545324d8a31f67fbf2cf5b08ea2b *man/screens.Rd
 bb0d7f0cd5b538510a016a758e80dbb8 *man/secdif.Rd
@@ -520,7 +522,6 @@ face6e0530c4ee2369dddfc912c9415f *man/seiscols.Rd
 3e867e1d2b91ef231d6914fbb18a953e *man/selAPX.Rd
 ed6ef9ae42b8cbda34538e6a10e55ce1 *man/selpgen.Rd
 568b89d028402454ec1bf28c70db1173 *man/selstas.Rd
-0a90ca2ed91a81f8497c6d9908da2659 *man/setLQUAKE.Rd
 b1460be5d332cdca2bc492d4e1c80f65 *man/setWPX.Rd
 2d8ddd7fb8a5ca528e03bd9df9624a34 *man/setstas.Rd
 960ac5f31a1ac489c5d02a8f14f24611 *man/setupDB.Rd
@@ -536,7 +537,7 @@ fa1228fa7e7a2ee0977b0bb27a239c61 *man/swig.Rd
 dbcbe650e40a7ca65619b7c3161808c5 *man/sysinfo.Rd
 c6ddf5a63cc720d325b7153d94143b16 *man/tojul.Rd
 9c9fec8b69ac8f352c39d41547f331ba *man/tomo.colors.Rd
-5810831abe1ff1b5e1a03dc31ef85ad7 *man/trapz.Rd
+c2b82086f143ed212107598b0638d338 *man/trapz.Rd
 467bbaf242606b23ad64ce172e1dfe2d *man/travel.time1D.Rd
 3577f4543f80ecf18b95259b02d3871e *man/tung.pulse.Rd
 956adb5de5a6b717e1f97f3de085593a *man/unpackAcard.Rd
@@ -552,7 +553,7 @@ b6b14d4dd8594eb539b4be34e7de2b61 *man/view.seis.Rd
 1149ea3dafebb84d9c30efdabbe8bc62 *man/winseis24.Rd
 25212149cdcbaf96de6abc29e4344300 *man/wlet.do.Rd
 950f1d901a43a1d824b70073a991b613 *man/wlet.drive.Rd
-7904c7b8e3eaa2d533c2715aecce470b *man/write1segy.Rd
+85be6e787d2ab35f82c62ece22b78236 *man/write1segy.Rd
 ffd7f447dbe365ef8d174112f0fefcbe *man/writeUW.Acard.Rd
 2452922763615a0ad2e2c81cb941776a *man/writeUW.Commentcard.Rd
 93f9278442af3e025c2c451587f82280 *man/writeUW.DOTcard.Rd

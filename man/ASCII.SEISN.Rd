@@ -6,12 +6,14 @@
 \description{Write RSEIS list to a  file in ASCII format.
 }
 \usage{
-ASCII.SEISN(GH, sel = 1, HEAD = TRUE)
+ASCII.SEISN(GH, sel = 1, HEAD = TRUE, destdir='.' )
 }
 \arguments{
   \item{GH}{RSEIS list}
   \item{sel}{vector, select which ttraces to write}
   \item{HEAD}{logical, TRUE will put a header in the file}
+   \item{destdir}{character, path to folder to deposit output file }
+ 
 }
 \details{  Used for data exchange for users who do not want to
   use RSEIS.  The header consists of one line
@@ -32,8 +34,8 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 
 \dontrun{
 data("GH")
-
-sel <-  which(GH$COMPS == "V" & GH$STNS=="CE1"  )
+tempd = tempdir()
+sel <-  which(GH$COMPS == "V" & GH$STNS=="CE1"  , destdir=tempd )
 ASCII.SEISN(GH, sel = 1, HEAD = TRUE)
 }
 }
