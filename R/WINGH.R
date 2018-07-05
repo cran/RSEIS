@@ -43,6 +43,7 @@ WINGH<-function(GH, sel=1 , WIN = c(0,1) )
     NEWH$info$n2[ii] = n1
     NEWH$info$n3[ii] = n1
     NEWH$info$n[ii] = n1
+    NEWH$info$dt[ii] = GH$dt[i]
     
   }
 

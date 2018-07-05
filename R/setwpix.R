@@ -49,6 +49,8 @@ function(phase=NULL, col=NULL, yr=NULL, jd=NULL, hr=NULL,  mi=NULL, sec=NULL, du
   pix$sec= rpic$sec
   pix$dur= dur
   pix$res= dur
+  pix$err= dur
+  
     pix$phase = phase
 
     

@@ -6,6 +6,7 @@ SEISNtime<-function(GH)
   
   w1 = which.min(yd)
 
+  
   ymax = yeardate(rdate$yr,rdate$jd, rdate$hr, rdate$mi,rdate$sec +   GH$info$dt* GH$info$n  )
   
   w2 = which.max(ymax)
