@@ -1,4 +1,4 @@
-aadfd4b8683533c9d2ba7b47b29b5fd0 *DESCRIPTION
+4de9abd4e35a406dead650fe2d9bdf27 *DESCRIPTION
 9e50fd28073aeea5de541850e192830e *NAMESPACE
 112c14e362dd431df085733f9971ce91 *NEWS
 b844c8be886f6cbbb4e9b134967df6eb *R/ASCII.SEISN.R
@@ -208,6 +208,7 @@ d0c73d60de3077a7cac919029520ec1f *R/pickseis24.R
 15415152f4d065c93064a31655f137f7 *R/plotseis24.R
 5cd27165c5971cecfd39963c845919c6 *R/plotwlet.R
 982a96362eb9e565f21002b0e2dc31c5 *R/plt.MTM0.R
+91297a08888c22d4fc4d45a94e340200 *R/posix2RSEIS.R
 cf67ef1c475ca401a4310b371633596c *R/prep1wig.R
 f15371f5d81f8cee21f7412abbbe7454 *R/prepSEIS.R
 3f346b9fca7f5139b7ad811267656c6b *R/pwlet2freqs.R
@@ -495,6 +496,7 @@ e97950c730db88bf4fbb172d69707f98 *man/plotarrivals.Rd
 36bf8a5af84bf5bef889ad80f23898f2 *man/plotseis24.Rd
 420632161fef21344d0069aacdc55bbf *man/plotwlet.Rd
 c5c8c999b754fedabb37afaa4ac9f7ea *man/plt.MTM0.Rd
+2d9520b0e73876328e12c4618d068f53 *man/posix2RSEIS.Rd
 d62999ad682a4bac0399e4df9101b395 *man/prep1wig.Rd
 001b6b4c0d7def2b83a7ffa10d6204f8 *man/prepSEIS.Rd
 e1803b5d2f0f81f3da985585084d9c73 *man/pwlet2freqs.Rd
@@ -570,7 +572,7 @@ d847b07f2e54df4a73bfb6a3c629ed08 *man/xtract.trace.Rd
 4717188723520fc01d75ebd6e5dd175c *man/zlocator.Rd
 e2ada561fbd2ab61f1f023a9a7742399 *src/ARAIC.c
 5688677d0004f58f6d90e8cfe7073817 *src/GetCornerFreq.c
-501246d24f2d3cf25810c05da2b939cb *src/LLNfilt.c
+7ecb8ab08db47d1e8806cad18fa50feb *src/LLNfilt.c
 197f4620a03953d7d3c619c4db622e11 *src/MTAPSRC.c
 52be0f47584e77c4fc8f283c9bc988e0 *src/TTray.c
 ad505caa9e4f09fda103226718e6d3eb *src/defines.h

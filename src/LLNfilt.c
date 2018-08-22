@@ -226,7 +226,7 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 
     /*  following VALGRIND need to have this initialized  */
 
-    strncpy(stype + 3, type, 2);
+    memcpy(stype + 3, type, 2);
     /*  Analog prototype selection */
 
     if (strncmp(aproto, "BU", 2) == 0) {
@@ -318,7 +318,7 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
     nsects = 0;
     if (half << 1 < iord) {
 	p[1].r = (double)-1., p[1].i = (double)0.;
-	strncpy(rtype + 3, "SP", 2);
+	memcpy(rtype + 3, "SP", 2);
 	nsects = 1;
     }
     i__1 = half;
@@ -330,7 +330,7 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 	d__2 = sin(angle);
 	q__1.r = d__1, q__1.i = d__2;
 	p[i__2].r = q__1.r, p[i__2].i = q__1.i;
-        strncpy(rtype + nsects * 3, "CP", 2);
+        memcpy(rtype + nsects * 3, "CP", 2);
     }
     *dcvalue = (double)1.;
     return TRUE;
@@ -433,7 +433,7 @@ double *eps, *ripple;
     nsects = 0;
     i__1 = half;
     for (i = 1; i <= i__1; ++i) {
-	strncpy(rtype + i * 3, "CP", 2);
+	memcpy(rtype + i * 3, "CP", 2);
 	angle = (double) ((i << 1) - 1) * pi / (double) (iord << 1);
 	sigma = -(double)s * sin(angle);
 	omega = c * cos(angle);
@@ -443,7 +443,7 @@ double *eps, *ripple;
 	++(nsects);
     }
     if (half << 1 < iord) {
-	strncpy(rtype + (half + 1) * 3, "SP", 2);
+	memcpy(rtype + (half + 1) * 3, "SP", 2);
 	i__1 = half + 1;
 	d__1 = -(double)s;
 	q__1.r = d__1, q__1.i = (double)0.;
@@ -524,7 +524,7 @@ double a, omegar;
 
 /*  CALCULATE POLES */
 
-	strncpy(rtype + i * 3, "CPZ", 3);
+	memcpy(rtype + i * 3, "CPZ", 3);
 	angle = (double) ((i << 1) - 1) * pi / (double) (iord << 1);
 	alpha = -(double)s * sin(angle);
 	beta = c * cos(angle);
@@ -547,7 +547,7 @@ double a, omegar;
 /*  ODD-ORDER FILTERS */
 
     if (half << 1 < iord) {
-	strncpy(rtype + (half + 1) * 3, "SP", 2);
+	memcpy(rtype + (half + 1) * 3, "SP", 2);
 	i__1 = half + 1;
 	d__1 = -(double)(omegar) / s;
 	q__1.r = d__1, q__1.i = (double)0.;
@@ -1352,52 +1352,52 @@ int iord;
     /* Function Body */
     if (iord == 1) {
 	p[1].r = (double)-1., p[1].i = (double)0.;
-	strncpy(rtype + 3, "SP", 2);
+	memcpy(rtype + 3, "SP", 2);
     } else if (iord == 2) {
 	p[1].r = (double)-1.1016013, p[1].i = (double).6360098;
-	strncpy(rtype + 3, "CP", 2);
+	memcpy(rtype + 3, "CP", 2);
     } else if (iord == 3) {
 	p[1].r = (double)-1.0474091, p[1].i = (double).9992645;
-	strncpy(rtype + 3, "CP", 2);
+	memcpy(rtype + 3, "CP", 2);
 	p[2].r = (double)-1.3226758, p[2].i = (double)0.;
-	strncpy(rtype + 6, "SP", 2);
+	memcpy(rtype + 6, "SP", 2);
     } else if (iord == 4) {
 	p[1].r = (double)-.9952088, p[1].i = (double)1.2571058;
-	strncpy(rtype + 3, "CP", 2);
+	memcpy(rtype + 3, "CP", 2);
 	p[2].r = (double)-1.3700679, p[2].i = (double).4102497;
-	strncpy(rtype + 6, "CP", 2);
+	memcpy(rtype + 6, "CP", 2);
     } else if (iord == 5) {
 	p[1].r = (double)-.9576766, p[1].i = (double)1.4711244;
-	strncpy(rtype + 3, "CP", 2);
+	memcpy(rtype + 3, "CP", 2);
 	p[2].r = (double)-1.3808774, p[2].i = (double).7179096;
-	strncpy(rtype + 6, "CP", 2);
+	memcpy(rtype + 6, "CP", 2);
 	p[3].r = (double)-1.502316, p[3].i = (double)0.;
-	strncpy(rtype + 9, "SP", 2);
+	memcpy(rtype + 9, "SP", 2);
     } else if (iord == 6) {
 	p[1].r = (double)-.9306565, p[1].i = (double)1.6618633;
-	strncpy(rtype + 3, "CP", 2);
+	memcpy(rtype + 3, "CP", 2);
 	p[2].r = (double)-1.3818581, p[2].i = (double).9714719;
-	strncpy(rtype + 6, "CP", 2);
+	memcpy(rtype + 6, "CP", 2);
 	p[3].r = (double)-1.5714904, p[3].i = (double).3208964;
-	strncpy(rtype + 9, "CP", 2);
+	memcpy(rtype + 9, "CP", 2);
     } else if (iord == 7) {
 	p[1].r = (double)-.9098678, p[1].i = (double)1.8364514;
-	strncpy(rtype + 3, "CP", 2);
+	memcpy(rtype + 3, "CP", 2);
 	p[2].r = (double)-1.3789032, p[2].i = (double)1.1915667;
-	strncpy(rtype + 6, "CP", 2);
+	memcpy(rtype + 6, "CP", 2);
 	p[3].r = (double)-1.6120388, p[3].i = (double).5892445;
-	strncpy(rtype + 9, "CP", 2);
+	memcpy(rtype + 9, "CP", 2);
 	p[4].r = (double)-1.6843682, p[4].i = (double)0.;
-	strncpy(rtype + 12, "SP", 2);
+	memcpy(rtype + 12, "SP", 2);
     } else if (iord == 8) {
 	p[1].r = (double)-.892871, p[1].i = (double)1.9983286;
-	strncpy(rtype + 3, "CP", 2);
+	memcpy(rtype + 3, "CP", 2);
 	p[2].r = (double)-1.3738431, p[2].i = (double)1.3883585;
-	strncpy(rtype + 6, "CP", 2);
+	memcpy(rtype + 6, "CP", 2);
 	p[3].r = (double)-1.6369417, p[3].i = (double).8227968;
-	strncpy(rtype + 9, "CP", 2);
+	memcpy(rtype + 9, "CP", 2);
 	p[4].r = (double)-1.7574108, p[4].i = (double).2728679;
-	strncpy(rtype + 12, "CP", 2);
+	memcpy(rtype + 12, "CP", 2);
     }
     nsects = iord - iord / 2;
     *dcvalue = (double)1.;
@@ -1514,11 +1514,11 @@ char ktype[3], kproto[3];
 
 
 
-/*     strncpy(kproto,"BU\0",3); */
-/*    strncpy(ktype,"LP\0",3); */
+/*     memcpy(kproto,"BU\0",3); */
+/*    memcpy(ktype,"LP\0",3); */
 
-   strncpy(kproto,aproto[0],3);
-   strncpy(ktype,type[0],3);
+   memcpy(kproto,aproto[0],3);
+   memcpy(ktype,type[0],3);
 
 
 
