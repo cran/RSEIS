@@ -4,23 +4,38 @@ function()
     ## set up a list of instruments from passcal Guralp
 ###  usage    Kal = PreSet.Instr()
 
-    types = c("40T", "3T", "L28", "LE3D20s", "GEOSP1", "CMG3ESPC" ,  "60T", "TRIL120" )
+
+##### one should really read the RESP files for more details.
+
+    types = c("40T", "3T", "L28", "LE3D20s", "GEOSP1", "CMG3ESPC" ,  "60T", "TRIL120", "COLT" )
     
     K = as.list(types)
 
+###     I think these are wrong - I do not know where they came from.
+###     CMG40TPASS=c(
+###       "ZEROS 2",
+###       "0.0000E+00 0.0000E+00",
+###       "0.0000E+00 0.0000E+00",
+###       "POLES 3",
+###       "-0.1480E+00 0.1480E+00",
+###       "-0.1480E+00 -0.1480E+00",
+###       "-50.0 0.0",
+###         "CONSTANT 1.0",
+###         "SENSE 800")
 
-    CMG40TPASS=c(
-      "ZEROS 2",
-      "0.0000E+00 0.0000E+00",
-      "0.0000E+00 0.0000E+00",
-      "POLES 3",
-      "-0.1480E+00 0.1480E+00",
-      "-0.1480E+00 -0.1480E+00",
-      "-50.0 0.0",
-      "CONSTANT 1.0",
-      "SENSE 800")
 
-    CMG40T=c(
+CMG40T  = c(
+'ZEROS 2',
+'0.0000E+00 0.0000E+00',
+'0.0000E+00 0.0000E+00',
+'POLES 2',
+'-0.1481E+00 0.1481E+00',
+'-0.1481E+00 -0.1481E+00',
+'CONSTANT 1.0',
+    'SENSE 800')
+
+    
+    CMG40T.OLD=c(
       "ZEROS 3",
       "0.0000E+00 0.0000E+00",
       "0.0000E+00 0.0000E+00",
@@ -56,7 +71,7 @@ function()
       "-160 0",
       "-80  0",
       "-180 0",
-      "CONSTANT 14476458.95",
+      "CONSTANT 2314285.15948954",
       "SENSE 1962")
     
     CMG60T=c(
@@ -69,7 +84,7 @@ function()
       "-160 0",
       "-80  0",
       "-180 0",
-      "CONSTANT 14476458.95",
+      "CONSTANT 2314285.15948954",
       "SENSE 1962")
     
 
@@ -80,7 +95,7 @@ function()
       "POLES 2",
       "-19.99E+00 19.99E+00",
       "-19.99E+00 -19.99E+00",
-      "CONSTANT 1",
+      "CONSTANT 20.268661212834",
       "SENSE 30.4")
     
     CMG3T=c(   
@@ -163,6 +178,22 @@ TRIL120 = c("ZEROS 5",
     "CONSTANT 1",
     "SENSE 700.7874"
     )
+
+
+    COLT.SAC.format<- c(
+        "ZEROS 2",
+        "0.0000E+00 0.0000E+00",
+        "0.0000E+00 0.0000E+00",
+        "POLES 6",
+        "-0.0370200000000012 0.0370340329966913",
+        "-0.0370199999999988 -0.0370340329966913",
+        "-384.0406 628.752588504922",
+        "-384.0406 -628.752588504922",
+        "389.7902 0",
+        "2.671646e+13 0",
+        "CONSTANT 5.653370e+021",
+        "SENSE 2000")
+    
     
 
     
@@ -174,8 +205,13 @@ TRIL120 = c("ZEROS 5",
     K[[6]] = ReadSet.Instr(CMG3ESPC)
     K[[7]] = ReadSet.Instr(CMG60T)
     K[[8]] = ReadSet.Instr(TRIL120)
+    K[[9]] = ReadSet.Instr(COLT.SAC.format)
+    
 
     names(K) = types
+
+
+    
     ##  Others?
     return(K)
   }

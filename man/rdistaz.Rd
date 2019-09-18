@@ -18,7 +18,7 @@ rdistaz(olat, olon, tlat, tlon)
   List:
   \item{del}{Delta, angle in degrees}
   \item{az}{Azimuth, angle in degrees}
-  \item{baz}{Back-Azimuth, (az+180) in degrees}
+  \item{baz}{Back Azimuth, angle in degrees from target to origin}
   \item{dist}{Distance in km}
   \item{err}{0 or 1, error flag.  0=error, 1=no error, see details}
   

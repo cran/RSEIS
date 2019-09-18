@@ -1,7 +1,8 @@
-4de9abd4e35a406dead650fe2d9bdf27 *DESCRIPTION
+7e156f0ed57c71794e91635eb97f5c21 *DESCRIPTION
 9e50fd28073aeea5de541850e192830e *NAMESPACE
 112c14e362dd431df085733f9971ce91 *NEWS
 b844c8be886f6cbbb4e9b134967df6eb *R/ASCII.SEISN.R
+0d255bff6fd424a447482b0e2d14deec *R/AUGMENTbutfilt.R
 86ba5eabfd5472dc859d9ac977a9b258 *R/BUTREPLOT.R
 774ef19521ad8912ace43de9120a9dde *R/CHOP.SEISN.R
 924c47a869fa0a0d01d9fdc51e8ab3d2 *R/COMPorder.R
@@ -60,7 +61,7 @@ c260effb6bd7ad3f791a1ce0f5c4e172 *R/PLOT.ALLPX.R
 f553768275b446cdcf0c2cb5da544349 *R/PPIX.R
 604ee5770fb56a21d39ac989775eae61 *R/PSTLTcurve.R
 c99243d5f0241d03c4d79b7037e2b4c8 *R/PickWIN.R
-ed9721da28b09b326171e63398a834dd *R/PreSet.Instr.R
+aeeac0a704ab8df06b915e9838e9d218 *R/PreSet.Instr.R
 dd78ea0a5d1d8fcbb32018a65a0be047 *R/Put1Dvel.R
 53b3e4e123877cdafbea6fd5d1ee4f1d *R/Ray.time1D.R
 07059c11d65cefac275efd275ad68479 *R/ReadInstr.R
@@ -224,6 +225,7 @@ d5ca4c80ca153f88c0b69358d6e9eef9 *R/repairWPX.R
 4fb22865425447d21e6d04e05e64807d *R/replaceWPX.R
 9393c6a676d2097230fc5c58c24a87c9 *R/rseis2sac.R
 730fdb7c1695b75b93b07d82a269f225 *R/rseis2segy.R
+dd44b84d91a15cc366b9a60f05ae96b2 *R/rseis2ts.R
 e0482ff001083c3fbabbd2ddd4cd3b5b *R/rsspec.taper.R
 42577ed72672f2a44f07e30db3ae34f3 *R/ruler.R
 f2f240cd93015ce6f4629fcaa1871059 *R/sac2rseis.R
@@ -285,6 +287,7 @@ d45a01f3ae75c60328dad6603d768905 *data/GH.RData
 9de5f3a990c5cf92cd0d4e7542ecfddb *data/KH.RData
 8a35679cf2d553d7948306f036e857f0 *data/OH.RData
 1f9ff62e4ecc232b3c57ce9877fc7211 *data/VELMOD1D.RData
+2004f73b6532841459ce6b493a414cc8 *data/datalist
 b886229dd71960bc65b4f6e3322cda86 *demo/00Index
 3629e676d51b9500602856fafb3d753b *demo/COSO.R
 aa87f94bf286f851f6d0299e18015502 *demo/FILT.R
@@ -300,6 +303,7 @@ a8f3391ad9f7d93561580d7c40d444c4 *inst/vignettes/rseis.R
 c2eed0689abd92bc78f915b27fc4f6db *inst/vignettes/rseis.Rnw
 6c2820d53c8fbe23d11eb1a4a68132f7 *inst/vignettes/rseis.pdf
 320413563724f1905ea8dd398d0eea47 *man/ASCII.SEISN.Rd
+dacc124e424830a1e62e71e6ab040533 *man/AUGMENTbutfilt.Rd
 b2de15faf030d1386f70a199db0615ba *man/BUTREPLOT.Rd
 d4ae86429c1a1103256fee2af93bf179 *man/CE1.Rd
 b984a345e2ed2226c9a5b22a7c201ac8 *man/CHOP.SEISN.Rd
@@ -393,7 +397,7 @@ c75fba21c005ff7e1dbb177c6dbab74b *man/autoreg.Rd
 642b860f9c41cef097550636e4db17e9 *man/brune.doom.Rd
 9e58eb01904b862e7b4931976288dabd *man/brune.func.Rd
 4b61961eebdb3ae42fa6d4b6a08efae4 *man/brune.search.Rd
-7852724ee14faed586cdfd25020119b1 *man/butfilt.Rd
+8a78554f73b794e55f3eb92942162dc8 *man/butfilt.Rd
 5a0bbc0331766b35b2705dcc99f27b84 *man/catWPX.Rd
 d82b289f8f4de91c9fbaf007a70c6e73 *man/checkWPX.Rd
 69f086095b984e20fe6725374ca5566f *man/choosfilt.Rd
@@ -502,13 +506,14 @@ d62999ad682a4bac0399e4df9101b395 *man/prep1wig.Rd
 e1803b5d2f0f81f3da985585084d9c73 *man/pwlet2freqs.Rd
 19b330685d16553d683197689902d211 *man/rDUMPLOC.Rd
 2ac41a611194bb10f95e4d5d986618b0 *man/rangedatetime.Rd
-7344b3f8b8dee5b3a801feb4dd4f43e5 *man/rdistaz.Rd
+93f37b6f74a55acf449197e91db5b1d9 *man/rdistaz.Rd
 4e907e938909dd2883acfa2c1bb50585 *man/read1segy.Rd
 9af5b74aea205ad7bb27e628aee685d3 *man/readUW.OSTAS.Rd
 25702b70f066b54ae435117ec1dea898 *man/recdate.Rd
 9527f33600be11b1de38be33c80f9679 *man/repairWPX.Rd
 573bd5921b967356e2bec81be00d2e4c *man/replaceWPX.Rd
 73d7b09bab18f28c1a8de23df79f7a81 *man/rseis2segy.Rd
+4c652ca0a39d06718f1a4cde66696f16 *man/rseis2ts.Rd
 473dc0bcd96bedefe4d4d9095b8c3b3e *man/rsspec.taper.Rd
 7f18a48d7e053300699374bdaf52060a *man/ruler.Rd
 6e9cddde592b95a85ee8497877459546 *man/save.wpix.Rd
@@ -572,14 +577,14 @@ d847b07f2e54df4a73bfb6a3c629ed08 *man/xtract.trace.Rd
 4717188723520fc01d75ebd6e5dd175c *man/zlocator.Rd
 e2ada561fbd2ab61f1f023a9a7742399 *src/ARAIC.c
 5688677d0004f58f6d90e8cfe7073817 *src/GetCornerFreq.c
-7ecb8ab08db47d1e8806cad18fa50feb *src/LLNfilt.c
+a4a9aa532d6bbb579764822e8c632cfb *src/LLNfilt.c
 197f4620a03953d7d3c619c4db622e11 *src/MTAPSRC.c
 52be0f47584e77c4fc8f283c9bc988e0 *src/TTray.c
 ad505caa9e4f09fda103226718e6d3eb *src/defines.h
 84f6eba99f70e583ddf40bbcd96b9802 *src/init.c
 f50c2847945ae7013551148e6739505a *src/jl.h
 ce8fa14d183bb51d3b9ab9c6092c8ec4 *src/jlproto.h
-472afc7f207dfbe9f84bd92a9c310722 *src/jpiki.c
+7af744cc11d5ee8064f35464590811e6 *src/jpiki.c
 96bff886782358781e6206ebbe2d1a0f *src/jpiki.h
 6b1c0bd7372c39c81139d1f5c9a56ddf *src/sac.h
 b425a5c0cb1e3e0ef56091ef9e4204fa *src/segy.h

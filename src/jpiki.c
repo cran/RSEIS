@@ -1,6 +1,12 @@
 /* Routine to do detailed picking on integer seismogram */
 /* This routine is stand-alone portable */
 
+
+/*  an attempt was made to remove all 'adjustments'  */
+/*  this is because CRAN was complaining about this  */
+/*   JML Sun Sep 15 11:47:17 EDT 2019  */
+
+
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -114,27 +120,27 @@ static int ifilt(int *din, int ld, int *dout, int *fil, int lf)
     float wt;
     int lf2, sum;
     /* Parameter adjustments */
-    --fil;
-    --dout;
-    --din;
+    /* --fil; */
+    /* --dout; */
+    /* --din; */
 
     /* Function Body */
     sum = 0;
-    for (i = 1; i <= lf; ++i) {
+    for (i = 0; i < lf; ++i) {
 	sum += fil[i];
     }
     wt = (float)1. / (float) sum;
     lf2 = lf / 2;
 /* perform actual filtering loop */
-    for (i = lf2 + 1; i <= ld-lf2; ++i) {
+    for (i = lf2 ; i < ld-lf2; ++i) {
 	sum = 0;
-	for (j = 1; j <= lf; ++j) {
+	for (j = 0; j < lf; ++j) {
 	    sum += fil[j] * din[i + j - lf2 - 1];
 	}
 	dout[i] = (float) sum * wt;
     }
 /* now fill out endpoints */
-    for (i = 1; i <= lf2; ++i) {
+    for (i = 0; i < lf2; ++i) {
 	dout[i] = dout[lf2 + 1];
 	dout[ld - i + 1] = dout[ld - lf2];
     }
@@ -164,7 +170,7 @@ static int gtpol(int *x, int lx, int pikpos)
     float ratio, sum1, sum2;
 
     /* Parameter adjustments */
-    --x;
+    /* --x; */
 
     /* Function Body */
 /* If not enough room, return with zero return value */
@@ -172,7 +178,7 @@ static int gtpol(int *x, int lx, int pikpos)
 
 /* pull out window of 23 points around pick */
     for (i = -11; i <= 11; ++i) {
-	zz[i + 11] = x[pikpos + i];
+	zz[i + 11] = x[pikpos + i-1];
     }
 /* filter the seismogram with low pass filter */
     ifilt(zz, 23, zzz, fil, nf);
@@ -254,8 +260,8 @@ static int hpfil(float *data, int *ndata, float *fdata) /* High pass filter */
     double out;
 
     /* Parameter adjustments */
-    --fdata;
-    --data;
+    /* --fdata; */
+    /* --data; */
 
 /*  FILTER DATA - FORWARD DIRECTION */
 
@@ -268,12 +274,12 @@ static int hpfil(float *data, int *ndata, float *fdata) /* High pass filter */
 
 /*  INITIALIZE POINTER */
 
-    point = 1;
+    point = 0;
 
 /*  LOOP */
 
 L5:
-    if (point > *ndata) {
+    if (point >= *ndata) {
 	goto L6;
     }
 
@@ -333,8 +339,8 @@ int fbrat(int *seis, float *fbcurv, int npts,
 
 
     /* Parameter adjustments - holdover from Fortran */
-    --fbcurv;
-    --seis;
+    /* --fbcurv; */
+    /* --seis; */
 
     /* Function Body */
     beg = 1;
@@ -345,7 +351,7 @@ int fbrat(int *seis, float *fbcurv, int npts,
 
     /* Set ratio curve to one before beginning. */
 
-    for (winpt = 1; winpt <= begpt-1; ++winpt) {
+    for (winpt = 0; winpt < begpt-1; ++winpt) {
 	fbcurv[winpt] = (float)(1.0);
     }
 
@@ -357,12 +363,12 @@ int fbrat(int *seis, float *fbcurv, int npts,
     fbox = 0;
     bbox = 0;
 
-    for (i = 1; i <= fwlen; ++i) {
+    for (i = 0; i < fwlen; ++i) {
 	ftri += i * (tmp1 = seis[begpt+fwlen-i], ABS(tmp1));
 	fbox += (tmp1 = seis[begpt+fwlen-i], ABS(tmp1));
     }
 
-    for (i = 1; i <= bwlen; ++i) {
+    for (i = 0; i < bwlen; ++i) {
 	btri += i * (tmp1 = seis[begpt-bwlen+i], ABS(tmp1));
 	bbox += (tmp1 = seis[begpt-bwlen+i], ABS(tmp1));
     }
@@ -377,7 +383,7 @@ int fbrat(int *seis, float *fbcurv, int npts,
 
     /* Compute ratio curve using fast tanking algorithm */
 
-    for (winpt = begpt + 1; winpt <= endpt; ++winpt) {
+    for (winpt = begpt ; winpt < endpt; ++winpt) {
         tmp1 = abs(seis[winpt-1]);
         tmp2 = abs(seis[winpt+fwlen-1]);
 	ftri -= fwlen * tmp1;
@@ -396,13 +402,13 @@ int fbrat(int *seis, float *fbcurv, int npts,
     }
 
     /* Set ratio curve to one after end */
-    for (winpt = endpt + 1; winpt <= npts; ++winpt) {
+    for (winpt = endpt ; winpt < npts; ++winpt) {
        fbcurv[winpt] = (float)(1.0);
     }
 
     /* Comput log if requested */
     if (logflg) {
-	for (winpt = 1; winpt <= npts; ++winpt) {
+	for (winpt = 0; winpt < npts; ++winpt) {
 	    fbcurv[winpt] = log10((double)fbcurv[winpt]);
 	}
     }
@@ -550,19 +556,19 @@ int dfbrat(double *seis, double *fbcurv, int npts,
 /* 	       } */
 
     /* Parameter adjustments - holdover from Fortran */
-    --fbcurv;
-    --seis;
+    /* --fbcurv; */
+    /* --seis; */
 
     /* Function Body */
-    beg = 1;
-    end = npts;
+    beg = 0;
+    end = npts-1;
     begpt = MAX(beg,bwlen);
     endpt = MIN(end, npts-fwlen+1);
     tscale = (float)(bwlen*(bwlen+1)) / (float)(fwlen*(fwlen+1));
 
     /* Set ratio curve to one before beginning. */
 
-    for (winpt = 1; winpt <= begpt-1; ++winpt) {
+    for (winpt = 0; winpt < begpt-1; ++winpt) {
 	fbcurv[winpt] = 1.;
     }
 
@@ -573,11 +579,11 @@ int dfbrat(double *seis, double *fbcurv, int npts,
     btri = 0;
     fbox = 0;
     bbox = 0;
-    for (i = 1; i <= fwlen; ++i) {
+    for (i = 0; i < fwlen; ++i) {
 	ftri += i * (tmp1 = seis[begpt+fwlen-i], ABS(tmp1));
 	fbox += (tmp1 = seis[begpt+fwlen-i], ABS(tmp1));
     }
-    for (i = 1; i <= bwlen; ++i) {
+    for (i = 0; i < bwlen; ++i) {
 	btri += i * (tmp1 = seis[begpt-bwlen+i], ABS(tmp1));
 	bbox += (tmp1 = seis[begpt-bwlen+i], ABS(tmp1));
     }
@@ -589,7 +595,7 @@ int dfbrat(double *seis, double *fbcurv, int npts,
 
     /* Compute ratio curve using fast tanking algorithm */
 
-    for (winpt = begpt + 1; winpt <= endpt; ++winpt) {
+    for (winpt = begpt ; winpt < endpt; ++winpt) {
         tmp1 = fabs(seis[winpt-1]);
         tmp2 = fabs(seis[winpt+fwlen-1]);
 	ftri -= fwlen * tmp1;
@@ -608,13 +614,13 @@ int dfbrat(double *seis, double *fbcurv, int npts,
     }
 
     /* Set ratio curve to one after end */
-    for (winpt = endpt + 1; winpt <= npts; ++winpt) {
+    for (winpt = endpt ; winpt < npts; ++winpt) {
 	fbcurv[winpt] = 1.0;
     }
 
     /* Comput log if requested */
     if (logflg) {
-	for (winpt = 1; winpt <= npts; ++winpt) {
+	for (winpt = 0; winpt < npts; ++winpt) {
 	    fbcurv[winpt] = log10((double)fbcurv[winpt]);
 	}
     }

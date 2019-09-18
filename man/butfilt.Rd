@@ -3,7 +3,7 @@
 
 \title{Butterworth filter}
 \description{
- design and apply butterworth low/high/band pass filters.
+ Design and apply butterworth low/high/band pass filters.
 }
 \usage{
 butfilt(a, fl=0, fh=0.5, deltat=1, type="BP", proto="BU",
@@ -55,6 +55,7 @@ Filtered time series.
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
+\seealso{AUGMENTbutfilt}
 
 \examples{
 data(CE1)

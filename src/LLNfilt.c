@@ -1,6 +1,21 @@
 #include <stdlib.h>
 #include <R.h> 
 
+
+/*  an attempt was made to remove all 'adjustments'  */
+/*  this is because CRAN was complaining about this  */
+/*   JML Sun Sep 15 11:47:17 EDT 2019  */
+
+/*** CRAN was complaining about the array adjustments - 
+apparently their compilers saw this and thought we might be going off
+the end of the array (which we were not) - so they put out a WARNING.
+
+I tried to fix this by (mostly) subtracting off 1 from the array parameters.
+in the case of rtype - i had to be careful i*3 etc....
+****/
+
+
+
 /*
 #ifdef MAC
 #include <sys/malloc.h>
@@ -121,8 +136,10 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
     double b0, b1, b2, a1, a2, x1, x2, y1, y2, output;
 
     /* Parameter adjustments */
-    --data;
+    /* --data;   I removed this 2019-09-15 and sutracted 1 from data[i] */
+    /*** watch for any loops: subtract 1 from i   */
 
+    
     /* Function Body */
     jptr = 1;
     i__1 = nsects;
@@ -144,13 +161,13 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
   
 
 	for (i = 1; i <= i__2; ++i) {
-	    output = b0 * data[i] + b1 * x1 + b2 * x2;
+	    output = b0 * data[i-1] + b1 * x1 + b2 * x2;
 	    output -= a1 * y1 + a2 * y2;
 	    y2 = y1;
 	    y1 = output;
 	    x2 = x1;
-	    x1 = data[i];
-	    data[i] = output;
+	    x1 = data[i-1];
+	    data[i-1] = output;
 	}
 	jptr += 3;
     }
@@ -168,13 +185,13 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 	    a1 = sd[jptr + 1];
 	    a2 = sd[jptr + 2];
 	    for (i = nsamps; i >= 1; --i) {
-		output = b0 * data[i] + b1 * x1 + b2 * x2;
+		output = b0 * data[i-1] + b1 * x1 + b2 * x2;
 		output -= a1 * y1 + a2 * y2;
 		y2 = y1;
 		y1 = output;
 		x2 = x1;
-		x1 = data[i];
-		data[i] = output;
+		x1 = data[i-1];
+		data[i-1] = output;
 	    }
 	    jptr += 3;
 	}
@@ -224,6 +241,8 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
     double omegar, ripple;
     double fhw, eps, flw, dcvalue;
 
+    /**  stype is set up to have 10 3-char types in it  - these are passed to the various subs (as rtype) ***/
+    
     /*  following VALGRIND need to have this initialized  */
 
     memcpy(stype + 3, type, 2);
@@ -304,9 +323,10 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
     int half, k;
     double angle, pi;
 
+    /***   MODIFIED JML: 2019-09-15  **/
     /* Parameter adjustments */
-    rtype -= 3;
-    --p;
+    /* rtype -= 3 */;
+    /* --p; */
 
     /* Function Body */
     pi = (double)3.14159265;
@@ -317,8 +337,8 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 
     nsects = 0;
     if (half << 1 < iord) {
-	p[1].r = (double)-1., p[1].i = (double)0.;
-	memcpy(rtype + 3, "SP", 2);
+	p[0].r = (double)-1., p[0].i = (double)0.;
+	memcpy(rtype, "SP", 2);
 	nsects = 1;
     }
     i__1 = half;
@@ -329,8 +349,8 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 	d__1 = cos(angle);
 	d__2 = sin(angle);
 	q__1.r = d__1, q__1.i = d__2;
-	p[i__2].r = q__1.r, p[i__2].i = q__1.i;
-        memcpy(rtype + nsects * 3, "CP", 2);
+	p[i__2-1].r = q__1.r, p[i__2-1].i = q__1.i;
+        memcpy(rtype + (nsects-1) * 3, "CP", 2);
     }
     *dcvalue = (double)1.;
     return TRUE;
@@ -412,9 +432,10 @@ double *eps, *ripple;
     int i;
     double gamma, s, angle, omega, sigma, pi;
 
+    /***   MODIFIED JML: 2019-09-15  **/
     /* Parameter adjustments */
-    rtype -= 3;
-    --p;
+    /* rtype -= 3; */
+    /* --p; */
 
     /* Function Body */
     pi = (double)3.14159265;
@@ -433,13 +454,13 @@ double *eps, *ripple;
     nsects = 0;
     i__1 = half;
     for (i = 1; i <= i__1; ++i) {
-	memcpy(rtype + i * 3, "CP", 2);
+      memcpy(rtype + (i-1) * 3, "CP", 2);
 	angle = (double) ((i << 1) - 1) * pi / (double) (iord << 1);
 	sigma = -(double)s * sin(angle);
 	omega = c * cos(angle);
 	i__2 = i;
 	q__1.r = sigma, q__1.i = omega;
-	p[i__2].r = q__1.r, p[i__2].i = q__1.i;
+	p[i__2-1].r = q__1.r, p[i__2-1].i = q__1.i;
 	++(nsects);
     }
     if (half << 1 < iord) {
@@ -447,7 +468,7 @@ double *eps, *ripple;
 	i__1 = half + 1;
 	d__1 = -(double)s;
 	q__1.r = d__1, q__1.i = (double)0.;
-	p[i__1].r = q__1.r, p[i__1].i = q__1.i;
+	p[i__1-1].r = q__1.r, p[i__1-1].i = q__1.i;
 	++(nsects);
 	*dcvalue = (double)1.;
     } else {
@@ -502,10 +523,11 @@ double a, omegar;
     int i;
     double gamma, s, alpha, angle, omega, sigma, denom, pi;
 
+    /***   MODIFIED JML: 2019-09-15  **/
     /* Parameter adjustments */
-    rtype -= 3;
-    --z;
-    --p;
+    /* rtype -= 3; */
+    /* --z; */
+    /* --p; */
 
     /* Function Body */
     pi = (double)3.14159265;
@@ -524,7 +546,7 @@ double a, omegar;
 
 /*  CALCULATE POLES */
 
-	memcpy(rtype + i * 3, "CPZ", 3);
+      memcpy(rtype + (i-1) * 3, "CPZ", 3);
 	angle = (double) ((i << 1) - 1) * pi / (double) (iord << 1);
 	alpha = -(double)s * sin(angle);
 	beta = c * cos(angle);
@@ -533,25 +555,25 @@ double a, omegar;
 	omega = -(double)(omegar) * beta / denom;
 	i__2 = i;
 	q__1.r = sigma, q__1.i = omega;
-	p[i__2].r = q__1.r, p[i__2].i = q__1.i;
+	p[i__2-1].r = q__1.r, p[i__2-1].i = q__1.i;
 
 /*  CALCULATE ZEROS */
 
 	omega = omegar / cos(angle);
 	i__2 = i;
 	q__1.r = (double)0., q__1.i = omega;
-	z[i__2].r = q__1.r, z[i__2].i = q__1.i;
+	z[i__2-1].r = q__1.r, z[i__2-1].i = q__1.i;
 	++(nsects);
     }
 
 /*  ODD-ORDER FILTERS */
 
     if (half << 1 < iord) {
-	memcpy(rtype + (half + 1) * 3, "SP", 2);
+	memcpy(rtype + (half ) * 3, "SP", 2);
 	i__1 = half + 1;
 	d__1 = -(double)(omegar) / s;
 	q__1.r = d__1, q__1.i = (double)0.;
-	p[i__1].r = q__1.r, p[i__1].i = q__1.i;
+	p[i__1-1].r = q__1.r, p[i__1-1].i = q__1.i;
 	++(nsects);
     }
 
@@ -609,10 +631,11 @@ double *fl, *fh;
     complex z1, z2;
     double pi;
 
+    /***   MODIFIED JML: 2019-09-15  **/
     /* Parameter adjustments */
-    rtype -= 3;
-    --z;
-    --p;
+    /* rtype -= 3; */
+    /* --z; */
+    /* --p; */
 
     /* Function Body */
     pi = (double)3.14159265;
@@ -630,9 +653,9 @@ double *fl, *fh;
     /* REprintf( "lptbp %s %d\n", rtype, n); */
 
     for (i = 1; i <= i__1; ++i) {
-	if (strncmp(rtype + i * 3, "CPZ", 3) == 0) {
+      if (strncmp(rtype + (i-1) * 3, "CPZ", 3) == 0) {
 	    i__2 = i;
-	    q__3.r = b * z[i__2].r, q__3.i = b * z[i__2].i;
+	    q__3.r = b * z[i__2-1].r, q__3.i = b * z[i__2-1].i;
             q__2 = cpowi(q__3, 2);
 	    d__1 = a * (double)4.;
 	    q__1.r = q__2.r - d__1, q__1.i = q__2.i;
@@ -640,17 +663,17 @@ double *fl, *fh;
             q__1 = jcsqrt(ctemp);
 	    ctemp.r = q__1.r, ctemp.i = q__1.i;
 	    i__2 = i;
-	    q__3.r = b * z[i__2].r, q__3.i = b * z[i__2].i;
+	    q__3.r = b * z[i__2-1].r, q__3.i = b * z[i__2-1].i;
 	    q__2.r = q__3.r + ctemp.r, q__2.i = q__3.i + ctemp.i;
 	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    z1.r = q__1.r, z1.i = q__1.i;
 	    i__2 = i;
-	    q__3.r = b * z[i__2].r, q__3.i = b * z[i__2].i;
+	    q__3.r = b * z[i__2-1].r, q__3.i = b * z[i__2-1].i;
 	    q__2.r = q__3.r - ctemp.r, q__2.i = q__3.i - ctemp.i;
 	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    z2.r = q__1.r, z2.i = q__1.i;
 	    i__2 = i;
-	    q__3.r = b * p[i__2].r, q__3.i = b * p[i__2].i;
+	    q__3.r = b * p[i__2 - 1 ].r, q__3.i = b * p[i__2 - 1 ].i;
             q__2 = cpowi(q__3, 2);
 	    d__1 = a * (double)4.;
 	    q__1.r = q__2.r - d__1, q__1.i = q__2.i;
@@ -658,12 +681,12 @@ double *fl, *fh;
             q__1 = jcsqrt(ctemp);
 	    ctemp.r = q__1.r, ctemp.i = q__1.i;
 	    i__2 = i;
-	    q__3.r = b * p[i__2].r, q__3.i = b * p[i__2].i;
+	    q__3.r = b * p[i__2 - 1 ].r, q__3.i = b * p[i__2 - 1 ].i;
 	    q__2.r = q__3.r + ctemp.r, q__2.i = q__3.i + ctemp.i;
 	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    p1.r = q__1.r, p1.i = q__1.i;
 	    i__2 = i;
-	    q__3.r = b * p[i__2].r, q__3.i = b * p[i__2].i;
+	    q__3.r = b * p[i__2 - 1 ].r, q__3.i = b * p[i__2 - 1 ].i;
 	    q__2.r = q__3.r - ctemp.r, q__2.i = q__3.i - ctemp.i;
 	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    p2.r = q__1.r, p2.i = q__1.i;
@@ -694,9 +717,9 @@ double *fl, *fh;
 	    sd[iptr + 2] = (double)1.;
 	    iptr += 3;
 	    nsects += 2;
-	} else if (strncmp(rtype + i * 3, "CP", 2) == 0) {
+      } else if (strncmp(rtype + (i-1) * 3, "CP", 2) == 0) {
 	    i__2 = i;
-	    q__3.r = b * p[i__2].r, q__3.i = b * p[i__2].i;
+	    q__3.r = b * p[i__2 - 1 ].r, q__3.i = b * p[i__2 - 1 ].i;
             q__2 = cpowi(q__3, 2);
 	    d__1 = a * (double)4.;
 	    q__1.r = q__2.r - d__1, q__1.i = q__2.i;
@@ -704,12 +727,12 @@ double *fl, *fh;
             q__1 = jcsqrt(ctemp);
 	    ctemp.r = q__1.r, ctemp.i = q__1.i;
 	    i__2 = i;
-	    q__3.r = b * p[i__2].r, q__3.i = b * p[i__2].i;
+	    q__3.r = b * p[i__2 - 1 ].r, q__3.i = b * p[i__2 - 1 ].i;
 	    q__2.r = q__3.r + ctemp.r, q__2.i = q__3.i + ctemp.i;
 	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    p1.r = q__1.r, p1.i = q__1.i;
 	    i__2 = i;
-	    q__3.r = b * p[i__2].r, q__3.i = b * p[i__2].i;
+	    q__3.r = b * p[i__2 - 1 ].r, q__3.i = b * p[i__2 - 1 ].i;
 	    q__2.r = q__3.r - ctemp.r, q__2.i = q__3.i - ctemp.i;
 	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    p2.r = q__1.r, p2.i = q__1.i;
@@ -734,13 +757,13 @@ double *fl, *fh;
 	    sd[iptr + 2] = (double)1.;
 	    iptr += 3;
 	    nsects += 2;
-	} else if (strncmp(rtype + i * 3, "SP", 2) == 0) {
+      } else if (strncmp(rtype + (i-1) * 3, "SP", 2) == 0) {
 	    sn[iptr] = (double)0.;
 	    sn[iptr + 1] = b;
 	    sn[iptr + 2] = (double)0.;
 	    sd[iptr] = a;
 	    i__2 = i;
-	    sd[iptr + 1] = -(double)b * p[i__2].r;
+	    sd[iptr + 1] = -(double)b * p[i__2 - 1 ].r;
 	    sd[iptr + 2] = (double)1.;
 	    iptr += 3;
 	    ++(nsects);
@@ -821,16 +844,16 @@ double *fl, *fh;
     double scale;
 
     /* Parameter adjustments */
-    --sd;
-    --sn;
-    rtype -= 3;
-    --z;
-    --p;
+    /* --sd; */
+    /* --sn; */
+    /* rtype -= 3; */
+    /* --z; */
+    /* --p; */
     
     /* Function Body */
-    iptr = 1;
+    iptr = 0;
     i__1 = nsects;
-    for (i = 1; i <= i__1; ++i) {
+    for (i = 0; i < i__1; ++i) {
 	if (strncmp(rtype + i * 3, "CPZ", 3) == 0) {
 	    i__2 = i;
 	    q__2 = conjg(p[i]);
@@ -889,9 +912,9 @@ double *fl, *fh;
 	    iptr += 3;
 	}
     }
+    sn[0] = *dcvalue * sn[0];
     sn[1] = *dcvalue * sn[1];
     sn[2] = *dcvalue * sn[2];
-    sn[3] = *dcvalue * sn[3];
     return TRUE;
 }
 
@@ -942,12 +965,13 @@ double *fl, *fh, *sn, *sd;
     complex z1, z2;
     double pi;
 
+    /***   MODIFIED JML: 2019-09-15  **/
     /* Parameter adjustments */
-    --sd;
-    --sn;
-    rtype -= 3;
-    --z;
-    --p;
+    /* --sd; */
+    /* --sn; */
+    /* rtype -= 3; */
+    /* --z; */
+    /* --p; */
 
     /* Function Body */
     pi = (double)3.14159265;
@@ -961,8 +985,8 @@ double *fl, *fh, *sn, *sd;
     iptr = 1;
     i__1 = n;
     for (i = 1; i <= i__1; ++i) {
-	if (strncmp(rtype + i * 3, "CPZ", 3) == 0) {
-	    q__1 = cdiv(c_b43, z[i]);
+      if (strncmp(rtype + (i-1) * 3, "CPZ", 3) == 0) {
+	    q__1 = cdiv(c_b43, z[i-1]);
 	    cinv.r = q__1.r, cinv.i = q__1.i;
 	    q__3.r = b * cinv.r, q__3.i = b * cinv.i;
             q__2 = cpowi(q__3, 2);
@@ -979,7 +1003,7 @@ double *fl, *fh, *sn, *sd;
 	    q__2.r = q__3.r - ctemp.r, q__2.i = q__3.i - ctemp.i;
 	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    z2.r = q__1.r, z2.i = q__1.i;
-	    q__1 = cdiv(c_b43, p[i]);
+	    q__1 = cdiv(c_b43, p[i-1]);
 	    cinv.r = q__1.r, cinv.i = q__1.i;
 	    q__3.r = b * cinv.r, q__3.i = b * cinv.i;
             q__2 = cpowi(q__3, 2);
@@ -999,32 +1023,32 @@ double *fl, *fh, *sn, *sd;
 	    q__2 = conjg(z1);
 	    q__1.r = z1.r * q__2.r - z1.i * q__2.i, q__1.i = z1.r * q__2.i + 
 		    z1.i * q__2.r;
-	    sn[iptr] = q__1.r;
-	    sn[iptr + 1] = z1.r * (double)-2.;
-	    sn[iptr + 2] = (double)1.;
+	    sn[iptr-1] = q__1.r;
+	    sn[iptr ] = z1.r * (double)-2.;
+	    sn[iptr + 1] = (double)1.;
 	    q__2 = conjg(p1);
 	    q__1.r = p1.r * q__2.r - p1.i * q__2.i, q__1.i = p1.r * q__2.i + 
 		    p1.i * q__2.r;
-	    sd[iptr] = q__1.r;
-	    sd[iptr + 1] = p1.r * (double)-2.;
-	    sd[iptr + 2] = (double)1.;
+	    sd[iptr-1] = q__1.r;
+	    sd[iptr ] = p1.r * (double)-2.;
+	    sd[iptr + 1] = (double)1.;
 	    iptr += 3;
 	    q__2 = conjg(z2);
 	    q__1.r = z2.r * q__2.r - z2.i * q__2.i, q__1.i = z2.r * q__2.i + 
 		    z2.i * q__2.r;
-	    sn[iptr] = q__1.r;
-	    sn[iptr + 1] = z2.r * (double)-2.;
-	    sn[iptr + 2] = (double)1.;
+	    sn[iptr-1] = q__1.r;
+	    sn[iptr ] = z2.r * (double)-2.;
+	    sn[iptr + 1] = (double)1.;
 	    q__2 = conjg(p2);
 	    q__1.r = p2.r * q__2.r - p2.i * q__2.i, q__1.i = p2.r * q__2.i + 
 		    p2.i * q__2.r;
-	    sd[iptr] = q__1.r;
-	    sd[iptr + 1] = p2.r * (double)-2.;
-	    sd[iptr + 2] = (double)1.;
+	    sd[iptr-1] = q__1.r;
+	    sd[iptr] = p2.r * (double)-2.;
+	    sd[iptr + 1] = (double)1.;
 	    iptr += 3;
 	    nsects += 2;
-	} else if (strncmp(rtype + i * 3, "CP", 2) == 0) {
-	    q__1 = cdiv(c_b43, p[i]);
+      } else if (strncmp(rtype + (i-1) * 3, "CP", 2) == 0) {
+	    q__1 = cdiv(c_b43, p[i-1]);
 	    cinv.r = q__1.r, cinv.i = q__1.i;
 	    q__3.r = b * cinv.r, q__3.i = b * cinv.i;
             q__2 = cpowi(q__3, 2);
@@ -1041,36 +1065,35 @@ double *fl, *fh, *sn, *sd;
 	    q__2.r = q__3.r - ctemp.r, q__2.i = q__3.i - ctemp.i;
 	    q__1.r = q__2.r * (double).5, q__1.i = q__2.i * (double).5;
 	    p2.r = q__1.r, p2.i = q__1.i;
-	    sn[iptr] = a;
-	    sn[iptr + 1] = (double)0.;
-	    sn[iptr + 2] = (double)1.;
+	    sn[iptr-1] = a;
+	    sn[iptr ] = (double)0.;
+	    sn[iptr + 1] = (double)1.;
 	    q__2 = conjg(p1);
 	    q__1.r = p1.r * q__2.r - p1.i * q__2.i, q__1.i = p1.r * q__2.i + 
 		    p1.i * q__2.r;
-	    sd[iptr] = q__1.r;
-	    sd[iptr + 1] = p1.r * (double)-2.;
-	    sd[iptr + 2] = (double)1.;
+	    sd[iptr-1] = q__1.r;
+	    sd[iptr ] = p1.r * (double)-2.;
+	    sd[iptr + 1] = (double)1.;
 	    iptr += 3;
-	    sn[iptr] = a;
-	    sn[iptr + 1] = (double)0.;
-	    sn[iptr + 2] = (double)1.;
+	    sn[iptr-1] = a;
+	    sn[iptr ] = (double)0.;
+	    sn[iptr + 1] = (double)1.;
 	    q__2 = conjg(p2);
 	    q__1.r = p2.r * q__2.r - p2.i * q__2.i, q__1.i = p2.r * q__2.i + 
 		    p2.i * q__2.r;
-	    sd[iptr] = q__1.r;
-	    sd[iptr + 1] = p2.r * (double)-2.;
-	    sd[iptr + 2] = (double)1.;
+	    sd[iptr-1] = q__1.r;
+	    sd[iptr ] = p2.r * (double)-2.;
+	    sd[iptr + 1] = (double)1.;
 	    iptr += 3;
 	    nsects += 2;
-	} else if (strncmp(rtype + i * 3, "SP", 2) == 0) {
-	    sn[iptr] = a;
-	    sn[iptr + 1] = (double)0.;
-	    sn[iptr + 2] = (double)1.;
+      } else if (strncmp(rtype + (i-1) * 3, "SP", 2) == 0) {
+	    sn[iptr-1] = a;
+	    sn[iptr ] = (double)0.;
+	    sn[iptr + 1] = (double)1.;
 	    i__2 = i;
-	    sd[iptr] = -(double)a * p[i__2].r;
-	    sd[iptr + 1] = b;
-	    i__2 = i;
-	    sd[iptr + 2] = -(double)p[i__2].r;
+	    sd[iptr-1] = -(double)a * p[i__2 - 1 ].r;
+	    sd[iptr ] = b;
+	    sd[iptr + 1] = -(double)p[i__2 - 1 ].r;
 	    iptr += 3;
 	    ++(nsects);
 	}
@@ -1081,13 +1104,13 @@ double *fl, *fh, *sn, *sd;
     iptr = 1;
     i__1 = nsects;
     for (i = 1; i <= i__1; ++i) {
-	h = h * sn[iptr] / sd[iptr];
+	h = h * sn[iptr-1] / sd[iptr-1];
 	iptr += 3;
     }
     scale = *dcvalue / ABS(h);
+    sn[0] *= scale;
     sn[1] *= scale;
     sn[2] *= scale;
-    sn[3] *= scale;
     return TRUE;
 }
 
@@ -1116,9 +1139,10 @@ double *f;
     int iptr, i;
     double scale;
 
+    /***   MODIFIED JML: 2019-09-15  **/
     /* Parameter adjustments */
-    --sd;
-    --sn;
+    /* --sd; */
+    /* --sn; */
 
     /* Function Body */
     scale = *f * (double)6.2831853000000004;
@@ -1127,10 +1151,10 @@ double *f;
     i__1 = nsects;
     for (i = 1; i <= i__1; ++i) {
 
-	sn[iptr + 1] /= scale;
-	sn[iptr + 2] /= scale * scale;
-	sd[iptr + 1] /= scale;
-	sd[iptr + 2] /= scale * scale;
+	sn[iptr ] /= scale;
+	sn[iptr + 1] /= scale * scale;
+	sd[iptr ] /= scale;
+	sd[iptr + 1] /= scale * scale;
 	iptr += 3;
     }
     return TRUE;
@@ -1171,78 +1195,79 @@ double *sn, *sd;
     int iptr, i;
     double scale;
 
+    /***   MODIFIED JML: 2019-09-15  **/
     /* Parameter adjustments */
-    --sd;
-    --sn;
-    rtype -= 3;
-    --z;
-    --p;
+    /* --sd; */
+    /* --sn; */
+    /* rtype -= 3; */
+    /* --z; */
+    /* --p; */
 
     /* Function Body */
     iptr = 1;
     i__1 = nsects;
     for (i = 1; i <= i__1; ++i) {
-	if (strncmp(rtype + i * 3, "CPZ", 3) == 0) {
+      if (strncmp(rtype + (i-1) * 3, "CPZ", 3) == 0) {
 	    i__2 = i;
-	    q__2 = conjg(p[i]);
-	    q__1.r = p[i__2].r * q__2.r - p[i__2].i * q__2.i, q__1.i = p[i__2]
-		    .r * q__2.i + p[i__2].i * q__2.r;
+	    q__2 = conjg(p[i-1]);
+	    q__1.r = p[i__2 - 1 ].r * q__2.r - p[i__2 - 1 ].i * q__2.i, q__1.i = p[i__2 - 1 ]
+		    .r * q__2.i + p[i__2 - 1 ].i * q__2.r;
 	    i__3 = i;
-	    q__4 = conjg(z[i]);
-	    q__3.r = z[i__3].r * q__4.r - z[i__3].i * q__4.i, q__3.i = z[i__3]
-		    .r * q__4.i + z[i__3].i * q__4.r;
+	    q__4 = conjg(z[i-1]);
+	    q__3.r = z[i__3-1].r * q__4.r - z[i__3 -1].i * q__4.i, q__3.i = z[i__3 -1]
+		    .r * q__4.i + z[i__3 -1].i * q__4.r;
 	    scale = q__1.r / q__3.r;
-	    sn[iptr] = scale * (double)1.;
+	    sn[iptr-1] = scale * (double)1.;
 	    i__2 = i;
-	    sn[iptr + 1] = z[i__2].r * (double)-2. * scale;
+	    sn[iptr-1 ] = z[i__2 - 1].r * (double)-2. * scale;
 	    i__2 = i;
-	    q__2 = conjg(z[i]);
-	    q__1.r = z[i__2].r * q__2.r - z[i__2].i * q__2.i, q__1.i = z[i__2]
-		    .r * q__2.i + z[i__2].i * q__2.r;
-	    sn[iptr + 2] = q__1.r * scale;
-	    sd[iptr] = (double)1.;
+	    q__2 = conjg(z[i-1]);
+	    q__1.r = z[i__2 - 1].r * q__2.r - z[i__2 - 1].i * q__2.i, q__1.i = z[i__2 - 1]
+		    .r * q__2.i + z[i__2 - 1].i * q__2.r;
+	    sn[iptr + 1] = q__1.r * scale;
+	    sd[iptr-1] = (double)1.;
 	    i__2 = i;
-	    sd[iptr + 1] = p[i__2].r * (double)-2.;
+	    sd[iptr ] = p[i__2 - 1 ].r * (double)-2.;
 	    i__2 = i;
-	    q__2 = conjg(p[i]);
-	    q__1.r = p[i__2].r * q__2.r - p[i__2].i * q__2.i, q__1.i = p[i__2]
-		    .r * q__2.i + p[i__2].i * q__2.r;
-	    sd[iptr + 2] = q__1.r;
+	    q__2 = conjg(p[i-1]);
+	    q__1.r = p[i__2 - 1 ].r * q__2.r - p[i__2 - 1 ].i * q__2.i, q__1.i = p[i__2 - 1 ]
+		    .r * q__2.i + p[i__2 - 1 ].i * q__2.r;
+	    sd[iptr + 1] = q__1.r;
 	    iptr += 3;
-	} else if (strncmp(rtype + i * 3, "CP", 2) == 0) {
+      } else if (strncmp(rtype + (i-1) * 3, "CP", 2) == 0) {
 	    i__2 = i;
-	    q__2 = conjg(p[i]);
-	    q__1.r = p[i__2].r * q__2.r - p[i__2].i * q__2.i, q__1.i = p[i__2]
-		    .r * q__2.i + p[i__2].i * q__2.r;
+	    q__2 = conjg(p[i-1]);
+	    q__1.r = p[i__2 - 1 ].r * q__2.r - p[i__2 - 1 ].i * q__2.i, q__1.i = p[i__2 - 1 ]
+		    .r * q__2.i + p[i__2 - 1 ].i * q__2.r;
 	    scale = q__1.r;
-	    sn[iptr] = (double)0.;
-	    sn[iptr + 1] = (double)0.;
-	    sn[iptr + 2] = scale;
-	    sd[iptr] = (double)1.;
-	    i__2 = i;
-	    sd[iptr + 1] = p[i__2].r * (double)-2.;
-	    i__2 = i;
-	    q__2 = conjg(p[i]);
-	    q__1.r = p[i__2].r * q__2.r - p[i__2].i * q__2.i, q__1.i = p[i__2]
-		    .r * q__2.i + p[i__2].i * q__2.r;
-	    sd[iptr + 2] = q__1.r;
-	    iptr += 3;
-	} else if (strncmp(rtype + i * 3, "SP", 2) == 0) {
-	    i__2 = i;
-	    scale = -(double)p[i__2].r;
-	    sn[iptr] = (double)0.;
+	    sn[iptr-1] = (double)0.;
+	    sn[iptr ] = (double)0.;
 	    sn[iptr + 1] = scale;
-	    sn[iptr + 2] = (double)0.;
-	    sd[iptr] = (double)1.;
+	    sd[iptr-1] = (double)1.;
 	    i__2 = i;
-	    sd[iptr + 1] = -(double)p[i__2].r;
-	    sd[iptr + 2] = (double)0.;
+	    sd[iptr] = p[i__2 - 1 ].r * (double)-2.;
+	    i__2 = i;
+	    q__2 = conjg(p[i-1]);
+	    q__1.r = p[i__2 - 1 ].r * q__2.r - p[i__2 - 1 ].i * q__2.i, q__1.i = p[i__2 - 1 ]
+		    .r * q__2.i + p[i__2 - 1 ].i * q__2.r;
+	    sd[iptr + 1] = q__1.r;
+	    iptr += 3;
+      } else if (strncmp(rtype + (i-1) * 3, "SP", 2) == 0) {
+	    i__2 = i;
+	    scale = -(double)p[i__2 - 1 ].r;
+	    sn[iptr-1] = (double)0.;
+	    sn[iptr ] = scale;
+	    sn[iptr + 1] = (double)0.;
+	    sd[iptr-1] = (double)1.;
+	    i__2 = i;
+	    sd[iptr ] = -(double)p[i__2 - 1 ].r;
+	    sd[iptr + 1] = (double)0.;
 	    iptr += 3;
 	}
     }
+    sn[0] *= *dcvalue;
     sn[1] *= *dcvalue;
     sn[2] *= *dcvalue;
-    sn[3] *= *dcvalue;
     return TRUE;
 }
 
@@ -1270,27 +1295,28 @@ double *sn, *sd;
     int iptr, i;
     double scale, a0, a1, a2;
 
+    /***   MODIFIED JML: 2019-09-15  **/
     /* Parameter adjustments */
-    --sd;
-    --sn;
+    /* --sd; */
+    /* --sn; */
 
     /* Function Body */
     iptr = 1;
     i__1 = nsects;
     for (i = 1; i <= i__1; ++i) {
-	a0 = sd[iptr];
-	a1 = sd[iptr + 1];
-	a2 = sd[iptr + 2];
+	a0 = sd[iptr-1];
+	a1 = sd[iptr ];
+	a2 = sd[iptr + 1];
 	scale = a2 + a1 + a0;
-	sd[iptr] = (double)1.;
-	sd[iptr + 1] = (a0 - a2) * (double)2. / scale;
-	sd[iptr + 2] = (a2 - a1 + a0) / scale;
-	a0 = sn[iptr];
-	a1 = sn[iptr + 1];
-	a2 = sn[iptr + 2];
-	sn[iptr] = (a2 + a1 + a0) / scale;
-	sn[iptr + 1] = (a0 - a2) * (double)2. / scale;
-	sn[iptr + 2] = (a2 - a1 + a0) / scale;
+	sd[iptr-1] = (double)1.;
+	sd[iptr ] = (a0 - a2) * (double)2. / scale;
+	sd[iptr + 1] = (a2 - a1 + a0) / scale;
+	a0 = sn[iptr-1];
+	a1 = sn[iptr];
+	a2 = sn[iptr + 1];
+	sn[iptr-1] = (a2 + a1 + a0) / scale;
+	sn[iptr ] = (a0 - a2) * (double)2. / scale;
+	sn[iptr + 1] = (a2 - a1 + a0) / scale;
 	iptr += 3;
     }
     return TRUE;
@@ -1345,59 +1371,60 @@ char *rtype;
 double *dcvalue;
 int iord;
 {
+  /***   MODIFIED JML: 2019-09-15  **/
     /* Parameter adjustments */
-    rtype -= 3;
-    --p;
+    /* rtype -= 3; */
+    /* --p; */
 
     /* Function Body */
     if (iord == 1) {
-	p[1].r = (double)-1., p[1].i = (double)0.;
-	memcpy(rtype + 3, "SP", 2);
+	p[0].r = (double)-1., p[0].i = (double)0.;
+	memcpy(rtype, "SP", 2);
     } else if (iord == 2) {
-	p[1].r = (double)-1.1016013, p[1].i = (double).6360098;
-	memcpy(rtype + 3, "CP", 2);
+	p[0].r = (double)-1.1016013, p[0].i = (double).6360098;
+	memcpy(rtype, "CP", 2);
     } else if (iord == 3) {
-	p[1].r = (double)-1.0474091, p[1].i = (double).9992645;
-	memcpy(rtype + 3, "CP", 2);
-	p[2].r = (double)-1.3226758, p[2].i = (double)0.;
-	memcpy(rtype + 6, "SP", 2);
+	p[0].r = (double)-1.0474091, p[0].i = (double).9992645;
+	memcpy(rtype, "CP", 2);
+	p[1].r = (double)-1.3226758, p[1].i = (double)0.;
+	memcpy(rtype + 3, "SP", 2);
     } else if (iord == 4) {
-	p[1].r = (double)-.9952088, p[1].i = (double)1.2571058;
+	p[0].r = (double)-.9952088, p[0].i = (double)1.2571058;
+	memcpy(rtype , "CP", 2);
+	p[1].r = (double)-1.3700679, p[1].i = (double).4102497;
 	memcpy(rtype + 3, "CP", 2);
-	p[2].r = (double)-1.3700679, p[2].i = (double).4102497;
-	memcpy(rtype + 6, "CP", 2);
     } else if (iord == 5) {
-	p[1].r = (double)-.9576766, p[1].i = (double)1.4711244;
+	p[0].r = (double)-.9576766, p[0].i = (double)1.4711244;
+	memcpy(rtype , "CP", 2);
+	p[1].r = (double)-1.3808774, p[1].i = (double).7179096;
 	memcpy(rtype + 3, "CP", 2);
-	p[2].r = (double)-1.3808774, p[2].i = (double).7179096;
-	memcpy(rtype + 6, "CP", 2);
-	p[3].r = (double)-1.502316, p[3].i = (double)0.;
-	memcpy(rtype + 9, "SP", 2);
+	p[2].r = (double)-1.502316, p[2].i = (double)0.;
+	memcpy(rtype + 6, "SP", 2);
     } else if (iord == 6) {
-	p[1].r = (double)-.9306565, p[1].i = (double)1.6618633;
+	p[0].r = (double)-.9306565, p[0].i = (double)1.6618633;
+	memcpy(rtype , "CP", 2);
+	p[1].r = (double)-1.3818581, p[1].i = (double).9714719;
 	memcpy(rtype + 3, "CP", 2);
-	p[2].r = (double)-1.3818581, p[2].i = (double).9714719;
+	p[2].r = (double)-1.5714904, p[2].i = (double).3208964;
 	memcpy(rtype + 6, "CP", 2);
-	p[3].r = (double)-1.5714904, p[3].i = (double).3208964;
-	memcpy(rtype + 9, "CP", 2);
     } else if (iord == 7) {
-	p[1].r = (double)-.9098678, p[1].i = (double)1.8364514;
+	p[0].r = (double)-.9098678, p[0].i = (double)1.8364514;
+	memcpy(rtype , "CP", 2);
+	p[1].r = (double)-1.3789032, p[1].i = (double)1.1915667;
 	memcpy(rtype + 3, "CP", 2);
-	p[2].r = (double)-1.3789032, p[2].i = (double)1.1915667;
+	p[2].r = (double)-1.6120388, p[2].i = (double).5892445;
 	memcpy(rtype + 6, "CP", 2);
-	p[3].r = (double)-1.6120388, p[3].i = (double).5892445;
-	memcpy(rtype + 9, "CP", 2);
-	p[4].r = (double)-1.6843682, p[4].i = (double)0.;
-	memcpy(rtype + 12, "SP", 2);
+	p[3].r = (double)-1.6843682, p[3].i = (double)0.;
+	memcpy(rtype + 9, "SP", 2);
     } else if (iord == 8) {
-	p[1].r = (double)-.892871, p[1].i = (double)1.9983286;
+	p[0].r = (double)-.892871, p[0].i = (double)1.9983286;
+	memcpy(rtype , "CP", 2);
+	p[1].r = (double)-1.3738431, p[1].i = (double)1.3883585;
 	memcpy(rtype + 3, "CP", 2);
-	p[2].r = (double)-1.3738431, p[2].i = (double)1.3883585;
+	p[2].r = (double)-1.6369417, p[2].i = (double).8227968;
 	memcpy(rtype + 6, "CP", 2);
-	p[3].r = (double)-1.6369417, p[3].i = (double).8227968;
+	p[3].r = (double)-1.7574108, p[3].i = (double).2728679;
 	memcpy(rtype + 9, "CP", 2);
-	p[4].r = (double)-1.7574108, p[4].i = (double).2728679;
-	memcpy(rtype + 12, "CP", 2);
     }
     nsects = iord - iord / 2;
     *dcvalue = (double)1.;
