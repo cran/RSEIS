@@ -513,7 +513,8 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
   while(TRUE) {
       ####### start while: each mouse click is recorded and tested for what to do next
       #######
-      iloc = RPMG::ilocator(global.vars$ilocnum ,COL=global.vars$iloccol ,NUM=FALSE , YN=length(global.vars$sel), style=global.vars$ilocstyle )
+      iloc = RPMG::ilocator(global.vars$ilocnum ,COL=global.vars$iloccol ,
+          NUM=FALSE , YN=length(global.vars$sel), style=global.vars$ilocstyle )
       Nclick = length(iloc$x)
 ####  cat(paste(sep=" ", zenclick, Nclick), sep="\n")
       

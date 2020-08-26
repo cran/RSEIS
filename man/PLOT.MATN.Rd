@@ -48,7 +48,7 @@ COL='red', add=1, AXES=1, units=NULL, VS=FALSE)
 
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}
 
-\seealso{swig}
+\seealso{swig, matsquiggle, dowiggles, varsquiggle}
 \examples{
 
 dt  <-  0.001

@@ -2,7 +2,9 @@
 function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1, RAW=FALSE)
 {
   ###  get a list of SEGY or SAC files from a directory and store in structure
-  ####  kind 1=segy, 2=sac, kind=0->R format  ( 3=AH is no longer available)
+####  kind 1=segy, 2=sac, kind=0->R format  ( 3=AH is no longer available)
+####   kind=0  data saved with save()
+    #####  kind=4  data saved with saveRDS() style
   
   if(missing(PLOT)) { PLOT=-1 }
   if(missing(kind)) { kind=1 }
@@ -45,6 +47,25 @@ function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1, RAW
 ##################################  if the file is already in R format
       ###############  just load it it and skip to next file
       ##  this code assumes that the list is called DAT
+
+     if(kind== -1)
+        {
+          DAT = readRDS(fn)
+          if(is.null(names(DAT)) & length(DAT)>=1)
+            {
+              DAT = DAT[[1]]
+
+            }
+          
+          if(HEADONLY) DAT$amp = NULL
+          DAT$oldname = DAT$fn
+          DAT$fn = fn
+          tmpGIVE[[i]] = DAT
+
+          
+          next
+        }
+
       if(kind==0)
         {
           DAT = list()
@@ -63,8 +84,9 @@ function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1, RAW
 
           
           next
-        }
+      }
 
+    
       if(kind==1)
         {
         #####   print(paste("RAW=", RAW))

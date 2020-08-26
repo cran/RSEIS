@@ -1,3 +1,4 @@
+
 segy2rseis<-function(fnames, Iendian=1 , HEADONLY=FALSE, BIGLONG=FALSE,  PLOT=-1, RAW=FALSE )
 {
 ###  get a bunch of segy files from a directory and store in structure
@@ -143,18 +144,19 @@ segy2rseis<-function(fnames, Iendian=1 , HEADONLY=FALSE, BIGLONG=FALSE,  PLOT=-1
 
       if(RAW==TRUE)
         {
-       y = ONEsegy$amp
-       aunits="counts"
-
+            y = ONEsegy$amp
+#### make this should be NA? i.e. unknown?
+            aunits="counts"
+            
         }
       else
-        {
+          {
 #####  NOTE: the gainConstant is already divided into the conversion factor
 ####  the scale factor is multiplied. Be aware of the amplitude of this sensor - should be volts
-            
-      y = ONEsegy$amp*conversionfac
-       aunits="volts"
-    }
+              
+              y = ONEsegy$amp*conversionfac
+              aunits="volts"
+          }
       
 ####  if(is.null(thesta))   thesta="XXX"
 #### if(is.null(thecomp))  thecomp="X"

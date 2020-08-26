@@ -1,5 +1,5 @@
 `Jtim` <-
-function(jj, hr=hr, mi=mi, sec=sec, yr=NULL)
+function(jj, hr=hr, mi=mi, sec=sec, yr=NULL, origyr=NULL)
   {
     #######  do recdate but return a decimal julian day
     if(missing(hr)) { hr=0 }
@@ -20,10 +20,11 @@ function(jj, hr=hr, mi=mi, sec=sec, yr=NULL)
         jday = jj
       }
 
-    if(!is.null(yr))
+    ##########  this section does not work
+    if(!is.null(origyr))
       {
-        eday = EPOCHday(yr, jd=jday)
-        jday = eday
+        eday = EPOCHday(yr, jd=jday, origyr=origyr)
+        jday = eday$jday
       }
     
   d = jday+ hr/24+mi/1440+ sec/86400

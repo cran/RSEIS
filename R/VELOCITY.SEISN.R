@@ -49,6 +49,7 @@ if(is.logical(sel)) { sel = which(sel) }
      y = y-mean(y)
      y = detrend(y)
      y = applytaper(y)
+     ###################  NOTE: the decon will change the units if Kal params!=1
      dy  = deconinst(y, dt, Kal, ins, Calibnew, waterlevel=waterlevel)
      
      ty = applytaper(dy-mean(dy), p=0.05)

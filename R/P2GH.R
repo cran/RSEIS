@@ -13,7 +13,7 @@ P2GH<-function(P1)
     DATTIM$t2=N*P1$dt
     DATTIM$off=0
 
-    GG[[1]] = list(fn="temp", sta=P1$STNS,  comp=P1$COMPS, dt=P1$dt, DATTIM=DATTIM, N=1, units="volts" , coords="temp" ,  amp=P1$y )
+    GG[[1]] = list(fn="temp", sta=P1$STNS,  comp=P1$COMPS, dt=P1$dt, DATTIM=DATTIM, N=1, units=NA , coords="temp" ,  amp=P1$y )
 
     LH = prepSEIS(GG)
 

@@ -58,7 +58,7 @@ function(phase=NULL, col=NULL, yr=NULL, jd=NULL, hr=NULL,  mi=NULL, sec=NULL, du
   pix$comp= comp
 
   pix$flg=rep(0, times=N)
-  pix$onoff=rep(0, times=N)
+  pix$onoff=rep(1, times=N)
   pix$pol=rep("_", times=N)
   pix$c3=rep(0, times=N)
 

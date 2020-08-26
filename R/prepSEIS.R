@@ -110,7 +110,7 @@ function(GG)
 	  notes[j] = paste(sep=' ', GG[[ima]]$sta, GG[[ima]]$comp)
 	  stns[j] = GG[[ima]]$sta
 	  comps[j] = GG[[ima]]$comp
-          units[j] = "volts"
+          units[j] = NA
           
         ##   print(paste(sep=' ', GG[[ima]]$sta, GG[[ima]]$comp, GG[[ima]]$units))
 	 

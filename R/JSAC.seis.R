@@ -193,7 +193,7 @@ if(is.character(Iendian))
    ###      if(is.na(thesta))   thesta="XXX"
    ###     if(is.na(thecomp))  thecomp="X"
            
-      if(is.null(aunits))  aunits="volts"
+      if(is.null(aunits))  aunits=NA
      
       if(HEADONLY==TRUE)
         {

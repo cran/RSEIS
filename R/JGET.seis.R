@@ -2,7 +2,7 @@
 function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1, RAW=FALSE)
 {
   ###  get a bunch of AH files from a directory and store in structure
-  ####  kind 1=segy, 2=sac, 3=AH, kind=0->R format
+  ####  kind 1=segy, 2=sac, 3=AH, kind=0->R format,   kind= (-1) readRDS
   
   if(missing(PLOT)) { PLOT=-1 }
   if(missing(kind)) { kind=1 }
@@ -41,10 +41,34 @@ function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1, RAW
           ###  print(paste(sep=' ', "file exists", fn) );
 
         }
-
+########
+########  there is a different way to store a single R object readRDS and saveRDS....
+      
 ##################################  if the file is already in R format
       ###############  just load it it and skip to next file
       ##  this code assumes that the list is called DAT
+
+      if(kind== -1)
+        {
+          DAT = readRDS(fn)
+          if(is.null(names(DAT)) & length(DAT)>=1)
+            {
+              DAT = DAT[[1]]
+
+            }
+          
+          if(HEADONLY) DAT$amp = NULL
+          DAT$oldname = DAT$fn
+          DAT$fn = fn
+          tmpGIVE[[i]] = DAT
+
+          
+          next
+        }
+
+
+
+      
       if(kind==0)
         {
           DAT = list()

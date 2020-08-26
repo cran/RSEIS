@@ -49,28 +49,28 @@ function(uwpickfile, stafile=NULL)
       for(  mnum in 1:length(MCARD)   )
         {
           F = list(az=0, dip=0)
-          F$az = as.numeric(substr(MCARD, 5, 7))
-          F$dip = as.numeric(substr(MCARD,8, 10))
+          F$az = as.numeric(substr(MCARD[mnum], 5, 7))
+          F$dip = as.numeric(substr(MCARD[mnum],8, 10))
           
           G = list(az=0, dip=0)
-          G$az = as.numeric(substr(MCARD, 14, 16))
-          G$dip = as.numeric(substr(MCARD,17, 19))
+          G$az = as.numeric(substr(MCARD[mnum], 14, 16))
+          G$dip = as.numeric(substr(MCARD[mnum],17, 19))
           
           U = list(az=0, dip=0)
-          U$az = as.numeric(substr(MCARD, 22, 25))
-          U$dip = as.numeric(substr(MCARD, 26, 28))
+          U$az = as.numeric(substr(MCARD[mnum], 22, 25))
+          U$dip = as.numeric(substr(MCARD[mnum], 26, 28))
           
           V = list(az=0, dip=0)
-          V$az = as.numeric(substr(MCARD, 32, 34))
-          V$dip = as.numeric(substr(MCARD, 35, 37))
+          V$az = as.numeric(substr(MCARD[mnum], 32, 34))
+          V$dip = as.numeric(substr(MCARD[mnum], 35, 37))
           
           P = list(az=0, dip=0)
-          P$az = as.numeric(substr(MCARD, 41, 43))
-          P$dip = as.numeric(substr(MCARD, 44, 46))
+          P$az = as.numeric(substr(MCARD[mnum], 41, 43))
+          P$dip = as.numeric(substr(MCARD[mnum], 44, 46))
           
           T  = list(az=0, dip=0)
-          T$az = as.numeric(substr(MCARD, 50, 52))
-          T$dip = as.numeric(substr(MCARD, 53, 55))
+          T$az = as.numeric(substr(MCARD[mnum], 50, 52))
+          T$dip = as.numeric(substr(MCARD[mnum], 53, 55))
           
           
           MC[[mnum]] = list(F=F, G=G, U=U, V=V, P=P, T=T, CNVRG=NA)

@@ -117,7 +117,9 @@ hr =  gsac$nzhour
 
       thesta=   paste(sblank[which(sblank!=" ")], collapse="")
 
-     ###   thecomp= B4[18]
+###   thecomp= B4[18]
+############ SAC data - somes as volts?  i.e. the reftek/mseed file has already converted it?
+#####   better check that - I am not so sure.
       aunits="volts"
      ###  print(paste(sep=' ', infile, thesta, thecomp, aunits, N, dt, sec))
       
@@ -126,7 +128,6 @@ hr =  gsac$nzhour
       t1 = 0
       t2 = dt*(N-1)
       
-
       tstart = list(yr=yr, jd=jd , mo=md$mo, dom=md$dom, hr=hr, mi=mi, sec=sec, msec=0, dt=dt, t1=t1,
         t2=t2, off=0)
 

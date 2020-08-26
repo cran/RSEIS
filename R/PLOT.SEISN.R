@@ -339,7 +339,8 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
       if(YAX == 2)
         {
 
-          axis(axis.side, pos=axis.pos   ,tck=-0.005 , at=yts, labels=yt, las=2 , line=0.1 )
+            axis(axis.side, pos=axis.pos   ,tck=-0.005 , at=yts, labels=yt, las=2 , line=0.1 )
+            
           if( any( !is.na(UNITS) ) )
             {
               ##   mtext(side=axis.side, at=y3+dy/2, text=ylab , line=-1)
@@ -392,7 +393,7 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
 
           ##  bnum = paste(sep='', "X", format.default(diffS[KDIFF]/diffS[i], digits=4))
           ##  blab=bnum 
-          if(add!=3)text(min(tim[tflag]), y3+0.75*dy, labels=labstring , adj=0, vfont=c("sans serif", "plain"))
+          if(add!=3 & YAX != 2) text(min(tim[tflag]), y3+0.75*dy, labels=labstring , adj=0, vfont=c("sans serif", "plain"))
         }
 
       

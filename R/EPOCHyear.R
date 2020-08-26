@@ -4,13 +4,15 @@ EPOCHyear<-function(iday,  origyr=1972)
  # print("EPOCHyear Dates")
     if(any(!is.numeric(iday)))
       {
-        print("Bad Dates")
+          print("Bad Dates")
+          ## return(list(yr=origyr, jd=0) )
       }
 
     N = length(iday)
     if(N<1)
-      {
-        list(yr=1972, jd=1)
+        {
+         bad.date =   list(yr=1972, jd=1) 
+        ## return(list(yr=1972, jd=1) )
       }
     
     IYEARS = rep(NA, N)
