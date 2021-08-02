@@ -7,7 +7,7 @@
 }
 \usage{
 varsquiggle(GH, sel = c(1, 2), WIN = c(0, 1), dist=NULL, thick=1 ,
-FLIP=FALSE, filcol='blue', tracecol='blue')
+FLIP=FALSE, filcol='blue', tracecol='blue', xpd=TRUE, plotdir=1 )
 }
 
 \arguments{
@@ -20,7 +20,8 @@ FLIP=FALSE, filcol='blue', tracecol='blue')
     FALSE,  TRUE = vertical}
    \item{filcol}{color for shading}
   \item{tracecol}{color for trace}
- 
+   \item{xpd}{logical, set xpd parameter (see par) }	
+   \item{plotdir}{1=left to right, 0=right to left (default=1) }
   
 }
 \details{

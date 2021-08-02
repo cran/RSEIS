@@ -6,7 +6,7 @@
   Wavelet transform
 }
 \usage{
-wlet.do(why, dt, noctave = 6, nvoice = 20,
+wlet.do(why, dt, noctave = 6, nvoice = 20, w0=5,
 flip = TRUE, ploty = TRUE, zscale = 1,
 col = terrain.colors(100), STAMP = STAMP, units="", scaleloc=c(0.4,0.95))
 }
@@ -14,8 +14,9 @@ col = terrain.colors(100), STAMP = STAMP, units="", scaleloc=c(0.4,0.95))
 \arguments{
   \item{why}{signal}
   \item{dt}{sample rate (s)}
-  \item{noctave}{number of octives}
-  \item{nvoice}{number of voices }
+  \item{noctave}{number of octaves, default=6}
+  \item{nvoice}{number of voices, nvoice = 20 }
+  \item{w0}{central frequency for morlet wavelet, default=5}
   \item{flip}{logical,  whether to flip the orientation }
   \item{ploty}{logical, whether to plot y }
   \item{zscale}{scale of the image }
@@ -44,7 +45,7 @@ col = terrain.colors(100), STAMP = STAMP, units="", scaleloc=c(0.4,0.95))
   \item{baha}{list:
     wavelet transform image,
     noctave = number of  octaves,
-    nvoice = number of voices,
+    nvoice = number of voices, w0= central freq, 
         flip = logical, whether image is flipped (default=TRUE) }
       \item{PE}{plotting information list:
 	why=y-axis,

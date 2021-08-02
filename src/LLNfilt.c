@@ -383,17 +383,17 @@ double *eps, *ripple;
     omegar = trbndw + 1.;
     /* Computing 2nd power */
     r__2 = omegar;
-    r__1 = omegar + sqrt(r__2 * r__2 - 1.);
-    alpha = pow((double)r__1, (double)iord);
+    r__1 = omegar + sqrt(r__2 * r__2 - 1.0);
+    alpha = pow(r__1, iord);
     /* Computing 2nd power */
     r__1 = alpha;
-    g = (r__1 * r__1 + (double)1.) / (alpha * (double)2.);
+    g = (r__1 * r__1 + 1.0) / (alpha * 2.0);
     /* Computing 2nd power */
     r__1 = a;
-    *eps = sqrt(r__1 * r__1 - (double)1.) / g;
+    *eps = sqrt(r__1 * r__1 - 1.0) / g;
     /* Computing 2nd power */
     r__1 = *eps;
-    *ripple = (double)1. / sqrt(r__1 * r__1 + (double)1.);
+    *ripple = 1.0 / sqrt(r__1 * r__1 + 1.0);
 
     return TRUE;
 }
@@ -418,6 +418,7 @@ double *eps, *ripple;
 /*      IORD           DESIRED FILTER ORDER */
 /*      EPS            CHEBYSHEV PARAMETER RELATED TO PASSBAND RIPPLE */
 
+
 /* FUNC DEF */ static int c1roots(complex *p, char *rtype, double *dcvalue, int iord, double *eps)
 {
     /* System generated locals */
@@ -434,10 +435,10 @@ double *eps, *ripple;
 
     /***   MODIFIED JML: 2019-09-15  **/
     /* Parameter adjustments */
-    /* rtype -= 3; */
+     /* rtype -= 3;  */
     /* --p; */
 
-    /* Function Body */
+ /* Function Body */
     pi = (double)3.14159265;
     half = iord / 2;
 
@@ -454,7 +455,8 @@ double *eps, *ripple;
     nsects = 0;
     i__1 = half;
     for (i = 1; i <= i__1; ++i) {
-      memcpy(rtype + (i-1) * 3, "CP", 2);
+	/* strncpy(rtype + i * 3, "CP", 2); */
+	 memcpy(rtype + (i-1) * 3, "CP", 2);
 	angle = (double) ((i << 1) - 1) * pi / (double) (iord << 1);
 	sigma = -(double)s * sin(angle);
 	omega = c * cos(angle);
@@ -464,7 +466,8 @@ double *eps, *ripple;
 	++(nsects);
     }
     if (half << 1 < iord) {
-	memcpy(rtype + (half + 1) * 3, "SP", 2);
+	/* strncpy(rtype + (half + 1) * 3, "SP", 2); */
+      memcpy(rtype + ((half-1) + 1) * 3, "SP", 2) ;
 	i__1 = half + 1;
 	d__1 = -(double)s;
 	q__1.r = d__1, q__1.i = (double)0.;
@@ -476,8 +479,15 @@ double *eps, *ripple;
 	r__1 = *eps;
 	*dcvalue = (double)1. / sqrt(r__1 * r__1 + 1);
     }
+  
     return TRUE;
 }
+
+
+
+
+
+
 
 /* C2ROOTS -- SUBROUTINE TO COMPUTE ROOTS FOR NORMALIZED LOWPASS */
 /*   CHEBYSHEV TYPE 2 FILTER */
@@ -1510,6 +1520,8 @@ complex a,b;
 }
 
 
+
+
 /** FUNC DEF */ void CALL_JFILT(double *input, int *na, int *iord, char **type, char **aproto,
 				double *aa, double *atrbndw, double *afl, double *afh, double *ats,int *RemM, int *zerop, double  *output)
 {
@@ -1584,4 +1596,6 @@ apply(why, k, zp);
  /* free(why); */
 
 }
+
+
 

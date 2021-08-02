@@ -8,7 +8,7 @@
 }
 \usage{
 DECIMATE.SEISN(TH, sel=1:length(TH$JSTR), dec=5 ,
- type="LP", proto="C1" , fl=2,  fh=10, RM=FALSE, zp=TRUE )
+ type="LP", proto="BU" , fl=2,  fh=10, RM=FALSE, zp=TRUE )
 }
 \arguments{
 

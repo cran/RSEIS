@@ -20,7 +20,7 @@ Comp1Dvel(v, v2)
 
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}
 
-\seealso{Get1Dvel, travel.time1D}
+\seealso{Plot1Dvel, Get1Dvel, travel.time1D}
 \examples{
 VEL <- list()
 VEL$'zp' <- c(0,0.25,0.5,0.75,1,2,4,5,10,12)

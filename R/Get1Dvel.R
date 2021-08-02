@@ -24,14 +24,9 @@ function(infile, PLOT=TRUE)
     
                                         #
     if(PLOT)
-      {
-        plot(c(v$vp,v$vs), c( -v$zp,-v$zs), type='n', xlab="Velocity, km/s", ylab="Depth, km") 
-        lines(v$vp, -v$zp, type='s', col=4)
-        lines(v$vs, -v$zs, type='s', col=3)
-        title(v$name)
-        u = par('usr')
-        LEG = legend("bottomleft"  , c("Vp", "Vs"), lwd=2, col=c(4,3), plot=TRUE  )
-       ##### jlegend( u[1], u[3]+LEG$rect$h, c("Vp", "Vs"), lwd=2, col=c(4,3), plot=TRUE  )
+    {
+        Plot1Dvel(v, tit =  v$name[1] )
+       
       }
    
     return(v)

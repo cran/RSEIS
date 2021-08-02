@@ -30,8 +30,13 @@ FmakeDB<-function(LF2, kind =1, Iendian=1, BIGLONG=FALSE)
         
         for(j in 1:length(sinfo))
           {
-            REC = sinfo[[j]]
-            N = N + 1
+              REC = sinfo[[j]]
+              if(is.null(REC$DATTIM[[ 'msec' ]] )) REC$DATTIM$msec=0
+                 if(is.null(REC$DATTIM[['dt']] )) REC$DATTIM$dt=REC$dt
+                    
+                    
+                    
+                    N = N + 1
             ADB$fn[N] = REC$fn
             ADB$sta[N] = REC$sta
             ADB$comp[N] = REC$comp
@@ -49,18 +54,23 @@ FmakeDB<-function(LF2, kind =1, Iendian=1, BIGLONG=FALSE)
       }
     
        
-         origyr = min(ADB$yr)
+    origyr = min(ADB$yr, na.rm =TRUE )
+
+    if(is.na(origyr) )   { origyr = 2000 }
+    if(is.null(origyr) ) { origyr = 2000 }
+    
         eday = EPOCHday(ADB$yr, jd = ADB$jd, origyr = origyr)
         ADB$t1 = eday$jday + ADB$hr/24 + ADB$mi/(24 * 60) + ADB$sec/(24 *
           3600)
         ADB$t2 = ADB$t1 + ADB$dur/(24 * 3600)
 
     attr(ADB, "origyr")<- origyr
+    
     attr(ADB, "kind")=kind
     attr(ADB, "Iendian")=Iendian
     attr(ADB, "BIGLONG")=BIGLONG
 
-    
+   ###  attr(ADB, "origyr") <- min(ADB$yr)
     
         invisible(ADB)
         

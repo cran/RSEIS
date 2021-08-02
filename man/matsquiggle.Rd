@@ -7,7 +7,7 @@
 }
 \usage{
 matsquiggle(XMAT, dt1, dist = NULL, thick = 1,
- FLIP = FALSE, filcol='blue', tracecol="black", add=FALSE, PLOT=TRUE)
+ FLIP = FALSE, filcol='blue', tracecol="black", add=FALSE, PLOT=TRUE,xpd=TRUE, plotdir=1 )
 }
 \arguments{
   \item{XMAT}{matrix of traces}
@@ -21,8 +21,8 @@ matsquiggle(XMAT, dt1, dist = NULL, thick = 1,
   \item{tracecol}{color for trace}
   \item{add}{add traces to existing plot}
   \item{PLOT}{whether to create a new plotting region}
-
-  
+  \item{xpd}{logical, set xpd parameter (see par) }	
+   \item{plotdir}{1=left to right, 0=right to left (default=1) }
 }
 \details{ see varsquiggle for more details
 }

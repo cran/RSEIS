@@ -1,4 +1,5 @@
-matsquiggle<-function(XMAT, dt1, dist=NULL, thick=1 , FLIP=FALSE, filcol='blue', tracecol="black", add=FALSE, PLOT=TRUE)
+matsquiggle<-function(XMAT, dt1, dist=NULL, thick=1 , FLIP=FALSE, filcol='blue',
+                      tracecol="black", add=FALSE, PLOT=TRUE, xpd=TRUE, plotdir=1)
   {
 #####  plot a seismic section as in exploration seismology
 ####  with varian - squiggle display
@@ -80,8 +81,11 @@ matsquiggle<-function(XMAT, dt1, dist=NULL, thick=1 , FLIP=FALSE, filcol='blue',
     
     
     if(PLOT)
-  {
-    for(i in 1:length(y1))
+        {
+            if(plotdir==1) { pord = 1:length(y1) }
+            if(plotdir==0) { pord = length(y1):1 }
+            
+    for(i in pord)
       {
         if(FLIP)
           {
@@ -93,7 +97,7 @@ matsquiggle<-function(XMAT, dt1, dist=NULL, thick=1 , FLIP=FALSE, filcol='blue',
 
           }
         
-        varsquig(x, XMAT[,i], L=L , FLIP=FLIP, filcol=filcol[i], tracecol=tracecol[i], var=TRUE)
+        varsquig(x, XMAT[,i], L=L , FLIP=FLIP, filcol=filcol[i], tracecol=tracecol[i], var=TRUE, xpd=xpd)
       }
   }
 

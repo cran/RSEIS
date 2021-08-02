@@ -57,7 +57,6 @@ charlen = c(rep(NA, times=110), 8, 16, rep(8, 21) )
 ###   data.frame(SAChead.names, formsac, charlen)
 
  
-HEAD = vector(mode="list")
  
  if(BIGLONG)
     {
@@ -76,7 +75,8 @@ HEAD = vector(mode="list")
   iint  = 4
   ilong = 4
   ifloat = 4
-  idouble = 8
+        idouble = 8
+        
   }
 
 sizes = c(ilong, ishort , iint, ifloat)
@@ -88,6 +88,7 @@ isize = sizes[m1]
 ##  cat(paste("In read1sac:", fname), sep="\n")
  
 zz <- file(fname , "rb")
+HEAD = vector(mode="list")
 
 
  ###   the sac header is 70 floats, 40 longs and the rest chars

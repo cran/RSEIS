@@ -57,30 +57,39 @@ ROT.RT<-function(nh, g)
     invisible(list(NH=nh, global.vars=g))
   }
 
+###################################
 JustV<-function(nh, g)
   {
 #####  BUTTONDOC:JustV:'Show only vertical'
-    kix = legitpix(g$sel, g$zloc, g$zenclick)
-    ypick =  kix$ypick
-    ppick = kix$ppick
+      kix = legitpix(g$sel, g$zloc, g$zenclick)
+      ypick =  kix$ypick
+      ppick = kix$ppick
 
-    sel = which(nh$COMPS=="V")
-     isel = sel[1]
+      ord.orig = g$SEL.ORIG
+      STA.order = nh$STNS[ord.orig]
+      
+      sel = which(nh$COMPS=="V")
+      msta = match(nh$STNS[sel], STA.order )
+        
+        jsel =  sel[order(msta) ]
+        
+      isel = jsel[1]
     
           Torigin = list(jd=nh$info$jd[isel], hr=nh$info$hr[isel],
             mi=nh$info$mi[isel],
             sec=(nh$info$sec[isel]+nh$info$msec[isel]/1000+nh$info$t1[isel]-nh$info$off[isel]))
        g$Torigin=Torigin
-          g$sel = sel
+          g$sel = jsel
 
     g$zloc = list(x=NULL, y=NULL)
-    g$STNS = nh$STNS[sel]
-    g$COMPS = nh$COMPS[sel]
+    g$STNS = nh$STNS[jsel]
+    g$COMPS = nh$COMPS[jsel]
     g$action = "replot"
     invisible(list(NH=nh, global.vars=g))
   }
 
 
+###################################
 JustE<-function(nh, g)
   {
 #####  BUTTONDOC:JustE:'Show only East' 
@@ -88,19 +97,25 @@ JustE<-function(nh, g)
     kix = legitpix(g$sel, g$zloc, g$zenclick)
     ypick =  kix$ypick
     ppick = kix$ppick
-
+    ord.orig = g$SEL.ORIG
+    STA.order = nh$STNS[ord.orig]
+      
     sel = which(nh$COMPS=="E")
-     isel = sel[1]
-          
+   msta = match(nh$STNS[sel], STA.order )
+        
+        jsel =  sel[order(msta) ]
+        
+      isel = jsel[1]
+    
           Torigin = list(jd=nh$info$jd[isel], hr=nh$info$hr[isel],
             mi=nh$info$mi[isel],
             sec=(nh$info$sec[isel]+nh$info$msec[isel]/1000+nh$info$t1[isel]-nh$info$off[isel]))
- g$Torigin=Torigin
-          g$sel = sel
+       g$Torigin=Torigin
+          g$sel = jsel
 
     g$zloc = list(x=NULL, y=NULL)
-    g$STNS = nh$STNS[sel]
-    g$COMPS = nh$COMPS[sel]
+    g$STNS = nh$STNS[jsel]
+    g$COMPS = nh$COMPS[jsel]
     g$action = "replot"
     invisible(list(NH=nh, global.vars=g))
   }
@@ -112,19 +127,63 @@ JustN<-function(nh, g)
     kix = legitpix(g$sel, g$zloc, g$zenclick)
     ypick =  kix$ypick
     ppick = kix$ppick
-
+    ord.orig = g$SEL.ORIG
+    STA.order = nh$STNS[ord.orig]
+      
     sel = which(nh$COMPS=="N")
-     isel = sel[1]
-          
+
+    msta = match(nh$STNS[sel], STA.order )
+        
+        jsel =  sel[order(msta) ]
+        
+      isel = jsel[1]
+    
           Torigin = list(jd=nh$info$jd[isel], hr=nh$info$hr[isel],
             mi=nh$info$mi[isel],
             sec=(nh$info$sec[isel]+nh$info$msec[isel]/1000+nh$info$t1[isel]-nh$info$off[isel]))
- g$Torigin=Torigin
-          g$sel = sel
+       g$Torigin=Torigin
+          g$sel = jsel
 
     g$zloc = list(x=NULL, y=NULL)
-    g$STNS = nh$STNS[sel]
-    g$COMPS = nh$COMPS[sel]
+    g$STNS = nh$STNS[jsel]
+    g$COMPS = nh$COMPS[jsel]
+
     g$action = "replot"
     invisible(list(NH=nh, global.vars=g))
-  }
+}
+
+SHOW3<-function(nh, g)
+    {
+#####  BUTTONDOC:JustV:'Show All Comps '
+        kix = legitpix(g$sel, g$zloc, g$zenclick)
+        ypick =  kix$ypick
+        ppick = kix$ppick
+
+        ord.orig = g$SEL.ORIG
+        STA.order = nh$STNS[ord.orig]
+        sel = 1:length(nh$COMPS)
+
+        msta = match(nh$STNS, STA.order )
+        
+        jsel =  sel[order(msta) ]
+        
+     isel = jsel[1]
+    
+          Torigin = list(jd=nh$info$jd[isel], hr=nh$info$hr[isel],
+            mi=nh$info$mi[isel],
+            sec=(nh$info$sec[isel]+nh$info$msec[isel]/1000+nh$info$t1[isel]-nh$info$off[isel]))
+       g$Torigin=Torigin
+          g$sel = jsel
+
+    g$zloc = list(x=NULL, y=NULL)
+    g$STNS = nh$STNS[jsel]
+    g$COMPS = nh$COMPS[jsel]
+    g$action = "replot"
+    invisible(list(NH=nh, global.vars=g))
+ 
+        
+
+
+    }
+
+

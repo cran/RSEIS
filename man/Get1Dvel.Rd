@@ -31,6 +31,9 @@ LIST:
 
 }
 
+\seealso{Plot1Dvel, Comp1Dvel, Comp1Dvels, travel.time1D}
+
+
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
 \examples{

@@ -53,7 +53,12 @@ butfilt(a, fl=0, fh=0.5, deltat=1, type="BP", proto="BU",
 Filtered time series. 
 }
 
-\author{Jonathan M. Lees<jonathan.lees.edu>}
+\author{originally written in FORTRAN by David Harris,
+  converted to C and modified by Jonathan M. Lees<jonathan.lees@unc.edu>}
+
+\references{Harris, D., 1990: XAPiir: A recursive digital filtering
+  package. United States: N. p., Web. doi:10.2172/6416972.}
+
 
 \seealso{AUGMENTbutfilt}
 

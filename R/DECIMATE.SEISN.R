@@ -1,5 +1,5 @@
 `DECIMATE.SEISN` <-
-function(TH, sel=1:length(TH$JSTR), dec=5 , type="LP", proto="C1" , fl=2,  fh=10, RM=FALSE, zp=TRUE  )
+function(TH, sel=1:length(TH$JSTR), dec=5 , type="LP", proto="BU" , fl=2,  fh=10, RM=FALSE, zp=TRUE  )
   {
     if(missing(sel)) { sel = 1:length(TH$JSTR) }
     if(missing(fh)) { fh=10 }
@@ -27,6 +27,13 @@ function(TH, sel=1:length(TH$JSTR), dec=5 , type="LP", proto="C1" , fl=2,  fh=10
         TH$info$n[ii] =TH$info$n1[ii] = TH$info$n2[ii] = length(TH$JSTR[[ii]])
         TH$info$t2[ii] = TH$info$dt[ii] * TH$info$n[ii]
       }
+
+    proc = paste(sep=" ", "DECIMATE.SEISN", 'fl=', fl, 'fh=' , fh, 'type=', type, 'proto=', proto) 
+   TH$process =  c(TH$process, proc)
+    
+
+
+    
     return(TH)
   }
 

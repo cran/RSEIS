@@ -69,6 +69,11 @@ formsegy=c("long", "long", "long", "long", "long", "long", "long", "short", "sho
   "short", "short", "short", "short", "char", "char", "char", "short", "long", "short", "short",
   "short", "short", "short", "short", "short", "short", "float", "short", "short", "long", "long", "long")
 
+      usign = rep(TRUE, length=length(formsegy) )
+      usign[86]  = FALSE
+
+      
+
 charlen = c(NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
   NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
   NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
@@ -166,6 +171,9 @@ segynotes=c("0 Sequence numbers within line",
 " 232 Maximum value in Counts ",
 " 236 Minimum value in Counts ")
 
+
+     ##  cbind(SEGYhead.names , formsegy)
+      
 HEAD = vector(mode="list")
  
  if(BIGLONG)
@@ -195,7 +203,8 @@ isize = rep(iint, length(formsegy))
 isize = sizes[m1]
 
 ##  cat(paste("In read1segy:", fname), sep="\n")
- 
+##  close(zz)
+
 zz <- file(fname , "rb")
 
 for(i in 1:length(formsegy) )
@@ -203,10 +212,11 @@ for(i in 1:length(formsegy) )
 ##    print(paste(i,SEGYhead.names[i], formsegy[i]) )
        if(formsegy[i]=="char")
          {
-           ## fchar =  paste(format(SEGYhead.vals[i] , width=charlen[i]-1), "\\0" , sep="" )
+           fchar =  paste(format(SEGYhead.names[i] , width=charlen[i]-1), "\\0" , sep="" )
            
            fchar=readChar(zz, charlen[i], useBytes = FALSE)
-           HEAD[[i]] = fchar
+             HEAD[[i]] = fchar
+             ## print(HEAD[[i]])
          }
        else
            {
@@ -214,7 +224,7 @@ for(i in 1:length(formsegy) )
 
                if(formsegy[i]!='float')
                    {
-                       A1 =  readBin(zz, integer() , n = 1, size = isize[i] , signed = TRUE,
+                       A1 =  readBin(zz, integer() , n = 1, size = isize[i] , signed = usign[i] ,
                            endian = theENDIAN)
                        
                        
@@ -223,7 +233,7 @@ for(i in 1:length(formsegy) )
                    {
                        
                       ##   print(i, isize[i] )
-                       A1 =  readBin(zz, numeric() , n = 1, size = isize[i] , signed = TRUE,
+                       A1 =  readBin(zz, numeric() , n = 1, size = isize[i] , signed = usign[i],
                            endian = theENDIAN)
                    }
                

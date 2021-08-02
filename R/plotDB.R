@@ -38,7 +38,10 @@ usta = unique(DB$sta)
 
     days = days[days!=0]
 
-   day.yrs =  EPOCHyear(days, origyr=attr(DB, "origyr")  )
+   origyr=attr(DB, "origyr")
+   if(is.null(origyr) ) { origyr = min( unique(DB$yr) ) }
+   
+   day.yrs =  EPOCHyear(days, origyr=origyr )
 
 
   

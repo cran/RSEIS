@@ -6,7 +6,8 @@
   section with half the wiggled shaded.
 }
 \usage{
-varsquig(x, y, L = locator(2), FLIP = FALSE, filcol="blue", tracecol="red", var = 0)
+varsquig(x, y, L = locator(2), FLIP = FALSE, filcol="blue",
+tracecol="red", var = 0, xpd=TRUE )
 }
 \arguments{
   \item{x}{X (time axis) coordinates}
@@ -16,6 +17,7 @@ varsquig(x, y, L = locator(2), FLIP = FALSE, filcol="blue", tracecol="red", var 
   \item{filcol}{color for shading}
   \item{tracecol}{color for trace}
   \item{var}{logical, whether to shade}
+    \item{xpd}{logical, set xpd parameter (see par) }	
 }
 \details{
   A set of traces can be plotted after the plotting region has been set.

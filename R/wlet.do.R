@@ -1,5 +1,5 @@
 `wlet.do` <-
-function(why, dt, noctave=6, nvoice=20, flip=TRUE, ploty=TRUE, zscale=1, col=terrain.colors(100), STAMP=STAMP, units="", scaleloc=c(0.4,0.95) )
+function(why, dt, noctave=6, nvoice=20, w0=5,  flip=TRUE, ploty=TRUE, zscale=1, col=terrain.colors(100), STAMP=STAMP, units="", scaleloc=c(0.4,0.95) )
   {
     ### usage: wlet.do(x,  delta, noctave = 4, nvoice = 20,  flip=FALSE,  col=rainbow(100))
 
@@ -12,6 +12,7 @@ function(why, dt, noctave=6, nvoice=20, flip=TRUE, ploty=TRUE, zscale=1, col=ter
     if(missing(ploty)) { ploty=TRUE }
     if(missing(zscale)) {  zscale=1  }
     if(missing(STAMP)) { STAMP=NULL }
+   if(missing(w0)) { w0=5 }
 
    opar = par()
     ## par(mfrow=c(2,1))
@@ -21,7 +22,7 @@ function(why, dt, noctave=6, nvoice=20, flip=TRUE, ploty=TRUE, zscale=1, col=ter
 
     ####  this used to be a problem but I think they fixed
     ####  it.  If not, go back to jmlcwt
-    kaha= cwt(why, noctave, nvoice=nvoice, w0=5, twoD=TRUE, plot=FALSE)
+    kaha= cwt(why, noctave, nvoice=nvoice, w0=w0, twoD=TRUE, plot=FALSE)
  ##   kaha= cwt(why, noctave, nvoice=nvoice, w0=5, twoD=TRUE, plot=TRUE)
 
 ###  get the scale for the y-axis
@@ -45,7 +46,7 @@ function(why, dt, noctave=6, nvoice=20, flip=TRUE, ploty=TRUE, zscale=1, col=ter
        
       }
 
-    baha = list(img=baha, noctave=noctave , nvoice=nvoice, flip=flip)
+    baha = list(img=baha, noctave=noctave , nvoice=nvoice, w0=w0,  flip=flip)
     
     ##  wlet.plot(baha, why, dt, col=col, zscale=zscale)
 

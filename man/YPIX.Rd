@@ -19,6 +19,8 @@
 \alias{JustV}
 \alias{JustE}
 \alias{JustN}
+\alias{SHOW3}
+
 \alias{iNEXT}
 \alias{noPS}
 
@@ -47,6 +49,7 @@ ROT.RT(nh, g)
 JustV(nh, g)
 JustE(nh, g)
 JustN(nh, g)
+SHOW3(nh, g)
 
 }
 \arguments{
@@ -88,6 +91,8 @@ JustN(nh, g)
     \item{JustV}{Display only vertical components}
     \item{JustE}{Display only east components}
     \item{JustN}{Display only north components}
+     \item{SHOW3}{Display All 3 components}
+   
     \item{iNEXT}{Used internally in PickWin to move to next station}
 
 

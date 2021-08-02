@@ -1,4 +1,4 @@
-varsquiggle<-function(GH, sel=c(1,2), WIN=c(0,1) , dist=NULL, thick=1 , FLIP=FALSE, filcol='blue', tracecol='blue')
+varsquiggle<-function(GH, sel=c(1,2), WIN=c(0,1) , dist=NULL, thick=1 , FLIP=FALSE, filcol='blue', tracecol='blue', xpd=TRUE, plotdir=1)
   {
 #####  plot a seismic section as in exploration seismology
 ####  with varian - squiggle display
@@ -87,7 +87,7 @@ varsquiggle<-function(GH, sel=c(1,2), WIN=c(0,1) , dist=NULL, thick=1 , FLIP=FAL
     d = dim(XMAT)
     x = seq(from=0, length=d[1], by=dt1)
 
- matsquiggle(XMAT, dt1, dist, thick=thick, FLIP=FALSE, filcol=filcol,tracecol=tracecol,  PLOT=FALSE, add=FALSE)
+ matsquiggle(XMAT, dt1, dist, thick=thick, FLIP=FALSE, filcol=filcol,tracecol=tracecol,  PLOT=FALSE, add=FALSE, xpd=xpd, plotdir=plotdir)
   grid(col=rgb(.8,.6,.6) , nx=20)
   axis(1)
   axis(2)
@@ -96,7 +96,7 @@ varsquiggle<-function(GH, sel=c(1,2), WIN=c(0,1) , dist=NULL, thick=1 , FLIP=FAL
   text(rep(u[2], times=length(dist)) , dist, labels=GH$STNS[sel], pos=2, xpd=TRUE)
 
   
-  Msquig = matsquiggle(XMAT, dt1, dist, thick=thick, FLIP=FALSE, filcol=filcol,tracecol=tracecol,  add=TRUE, PLOT=TRUE)
+  Msquig = matsquiggle(XMAT, dt1, dist, thick=thick, FLIP=FALSE, filcol=filcol,tracecol=tracecol,  add=TRUE, PLOT=TRUE, xpd=xpd, plotdir=plotdir)
   
 
 

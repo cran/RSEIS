@@ -85,6 +85,13 @@ CHOP.SEISN = function (GH, sel = 1:4, WIN = NULL)
 
         
     NEWH$ex = NEWH$dt[1] * seq(from = 0, to = length(NEWH$JSTR[[1]]) -
-        1)
+                                             1)
+ proc = paste(sep=" ", "CHOP.SEISN", 'sel=',  paste(sel, collapse=' ')  , 'WIN=', paste(WIN, collapse=' ')  ) 
+
+
+    NEWH$process =  c(NEWH$process, proc)
+    
+
+    
     invisible(NEWH)
 }

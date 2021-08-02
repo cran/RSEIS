@@ -64,7 +64,10 @@ if(dirs=="")
         
         for(j in 1:length(sinfo))
           {
-           REC = sinfo[[j]]
+              REC = sinfo[[j]]
+              if(is.null(REC$DATTIM[[ 'msec' ]] )) REC$DATTIM$msec=0
+              if(is.null(REC$DATTIM[['dt']] )) REC$DATTIM$dt=REC$dt
+              
            N = N + 1
            ADB$fn[N] = REC$fn
            ADB$sta[N] = REC$sta

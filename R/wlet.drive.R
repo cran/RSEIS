@@ -1,5 +1,5 @@
 `wlet.drive` <-
-function(Xamp, DT=0.008, STAMP=NULL)
+function(Xamp, DT=0.008, noctave=6, nvoice=20, w0=5, STAMP=NULL)
   {
 
       
@@ -7,8 +7,10 @@ function(Xamp, DT=0.008, STAMP=NULL)
     if(missing(DT)) { DT=1 }
      if(missing(STAMP)) { STAMP=NULL }
 
+########  this is just a guess
+      
 
-    
+      
    TPALS = c("rainbow", "topo.colors", "terrain.colors", "heat.colors", "tomo.colors")
     APALS = c("rainbow", "topo", "terrain", "heat", "tomo")
     ADDBUTS = c("RAW", "LOG", "SQRT", "INFO","BOXZ", "CLIMB", "ZBOUNDS" )
@@ -35,7 +37,7 @@ function(Xamp, DT=0.008, STAMP=NULL)
        
    ###  X11(width=15, height=10)
 ###  
-    WOUT =  wlet.do(Xamp, DT, noctave=7, zscale=scale.def,  col=pal, STAMP=STAMP)
+    WOUT =  wlet.do(Xamp, DT, noctave=noctave, nvoice=nvoice, w0=w0,   zscale=scale.def,  col=pal, STAMP=STAMP)
     print("Finished calculation for  wlet.do")
 
     faha = WOUT$baha

@@ -1,4 +1,4 @@
-varsquig<-function(x,y, L=locator(2) , FLIP=FALSE, filcol="blue", tracecol="red" , var=0)
+varsquig<-function(x,y, L=locator(2) , FLIP=FALSE, filcol="blue", tracecol="red" , var=0, xpd=TRUE)
 {
   if(missing(FLIP) ) { FLIP=FALSE  }
   if(missing(L) ) { L=locator(2)  }
@@ -43,12 +43,12 @@ varsquig<-function(x,y, L=locator(2) , FLIP=FALSE, filcol="blue", tracecol="red"
       g[!yup] = zer 
       g[1] = zer
       g[length(ry)] = zer
-      if(var)  polygon(rx, g , col=filcol, border=NA, xpd=TRUE)
+      if(var)  polygon(rx, g , col=filcol, border=NA, xpd=xpd)
 
     }
 
 
-  lines(rx, ry, col=tracecol, xpd=TRUE)
+  lines(rx, ry, col=tracecol, xpd=xpd)
 
 ### lines(g, ry, col=col)
 

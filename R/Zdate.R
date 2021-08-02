@@ -5,6 +5,13 @@ function(info, sel=1, t1=0, sep=':' )
     if(missing(t1)) { t1 = 0 }
     
     if(is.null(t1)) { t1 = 0 }
+
+    n = length(info$sec) 
+
+    if( is.null(info$off) ) {   info$off  = rep(0,n) }
+    if( is.null(info$msec) ) { info$msec = rep(0,n) }
+    if( is.null(info$t1) ) {   info$t1   = rep(0,n) }
+   
     rd = recdate(info$jd[sel], info$hr[sel], info$mi[sel], info$sec[sel]+info$msec[sel]/1000+info$t1[sel]-info$off[sel]+t1, yr=info$yr[sel])
     sec = floor(rd$sec)
     msec = 1000*(rd$sec-sec)

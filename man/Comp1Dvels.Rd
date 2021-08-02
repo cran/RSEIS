@@ -2,7 +2,7 @@
 \alias{Comp1Dvels}
 \title{Compare 1D models }
 \description{
-   plot 1D velocity Models for comparison
+   Plot 1D velocity Models for comparison.
 }
 \usage{
 Comp1Dvels(INV, depth = 1:50)
@@ -21,7 +21,7 @@ Comp1Dvels(INV, depth = 1:50)
 
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}
 
-\seealso{Comp1Dvel, Get1Dvel}
+\seealso{Plot1Dvel, Comp1Dvel, Get1Dvel}
 \examples{
 
 VEL <- list()
