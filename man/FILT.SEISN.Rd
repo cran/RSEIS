@@ -8,7 +8,7 @@
 \usage{
 FILT.SEISN(TH, sel = 1:length(TH$JSTR),
 FILT = list(ON = TRUE, fl = 0.5, fh = 7, type = "HP",
- proto = "BU", RM=FALSE, zp=TRUE ), TAPER = 0.1, POSTTAPER = 0.1)
+ proto = "BU", RM=FALSE, zp=TRUE ), TAPER = 0.1, POSTTAPER = 0.1, AUGMENT=FALSE)
 }
 
 \arguments{
@@ -17,12 +17,17 @@ FILT = list(ON = TRUE, fl = 0.5, fh = 7, type = "HP",
   \item{FILT}{filter definition }
   \item{TAPER}{filter taper}
   \item{POSTTAPER}{taper after filter}
+  \item{AUGMENT}{Logical, FALSE}
 }
 \details{
-  Seismic structure
+  RSEIS Seismic structure is filtered, trace by trace.
+  If AUGMENT is TRUE, traces are augmented at beginning and end,
+  filtered and then truncated to suppress edge effects. In that case
+  no tapering is applied post fitler.
 }
 \value{
- Seismic structure
+ RSEIS Seismic structure, traces are filtered and a proc is added to the
+  trace history.
 }
 
 \author{Jonathan M. Lees<jonathan.lees.edu>}

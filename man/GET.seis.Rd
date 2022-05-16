@@ -16,7 +16,8 @@ HEADONLY=FALSE,  PLOT = -1, RAW=FALSE)
 }
 \arguments{
   \item{fnames}{list of file names.}
-  \item{kind}{an integer 1, 2, 3; 0=R(DAT) , 1 = segy, 2 = sac, 3 = AH.}
+  \item{kind}{an integer -1, 0, 1, 2 ; 0="RDATA" , -1="RDS", 0="RDATA", 1 = "segy",
+    2 = "sac", see notes below}
   \item{Iendian}{ vector,   Endian-ness of the data: 1,2,3: "little", "big", "swap".
     Default = 1 (little)
   }
@@ -60,6 +61,10 @@ HEADONLY=FALSE,  PLOT = -1, RAW=FALSE)
    
  }
  \details{
+
+   "kind" can be numeric or character: options are
+   'RDS', 'RDATA', 'SEGY', 'SAC', corresponding to (-1, 0, 1, 2).
+   
  
   Uses readBin to extract data in SAC/SEGY format.
   User must know what kind of machine the data
@@ -93,6 +98,9 @@ HEADONLY=FALSE,  PLOT = -1, RAW=FALSE)
 \seealso{plotJGET, JSAC.seis , prepSEIS, Mine.seis}
 \note{
 
+  The easiext way to process datais to convert the data to
+  an R-format type, using either save (kind=0) or saveRDS (kind=-1).
+  If these are used then I/O is simple.
 
   OLDER:
   
@@ -111,9 +119,10 @@ HEADONLY=FALSE,  PLOT = -1, RAW=FALSE)
    are installed but it is easy to extend.  AH format
    is available for LINUX systems, but there were problems compiling in
    WINDOWS and MACOS so this feature was removed.
+   
    A filter for mseed format is currently being developed.
 
-   
+    
 
 
 

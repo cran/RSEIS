@@ -95,6 +95,14 @@ function(GG)
             nsamp=length(temy)
             tem2 = nsamp*dt[j[w1]]
 
+                ####  need to check here is HEAD exists...
+            if(is.null(GG[[j[w1]]][['HEAD']] ))
+            {
+                GG[[j[w1]]][['HEAD']] = list(scalefac = 1, gain = 1) 
+            }
+                
+           
+
             if(is.null(GG[[j[w1]]]$HEAD$scale_fac))
               { scalefac = 1 } else {scalefac =GG[[j[w1]]]$HEAD$scale_fac} 
             

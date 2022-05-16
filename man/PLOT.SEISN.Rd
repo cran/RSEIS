@@ -11,7 +11,7 @@ labs=c("CE1") ,
 notes = "CE1.V", subnotes=NA, tags ="CE1.V" ,
 sfact = 1, LOG = "", COL = 'red', add = 1, pts = FALSE,
 YAX = 1, TIT = NULL, SHIFT = NULL,COLLAPSE=FALSE,   rm.mean = TRUE, UNITS = "volts",
-MARK = TRUE, xtickfactor = 1)
+MARK = TRUE, xtickfactor = 1, vertline=NA )
 }
 
 \arguments{
@@ -44,7 +44,9 @@ MARK = TRUE, xtickfactor = 1)
   \item{rm.mean}{remove mean from traces}
   \item{UNITS}{character, units of traces (see labs) }
   \item{MARK}{character marking for earthquake}
-  \item{xtickfactor}{Factor for multiplying the x-axis tick markers (default=1; for minutes=60, hrs=3600, days=24*3600) }
+  \item{xtickfactor}{Factor for multiplying the x-axis tick markers  (default=1; for minutes=60, hrs=3600, days=24*3600) }
+  \item{vertline}{time list (yr, jd, hr, mi sec) for plotting vertical lines on window.
+  Default=NA }
   
   
 }

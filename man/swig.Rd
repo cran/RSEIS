@@ -13,7 +13,7 @@ SHOWONLY = FALSE, CHOP = FALSE, TIT = "",
 pts = FALSE, forcepix = FALSE, pcex=0.7, SCALE = 1, ilocstyle=1,
 velfile = "", stafile = "", LOC = NULL,
 prefilt=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL,
- YAX = 1  ,  xtickfactor = 1)
+ YAX = 1  ,  xtickfactor = 1, vertline=NA)
 }
 
 \arguments{
@@ -51,6 +51,9 @@ prefilt=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL,
   alternating left and right}
  \item{xtickfactor}{Factor for multiplying the x-axis tick markers
    (default=1; for minutes=60, hrs=3600, days=24*3600) }
+ \item{vertline}{time list (yr, jd, hr, mi sec) for plotting vertical lines on window.
+  Default=NA }
+  
   
 }
 \details{

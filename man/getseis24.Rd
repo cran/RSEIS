@@ -21,7 +21,8 @@ getseis24(DB, iyear = 2009, iday = 1, usta = "",
 }
   \item{acomp}{component to show
 }
-  \item{kind}{kind of data, default=1, SEGY data
+  \item{kind}{kind of data, default=1, 0="RDATA" , -1="RDS", 0="RDATA", 1 = "segy",
+    2 = "sac"
   }
  \item{Iendian}{ Endian-ness of the data: 1,2,3: "little", "big", "swap".
     Default = 1 (little)

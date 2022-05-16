@@ -4,7 +4,7 @@ function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1, RAW
   ###  get a list of SEGY or SAC files from a directory and store in structure
 ####  kind 1=segy, 2=sac, kind=0->R format  ( 3=AH is no longer available)
 ####   kind=0  data saved with save()
-    #####  kind=4  data saved with saveRDS() style
+    #####  kind=-1  data saved with saveRDS() style
   
   if(missing(PLOT)) { PLOT=-1 }
   if(missing(kind)) { kind=1 }
@@ -13,7 +13,20 @@ function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1, RAW
   if(missing(BIGLONG)) { BIGLONG=FALSE}
   if(missing(RAW)) { RAW=FALSE }
 
-  
+  Akind = c('RDS', 'RDATA', 'SEGY', 'SAC', 'AH' )
+    Ikind = c(-1, 0, 1, 2, 3)
+
+    
+    if(is.character(kind) )
+    {
+        kind = toupper(kind)
+        w.kind = which(kind==Akind)
+        kind  = Ikind[w.kind]
+
+        }
+
+
+    
   tmpGIVE = as.list(1:length(fnames))
 
   ii = 1

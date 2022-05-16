@@ -18,8 +18,8 @@ FmakeDB(LF2, kind =1, Iendian=1, BIGLONG=FALSE)
   \item{path}{character, Path to directory where files and directories exist}
   \item{pattern}{character, pattern for listing of files}
   \item{dirs}{character, vector of directories to be scanned}
-  \item{kind}{kind of data: R(DAT)=0, segy=1; sac=2}
-  \item{Iendian}{default=1Endian-ness of the data: 1,2,3: "little", "big", "swap".
+  \item{kind}{kind of data: RDS=-1, R(DAT)=0, segy=1; sac=2}
+  \item{Iendian}{default=1, Endian-ness of the data: 1,2,3: "little", "big", "swap".
     Default = 1 (little)}
   \item{BIGLONG}{ logical, TRUE means long=8 bytes
   }
@@ -40,6 +40,10 @@ FmakeDB(LF2, kind =1, Iendian=1, BIGLONG=FALSE)
   with a header.  makeDB reads in all the headers and
   creates a list of meta-data for later use in RSEIS.
 
+   "kind" can be numeric or character: options are
+   'RDS', 'RDATA', 'SEGY', 'SAC', corresponding to (-1, 0, 1, 2).
+   
+
   Uses readBin to extract data in SAC format.
   user must know what kind of machine the data
   was created on for I/O purposes.
@@ -56,7 +60,7 @@ FmakeDB(LF2, kind =1, Iendian=1, BIGLONG=FALSE)
   not seismic data then care must be taken.  Perhaps use FmakeDB
   to explicitly names the files for the DataBase.
 
-  If using FmakeDB a simple vecotr of files
+  If using FmakeDB a simple vector of files
   (full path names) should be provided.
 
   The origin year, used for getting the Epoch year,

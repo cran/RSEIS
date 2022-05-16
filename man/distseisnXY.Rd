@@ -2,7 +2,8 @@
 \alias{distseisnXY}
 \title{Distances from an RSEIS list}
 \description{
-  Distances from an RSEIS list
+  Calculate euclidian distances from an RSEIS seismic data list,
+  stations and event location.
 }
 \usage{
 distseisnXY(GH, sta=list(nam="", x=0 , y=0 , z=0) , LOC=list(x=0, y=0 , z=0))
@@ -14,9 +15,8 @@ distseisnXY(GH, sta=list(nam="", x=0 , y=0 , z=0) , LOC=list(x=0, y=0 , z=0))
 }
 
 \value{
-  list:
-  \item{}{}
-  \item{}{}
+  \item{d}{vector of distances in km, matching the stations in the RSEIS
+  list.}
 }
 
 \author{Jonathan M. Lees<jonathan.lees@unc.edu>}

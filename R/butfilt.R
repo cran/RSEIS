@@ -21,13 +21,17 @@ function(a, fl=0, fh=0.5, deltat=1, type="BP", proto="BU", npoles=5, chebstop=30
    #####                 (SAC default = 5.0)
    #####  float ts:      time sample interval in secs (e.g.,0.01 = 100 samp/sec)
    #####                (SAC default = 0.01)
-  ###    checks to avoid problems
+   ###    checks to avoid problems
 
   if(missing(npoles)) { npoles=5 }
   if(missing(proto)) { proto="BU" }
   if(missing(type)) { type="BP" }
-  if(missing(deltat)) { deltat = 1 }
-  if(missing(fh)) { fh = 1/(2*deltat) }
+    if(missing(deltat)) { deltat = 1 }
+
+#####  fh can not be higher than nyquist frequency
+    if(missing(fh)) { fh = 1/(2*deltat) }
+    if(fh>  1/(2*deltat) ) fh = 1/(2*deltat)
+    
   if(missing(fl)) { fl = 0.01 }
   if(missing(trbndw)) { trbndw=0.3 }
     if(missing(chebstop)) { chebstop=30.0 }

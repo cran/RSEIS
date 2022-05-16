@@ -38,7 +38,8 @@ longpstart(NPP = 6, asta = "", acomp = "", theday = 1, hr = 0)
 }
   \item{PS}{logical, TRUE postscript output
 }
-  \item{kind}{ kind of seismic data, 1=SEGY, 2=SAC
+  \item{kind}{data type, an integer -1, 0, 1, 2 ; 0=R(DAT) , -1=RDS, 0=RDATA, 1 = segy,
+    2 = sac
 }
   \item{Iendian}{Endian-ness of binary data
 }

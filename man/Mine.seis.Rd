@@ -17,7 +17,8 @@ BIGLONG=FALSE, CHOP=TRUE, verbose=FALSE, chtoken=NULL, statoken=NULL, RAW=FALSE)
     files where data is to extracted from}
   \item{grepsta}{which stations to extract}
   \item{grepcomp}{which components to extract}
-  \item{kind}{kind of data, segy=1, sac=2}
+  \item{kind}{kind of data, -1="RDS", 0="RDATA" ,  0="RDATA", 1 = "segy",
+    2 = "sac"}
 
 \item{Iendian}{ Endian-ness of the data: 1,2,3: "little", "big", "swap".
   Default = 1 (little)

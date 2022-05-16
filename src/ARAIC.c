@@ -190,13 +190,13 @@ void free_dvector(double *v)
    double  *cof1, *cof2, pm;
 
    int  k1, k2;
-   int p1, p2, q1, q2, n1, n2;
+   int p1, p2,  n1, n2;
    int N, K, M;
    double mz1;
 
    double s1, s2;
 
-   double kdat;
+   
    int kmin;
 
    
@@ -283,7 +283,7 @@ void free_dvector(double *v)
    k1 = 2*M+1;
    k2 = N-(2*M+1);
   
-   kdat = 0;
+  
    kmin = 0;
  /* REprintf("READY 4\n"); */
    for(K=k1; K<=k2; K++)
@@ -291,8 +291,7 @@ void free_dvector(double *v)
 
        p1 = M;
        p2 = K+1;
-       q1 = K;
-       q2 = N-M;
+       
        n1 = K-M;
        n2 = N-M-K;
 
@@ -440,13 +439,13 @@ IOUT =  araic(y1, num_points, dt, M,
 /** FUNC DEF */ void   CALL_ARspec(double *y1, double *kout, int *inum,  int *p,  int *numc)
 {
 
-  int num_points, numcof,  klength, m ;
+  int num_points, numcof,  klength ;
  
    num_points = *inum;
    klength = *p;
    numcof = *numc;
  
-   m = autoreg_spec(y1, kout, num_points, klength, numcof );
+    autoreg_spec(y1, kout, num_points, klength, numcof );
 
 
  return;

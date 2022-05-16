@@ -2,7 +2,10 @@
 function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1, RAW=FALSE)
 {
   ###  get a bunch of AH files from a directory and store in structure
-  ####  kind 1=segy, 2=sac, 3=AH, kind=0->R format,   kind= (-1) readRDS
+####  kind 1=segy, 2=sac, 3=AH, kind=0->R format,   kind= (-1) readRDS
+
+
+    
   
   if(missing(PLOT)) { PLOT=-1 }
   if(missing(kind)) { kind=1 }
@@ -11,7 +14,20 @@ function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1, RAW
   if(missing(BIGLONG)) { BIGLONG=FALSE}
   if(missing(RAW)) { RAW=FALSE }
 
-  
+    Akind = c('RDS', 'RDATA', 'SEGY', 'SAC', 'AH' )
+    Ikind = c(-1, 0, 1, 2, 3)
+
+    
+    if(is.character(kind) )
+    {
+        kind = toupper(kind)
+        w.kind = which(kind==Akind)
+        kind  = Ikind[w.kind]
+
+        }
+
+
+    
   tmpGIVE = as.list(1:length(fnames))
 
   ii = 1

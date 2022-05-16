@@ -1,7 +1,7 @@
 `PLOT.SEISN` <-
     function(GH, tim=1, dt=1,  sel=c(1:4), WIN=c(1,0), labs=c("CE1"), notes="CE1.V", subnotes=NA, tags="CE1.V",
              sfact=1, LOG="", COL='red', add=1, pts=FALSE, YAX=1, TIT=NULL, SHIFT=NULL , COLLAPSE=FALSE, 
-             rm.mean=TRUE, UNITS="volts", MARK=TRUE, xtickfactor = 1 )
+             rm.mean=TRUE, UNITS="volts", MARK=TRUE, xtickfactor = 1, vertline=NA )
 {
   ### plot a matrix of seismograms on a simple panel display
   ###   GH = structure of traces
@@ -230,7 +230,12 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
   if(add==1 | add==2 )
     {
       plot(range(tim[tflag]), c(0,1), type='n', axes=FALSE, xlab="", ylab="", log=LOG)
-       
+      if(is.list(vertline))
+      {
+          d1 = data.frame(GH$info)
+          sec.1 = secdifL(d1[1,], vertline ) 
+          abline(v=sec.1, col=grey(0.8) )
+          }
     }
    ##############################
    ##############################
