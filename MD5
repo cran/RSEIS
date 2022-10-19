@@ -1,6 +1,6 @@
-368dc1664e7a86d838c1236ca3aa2496 *DESCRIPTION
+a43c371b6c8b69924f6571f2a12b1454 *DESCRIPTION
 9e50fd28073aeea5de541850e192830e *NAMESPACE
-112c14e362dd431df085733f9971ce91 *NEWS
+1885c66d26d5e0bec4440cdbe54dbc85 *NEWS
 b844c8be886f6cbbb4e9b134967df6eb *R/ASCII.SEISN.R
 0d255bff6fd424a447482b0e2d14deec *R/AUGMENTbutfilt.R
 86ba5eabfd5472dc859d9ac977a9b258 *R/BUTREPLOT.R
@@ -10,6 +10,7 @@ b844c8be886f6cbbb4e9b134967df6eb *R/ASCII.SEISN.R
 ee78bcef22b6d2b82ab9069153684210 *R/Comp1Dvels.R
 fdf1164725cf46b1683ef4ddce7c00f4 *R/DAYSperYEAR.R
 17517a37e4b11994f2ab08ea999334ef *R/DECIMATE.SEISN.R
+95704e80af178a1ce5baec84619bcca3 *R/DELpix.R
 6537223c8750cf1ac708b859e05e2fff *R/DISPLACE.SEISN.R
 38140d1c18cc9f43ea4b7a3717ac2348 *R/DISTxsec.R
 08758dffb437f1f1ee73a9d083152c23 *R/DO.PMOT.ARR.R
@@ -41,6 +42,7 @@ ec68c215c40e3290ca42d08ae8503960 *R/JGRAY.R
 b58c77444cc50d088adc5006aaeb56db *R/JSEGY.seis.R
 e7ce804dfa8272b3bae908c99c9e7a2d *R/Jtim.R
 670c7ed43514fb3460e3e134b2cc5119 *R/JtimL.R
+003c613cfbdfac464013150faf75e4dd *R/JustF.R
 1f42a3a70a899be3873341c1e1e2b696 *R/LocalUnwrap.R
 375200f5edc25b13e212a08b215f0be7 *R/MTM.drive.R
 f6862f14c28b1858b68ef0a1ba94f227 *R/MTMdisp.R
@@ -76,6 +78,7 @@ e7d2ee626a1c2de2b76c2f9be177a947 *R/SELSTA.R
 26be4eff52d77dd7c8d44066b2112ffc *R/SENSORsensitivity.R
 ad14e69a1f088346da94d235f956b8f2 *R/SNET.drive.R
 811ad4b48942a171d21849f13710fd60 *R/SPECT.drive.R
+9f953324f392928ed86158a4c338c108 *R/STALTA.R
 8f1edff8f38cff5a7455078c97cc5081 *R/STLTcurve.R
 09bbf56c2632e02aa5c15e0d4d0d4d6b *R/Spectrum.R
 fdb8f220a8674382179216d6962e3351 *R/T12.pix.R
@@ -275,7 +278,7 @@ d87f72fb6b70325a13fa7a604a23166d *R/varsquiggle.R
 0aade38cddfe05e1087daa5522c94321 *R/view.seis.R
 53a8692f44ca0072cc0782f9a2ef6b01 *R/vlen.R
 53bd888febd284e704fa99c8e251e5f7 *R/vline.R
-0592d5ee8f5185804a257c416f929b56 *R/wigFUNCS.R
+a7fcbd43d3cbaa392e4e5b358f8a40c7 *R/wigFUNCS.R
 b8438f14e2f8a1eb486f9b76ff4ba92f *R/wiggle.env.R
 8c2bad2bf17c72eeab8f4ad46f00cf94 *R/wiggleimage.R
 da1f2c1365e5008d0f7f0c7dcfe870f5 *R/winmark.R
@@ -322,7 +325,7 @@ cf6742895736a89f7325b01a1554ce70 *man/Comp1Dvel.Rd
 aa178c9c009a28e825549808e73b8326 *man/DISPLACE.SEISN.Rd
 b354b163f913945a306ce8be53f2f93c *man/DISTxsec.Rd
 15e3360a023ee2d7ccfe1c757a019006 *man/DO.PMOT.ARR.Rd
-4823d2c82a540a93c5f1042880acbc12 *man/DOsgram.Rd
+4c29b37604aa0557a60e3d553d5155bc *man/DOsgram.Rd
 1abb2d6bbc92ca3465a18abfcbb47d46 *man/EPOCHday.Rd
 c42294ca79f347e2e0f7544e920facfd *man/EPOCHyear.Rd
 a6590b7dc33de3ee5570dce3b3ea3db2 *man/ETECTG.Rd
@@ -348,9 +351,9 @@ a8b7d8e86cd726b535f696618bf6269a *man/JBLACK.Rd
 a27fb3b2a4e23761431a6967da9dd742 *man/Jtim.Rd
 f1516078e811b451f41346c18acfc795 *man/KH.Rd
 815eab945b40b717b0100e29551c5af4 *man/LocalUnwrap.Rd
-ca83633a49f19adb0d7f2e05c69a8522 *man/MTM.drive.Rd
-4728a88fa9ca2e341e054ca7d2fb234b *man/MTMdisp.Rd
-a4006ecf4d845569980cdef89b8086eb *man/MTMgabor.Rd
+0b3302b2100a36db717ae6e5d3c7fa2f *man/MTM.drive.Rd
+f354c4ae9a8210656fa34a59e15dea48 *man/MTMdisp.Rd
+8a094a2f4cfe8a7f66fe5080840422b0 *man/MTMgabor.Rd
 594eb3d6ab2c57ae0939cee35988c609 *man/MTMplot.Rd
 b03c6ef8da38fae0b7eddcdbafb99191 *man/Mine.seis.Rd
 c51813d145bcf285506cd2bab049c69b *man/Mmorlet.Rd
@@ -383,6 +386,7 @@ c2f519afab709937c12018156a29bbc9 *man/SELSTA.Rd
 daa2c4563dfe169f14f7660a1c08c906 *man/SENSORsensitivity.Rd
 b3d8611a5026fa3006d3cac281db2e82 *man/SNET.drive.Rd
 e1426072589cd850953ec6b700f8b775 *man/SPECT.drive.Rd
+3f472c0d59f39773f5890d66a111947b *man/STALTA.Rd
 851a8d31ac27a69ad551c2e065f434d8 *man/STLTcurve.Rd
 b0650be6af86d06dcf4319aff118d573 *man/Spectrum.Rd
 479f0f6a0904c104024eff5ded4155ad *man/T12.pix.Rd
@@ -395,7 +399,7 @@ bc9c846fade34dfa7d41125c4247872c *man/VELOCITY.SEISN.Rd
 e7b2efb3fa552cec71f05ad0f1d4be53 *man/X2RSEIS.Rd
 4bc778816b103796f9b8eaf6b66c842b *man/X2SAC.Rd
 44271bf0804b2b628f9dc9fa735fbe4b *man/XTR.Rd
-54d1d99753267cd6886499c9d0012fde *man/YPIX.Rd
+ca02cb07094bbbd4641ebc65d27967c7 *man/YPIX.Rd
 d4b504519c9ba12f64344a558249b27f *man/YRsecdif.Rd
 0a48c797d0bc71d0667c689e686f7a72 *man/ZOOM.SEISN.Rd
 698a8f584ef303ccc32e4e20b1e25030 *man/Zdate.Rd
@@ -428,14 +432,14 @@ fa4f5fd48c9e59af58e6be19aeacb917 *man/deconinst.Rd
 461d7147399e2c44350654a926bb7184 *man/detail.pick.Rd
 416fb2e2944e8c58922c14ade1e696f6 *man/detrend.Rd
 d545137fd4132929d677b21343b47798 *man/distseisnXY.Rd
-62faa1842788cb2b4ac5d2867ec8ba65 *man/doGABOR.AR.Rd
-22d4b85da2138d187592958e30d27f2b *man/doGABOR.MTM.Rd
+068a19e1ca373b14330392e81eb1b841 *man/doGABOR.AR.Rd
+4728ffb5babb7dd13aac6f1890405b14 *man/doGABOR.MTM.Rd
 2f9c3f280353de580a23c65362a23980 *man/doMYBUTTS.Rd
 08bc0386e7d327abe8aecc955c283c0e *man/dowiggles.Rd
 ba99f70469d68a00a8cc65f476de9d4a *man/editDB.Rd
 5c99e9efaae2749ac59cdcbeb350980e *man/envelope.Rd
 82a5de9d8ecca03bd071edb36b31be12 *man/evolAR.Rd
-22ce2e8727c3121a41d50d1c43e24781 *man/evolMTM.Rd
+2a592161f34e0839bbe835cbee61c6f5 *man/evolMTM.Rd
 08d46acc66393bd464bc7ec04e3395a1 *man/evolfft.Rd
 4ced545fe2cd6bcdd1879f845603faad *man/filedatetime.Rd
 2a661c4f63dfab01800f58e73fb90b7b *man/filterstamp.Rd
@@ -448,7 +452,7 @@ bc1865d9546047ab1ba12f1ea1b033aa *man/finteg.Rd
 1f731be892f8bfc1f716b301a21c0c33 *man/gaddtix.Rd
 d14bb25c19eab90685d499ffa1592557 *man/genrick.Rd
 efb0d8c404607b660d196b44d4527345 *man/get.corner.Rd
-b79a62ae4e23177c638076fdb19ad063 *man/get.slepians.Rd
+3303551fde00b24be2dce80be518aa7b *man/get.slepians.Rd
 34f5692e89594deade6e88c8a08e2118 *man/getEcard.Rd
 3314bea2aa3b1192319a5fa00f600289 *man/getFcard.Rd
 58029c4de9fe3ec96154481031c6f207 *man/getGHtime.Rd
@@ -493,7 +497,7 @@ c39c9f4a085423318a82684ff0edb29c *man/makefreq.Rd
 99f0316e8427b2f0a16d7f62cd46765b *man/markseis24.Rd
 68890295f95fa16291c7711d8aeaee2f *man/matsquiggle.Rd
 c09a005649c729356c0ecfe5e55c33d7 *man/mirror.matrix.Rd
-26a69c35aa3224871019373f78294e87 *man/mtapspec.Rd
+5fc378fae3a4c99dcd1d48d1c89a0f16 *man/mtapspec.Rd
 d6353a273501bdc5eaf68279af989b6b *man/next2.Rd
 68f7408359646f863d59dcbc3b6c370b *man/one.Rd
 4efe6dcdc0375b9a3728365d537d469a *man/parse.pde.Rd
@@ -512,7 +516,7 @@ e97950c730db88bf4fbb172d69707f98 *man/plotarrivals.Rd
 676618454fd5fd952dc26ae8c7e04f16 *man/plotevol.Rd
 36bf8a5af84bf5bef889ad80f23898f2 *man/plotseis24.Rd
 420632161fef21344d0069aacdc55bbf *man/plotwlet.Rd
-c5c8c999b754fedabb37afaa4ac9f7ea *man/plt.MTM0.Rd
+e4c646c9d96264b7edda7a018ce7df90 *man/plt.MTM0.Rd
 2d9520b0e73876328e12c4618d068f53 *man/posix2RSEIS.Rd
 d62999ad682a4bac0399e4df9101b395 *man/prep1wig.Rd
 001b6b4c0d7def2b83a7ffa10d6204f8 *man/prepSEIS.Rd
@@ -529,7 +533,7 @@ e1803b5d2f0f81f3da985585084d9c73 *man/pwlet2freqs.Rd
 4c652ca0a39d06718f1a4cde66696f16 *man/rseis2ts.Rd
 473dc0bcd96bedefe4d4d9095b8c3b3e *man/rsspec.taper.Rd
 7f18a48d7e053300699374bdaf52060a *man/ruler.Rd
-6e9cddde592b95a85ee8497877459546 *man/save.wpix.Rd
+42dff4d16d01bc2771e1460b9a10d7d9 *man/save.wpix.Rd
 9389dfcffbcac9d67c6638f1deaf55e8 *man/saveWPX.Rd
 699da9e39e607170b5729feb2b3c3c38 *man/scal2freqs.Rd
 1e69545324d8a31f67fbf2cf5b08ea2b *man/screens.Rd
@@ -589,16 +593,16 @@ ca9bb30475c07cd41a0e2e342b483866 *man/writeUW.OSTAScard.Rd
 d847b07f2e54df4a73bfb6a3c629ed08 *man/xtract.trace.Rd
 8b461b5635464232b3b921f969e69d16 *man/yeardate.Rd
 4717188723520fc01d75ebd6e5dd175c *man/zlocator.Rd
-cb2c08a0b2f9caa7c94e95fcd36c60c7 *src/ARAIC.c
-5688677d0004f58f6d90e8cfe7073817 *src/GetCornerFreq.c
-000e0a728cb3b32c323ed4bf3714777f *src/LLNfilt.c
-197f4620a03953d7d3c619c4db622e11 *src/MTAPSRC.c
+9525d7b6cae20e9e0846d51994eba91a *src/ARAIC.c
+155b145b7349ac6641e8b7d64c718dd9 *src/GetCornerFreq.c
+322b47aafcc580e417be602dd0e78703 *src/LLNfilt.c
+a391b2c0e5fc468963e2087030c3cc91 *src/MTAPSRC.c
 52be0f47584e77c4fc8f283c9bc988e0 *src/TTray.c
 ad505caa9e4f09fda103226718e6d3eb *src/defines.h
 3a8ea1ad19d8ca76f921d66256e64fd4 *src/init.c
 f50c2847945ae7013551148e6739505a *src/jl.h
 ce8fa14d183bb51d3b9ab9c6092c8ec4 *src/jlproto.h
-7af744cc11d5ee8064f35464590811e6 *src/jpiki.c
+4a5236039bf6ff6907dbe3f7de609f72 *src/jpiki.c
 96bff886782358781e6206ebbe2d1a0f *src/jpiki.h
 6b1c0bd7372c39c81139d1f5c9a56ddf *src/sac.h
 b425a5c0cb1e3e0ef56091ef9e4204fa *src/segy.h

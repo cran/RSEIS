@@ -368,7 +368,7 @@ void free_dvector(double *v)
    double dt ;
    double O1,  O2, W;
 
-   int IOUT;
+  
 
 
    num_points = *inum;
@@ -379,7 +379,7 @@ void free_dvector(double *v)
    O2 = *iO2;
    W = *iW;
 
-IOUT =  araic(y1, num_points, dt, M, 
+  araic(y1, num_points, dt, M, 
        T1, O1, O2, W, kout);
 
  return;

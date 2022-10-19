@@ -130,9 +130,9 @@ y = log10 displacement spectrum
 	double          *dtempy, *dtempx;
 	double           slope, intercept;
 	double          score, score_old;
-        double     tscore,  ascore, bscore;
+       
 
-//	FILE           *fopen();
+//	FILE           *fopen(const char *filename, const char *mode);
 //	FILE           *fout = fopen("test.reg.out", "w");
 		
 	score_old = 1e99;
@@ -164,26 +164,24 @@ y = log10 displacement spectrum
 		dget_abfit(dtempx, dtempy, num, &slope, &intercept);
 
 
-		ascore = 0.0;
-		bscore = 0.0;
+		
                 score = 0.0;
-                tscore = 0.0;
+             
 
 		for (j = i1; j <= i2; j++)
 		{
 		   score += (ave - y[j])*(ave - y[j]);
-		   ascore += (ave - y[j])*(ave - y[j]);
+		   
 		   
 		}
 
-		 tscore =score;
+		
 	
 		for (j = 0; j < num ; j++) {
 
 		   
 			a = slope * dtempx[j] + intercept;
-			tscore += (a - dtempy[j])*(a - dtempy[j]);
-			bscore += (a - dtempy[j])*(a - dtempy[j]);
+			
 		}
 
 

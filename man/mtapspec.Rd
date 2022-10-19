@@ -42,7 +42,7 @@ functions used by mtapspec.  See reference for details.
     \item{klen}{length used in fft}
     \item{mtm}{input MTM parameters, see above}
 }
-\references{Lees, J. M. and Park, J., 1995: Multiple-taper spectral analysis: A stand-alone C-subroutine, \emph{Computers \& Geology}, 21(2), 199-236. }
+\references{Lees, J. M. and Park, J., 1995: Multiple-taper spectral analysis: A stand-alone C-subroutine, \emph{Computers and Geology}, 21(2), 199-236. }
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
 \seealso{fft }

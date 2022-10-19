@@ -23,7 +23,7 @@ PADDLAB = NULL, GUI = TRUE)
 \value{
  Graphical Side effect
 }
-\references{Lees, J. M. and Park, J., 1995: Multiple-taper spectral analysis: A stand-alone C-subroutine, \emph{Computers \& Geology}, 21(2), 199-236.}
+\references{Lees, J. M. and Park, J., 1995: Multiple-taper spectral analysis: A stand-alone C-subroutine, \emph{Computers and Geology}, 21(2), 199-236.}
 \author{Jonathan M. Lees<jonathan.lees.edu>}
 
 \seealso{plt.MTM0}

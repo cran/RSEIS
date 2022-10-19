@@ -104,11 +104,24 @@ static double sn[50],sd[50];
 static int nsects=0;
 
 /* Local function prototypes */
-static double warp();
-static int chebparm(), lptbp(), lptbr(), lpthp(), bilin2(), lp();
-static int c1roots(), c2roots();
-static int cutoffs(), beroots(), buroots();
-static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
+static double warp(double *f , double *ts);
+static int chebparm(double a, double trbndw, int iord, double *eps, double *ripple);
+static int lptbp(complex *p, complex *z, char *rtype, double *dcvalue, double *fl, double *fh);
+static int lptbr(complex *p, complex *z, char *rtype, double *dcvalue, double *fl, double *fh, double *sn, double *sd);
+static int lpthp(complex *p, complex *z, char *rtype, double *dcvalue, double *sn, double *sd);
+static int bilin2(double *sn, double *sd);
+static int lp(complex *p, complex *z, char *rtype, double *dcvalue, double *sn, double *sd);
+
+static int c1roots(complex *p, char *rtype, double *dcvalue, int iord, double *eps);
+static int c2roots(complex *p, complex *z, char *rtype, double *dcvalue, int iord, double a, double omegar);
+static int cutoffs(double *sn, double *sd, double *f);
+static int beroots(complex *p, char *rtype, double *dcvalue, int iord);
+static int buroots(complex *p, char *rtype, double *dcvalue, int iord);
+static complex cmul(complex a,complex b);
+static complex cpowi(complex a,int  n);
+static complex jcsqrt(complex z);
+static complex conjg(complex z);
+static complex cdiv(complex a, complex b);
 
 /*  Subroutine to apply an iir filter to a data sequence. */
 /*    The filter is assumed to be stored as second order sections. */
@@ -126,7 +139,6 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 /*    DATA                          Data array (same as input) */
 
 /* FUNC DEF */ void apply(double *data, int  nsamps, int zp)
-
 {
     /* System generated locals */
     int i__1, i__2;
@@ -369,10 +381,7 @@ static complex cmul(), cpowi(), jcsqrt(), conjg(), cdiv();
 /*       EPS              Chebyshev passband parameter */
 /*       RIPPLE           Passband ripple */
 
-/* FUNC DEF */ static int chebparm(a, trbndw, iord, eps, ripple)
-double a, trbndw;
-int iord;
-double *eps, *ripple;
+/* FUNC DEF */ static int chebparm(double a, double trbndw, int iord, double *eps, double *ripple)
 {
     /* System generated locals */
     double r__1, r__2;
@@ -515,12 +524,7 @@ double *eps, *ripple;
 /*      OMEGAR         CUTOFF FREQUENCY OF STOPBAND */
 /*                     PASSBAND CUTOFF IS AT 1.0 HERTZ */
 
-/* FUNC DEF */ static int c2roots(p, z, rtype, dcvalue, iord, a, omegar)
-complex *p, *z;
-char *rtype;
-double *dcvalue;
-int iord;
-double a, omegar;
+/* FUNC DEF */ static int c2roots(complex *p, complex *z, char *rtype, double *dcvalue, int iord, double a, double omegar)
 {
     /* System generated locals */
     int i__1, i__2;
@@ -618,11 +622,7 @@ double a, omegar;
 /*                              This subroutine doubles the number of */
 /*                              sections. */
 
-/* FUNC DEF */ static int lptbp(p, z, rtype, dcvalue, fl, fh)
-complex *p, *z;
-char *rtype;
-double *dcvalue;
-double *fl, *fh;
+/* FUNC DEF */ static int lptbp(complex *p, complex *z, char *rtype, double *dcvalue, double *fl, double *fh)
 {
     /* System generated locals */
     int i__1, i__2, i__3, i__4, i__5, i__6, i__7;
@@ -953,11 +953,7 @@ double *fl, *fh;
 /*    NSECTS                  Number of second order sections following */
 /*                              transformation.  The number is doubled. */
 
-/* FUNC DEF */ static int lptbr(p, z, rtype, dcvalue, fl, fh, sn, sd)
-complex *p, *z;
-char *rtype;
-double *dcvalue;
-double *fl, *fh, *sn, *sd;
+/* FUNC DEF */ static int lptbr(complex *p, complex *z, char *rtype, double *dcvalue, double *fl, double *fh, double *sn, double *sd)
 {
     /* System generated locals */
     int i__1, i__2;
@@ -1138,9 +1134,7 @@ double *fl, *fh, *sn, *sd;
 /*    SD                      Denominator polynomials for second order */
 /*                              sections. */
 
-/* FUNC DEF */ static int cutoffs(sn, sd, f)
-double *sn, *sd;
-double *f;
+/* FUNC DEF */ static int cutoffs(double *sn, double *sd, double *f)
 {
     /* System generated locals */
     int i__1;
@@ -1191,11 +1185,7 @@ double *f;
 /*    SD                      Denominator polynomials for second order */
 /*                              sections. */
 
-/* FUNC DEF */ static int lpthp(p, z, rtype, dcvalue, sn, sd)
-complex *p, *z;
-char *rtype;
-double *dcvalue;
-double *sn, *sd;
+/* FUNC DEF */ static int lpthp(complex *p, complex *z, char *rtype, double *dcvalue, double *sn, double *sd)
 {
     /* System generated locals */
     int i__1, i__2, i__3;
@@ -1295,8 +1285,7 @@ or*/
  f*/
 /*                           second order sections.  Packed head-to-tail. */
 
-/* FUNC DEF */ static int bilin2(sn, sd)
-double *sn, *sd;
+/* FUNC DEF */ static int bilin2(double *sn, double *sd)
 {
     /* System generated locals */
     int i__1;
@@ -1340,8 +1329,7 @@ double *sn, *sd;
 /*      TS      SAMPLING INTERVAL (SECONDS) */
 /*  LAST MODIFIED:  SEPTEMBER 20, 1990 */
 
-/* FUNC DEF */ static double warp(f, ts)
-double *f, *ts;
+/* FUNC DEF */ static double warp(double *f, double *ts)
 {
     /* System generated locals */
     double ret_val;
@@ -1375,11 +1363,7 @@ double *f, *ts;
 /*  ---------------- */
 /*      IORD           DESIRED FILTER ORDER */
 
-/* FUNC DEF */ static int beroots(p, rtype, dcvalue, iord)
-complex *p;
-char *rtype;
-double *dcvalue;
-int iord;
+/* FUNC DEF */ static int beroots(complex *p, char *rtype, double *dcvalue, int iord)
 {
   /***   MODIFIED JML: 2019-09-15  **/
     /* Parameter adjustments */
@@ -1441,8 +1425,7 @@ int iord;
     return TRUE;
 }
 
-/* FUNC DEF */ static complex cmul(a,b)
-complex a,b;
+/* FUNC DEF */ static complex cmul(complex a,complex b)
 {
     complex c;
     c.r = a.r * b.r - a.i * b.i;
@@ -1450,9 +1433,7 @@ complex a,b;
     return c;
 }
 
-/* FUNC DEF */ static complex cpowi(a,n)
-complex a;
-int n;
+/* FUNC DEF */ static complex cpowi(complex a,int  n)
 {
     int i;
     complex c;
@@ -1464,8 +1445,7 @@ int n;
     return c;
 
 }
-/* FUNC DEF */ static complex jcsqrt(z)
-complex z;
+/* FUNC DEF */ static complex jcsqrt(complex z)
 {	complex c;
 	double x,y,w,r;
 	if ((z.r == 0.0) && (z.i == 0.0)) {
@@ -1493,16 +1473,14 @@ complex z;
 	}
 }
 
-/* FUNC DEF */ static complex conjg(z)
-complex z;
+/* FUNC DEF */ static complex conjg(complex z)
 {	complex c;
 	c.r=z.r;
 	c.i = -z.i;
 	return c;
 }
 
-/* FUNC DEF */ static complex cdiv(a,b)
-complex a,b;
+/* FUNC DEF */ static complex cdiv(complex a, complex b)
 {	complex c;
 	double r,den;
 	if (fabs(b.r) >= fabs(b.i)) {

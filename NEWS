@@ -28,36 +28,50 @@ NEWS for Rwave package
 	o Major changes: 
 		ADDED rseis2sac to write out a set of SAC format files for exchange.
 3.0-8   2012-07-16
+	o Minor changes: 
 	Fixed bug in Ray.time1D.R - now the program takes velocity and converts internally to slowness
 
 3.1-2	2013-04-09
+	o Minor changes: 
 	Earlier Jake called attention to a bug in JSEGY.seis, dealing with sample rate.
 	This was fixed wrongly and now the code checks samprate and deltaSample to extract the sample rate
 
 3.1-3   2013-05-20
+	o Minor changes:	
 	Fixed CHOP.SEISN
 	fixed memory leak in GETARAIC man example
 
 3.2-0   2013-06-03
+	o Minor changes: 
        Changed Documentation to conform with length standards
        Fixed index bug in hilbert transform
        JSEGY.seis: Iendian can be a vector now when files have different byte order
        
        
 3.2-5  Thu Oct 31 09:58:13 EDT 2013
+       o Minor changes: 
        Fix bug in makeDB with dirs 
        
 
 3.3-1  Sun Dec 15 12:28:47 EST 2013
+       o Minor changes: 
        Fix bug in plt.MTM0 with sample rates(Jake A.)
        Added Adjust parameter in evolfft  to allow for user control of parameters
 
 3.4-1  Sun Jul 13 12:54:04 EDT 2014
+       o Minor changes: 
        Fixed bug in CHOP.SEISN
        vectorized input parameters in FmakeDB
        NEW I/O functions write1segy, write1sac, read1sac, read1segy, sac2rseis, segy2rseis
        	       		 rseis2segy, rseis2sac
 
 3.4-4   Tue Apr 14 12:11:05 EDT 2015
+	o Minor changes: 
 	Fixed bugs in write1segy, getphaselag2, INSTresponse
 
+4.1-2	Tue Oct 18 23:05:25 EDT 2022
+	o Major changes:
+	 Input/output many files now in RDS format
+	 fixed C-code to be compliant with CRAN
+	 
+	 

@@ -12,7 +12,7 @@ save.wpix(KOUT, fn = "wpix.out")
 }
 \details{
   Takes the output list from swig, specifically the WPX
-  component (KOUT\$WPX) and writes a table to the file system.
+  component and writes a table to the file system.
   This function is embedded in view.seis.
 }
 \value{

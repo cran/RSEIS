@@ -32,16 +32,8 @@
 /*     ------------------------------------------------------------------ */
 
 /* Subroutine */ 
-/** FUNC DEF */ int jtinvit_(nm, n, d, e, e2, m, w, ind, z, ierr, rv1, rv2, 
-	rv3, rv4, rv6)
-int *nm, *n;
-double *d, *e, *e2;
-int *m;
-double *w;
-int *ind;
-double *z;
-int *ierr;
-double *rv1, *rv2, *rv3, *rv4, *rv6;
+/** FUNC DEF */ int jtinvit_(int *nm, int *n, double *d, double *e, double *e2, int *m, double *w, int *ind, double *z, int *ierr, double *rv1, double *rv2, 
+	double *rv3, double *rv4, double *rv6)
 {
     /* Initialized data */
 
@@ -52,7 +44,7 @@ double *rv1, *rv2, *rv3, *rv4, *rv6;
     double d__1, d__2;
 
     /* Builtin functions */
-    double sqrt();
+    double sqrt(double);
 
     /* Local variables */
     static double norm;
@@ -430,14 +422,8 @@ L1001:
 /*     ------------------------------------------------------------------ */
 
 /* Subroutine */ 
-/** FUNC DEF */ int jtridib_(n, eps1, d, e, e2, lb, ub, m11, m, w, ind, ierr, 
-	rv4, rv5)
-int *n;
-double *eps1, *d, *e, *e2, *lb, *ub;
-int *m11, *m;
-double *w;
-int *ind, *ierr;
-double *rv4, *rv5;
+/** FUNC DEF */ int jtridib_(int *n, double *eps1, double *d, double *e, double *e2, double *lb, double *ub, int *m11, int *m, double *w, int *ind, int *ierr, 
+	double *rv4, double *rv5)
 {
     /* Initialized data */
 
@@ -937,7 +923,7 @@ L1001:
 
 
 void 
-blank()
+blank(void)
 {
 	REprintf( "\n");
 }
@@ -1529,7 +1515,7 @@ c  set tolerance for iterative scheme exit */
 	double         *lambda, *tapers;
 /* 	long            len, longlen; */
 	/* double          *xt; */
-	FILE           *fopen();
+	FILE           *fopen(const char *filename, const char *mode);
 /* , *inf; */
 	/* , *tap_file */;
        /*  FILE            *dof_file; */
@@ -1852,7 +1838,7 @@ c  set tolerance for iterative scheme exit */
 	double         *lambda, *tapers;
 /* 	long            len, longlen; */
 /* 	double          *xt; */
-	FILE           *fopen();
+	FILE           *fopen(const char *filename, const char *mode);
 /* , *inf, *tap_file; */
         /* FILE            *dof_file; */
 

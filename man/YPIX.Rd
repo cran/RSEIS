@@ -3,6 +3,7 @@
 \alias{WPIX}
 \alias{NOPIX}
 \alias{REPIX}
+\alias{DELpix}
 \alias{PickWin}
 \alias{pADDPIX}
 \alias{Ppic}
@@ -19,8 +20,8 @@
 \alias{JustV}
 \alias{JustE}
 \alias{JustN}
+\alias{JustF}
 \alias{SHOW3}
-
 \alias{iNEXT}
 \alias{noPS}
 
@@ -33,6 +34,7 @@ YPIX(nh, g)
 WPIX(nh, g)
 NOPIX(nh, g)
 REPIX(nh, g)
+DELpix(nh, g)
 PickWin(nh, g)
 pADDPIX(nh, g, phase)
 Ppic(nh, g)
@@ -49,6 +51,7 @@ ROT.RT(nh, g)
 JustV(nh, g)
 JustE(nh, g)
 JustN(nh, g)
+JustF(nh, g)
 SHOW3(nh, g)
 
 }
@@ -74,6 +77,8 @@ SHOW3(nh, g)
     \item{WPIX}{window picks (start and end)}
     \item{NOPIX}{remove the picks}
     \item{REPIX}{un-remove the picks}
+    \item{DELpix}{Delete pix near clicks}
+    
     \item{PickWin}{Pick window for 3 component picking}
     \item{pADDPIX}{add picks}
     \item{Ppic}{P-wave arrival (only one per station) }
@@ -91,6 +96,9 @@ SHOW3(nh, g)
     \item{JustV}{Display only vertical components}
     \item{JustE}{Display only east components}
     \item{JustN}{Display only north components}
+    
+    \item{JustF}{Display only infrasound (F) components}
+    
      \item{SHOW3}{Display All 3 components}
    
     \item{iNEXT}{Used internally in PickWin to move to next station}

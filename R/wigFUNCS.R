@@ -128,7 +128,8 @@ RESTORE<-function(nh, g)
     #####  BUTTONDOC:RESTORE:'Restore from zoom' 
 
     u = par("usr")
-    L = length(g$sloc$x)
+      L = length(g$sloc$x)
+      #####  this line is wrong; it does nothing
     if(L>1)
       {
         abline(v=g$sloc$x[c(L-1,L)], col=gray(0.8), lty=2)

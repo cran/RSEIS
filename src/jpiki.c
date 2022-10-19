@@ -426,7 +426,6 @@ int fbrat(int *seis, float *fbcurv, int npts,
  */
 
 /** FUNC DEF */ int jpiki(int *epik, int *polar, int *pikwt, int x[], int lx, int tar)
-
 {
     /* System generated locals */
     int ret_val;
@@ -438,7 +437,7 @@ int fbrat(int *seis, float *fbcurv, int npts,
     float valmn, valmx, tmp;
     int ptrmn, ptrmx;
     static float offthr = OFFTHR, pikthr = PIKTHR;
-FILE  *fopen();
+FILE  *fopen(const char *filename, const char *mode);
 /* FILE *fp, *fopen(); */
 
 /* Pick phase times for seismogram stored in INTEGER array x
