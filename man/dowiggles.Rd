@@ -9,7 +9,7 @@
 dowiggles(AMAT, dt, dx)
 }
 \arguments{
-  \item{AMAT}{
+  \item{AMAT}{Matrix of seismic time series
 }
   \item{dt}{time interval, sec
 }

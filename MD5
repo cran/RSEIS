@@ -1,6 +1,5 @@
-a43c371b6c8b69924f6571f2a12b1454 *DESCRIPTION
+d0c1f6d0f76ee5d111f6736c1306b6f8 *DESCRIPTION
 9e50fd28073aeea5de541850e192830e *NAMESPACE
-1885c66d26d5e0bec4440cdbe54dbc85 *NEWS
 b844c8be886f6cbbb4e9b134967df6eb *R/ASCII.SEISN.R
 0d255bff6fd424a447482b0e2d14deec *R/AUGMENTbutfilt.R
 86ba5eabfd5472dc859d9ac977a9b258 *R/BUTREPLOT.R
@@ -77,7 +76,7 @@ abaf29c96175efdda579fb985638fb23 *R/ReadSet.Instr.R
 e7d2ee626a1c2de2b76c2f9be177a947 *R/SELSTA.R
 26be4eff52d77dd7c8d44066b2112ffc *R/SENSORsensitivity.R
 ad14e69a1f088346da94d235f956b8f2 *R/SNET.drive.R
-811ad4b48942a171d21849f13710fd60 *R/SPECT.drive.R
+91d0848902ba4bd693fe809cd596243c *R/SPECT.drive.R
 9f953324f392928ed86158a4c338c108 *R/STALTA.R
 8f1edff8f38cff5a7455078c97cc5081 *R/STLTcurve.R
 09bbf56c2632e02aa5c15e0d4d0d4d6b *R/Spectrum.R
@@ -435,7 +434,7 @@ d545137fd4132929d677b21343b47798 *man/distseisnXY.Rd
 068a19e1ca373b14330392e81eb1b841 *man/doGABOR.AR.Rd
 4728ffb5babb7dd13aac6f1890405b14 *man/doGABOR.MTM.Rd
 2f9c3f280353de580a23c65362a23980 *man/doMYBUTTS.Rd
-08bc0386e7d327abe8aecc955c283c0e *man/dowiggles.Rd
+857c653a861e5afcc94ddd729e58cdd5 *man/dowiggles.Rd
 ba99f70469d68a00a8cc65f476de9d4a *man/editDB.Rd
 5c99e9efaae2749ac59cdcbeb350980e *man/envelope.Rd
 82a5de9d8ecca03bd071edb36b31be12 *man/evolAR.Rd
@@ -527,7 +526,7 @@ e1803b5d2f0f81f3da985585084d9c73 *man/pwlet2freqs.Rd
 4e907e938909dd2883acfa2c1bb50585 *man/read1segy.Rd
 9af5b74aea205ad7bb27e628aee685d3 *man/readUW.OSTAS.Rd
 25702b70f066b54ae435117ec1dea898 *man/recdate.Rd
-9527f33600be11b1de38be33c80f9679 *man/repairWPX.Rd
+f7949c7de24a2a2f56cf0b920eb83bfc *man/repairWPX.Rd
 573bd5921b967356e2bec81be00d2e4c *man/replaceWPX.Rd
 73d7b09bab18f28c1a8de23df79f7a81 *man/rseis2segy.Rd
 4c652ca0a39d06718f1a4cde66696f16 *man/rseis2ts.Rd

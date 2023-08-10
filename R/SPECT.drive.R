@@ -13,7 +13,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
     
     NCOL = 100
     
-    labs = c("DONE", "Postscript", APALS, ADDBUTS )
+    labs = c("DONE", "PNG", APALS, ADDBUTS )
     NLABS = length(labs)
     NOLAB = NLABS +1000
   ###  FUN = match.fun(TPALS[1])
@@ -155,7 +155,27 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
 
 
 
-    
+          ####################   PNG  ##################
+        if(K[Nclick] == match("PNG", labs, nomatch = NOLAB))
+        {
+
+          print(paste(sep=' ' ,"Starting png file plotevol"))
+           jdev = dev.cur()
+           plfname = RPMG::local.file("sgram","png")
+           P = round(par('pin'))
+
+           RPMG::jpng(file=plfname , width=P[1], height=P[2])
+
+          ## postscript(file=plfname, horizontal=TRUE, print.it=FALSE,  onefile=FALSE)
+           PE = plotevol(DEV, log=scale.def, fl= flshow, fh=fhshow, col=pal, ygrid=gridon, STAMP=STAMP)
+           cat(paste(sep=' ' ,"Done creating postscript file: ", plfname), sep="\n")
+
+          dev.off()
+          dev.set(jdev)
+          zloc = list(x=NULL, y=NULL) 
+        }
+
+      
       
       ####################   POSTSCRIPT  ##################
         if(K[Nclick] == match("Postscript", labs, nomatch = NOLAB))

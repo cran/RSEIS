@@ -10,14 +10,14 @@ in one or more of its components.
 repairWPX(wpx)
 }
 \arguments{
-  \item{wpx}{
+  \item{wpx}{Pick information, dataframe
 }
 }
 \details{
 Program checks a few of the elelments
 and tries to fix potential problems.
 }
-\value{WPX list
+\value{WPX dataframe
 }
 
 \author{
