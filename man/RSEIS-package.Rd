@@ -5,20 +5,9 @@
 \title{
 Seismic Analysis and Display
 }\description{
-  Multiple interactive codes to analize seismic data, via, spectrum
-  analysis, wavelet transforms, particle motion, hodograms.
-}
-\details{
-\tabular{ll}{
-Package: \tab RSEIS\cr
-Type: \tab Package\cr
-Version: \tab 4.0-3\cr
-Date: \tab 2021-07-13\cr
-License: \tab GPL\cr
+ Multiple interactive codes to view and analyze seismic data, via spectrum analysis, wavelet transforms, particle motion, hodograms.  Includes general time-series tools, plotting, filtering, interactive display.
 }
 
-swig is general all pupose code that uses interaction for seismic analysis.
-}
 \author{
 Jonathan M. Lees<jonathan.lees.edu>
 Maintainer:Jonathan M. Lees<jonathan.lees.edu>
