@@ -6,9 +6,9 @@ function(E, N)
       {
         karr = (jarr)*len
         harr = hypot(E[karr], N[karr], E[karr+1], N[karr+1])
-       #### print(c(jarr, karr, harr))
+       #### message(c(jarr, karr, harr))
         
-       ######  print(paste(sep=' ', jarr, karr, harr))
+       ######  message(paste(sep=' ', jarr, karr, harr))
         if(!is.na(harr) & harr>.001)
           {
             arrows(E[karr], N[karr], E[karr+1], N[karr+1], length=.06)

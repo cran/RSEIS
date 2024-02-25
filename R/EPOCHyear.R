@@ -1,10 +1,10 @@
 EPOCHyear<-function(iday,  origyr=1972)
   {
     if(missing(origyr)) { origyr=1972 }
- # print("EPOCHyear Dates")
+ # message("EPOCHyear Dates")
     if(any(!is.numeric(iday)))
       {
-          print("Bad Dates")
+          warning("Bad Dates")
           ## return(list(yr=origyr, jd=0) )
       }
 
@@ -19,8 +19,8 @@ EPOCHyear<-function(iday,  origyr=1972)
     IJD = rep(NA, N)
 
 
-   #  print(iday)
-  #    print(origyr)
+   #  message(iday)
+  #    message(origyr)
 
     for(i in 1:N)
       {

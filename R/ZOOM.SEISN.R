@@ -101,7 +101,7 @@ function(GH, sel=1:length(GH$dt), WIN=NULL)
        if(K[Nclick]==5)
         {
           
-          print(paste(sep=" " , "WIN=",sloc$x))
+          message(paste(sep=" " , "WIN=",sloc$x))
           
 
           
@@ -114,7 +114,7 @@ function(GH, sel=1:length(GH$dt), WIN=NULL)
       if(is.null(zloc$x)) { return(sloc) }
       K =  RPMG::whichbutt(zloc ,buttons)
       ### K = ValBAR(NV, zloc)
-     ###  print(paste(sep=" ", "K=",K))
+     ###  message(paste(sep=" ", "K=",K))
       
     }
   return(sloc)

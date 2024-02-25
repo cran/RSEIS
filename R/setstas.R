@@ -1,7 +1,7 @@
 `setstas` <-
 function(stafile)
 {
-################  read in a LAT LON Z for a station file - the z is positive km above sealevel (0)
+##### read in a LAT LON Z for a station file - the z is positive km above sealevel (0)
   if(is.null(stafile)) { return(NULL) }
   
   if(!is.list(stafile) & is.character(stafile) )
@@ -10,7 +10,9 @@ function(stafile)
     {
       sta =stafile
     }
-  if(any(abs(sta$z)>100)) { print("BEWARE: STATIONS are in meters!, dividing by 1000") ; sta$z = sta$z/1000 }
+    if(any(abs(sta$z)>100)) {
+        warning("BEWARE: STATIONS are in meters!, dividing by 1000") ;
+        sta$z = sta$z/1000 }
   
   invisible(sta)
 }

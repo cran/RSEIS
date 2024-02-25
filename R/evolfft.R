@@ -24,7 +24,7 @@ function(a, dt=0, Nfft=0,  Ns=0, Nov=0, fl=0, fh=10, pcttap = 0.05, adjust=TRUE 
       {
         emsg = c("ERROR: illegal call to evolfft.",
         "Number of samples in trace must be greater than the number of sample in the moving window")
-        cat(emsg, sep="\n")
+        warning(emsg )
         return(NULL)
       }
     
@@ -33,7 +33,7 @@ function(a, dt=0, Nfft=0,  Ns=0, Nov=0, fl=0, fh=10, pcttap = 0.05, adjust=TRUE 
     
     if(kcol<Ns & adjust)
       {
-        cat("NOTE: Making an adjustment in input parameters", sep="\n")
+        message("NOTE: Making an adjustment in input parameters", sep="\n")
          Ns = kcol
          Nov = floor(Ns-0.1*Ns)
          kcol =floor( (NT-floor(Nov) )/(Ns-floor(Nov)))
@@ -57,12 +57,12 @@ function(a, dt=0, Nfft=0,  Ns=0, Nov=0, fl=0, fh=10, pcttap = 0.05, adjust=TRUE 
     numfreqs=krow;
 
 
-   ###  print(paste(sep=' ', "evolfft kcol=", kcol, "krow=", krow, "Ns", Ns, "Nov", Nov))
+   ###  message(paste(sep=' ', "evolfft kcol=", kcol, "krow=", krow, "Ns", Ns, "Nov", Nov))
 
-     cat(paste(sep=' ', "evolfft kcol=", kcol, "krow=", krow, "Ns", Ns, "Nov", Nov), sep="\n")
+     message(paste(sep=' ', "evolfft kcol=", kcol, "krow=", krow, "Ns", Ns, "Nov", Nov), sep="\n")
     if(kcol<1)
       {
-        cat(paste(sep=' ', "error in evolfft kcol=", kcol, "krow=", krow, "NT", NT, "Ns", Ns, "Nov", Nov), sep="\n")
+        warning(paste(sep=' ', "error in evolfft kcol=", kcol, "krow=", krow, "NT", NT, "Ns", Ns, "Nov", Nov), sep="\n")
         return(NULL)
       }
           
@@ -71,23 +71,17 @@ function(a, dt=0, Nfft=0,  Ns=0, Nov=0, fl=0, fh=10, pcttap = 0.05, adjust=TRUE 
     m = 1:(kcol)
     ibeg=((m-1)*skiplen)+1;
      iend = floor(ibeg+Ns-1)
-
-    
-
-    
-    #  print(cbind(ibeg, iend))
-   
     
     for( i in m)
       { 
-       ###  print(paste(sep=" ", m, ibeg, iend, NT))
+       ###  message(paste(sep=" ", m, ibeg, iend, NT))
         tem = a[ibeg[i]:iend[i]]
         tem = tem-mean(tem, na.rm=TRUE)
         tem = rsspec.taper(tem, p=pcttap)
         tem =  c(tem,rep(0,krow-Ns))
         if(length(tem)<krow)
           {
-           ### print(paste(sep=" ", m, ibeg, iend, NT));
+           ### message(paste(sep=" ", m, ibeg, iend, NT));
             DMAT[,i] = rep(NA, length=krow)
           }
         else

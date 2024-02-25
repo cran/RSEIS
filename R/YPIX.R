@@ -10,7 +10,7 @@ YPIX<-function(nh, g)
         ypick =  kix$ypick
         ppick = kix$ppick
 
-       ##### print(ppick)
+       ##### message(ppick)
 ############   proceed only if have legitimate picks
         if(length(ypick)>0)
           {
@@ -20,7 +20,7 @@ YPIX<-function(nh, g)
             kzap = "Y"
             ipick = g$sel[ypick]
             
-#### print(paste(sep=" ", "DUMP YPIX", zappa, col, azap, kzap , ppick , ypick,ipick)) 
+#### message(paste(sep=" ", "DUMP YPIX", zappa, col, azap, kzap , ppick , ypick,ipick)) 
             
             for(iz in 1:length(ypick))
               {
@@ -71,7 +71,7 @@ YPIX<-function(nh, g)
           }
       }
 
-    ## print(g$PHASE)
+    ## message(g$PHASE)
 
     
     g$zloc = list(x=NULL, y=NULL) 

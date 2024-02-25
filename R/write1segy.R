@@ -170,7 +170,7 @@ write1segy<-function(alist,  fn=NULL , BIGLONG=FALSE )
               {
                 fput = as.numeric(val)
               }
-            ## print(paste(i, val, fput, formsegy[i]) )
+            ## message(paste(i, val, fput, formsegy[i]) )
             writeBin(fput , zz, size = isize[i], 
                      endian = theENDIAN)
           }

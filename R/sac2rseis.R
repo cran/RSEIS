@@ -55,18 +55,18 @@ sac2rseis<-function(fnames, Iendian=1 , HEADONLY=FALSE, BIGLONG=FALSE,  PLOT=-1,
       infile = fn
       theENDIAN = endianVEC[i]
 ####
-      ##  print(paste(fn, theENDIAN) );
+      ##  message(paste(fn, theENDIAN) );
 
       
 ###  if this file does not exist, exit!
       if(file.exists(infile)==FALSE)
         {
-          print(paste(sep=' ', "file does not exist", fn) ); 
+          warning(paste(sep=' ', "file does not exist", fn) ); 
           next;
         }
       else
         {
-        ##   print(paste(sep=' ', "file exists", fn) );
+        ##   message(paste(sep=' ', "file exists", fn) );
 
         }
 
@@ -84,8 +84,8 @@ sac2rseis<-function(fnames, Iendian=1 , HEADONLY=FALSE, BIGLONG=FALSE,  PLOT=-1,
       if( !is.integer(N))
         {
           ##  this is a problem
-          print("ERROR: number of samples is not an integer.")
-          print(paste(i, fn))
+          warning("ERROR: number of samples is not an integer.")
+          message(paste(i, fn) )
 
         }
       
@@ -121,7 +121,7 @@ hr =  gsac$nzhour
 ############ SAC data - somes as volts?  i.e. the reftek/mseed file has already converted it?
 #####   better check that - I am not so sure.
       aunits="volts"
-     ###  print(paste(sep=' ', infile, thesta, thecomp, aunits, N, dt, sec))
+     ###  message(paste(sep=' ', infile, thesta, thecomp, aunits, N, dt, sec))
       
       md = getmoday(jd, yr)
 
@@ -160,7 +160,7 @@ hr =  gsac$nzhour
           
           if(PLOT==0 | PLOT==TRUE)
             {
-              print("left CLICK once in WINDOW for NEXT TRACE:")
+              message("left CLICK once in WINDOW for NEXT TRACE:")
               locator(1)
             }
           else
@@ -173,9 +173,9 @@ hr =  gsac$nzhour
     }
 
 
-### print("using RAW (counts), range:")
-### print(range(x))
-### for(ig in 1:length(GIVE)) { print( range(GIVE[[ig]]$amp ))  }
+### message("using RAW (counts), range:")
+### message(range(x))
+### for(ig in 1:length(GIVE)) { message(paste( collapse=' ', range(GIVE[[ig]]$amp )))  }
   
   
   invisible(GIVE)

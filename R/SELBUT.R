@@ -97,7 +97,7 @@ SELBUT<-function(OPTS, onoff=1, ocols ="white", default="opt"  )
 ###  Right button was clicked
           Nclick = 0
 ###  zenclick=zenclick+1
-###   print(zenclick)
+###   message(zenclick)
           K = 0
           gvars$zenclick = length(zloc$x)
           if(gvars$zenclick<1)
@@ -135,7 +135,7 @@ SELBUT<-function(OPTS, onoff=1, ocols ="white", default="opt"  )
 
             retvec = gvars$opts[gvars$onoff==1]
 
-            ## print(retvec)
+            ## message(retvec)
             return(retvec)
 
             break;

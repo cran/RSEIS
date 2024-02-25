@@ -24,7 +24,7 @@ filedatetime<-function (orgtim, tims=0, datesep="-", timesep=":", secsep="_" )
                               flag = "0"))
   amcrsec = formatC(as.integer(mymcrsec), width = 6, flag = "0")
   charvec = paste(sep=secsep, gdates, gtimes, amcrsec)
-  cat(charvec, sep = "\n")
+  message(charvec, sep = "\n")
   
   return( charvec[which.min(tims)] )
 }

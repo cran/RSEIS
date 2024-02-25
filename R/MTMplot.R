@@ -102,7 +102,7 @@ function(a, f1=f1, f2=f2, len2=1024, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
           if(K[Nclick]==4)
             {
           alabs = format.default(zloc$x[1:(Nclick-1)], digits=3)
-          print(paste( paste( sep=' ',"Frequencies:", paste(alabs, collapse=" "))))
+          message(paste( paste( sep=' ',"Frequencies:", paste(alabs, collapse=" "))))
           ## abline(v=zloc$x[1:(Nclick-1)])
           ## mtext(labs, at=zloc$x[1:(Nclick-1)], side=3, line=0)
         

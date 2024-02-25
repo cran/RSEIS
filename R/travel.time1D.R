@@ -20,13 +20,13 @@ function(indelta, inhpz, instaz, inlay , ztop ,  vel)
     dtdz=0; angle=0; outt=0;
     
 
-    if(length(ztop)<inlay) { print("ERROR: BAD velocity model"); return(NULL) }
-    if(length(vel)<inlay) { print("ERROR: BAD velocity model"); return(NULL) }
-    if( any(indelta <0) )  { print("ERROR: BAD Distance in travel.time1D "); return(NULL) }
+    if(length(ztop)<inlay) { warning("ERROR: BAD velocity model"); return(NULL) }
+    if(length(vel)<inlay) { warning("ERROR: BAD velocity model"); return(NULL) }
+    if( any(indelta <0) )  { warning("ERROR: BAD Distance in travel.time1D "); return(NULL) }
 
     
-    if(any(!is.numeric(ztop))){ print("ERROR: BAD velocity model"); return(NULL) }
-    if(any(!is.numeric(vel))){ print("ERROR: BAD velocity model"); return(NULL) }
+    if(any(!is.numeric(ztop))){ warning("ERROR: BAD velocity model"); return(NULL) }
+    if(any(!is.numeric(vel))){ warning("ERROR: BAD velocity model"); return(NULL) }
     
     TTout = .C("CALL_DTT1",PACKAGE = "RSEIS",
       as.double(indelta), as.double(inhpz),as.double(instaz), as.integer(inlay), as.double(ztop) ,  as.double(vel),

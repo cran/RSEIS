@@ -24,7 +24,7 @@ function(LOC)
       if(is.na(LOC$mag)) { LOC$mag=0 }
       if(is.na(LOC$z)) { LOC$z=0 }
 
-### print(paste(sep=' ', LAT1, LATNS, LAT2, LON1, LONEW, LON2))
+### message(paste(sep=' ', LAT1, LATNS, LAT2, LON1, LONEW, LON2))
      
     AC = paste(sep='', "A ", ID, sprintf(fmt="%6.2f",LOC$se) , " ",
         sprintf(fmt="%02d", LAT1)   ,LATNS, sprintf(fmt="%04d", LAT2) ," ",
@@ -129,7 +129,7 @@ function(OSTAS)
     
     for(i in 0:(length(OSTAS)-1) )
       {
-        #####print(paste(sep=' ', i, i %% 8))
+        #####message(paste(sep=' ', i, i %% 8))
         if( i %% 8 == 0 )
           {
             k = k + 1

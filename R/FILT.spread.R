@@ -16,7 +16,9 @@ function(x,y, dt, fl=fl, fh=fh, sfact=1, WIN=NULL, PLOT=TRUE, TIT=NULL, TAPER=0.
     if(missing(RM))  { RM=FALSE }
     if(missing(zp))  { zp=TRUE }
 
-    
+    oldpar <- par(no.readonly = TRUE)
+      on.exit(par(oldpar))
+
     
     n=length(fl)
     ##  graphics.off()
@@ -38,17 +40,17 @@ function(x,y, dt, fl=fl, fh=fh, sfact=1, WIN=NULL, PLOT=TRUE, TIT=NULL, TAPER=0.
 
         if(fl[i]>fh[i])
           {
-            print(paste(sep=' ', "Warning on Filter definition: FL=", fl[i], " FH=", fh[i], "HZ"))
+            warning(paste(sep=' ', "Warning on Filter definition: FL=", fl[i], " FH=", fh[i], "HZ"))
           }
 
         if(fh[i]>1/(2*dt))
           {
-            print(paste(sep=' ', "Warning on Filter definition: FL=", fl[i], " FH=", fh[i], "HZ", "NYQ=", 1/(2*dt)))
+            warning(paste(sep=' ', "Warning on Filter definition: FL=", fl[i], " FH=", fh[i], "HZ", "NYQ=", 1/(2*dt)))
           }
 
         if(!is.null(TAPER))
           {
-            ###  print("applying tape at ", TAPER)
+            ###  message("applying tape at ", TAPER)
            
              tapy = applytaper(y, p=TAPER)
             y = tapy
@@ -59,7 +61,7 @@ function(x,y, dt, fl=fl, fh=fh, sfact=1, WIN=NULL, PLOT=TRUE, TIT=NULL, TAPER=0.
         
           if(!is.null(POSTTAPER))
           {
-            ###  print("applying tape at ", TAPER)
+            ###  message("applying tape at ", TAPER)
             fy = fy - mean(fy)
              ftapy = applytaper(fy, p=POSTTAPER)
             fy  =  ftapy 

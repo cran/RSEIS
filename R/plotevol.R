@@ -147,7 +147,7 @@ plotevol<-function (DEVOL, log = 0, fl = 0, fh = 10, col = col, ylog = FALSE,
         }
     }
     else {
-        print("plotevol error in input amplitudes")
+        warning("plotevol error in input amplitudes")
     }
     if (CSCALE == TRUE) {
         RPMG::HOZscale(ImPlot, col, units = units, s1 = 0.4, s2 = 0.95)

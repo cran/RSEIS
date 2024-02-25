@@ -20,10 +20,10 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
     
     du = 1/length(STNS)
     
- ###  print(YPX)
-  ### print(paste(sep=' ', "PLOT.WPX NPX=", length(YPX), "du=", du))
+ ###  message(YPX)
+  ### message(paste(sep=' ', "PLOT.WPX NPX=", length(YPX), "du=", du))
 
-    ### print(cbind(STNS, COMPS))
+    ### message(cbind(STNS, COMPS))
 
     uphase = unique(YPX$phase)
 
@@ -137,7 +137,7 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
       }
 
 
-  ###   print(paste(sep=" ", "PLOT.ALLPX", pcol))
+  ###   message(paste(sep=" ", "PLOT.ALLPX", pcol))
 
 
     #############  plot main pick
@@ -157,7 +157,7 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
 #################  introduction of jittered labels
 
 
-        ######   print(cbind(ypixB, LABS))
+        ######   message(cbind(ypixB, LABS))
 
 
         tx1 =  split(x1,ypixB)

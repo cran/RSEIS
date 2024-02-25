@@ -12,6 +12,8 @@ function(baha, Ysig, dt , zscale=1,  zbound=NULL, col=rainbow(100) , ygrid=FALSE
        if(missing(STAMP)) { STAMP=NULL }
        if(missing(zbound)) { zbound=NULL }
 
+ oldpar <- par(no.readonly = TRUE)
+      on.exit(par(oldpar))
 
     perc = 0.85
 
@@ -50,9 +52,9 @@ function(baha, Ysig, dt , zscale=1,  zbound=NULL, col=rainbow(100) , ygrid=FALSE
 
     IMAT =baha$img
 
- ##print(y)
+ ##message(y)
     why   = sort( RPMG::RESCALE( 1:ncol(baha$img) , 0 , perc , 1, ncol(baha$img) ))
- ##print(why)
+ ##message(why)
     
 
     if(zscale<=1){ ImPlot = IMAT; Iunits="Amp" } 
@@ -114,7 +116,7 @@ function(baha, Ysig, dt , zscale=1,  zbound=NULL, col=rainbow(100) , ygrid=FALSE
     xright = max(x)+xedge
      xtix = xtix[xtix>=xleft & xtix<=xright]
 
-    ### print(xtix)
+    ### message(xtix)
     
  #    xtix = c(floor(min(x)),xtix,  floor(max(x)))
     
@@ -160,7 +162,7 @@ function(baha, Ysig, dt , zscale=1,  zbound=NULL, col=rainbow(100) , ygrid=FALSE
 
     
     axtrace = range(a)
-    ## print(axtrace)
+    ## message(axtrace)
     
     raxtrace= RPMG::RESCALE( axtrace, perc , 1.0 , min(a), max(a) )
 

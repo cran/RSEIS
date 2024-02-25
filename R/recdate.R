@@ -29,6 +29,8 @@ function(jd=0, hr=0, mi=0, sec=0, yr=0)
 
     YRJD = EPOCHyear(days, origyr=eday$origyr)
 
-  list( jd=YRJD$jd, hr=hrs, mi=mins, sec=osec, yr=YRJD$yr)
+  md =   getmoday(YRJD$jd , YRJD$yr) 
+    
+  list( jd=YRJD$jd, hr=hrs, mi=mins, sec=osec, yr=YRJD$yr, mo=md$mo, dom=md$dom )
 }
 

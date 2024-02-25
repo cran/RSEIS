@@ -1,5 +1,7 @@
 `PLOT.MATN` <-
-function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost=0,  shift=NULL, LOG="", COL='red', add=1, AXES=1, units=NULL, VS=FALSE)
+    function(ascd, tim=1, dt=1, T1=0,  WIN=c(0,1), labs="",
+             notes=notes, sfact=1,ampboost=0,  shift=NULL,
+             LOG="", COL='red', add=1, AXES=1, units=NULL, VS=FALSE)
 {
 ###  source("/home/lees/R_PAX/RSEIS/R/PLOT.MATN.R")
   
@@ -17,21 +19,21 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost=
   
   if(missing(add)) { add=1 }
 
-##########  if AXES=0  no Y axes
-##########  if AXES=1  plot scale for largest amplitude band and a multiplier for all others
-##########  if AXES=2  plot a y-axis for each band, add units for scale, left side
-##########  if AXES=3  plot a y-axis for each band, add units for scale, right side
-##########  if AXES=4  plot a y-axis for each band, add units for scale, alternate sides
+####  if AXES=0  no Y axes
+####  if AXES=1  plot scale for largest amplitude band and a multiplier for all others
+#### if AXES=2  plot a y-axis for each band, add units for scale, left side
+####  if AXES=3  plot a y-axis for each band, add units for scale, right side
+###  if AXES=4  plot a y-axis for each band, add units for scale, alternate sides
   
   
   if(missing(AXES)) {  AXES=1 } 
   if(missing(units)) {  units=colnames(ascd) } 
   if(missing(VS)) { VS=FALSE } 
 
-  
+  #####  X-axis
   if(missing(tim))
     {
-      tim = dt*seq(from=0,to=length(ascd[,1])-1)
+      tim = dt*seq(from=T1,to=length(ascd[,1])-1)
     }
 
   if(missing(WIN))
@@ -253,14 +255,14 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost=
 
             }
         }
-                     #   print( paste(sep=' ', "IN PLOT.MATN", y3, y3+dy, minamp, maxamp))
+                     #   message( paste(sep=' ', "IN PLOT.MATN", y3, y3+dy, minamp, maxamp))
       
       cmm = c(minamp, maxamp)
       lcmm = length(cmm[!is.na(cmm)])
       dmm = maxamp-minamp
       if( lcmm < 2   | dmm<=0)
         {
-                                        #   print( paste(sep=' ', "IN PLOT.MATN", "PROBLEMS", lcmm ,dmm ))
+                                        #   message( paste(sep=' ', "IN PLOT.MATN", "PROBLEMS", lcmm ,dmm ))
           next;
         }
       yy = pretty(cmm, n = 5)
@@ -324,11 +326,11 @@ function(ascd, tim=1, dt=1,  WIN=c(0,1), labs="", notes=notes, sfact=1,ampboost=
       
       ylab = labs[i]
       mtext(side=2, at=y3+dy/2, text=ylab , line=1)
-                                        #   print( paste(sep=' ', "IN PLOT.MATN",note.flag))
+                                        #   message( paste(sep=' ', "IN PLOT.MATN",note.flag))
       
       if(note.flag==TRUE)
         {
-                                        #  print( paste(sep=' ', "IN PLOT.MATN", notes[i]))
+                                        #  message( paste(sep=' ', "IN PLOT.MATN", notes[i]))
           
           if(add!=3)text(max(tim[tflag]), y3+dy-dy*0.1, notes[i], adj=1)
           

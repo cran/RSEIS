@@ -23,7 +23,7 @@ if(is.logical(sel)) { sel = which(sel) }
   if(FILT$ON==TRUE)
     {
 
-      print("Filter option not available, use FILT.SEISN")
+      message("Filter option not available, use FILT.SEISN")
  
     }
 

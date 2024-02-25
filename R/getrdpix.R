@@ -7,11 +7,11 @@ getrdpix<-function(zloc,zenclick,sel,NH   )
     
     kix = legitpix(sel, zloc, zenclick)
 
-    ##  print(kix$ypick)
+    ##  message(kix$ypick)
     
     if(length(kix$ypick)<1) {
 
-      ## print("No legit picks")
+      ## message("No legit picks")
       return(NULL)
 
 

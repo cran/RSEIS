@@ -9,7 +9,7 @@ origyr=attr(DB, "origyr")
     {
       dev.set(2)
       w = winseis24(pjj)
-      print(w)
+      message(w)
 
       eday = EPOCHday(w$yr, jd =w$jd, origyr = origyr)
 

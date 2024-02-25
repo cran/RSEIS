@@ -39,7 +39,7 @@
             {
                 start = CLEN[wget[i]] 
                 end = CLEN[wget[i]] + RLAW$lengths[wget[i]] - 1
-              #######  print(c(start, end))
+              #######  message(c(start, end))
                 if(start<=1) {
                     start =1
                     meanys = y[end+1]

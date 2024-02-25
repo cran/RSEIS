@@ -35,8 +35,8 @@
   if(length(comp)==1) { comp  =  rep(comp, times=N) }
   if(length(onoff)==1) { onoff  =  rep(onoff, times=N) }
 
- ## print(jd)
- ##  print(yr)
+ ## message(jd)
+ ##  message(yr)
 
   
   rpic = recdate(jd=jd, hr=hr, mi=mi, sec=sec, yr=yr)

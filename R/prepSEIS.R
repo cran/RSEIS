@@ -58,8 +58,8 @@ function(GG)
       gn[i] = n
       gdt[i] = dt
       ## gfn[i] = GG[[i]]$fn
-   ##  print(paste(sep=' ', i, GG[[i]]$sta, GG[[i]]$comp, GG[[i]]$N, n, GG[[i]]$DATTIM$dt, GG[[i]]$DATTIM$jd, GG[[i]]$DATTIM$hr, GG[[i]]$DATTIM$mi, GG[[i]]$DATTIM$sec))
-     ### print(paste(sep=' ', i, dt, GG[[i]]$DATTIM$dt))
+   ##  message(paste(sep=' ', i, GG[[i]]$sta, GG[[i]]$comp, GG[[i]]$N, n, GG[[i]]$DATTIM$dt, GG[[i]]$DATTIM$jd, GG[[i]]$DATTIM$hr, GG[[i]]$DATTIM$mi, GG[[i]]$DATTIM$sec))
+     ### message(paste(sep=' ', i, dt, GG[[i]]$DATTIM$dt))
     }
 
   if(any(is.infinite(gdt))) return(NULL)
@@ -102,7 +102,7 @@ function(GG)
   for(j in 1:length(ma))
 	{
 	  ima = ma[j]
-     ###     print(paste(sep=" ", j, ima, r1[ ima ], r2[ ima ]))
+     ###     message(paste(sep=" ", j, ima, r1[ ima ], r2[ ima ]))
           ######   the NA padding of traces occurs here
           
 	  ascd[[j]] = c(rep(NA, r1[ ima ]) , GG[[ima]]$amp,    rep(NA,r2[ ima ]))
@@ -112,7 +112,7 @@ function(GG)
 	  comps[j] = GG[[ima]]$comp
           units[j] = NA
           
-        ##   print(paste(sep=' ', GG[[ima]]$sta, GG[[ima]]$comp, GG[[ima]]$units))
+        ##   message(paste(sep=' ', GG[[ima]]$sta, GG[[ima]]$comp, GG[[ima]]$units))
 	 
 	  info$fn[j] = GG[[ima]]$fn
 	  info$name[j] = GG[[ima]]$fn

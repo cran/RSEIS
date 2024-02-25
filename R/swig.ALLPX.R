@@ -18,24 +18,24 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
     ####   COMPS = vector of associated components
      ####   YPX =  list of picks
 
-   ####    print(YPX)
+   ####    message(YPX)
 
-  ####   print(paste("PHASE=",PHASE))
-  ####   print(paste( "POLS=", POLS,  "FILL=",FILL, "FORCE=",FORCE, "cex=",cex, "sr=",srt))
+  ####   message(paste("PHASE=",PHASE))
+  ####   message(paste( "POLS=", POLS,  "FILL=",FILL, "FORCE=",FORCE, "cex=",cex, "sr=",srt))
     
       du = 1/length(STNS)
     
     uphase = unique(YPX$phase)
 
 
-####    print(paste("input parameters  PHASE=", PHASE, "POLS=", POLS,  "FILL=", FILL,
+####    message(paste("input parameters  PHASE=", PHASE, "POLS=", POLS,  "FILL=", FILL,
 ####                "FORCE=",FORCE,"cex=", cex, "srt=", srt, collapse=" "))
 
     
 
     if(is.null(PHASE))
       {
-       ## print("PHASE is NULL")
+       ## message("PHASE is NULL")
         ###########  match the pick with the component only
        ####   m1 = match(STNS , YPX$name)
 
@@ -125,7 +125,7 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
     
     x1 = YRsecdif(   t0$jd, t0$hr, t0$mi, t0$sec, YPX$jd[ mpicks], YPX$hr[mpicks ],YPX$mi[mpicks ], YPX$sec[mpicks ], yr1=t0$yr, yr2=YPX$yr[ mpicks] )
 
-   ## print(x1)
+   ## message(x1)
 
     
 #############  set the color of the pix 
@@ -145,7 +145,7 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
 
       }
 
-  ###   print(paste(sep=" ", "PLOT.ALLPX", pcol))
+  ###   message(paste(sep=" ", "PLOT.ALLPX", pcol))
 
 
     #############  plot main pick
@@ -170,15 +170,15 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
 #################  introduction of jittered labels
 
 
-######   print(cbind(ypixB, LABS))
+######   message(cbind(ypixB, LABS))
     noLAB = FALSE
     
     noLAB = all(YPX$flg[!is.na(YPX$flg)] =="N")
 
 
     
-   #### print(mpicks)
-   #### print(YPX)
+   #### message(mpicks)
+   #### message(YPX)
     
 
     if(!noLAB)
@@ -187,7 +187,7 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
         jlab = YPX$flg[mpicks]
         wlab = which(jlab!="N")
         
-       ####   print(wlab)
+       ####   message(wlab)
         
         nx1 =x1[wlab]
         nLABS=LABS[wlab]
@@ -199,8 +199,8 @@ function(t0, STNS, COMPS, YPX, PHASE=NULL, POLS=TRUE,  FILL=FALSE, FORCE=TRUE, c
         typixB  = split(nypixB,nypixB)
         tpcol  = split(npcol,nypixB)
 
-          ###  print(c(length(wlab), length(tx1)))
-          ### print(tx1)
+          ###  message(c(length(wlab), length(tx1)))
+          ### message(tx1)
 
         
 ##############  typixB are the categories

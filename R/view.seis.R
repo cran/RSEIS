@@ -28,8 +28,8 @@ view.seis<-function(aday, ihour, inkhour, SAVEFILE, days, DB, usta, acomp,  STDL
 
 
        
-       print("NO days list")
-       print("using:")
+       message("NO days list")
+       message("using:")
        
        
        udays = unique(paste(DB$yr, DB$jd))
@@ -42,8 +42,8 @@ view.seis<-function(aday, ihour, inkhour, SAVEFILE, days, DB, usta, acomp,  STDL
 
        days = list(yr = ye[o], jd=d[o])
 
-       print("using:")
-       print(days)
+       message("using:")
+       message(days)
 
      }
    else{
@@ -79,8 +79,8 @@ view.seis<-function(aday, ihour, inkhour, SAVEFILE, days, DB, usta, acomp,  STDL
 
         
         at1 = eday$jday+(ihour)/24
-       ####  print(at1)
-        cat(paste(days$yr[aday], days$jd[aday],ihour,  eday$jday,  at1), sep="\n")
+       ####  message(at1)
+        message(paste(days$yr[aday], days$jd[aday],ihour,  eday$jday,  at1) )
         
         
         at2 =  at1+inkhour/24

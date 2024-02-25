@@ -16,24 +16,24 @@
 
 
 
-/*************************************************************************************/
-/*************************************************************************************/
-/*************************************************************************************/
+/*********************************/
+/*********************************/
+/*********************************/
 /** FUNC DEF  **/ void   wletxcorfreq(double *LET, int Nlet, double *sig, int Nsig, double *xcor)
 {
   int i,j;
-   int K;
+   /* int K; */
    double xx, temp, tempA, tempLET;
    double sumLET, sumA, sum2LET, sum2A;
-   double meanLET;
+   /* double meanLET; */
    double plop;
 
-   K = (Nlet/2)+1;
+   /* K = (Nlet/2)+1; */
 
    temp = 0.0;
    tempA = 0.0;
    tempLET = 0.0;
-   meanLET = 0.0;
+   /* meanLET = 0.0; */
    sumLET = 0.0;
    sum2LET = 0.0;
    
@@ -89,18 +89,18 @@
 /** FUNC DEF  **/ void   wletxcor(double *LET, int Nlet, double *sig, int Nsig, double *xcor)
 {
   int i,j;
-   int K;
+   /* int K; */
    double xx, temp, tempA, tempLET;
    double sumLET, sumA, sum2LET, sum2A;
-   double meanLET;
+   /* double meanLET; */
    double plop;
 
-   K = (Nlet/2)+1;
+   /* K = (Nlet/2)+1; */
 
    temp = 0.0;
    tempA = 0.0;
    tempLET = 0.0;
-   meanLET = 0.0;
+   /* meanLET = 0.0; */
    sumLET = 0.0;
    sum2LET = 0.0;
    

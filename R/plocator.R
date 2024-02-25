@@ -26,7 +26,7 @@ function(COL=1, NUM=FALSE, YN=NULL, style=0)
         y1 = j*du
         y2 = y1+du
         
-#  print(paste(sep=' ', j, y1, y2))
+#  message(paste(sep=' ', j, y1, y2))
 
         if(style==(-1))
           {

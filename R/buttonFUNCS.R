@@ -15,9 +15,9 @@ ROT.RT<-function(nh, g)
     ev = nh$pickfile
     stn = nh$sta
 
-   ###  print(ev)
-   ###  print(stn)
-    ### print(asta)
+   ###  message(ev)
+   ###  message(stn)
+    ### message(asta)
     
     msa = which(asta==stn$name)
 

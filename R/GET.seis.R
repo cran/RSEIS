@@ -44,16 +44,16 @@ function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1, RAW
 
       fn = fnames[i]
       infile = fn
-    ####   print(fn);
+    ####   message(fn);
       ###  if this file does not exist, exit!
       if(file.exists(infile)==FALSE)
         {
-         print(paste(sep=' ', "file does not exist", fn) ); 
+         warning(paste(sep=' ', "file does not exist", fn) ); 
           next;
         }
       else
         {
-          ###  print(paste(sep=' ', "file exists", fn) );
+          ###  warning(paste(sep=' ', "file exists", fn) );
 
         }
 
@@ -102,7 +102,7 @@ function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1, RAW
     
       if(kind==1)
         {
-        #####   print(paste("RAW=", RAW))
+        #####   message(paste("RAW=", RAW))
           
           DAT  = segy2rseis(fn, Iendian=Iendian, HEADONLY=HEADONLY , BIGLONG=BIGLONG, PLOT=PLOT, RAW=RAW)
           tmpGIVE[[i]] = DAT[[1]]
@@ -118,7 +118,7 @@ function(fnames, kind=1, Iendian=1, BIGLONG=FALSE, HEADONLY=FALSE , PLOT=-1, RAW
 
       if(kind==3)
         {
-          print("AH format currently not available")
+          warning("AH format currently not available")
           tmpGIVE[[i]] = NA
           next
         }

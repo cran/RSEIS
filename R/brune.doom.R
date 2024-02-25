@@ -22,6 +22,9 @@ function(amp, dt=1, f1=0.01, f2=15,  PLOTB=FALSE ,  tit="")
   if(missing(tit))
     { tit = ""}
 
+     oldpar <- par(no.readonly = TRUE)
+      on.exit(par(oldpar))
+
   ###  return this default structure, WARN is a warning for failure
   xc = list(SUCCESS=TRUE, WARN = "OK",tstar0 = 0, gamma = 0,
     omega0 = 0,
@@ -54,12 +57,12 @@ function(amp, dt=1, f1=0.01, f2=15,  PLOTB=FALSE ,  tit="")
   lspec = Spec$displ
   
 
-  # print(paste(sep=' ', "brune.TEST", length(Spec$f), length( lspec), dt, f1, f2))
+  # message(paste(sep=' ', "brune.TEST", length(Spec$f), length( lspec), dt, f1, f2))
   
   #####  use grid search to find an initial corner frequency
   xc = get.corner(  Spec$f , lspec, dt, f1, f2, PLOT=FALSE)
   
-  ## print(paste(sep=' ', "BF post", xc$omega0, xc$corn, xc$tstar0))
+  ## message(paste(sep=' ', "BF post", xc$omega0, xc$corn, xc$tstar0))
 
   fnyq = 1/(2*dt)
 
@@ -75,11 +78,11 @@ function(amp, dt=1, f1=0.01, f2=15,  PLOTB=FALSE ,  tit="")
           par(mfrow=c(1,1))
           flag= Spec$f>=f1 & Spec$f<=f2
           
-          print(paste(sep=' ', "Brune DOOM PLOTB==TRUE", length(Spec$f[flag]), length( lspec[flag]), dt, f1, f2))
+          message(paste(sep=' ', "Brune DOOM PLOTB==TRUE", length(Spec$f[flag]), length( lspec[flag]), dt, f1, f2))
           
           LY = log10(lspec[flag])
           LF = log10(Spec$f[flag])
-          print(paste(sep=' ', "Brune DOOM", length(LF), length(LY) ))
+          message(paste(sep=' ', "Brune DOOM", length(LF), length(LY) ))
           plot(LF, LY ,  lty=1 , type='l' , xlab="Log Freq", ylab="Log Amp Spec")
           
           ## jbrune = brune.func(Spec$f[flag], jmod$omega0, jmod$tstar0 , jmod$fc,  jmod$alpha, jmod$gamma )
@@ -110,12 +113,12 @@ function(amp, dt=1, f1=0.01, f2=15,  PLOTB=FALSE ,  tit="")
       par(mfrow=c(1,1))
       flag= Spec$f>=f1 & Spec$f<=f2
       
-      print(paste(sep=' ', "Brune DOOM PLOTB==TRUE", length(Spec$f[flag]), length( lspec[flag]), dt, f1, f2))
+      message(paste(sep=' ', "Brune DOOM PLOTB==TRUE", length(Spec$f[flag]), length( lspec[flag]), dt, f1, f2))
 
       LY = log10(lspec[flag])
       LF = log10(Spec$f[flag])
       
-      print(paste(sep=' ', "Brune DOOM", length(LF), length(LY) ))
+      message(paste(sep=' ', "Brune DOOM", length(LF), length(LY) ))
       plot(LF, LY ,  lty=1 , type='l' , xlab="Log Freq", ylab="Log Amp Spec")
       jbrune = brune.func(Spec$f[flag], jmod$omega0, jmod$tstar0 , jmod$fc,  jmod$alpha, jmod$gamma )
       lines(LF, log10(jbrune), col=3)

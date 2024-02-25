@@ -11,8 +11,11 @@ function(baha, Ysig, dt , clev=0.75,  NLEV=12, zscale=1,  zbound=NULL, col=col, 
     
     if(missing(zbound)) { zbound=NULL }
     if(missing(PEAX))  { PEAX=NULL }
-         if(missing(WUNITS)) {   WUNITS="Volts"  }
-     
+    if(missing(WUNITS)) {   WUNITS="Volts"  }
+    
+     oldpar <- par(no.readonly = TRUE)
+      on.exit(par(oldpar))
+
 
     perc = 0.85
 
@@ -51,9 +54,9 @@ function(baha, Ysig, dt , clev=0.75,  NLEV=12, zscale=1,  zbound=NULL, col=col, 
 
     IMAT =baha$img
 
- ##print(y)
+ ##message(y)
     why   = sort( RPMG::RESCALE( 1:ncol(baha$img) , 0 , perc , 1, ncol(baha$img) ))
- ##print(why)
+ ##message(why)
     
 
     if(zscale<=1){ ImPlot = IMAT; units="Amp" } 
@@ -66,8 +69,8 @@ function(baha, Ysig, dt , clev=0.75,  NLEV=12, zscale=1,  zbound=NULL, col=col, 
     par(xaxs='i', yaxs='i')
 
     plot(range(tim), c(0,1), axes=FALSE, type='n', xlab='', ylab='log(scale)')
-    print("PEAX:")
-    print(PEAX)
+    message("PEAX:")
+    message(PEAX)
     if(!is.null(PEAX$x))
       {
         abline(v=PEAX$x, col=grey(.6))
@@ -79,8 +82,8 @@ function(baha, Ysig, dt , clev=0.75,  NLEV=12, zscale=1,  zbound=NULL, col=col, 
 
     if(!is.null(zbound))
       {
-        print("in conwlet: zbound")
-        print(zbound)
+        message("in conwlet: zbound")
+        message(zbound)
  
         if(zscale<=1){ ranz = zbound } 
         if(zscale==2){ ranz =     log10(zbound)}
@@ -89,8 +92,8 @@ function(baha, Ysig, dt , clev=0.75,  NLEV=12, zscale=1,  zbound=NULL, col=col, 
         if(zscale>4){ ranz = zbound }  
         
 
-        print("in conwlet: ranz")
-        print(ranz)
+        message("in conwlet: ranz")
+        message(ranz)
         
         nlevs = pretty(seq(from=ranz[1], to=ranz[2] , length=NLEV))
       }
@@ -110,8 +113,8 @@ function(baha, Ysig, dt , clev=0.75,  NLEV=12, zscale=1,  zbound=NULL, col=col, 
 
   }
 
-    print("nlevs")
-    print(nlevs)
+    message("nlevs")
+    message(nlevs)
     contour(x=x, y=why , z=ImPlot , add=TRUE, levels=nlevs, xlab='time', ylab='log(scale)', axes=FALSE, drawlabels=FALSE)
     
     if(!is.null(baha$ridge))

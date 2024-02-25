@@ -4,9 +4,9 @@ infoDB<-function(DB, verbose=TRUE)
     if(any(DB$yr>2100))
       {
 
-        print("Problems with DB....need to check")
+        warning("Problems with DB....need to check")
         ww = which(DB$yr>2100)
-        print(ww)
+        message(ww)
 
 
       }
@@ -87,8 +87,8 @@ infoDB<-function(DB, verbose=TRUE)
     }
     
 
-   ##  print(D1)
-   ##  print(D2)
+   ##  message(D1)
+   ##  message(D2)
    
     invisible(list(usta=usta, ucomp=ucomp, start=D1,
                    end=D2, at1=times[1], at2=times[2],YR1=RD[[1]]$yr, YR2=RD[[2]]$yr, CAL1=CAL1, CAL2=CAL2, startsec=startsec, endsec=endsec ))

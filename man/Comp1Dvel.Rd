@@ -6,12 +6,14 @@
  plot a pair of 1D velocity Models for comparison
 }
 \usage{
-Comp1Dvel(v, v2)
+Comp1Dvel(v, v2, col=c('blue', 'brown'), ...)
 }
 
 \arguments{
   \item{v}{List structure for model 1}
   \item{v2}{List structure for model 2}
+   \item{col}{2-colors for P and swave}
+   \item{\dots}{other graphical parameters (e.g. lty, lwd) }
 }
 
 \value{

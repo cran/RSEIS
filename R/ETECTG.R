@@ -33,6 +33,10 @@
   if(missing(perc)) { perc=0.05 }
   if(missing(DOARAIC)) { DOARAIC = FALSE }
 
+    oldpar <- par(no.readonly = TRUE)
+    on.exit(par(oldpar))
+
+    
   N1 = length(GH$JSTR)
   
   PTIMES = as.list(1:N1)
@@ -100,7 +104,7 @@
       {
           nam4 = paste("PP",M, sep="")
           v = get(nam4)
-          print(paste(" ", "ETECTG",  v$STNS, v$COMPS, length(v$RAT)) )
+          message(paste(" ", "ETECTG",  v$STNS, v$COMPS, length(v$RAT)) )
           nam5 = paste("tt",M, sep="")
           assign(nam5, rep(0, length(v$x)))
           tt  = get(nam5)
@@ -173,7 +177,7 @@
 
           for(j in 1:NJ)
               {
-                  ## print(paste(sep=" ", "****************** sub win=", i, j, "of ", NJ, BIGN))
+                  ## message(paste(sep=" ", "****************** sub win=", i, j, "of ", NJ, BIGN))
                   ##  b1 = (JJ$J[j]-sbef/deltat)
                   ##  b2 = (JJ$L[j]+saft/deltat)
 
@@ -190,13 +194,13 @@
                   if(length(z4)<375)
                       {
                           
-                          print(paste(sep=" " , "Very short window",M, j, length(z4), b1, b2)   )
+                          message(paste(sep=" " , "Very short window",M, j, length(z4), b1, b2)   )
                           detpix[j] = 0
                           next
                       }
 ####  here do the detailed picking to find a good first arrival
 ####     RATP = ratcurve(z4, dt=PP4$deltat, fwlen =  75,  bwlen  =200, PLOT=TRUE)
-                  print("ETECTG Going to PSTLTcurve")
+                  message("ETECTG Going to PSTLTcurve")
                   RATP = PSTLTcurve(z4, dt=PP$deltat, fwlen=ifrwd,  bwlen=ibkwd, perc=perc, stretch=1000 , MED=77, PLOT=FALSE)
                   if(is.na(RATP[[1]]) )
                       {
@@ -263,7 +267,7 @@
   
   if(PLOT==TRUE)
       {
-          print(paste("going to plotting", K1))
+          message(paste("going to plotting ", K1))
           
           ##  PLOT.SEISN(GH, sel = sel, notes=GH$KNOTES[sel]);  gin = locator(2)
           ##  gin = locator(2)

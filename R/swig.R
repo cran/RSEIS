@@ -5,7 +5,7 @@
                   pcex=0.7, SCALE=1, ilocstyle=1,
                   velfile="", stafile="", LOC=NULL,
                   prefilt=list(fl=.2, fh=15,  type="HP", proto="BU"), filters=NULL, YAX = 1  ,
-                  xtickfactor = 1 , vertline=NA  )
+                  xtickfactor = 1 , vertline=NA, destdir='.'  )
 {
 
 
@@ -27,7 +27,7 @@
     if(missing(YAX)) { YAX = 1 }
   
   
-###   if(missing(APIX)) { APIX = NULL}  else { if(!exists(deparse(substitute(APIX)))) { print("WARNING: NO WPX"); APIX=NULL} }
+###   if(missing(APIX)) { APIX = NULL}  else { if(!exists(deparse(substitute(APIX)))) { message("WARNING: NO WPX"); APIX=NULL} }
 
   if(missing(APIX)) { APIX = NULL}
   
@@ -176,14 +176,14 @@
 
 
  
-##  print(BLABS)
+##  message(BLABS)
   
 
 fixedbuttons = c("REPLOT", "DONE", "QUIT", "SELBUT" )
 
 BLABS = unique(c(fixedbuttons, BLABS))
 
-##  print(BLABS)
+##  message(BLABS)
   
 
 OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
@@ -256,14 +256,14 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
     }
   else
     {
-      ## print("reading in pickfile")
+      ## message("reading in pickfile")
       ##  
       WPX = APIX
       ##  WPX = data.frame(WPX, stringsAsFactors = FALSE)
       NPX = length(WPX$sec)
 
-     ##  print(paste(sep=' ', "read in pickfile",NPX))
-      ## print(WPX)
+     ##  message(paste(sep=' ', "read in pickfile",NPX))
+      ## message(WPX)
     }
   
   RIDPIX = list()
@@ -280,8 +280,8 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
   STNS = NH$STNS[sel]
   COMPS = NH$COMPS[sel]
 
-###   print(STNS)
-###   print(COMPS)
+###   message(STNS)
+###   message(COMPS)
   
   UNIsta = unique(STNS)
   
@@ -312,7 +312,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
 
     }
 
-###  print(pcols)
+###  message(pcols)
 
 ###   want the sorting of comps to be Vertical North East always
 
@@ -323,9 +323,9 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
       COMPS = COMPS[ORD]
     }
 
-  ##   print("*************    check stations and comps****** ")
-  ##  print(STNS)
-  ##  print(COMPS)
+  ##   message("*************    check stations and comps****** ")
+  ##  message(STNS)
+  ##  message(COMPS)
   
   
   du = 1/NSEL
@@ -338,15 +338,15 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
     mi=NH$info$mi[isel],
     sec=(NH$info$sec[isel]+NH$info$msec[isel]/1000+NH$info$t1[isel]-NH$info$off[isel]))
 
-###  print(Torigin)
+###  message(Torigin)
   
-###  print(sel)
-###  print(STNS)
-###  print(COMPS)
-### print(NH$KNOTES[sel])
-###  print(NSEL)
-###  print(NH$dt[sel])
-###  print(pcols[sel])
+###  message(sel)
+###  message(STNS)
+###  message(COMPS)
+### message(NH$KNOTES[sel])
+###  message(NSEL)
+###  message(NH$dt[sel])
+###  message(pcols[sel])
   LASTwin = WIN
 ##########################################
 ###   GLOBAL VARS to be sent to subroutines and functions
@@ -373,6 +373,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
     NOLAB = NOLAB,
     
     RETX =  NULL,
+    destdir = destdir,
     somecolors =somecolors ,
     APAL=APAL,
     pcols = pcols,
@@ -510,7 +511,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
   
 
 
-   ####  print( data.frame(global.vars$filters) )
+   ####  message( data.frame(global.vars$filters) )
 
   while(TRUE) {
       ####### start while: each mouse click is recorded and tested for what to do next
@@ -535,7 +536,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
 ###  RIGHT button was clicked
           Nclick = 0
 ###  zenclick=zenclick+1
-###   print(zenclick)
+###   message(zenclick)
           K = 0
           global.vars$zenclick = length(zloc$x)
           if(global.vars$zenclick<1)
@@ -583,7 +584,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
 
         }
       
-###  print(paste(sep=' ',  Nclick , global.vars$zenclick) )
+###  message(paste(sep=' ',  Nclick , global.vars$zenclick) )
 ############   button actions
 
 #############################################
@@ -591,7 +592,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
       if(K[Nclick] == match("SELBUT", BLABS, nomatch = NOLAB))
         {
 
-        ##  print('SELBUT' )
+        ##  message('SELBUT' )
           
           labs = BLABS
           
@@ -637,7 +638,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
       if(K[Nclick] == match("REPLOT", BLABS, nomatch = NOLAB))
         {
           YN = YNreplot()
-          ## print("clicked REPLOT")
+          ## message("clicked REPLOT")
           buttons = RPMG::rowBUTTONS(global.vars$BLABS, col=global.vars$colabs, pch=global.vars$pchlabs, cex=global.vars$buttoncex)
           Nclick = 0
           K = 0
@@ -692,7 +693,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
        ###################   Postscript output   ###########################  
       if(K[Nclick] == match("Postscript", BLABS, nomatch = NOLAB))
         {
-          print(paste(sep=' ' ,"Start swig postscript"))
+          message(paste(sep=' ' ,"Start swig postscript"))
           jdev = dev.cur()
           plfname = RPMG::local.file("swig","eps")
           
@@ -704,10 +705,10 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
            postscript(file=plfname , width=P[1], height=P[2], paper = "special", bg=opar$bg, fg=opar$fg, horizontal=FALSE, onefile=TRUE,print.it=FALSE)
 
           ### par(OPAR)
-          print(paste(sep=' ' ,"Doing postscript", plfname))
+          message(paste(sep=' ' ,"Doing postscript", plfname))
            YN = YNreplot()
           
-          print(paste(sep=' ' ,"Done creating postscript file: ", plfname))
+          message(paste(sep=' ' ,"Done creating postscript file: ", plfname))
           dev.off()
           dev.set(jdev)
              zloc = list(x=NULL, y=NULL)
@@ -716,7 +717,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
 
           if(K[Nclick] == match("PNG", BLABS, nomatch = NOLAB))
         {
-          print(paste(sep=' ' ,"Start swig postscript"))
+          message(paste(sep=' ' ,"Start swig postscript"))
           jdev = dev.cur()
           plfname = RPMG::local.file("swig","png")
           
@@ -728,10 +729,10 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
            RPMG::jpng(file=plfname , width=P[1], height=P[2])
 
           ### par(OPAR)
-          print(paste(sep=' ' ,"Doing png", plfname))
+          message(paste(sep=' ' ,"Doing png", plfname))
            YN = YNreplot()
           
-          print(paste(sep=' ' ,"Done creating png file: ", plfname))
+          message(paste(sep=' ' ,"Done creating png file: ", plfname))
           dev.off()
           dev.set(jdev)
              zloc = list(x=NULL, y=NULL)
@@ -748,8 +749,8 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
         {
           if(K[Nclick] != match(BLABS[K[Nclick]]  ,  fixedbuttons , nomatch = NOLAB))
             {
-              ###print("You Hoo!")
-              ###print(BLABS[K[Nclick]])
+              ###message("You Hoo!")
+              ###message(BLABS[K[Nclick]])
               if(exists(BLABS[K[Nclick]],  mode="function"))
                 {
                   FUN = match.fun( BLABS[K[Nclick]] )
@@ -768,7 +769,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
                     }
                   else
                     {
-                      print(paste("No Function named", BLABS[K[Nclick]] , "Found"))
+                      message(paste("No Function named", BLABS[K[Nclick]] , "Found"))
                       global.vars$action=="donothing"
                       zloc = list(x=NULL, y=NULL) 
 
@@ -777,7 +778,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
               else
                 {
 
-                  print(paste("No Function named", BLABS[K[Nclick]] , "Found"))
+                  message(paste("No Function named", BLABS[K[Nclick]] , "Found"))
                   global.vars$action=="donothing"
                   zloc = list(x=NULL, y=NULL) 
                   
@@ -831,7 +832,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
               
               if(global.vars$action=="exit")
                 {
-                  print("EXIT RETX")
+                  message("EXIT RETX")
                   return(GL$RETX)
                  break
                 }
@@ -860,14 +861,14 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
       pwin =  c( zloc$x[global.vars$zenclick-2], zloc$x[global.vars$zenclick-1])
 
     }
-#### print(pwin)
-#### print(WIN)
+#### message(pwin)
+#### message(WIN)
 
   
   PushI =  RPMG::whichbutt(zloc ,buttons)
-####  print(zloc)
-####  print(sloc)
-####  print(PushI)
+####  message(zloc)
+####  message(sloc)
+####  message(PushI)
   
   
   PushK=NULL
@@ -906,7 +907,7 @@ OTHERbuttons = c("NEXT", "PREV","HALF","S1", "S2", "MARK", "DOC", "RESTORE",
 
   
 
- #####  print("returning from swig")
+ #####  message("returning from swig")
   
   RETP = list(but=but, sloc=sloc, WPX=WPX, BRUNINFO=BRUNINFO, DETLINFO=DETLINFO,  mark=mark, PUSHED=PushK, g=global.vars)
   

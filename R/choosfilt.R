@@ -71,7 +71,7 @@
     if(any(is.na(m)))
       {
 
-        print("ERROR: Wrong Input: check the filter list for flo, fhi and type" )
+        warning("ERROR: Wrong Input: check the filter list for flo, fhi and type" )
  
         GIVE = list(type="None",  fl=100,fh=100,ON=FALSE,  proto="BU" )
 
@@ -84,8 +84,8 @@
 
 if( length(thefilts$type) != length(thefilts$flo ) &   length(thefilts$type)  != length(thefilts$fhi ) )
   {
-    print(paste(sep=' ',"problem with filter definition", length(thefilts$type),length(thefilts$flo ), length(thefilts$fhi )   ))
-   print("ERROR: Wrong Input: check the filter list for flo, fhi and type" )
+    warning(paste(sep=' ',"problem with filter definition", length(thefilts$type),length(thefilts$flo ), length(thefilts$fhi )   ))
+   warning("ERROR: Wrong Input: check the filter list for flo, fhi and type" )
  
         GIVE = list(type="None",  fl=100,fh=100,ON=FALSE,  proto="BU" )
 
@@ -95,11 +95,11 @@ if( length(thefilts$type) != length(thefilts$flo ) &   length(thefilts$type)  !=
 
   }
     
-###  print(data.frame(cbind(thefilts$flo, thefilts$fhi,   1/thefilts$flo, 1/thefilts$fhi,  thefilts$type)))
+###  message(data.frame(cbind(thefilts$flo, thefilts$fhi,   1/thefilts$flo, 1/thefilts$fhi,  thefilts$type)))
     
 ###    namcols = c("springgreen2",   "plum2" ,         "cyan3"  ,        "darkgoldenrod2")
 ###    match(namcols, colors())
-   ###  print(Z)
+   ###  message(Z)
     colpals = matrix(c(0,238,118,238,174,238,0,205,205,238,173,14)/255, nrow=3)
 
     colrgb = rgb(colpals[1,],colpals[2,], colpals[3,])
@@ -169,7 +169,7 @@ hilab[thefilts$fhi<1] = paste(sep=' ', 1/thefilts$fhi[thefilts$fhi<1], "s")
     GIVE = list(type=thefilts$type[i],  fl=thefilts$flo[i],fh=thefilts$fhi[i],ON=FALSE,  proto="BU" )
 
     
-    print(paste(sep=" ", "DATA is FILTERED", paste(collapse=" ", unlist(GIVE))))
+    message(paste(sep=" ", "DATA is FILTERED", paste(collapse=" ", unlist(GIVE))))
 
     dev.off(dev.cur())
     

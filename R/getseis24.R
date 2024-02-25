@@ -23,14 +23,14 @@ getseis24<-function(DB, iyear=2009, iday=1, usta="", acomp="", kind = 1,  Iendia
     w4 = which(DB$t2 >= at1 & DB$t2 < at2)
 
     if (length(c(w1, w2, w3, w4)) < 1) {
-      print("getseis24: No Match in DataBase")
+      warning("getseis24: No Match in DataBase")
       return()
     }
     wi = unique(c(w1, w2, w3, w4))
     
 ##     wi = unique(c(w1, w2, w3, w4))
     if (length(wi) < 1) {
-      print("getseis24: No times match this call")
+      warning("getseis24: No times match this call")
       return()
     }
     fnloc = DB$fn[wi]
@@ -53,7 +53,7 @@ getseis24<-function(DB, iyear=2009, iday=1, usta="", acomp="", kind = 1,  Iendia
     }
     if (length(gi) < 1) {
 
-      print("getseis24: length(gi) < 1")
+      warning("getseis24: length(gi) < 1")
       return()
     }
 
@@ -129,7 +129,7 @@ getseis24<-function(DB, iyear=2009, iday=1, usta="", acomp="", kind = 1,  Iendia
         a1 = M1 + (i-1)/24 - 0*adt
         a2 = M1 + (i)/24 +  0*adt
         
-        ##print(paste(a1, a2))
+        ##message(paste(a1, a2))
         w1 = which(gt1>=a1&gt1<=a2)
         w2 = which(gt2>=a1&gt2<=a2)
         w = sort(unique(c(w1,w2)))
@@ -145,7 +145,7 @@ getseis24<-function(DB, iyear=2009, iday=1, usta="", acomp="", kind = 1,  Iendia
                 t1 = gt1[k]
                 t2 = gt2[k]
                 f1 = ex>=t1&ex<=t2
-###    print(paste(sep=' ', j, length(f1) )) 
+###    message(paste(sep=' ', j, length(f1) )) 
                 U = any(f1)
                 if(U)
                   {
@@ -155,7 +155,7 @@ getseis24<-function(DB, iyear=2009, iday=1, usta="", acomp="", kind = 1,  Iendia
                         
                         lex = gt1[k]+seq(from=0, by=gdt[k], length=(length(s)))/(24*3600)
                         tem = lex>=a1&lex<=a2
-                        ## print(paste(sep=' ', j, length(zed[f1]) , length(s[tem])))
+                        ## message(paste(sep=' ', j, length(zed[f1]) , length(s[tem])))
                         s2 = s[tem]
                         zed[f1] = s2[1:length(zed[f1])]
                       }
@@ -171,13 +171,13 @@ getseis24<-function(DB, iyear=2009, iday=1, usta="", acomp="", kind = 1,  Iendia
                         
                         
                         tem = slex$x>=a1&slex$x<=a2
-                        ## print(paste(sep=' ', j, length(zed[f1]) , length(s[tem])))
+                        ## message(paste(sep=' ', j, length(zed[f1]) , length(s[tem])))
                         s2 = slex$y[tem]
                         zed[f1] = s2[1:length(zed[f1])]
                         
 
                       }
-                    ## print(U)
+                    ## message(U)
                   }
               }
 

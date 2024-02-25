@@ -11,6 +11,9 @@ function(z4, DT=0.008, Mar=8, O1=2, O2=0.2, WW= 2, T1=1 , PLOT=FALSE   )
     if(missing(WW)) { WW=10*DT }
     if(missing(PLOT)) { PLOT=FALSE }
 
+     oldpar <- par(no.readonly = TRUE)
+      on.exit(par(oldpar))
+
     ###  WW = window width (s)
     ###  O1 = time before  (s)
     ###  O2 = time after (s)
@@ -24,7 +27,7 @@ function(z4, DT=0.008, Mar=8, O1=2, O2=0.2, WW= 2, T1=1 , PLOT=FALSE   )
  ###   k1=T1+floor(O2/DT)+1;
  ###   k2 = k1+IW;
 
- ###   print(c(k1, k2, IW, Nz4));
+ ###   message(c(k1, k2, IW, Nz4));
 
              
               ary = .C("CALL_ARAIC",  PACKAGE = "RSEIS",
@@ -50,7 +53,7 @@ function(z4, DT=0.008, Mar=8, O1=2, O2=0.2, WW= 2, T1=1 , PLOT=FALSE   )
           }
         else
           {
-            print("ERROR (GETARAIC) - had some NA in kaic.")
+            warning("ERROR (GETARAIC) - had some NA in kaic.")
           }
         
       }

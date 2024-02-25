@@ -35,8 +35,11 @@ function(K=1)
     updir  = c(1, 1, -1, 1, 1, 1, 1, 1 )
 
     if(missing(K))
-      {
-        print(data.frame(cbind(codes, AI, II, unit)))
+    {
+       DFtemp = data.frame(cbind(codes, AI, II, unit))
+       Atemp = apply(DFtemp , 1, 'paste', collapse=' ')
+       message(paste('codes, AI, II, unit'))
+       message(paste(collapse='\n', Atemp))
         return(NULL)
       }
 

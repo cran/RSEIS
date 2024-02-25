@@ -80,7 +80,7 @@ function(r,q, dt)
  
      DefInt = integ1(tr, tq)
 
-    ### print(paste(sep=' ',DefInt[1],DefInt[2] , s4, s3))
+    ### message(paste(sep=' ',DefInt[1],DefInt[2] , s4, s3))
     #### Ex[1], Ex[2] = left minimum
      #### Ey[1], Ey[2] = right  minimum
      ####    Cx, Cy  = center (max?)

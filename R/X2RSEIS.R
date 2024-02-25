@@ -12,8 +12,8 @@ X2RSEIS<-function(nh, g)
 
         ipick = ipick[length(ipick)]
         
-        ## cat(paste(sep=" ", ypick, ipick), sep="\n")
-        ## print(ipick)
+        ## message(paste(sep=" ", ypick, ipick), sep="\n")
+        ## message(ipick)
         ##
        if(g$zenclick>2)
               {
@@ -31,7 +31,7 @@ X2RSEIS<-function(nh, g)
 
         pstamp = Zdate(GH$info)
         outfile = pstamp[1]
-        cat(paste("Creating RSEIS GH file:", outfile ), sep="\n")
+        message(paste("Creating RSEIS GH file:", outfile ), sep="\n")
         
         
         save(file=paste(outfile, "GH.RDATA", sep="."), GH)
@@ -45,7 +45,7 @@ X2RSEIS<-function(nh, g)
       }
 else
       {
-        cat("X_R WARNING: no window or trace has been selected:", sep="\n")
+        warning("X_R WARNING: no window or trace has been selected:", sep="\n")
         RETX=NULL
         g$zloc = list(x=NULL, y=NULL) 
         

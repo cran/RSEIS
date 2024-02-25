@@ -43,14 +43,14 @@
 
   if(length(c(w1, w2, w3, w4) )<1)
     {
-      print("No time Match in DataBase")
+      warning("No time Match in DataBase")
       return()
     } 
 
   wi = unique(c(w1, w2, w3, w4))
 
   if(length(wi)<1) {
-    print("No time  Match in DataBase")
+    warning("No time  Match in DataBase")
 
     return()} 
   
@@ -77,13 +77,13 @@
   
   if(length(gi)<1 ) {
 
-    print("No grep(sta-comp) Match in DataBase, check that file names match DB")
+    warning("No grep(sta-comp) Match in DataBase, check that file names match DB")
 
     return() }
   
   fn2 = fn1[gi]
   
-   if(verbose) print(fn2)
+   if(verbose) { message(fn2) }
 
   
   KG4 = GET.seis(fn2, kind = kind,  Iendian=Iendian, BIGLONG= BIGLONG, HEADONLY=FALSE ,PLOT = -1, RAW=RAW)
@@ -93,9 +93,9 @@
 
   
  if(verbose)
-   { print(length(KG4) )
+   { message(length(KG4) )
 for(k in 1:length(KG4)) {
- cat( paste(KG4[[k]]$sta, KG4[[k]]$comp ), sep="\n")
+ message( paste(KG4[[k]]$sta, KG4[[k]]$comp ), sep="\n")
 
 }
      
@@ -105,18 +105,18 @@ for(k in 1:length(KG4)) {
 
    if(verbose)
     {
-      print("LENGTHS Retrieved:")
+      message("LENGTHS Retrieved:")
     for(ib in 1:length(KG4))
       {
-        print(paste(ib, length(KG4[[ib]]$amp)))
+        message(paste(ib, length(KG4[[ib]]$amp)))
 
 
       }
   }
- ## print("Mine GLUE.GET.seis")
+ ## message("Mine GLUE.GET.seis")
   
   RR = GLUE.GET.seis(KG4)
- ##  print("Mine prepseis")
+ ##  message("Mine prepseis")
   GH=prepSEIS(RR)
   
   ##  the window is seconds from the begining of the traces
@@ -141,8 +141,10 @@ for(k in 1:length(KG4)) {
         n2=GH$info$n2,
         n3=GH$info$n3,
         n=GH$info$n)
-
-      print(Gdf)
+      Atemp = apply(Gdf , 1, 'paste', collapse=' ')			
+       message(paste(collapse=' ', names(Gdf) )	)		
+      message(paste(collapse='\n', Atemp))	
+       ###  if verbose
     }
 
 
@@ -150,7 +152,7 @@ for(k in 1:length(KG4)) {
   else {origyr=attr(DB, "origyr") }
   eday = EPOCHday(GH$info$yr, jd=GH$info$jd, origyr = origyr )
 
- #######  print("Mine after EPOCHday")
+ #######  message("Mine after EPOCHday")
   
   ss1 = secdif(eday$jday, GH$info$hr, GH$info$mi, GH$info$sec-GH$info$off,
     at1,0, 0, 0)
@@ -168,22 +170,22 @@ for(k in 1:length(KG4)) {
   if(verbose)
     {
 
-      print("Mine.seis internal eday=")
-      print(eday)
+      message("Mine.seis internal eday=")
+      message(eday)
 
 
-      print("Mine.seis ss1=")
+      message("Mine.seis ss1=")
       
-      print(ss1)
+      message(ss1)
 
-        print("Mine.seis ss2=")
-      print(ss2)
+        message("Mine.seis ss2=")
+      message(ss2)
 
-          print("Mine.seis win=")
+          message("Mine.seis win=")
       
-      print(win)
-      print("GH")
-      for(i in 1:length(GH$JSTR)) { print(paste(i, length(GH$JSTR[[i]]))) }
+      message(win)
+      message("GH")
+      for(i in 1:length(GH$JSTR)) { message(paste(i, length(GH$JSTR[[i]]))) }
     }
 
   if(CHOP) {  HH = CHOP.SEISN(GH, WIN=win) }
@@ -196,11 +198,11 @@ for(k in 1:length(KG4)) {
 
   if(verbose)
     {
-      print("HH")
-      print(win)
-      print(diff(win))
+      message("HH")
+      message(win)
+      message(diff(win))
       
-      for(i in 1:length(HH$JSTR)) { print(paste(i, length(HH$JSTR[[i]]))) }
+      for(i in 1:length(HH$JSTR)) { message(paste(i, length(HH$JSTR[[i]]))) }
     }
 
   HH$DBindex = gi

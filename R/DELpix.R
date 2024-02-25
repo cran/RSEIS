@@ -12,8 +12,8 @@ DELpix<-function(nh, g)
     TOLERANCE = 0.5
 
     zpix = data.frame( g$WPX )
-   # cat('#######################', sep='\n')
-  #  print(zpix )
+   # message('#######################')
+  #  message(zpix )
 
     
     
@@ -42,20 +42,20 @@ DELpix<-function(nh, g)
             ista = nh$STNS[i1]
             icomp = nh$COMPS[i1]
             
-          #  cat(paste(ista, icomp, i1, i2  ) , sep='\n')
+          #  message(paste(ista, icomp, i1, i2  ) )
 
             stacomp = which(zpix$name == ista  & zpix$comp == icomp )
 
-          #  cat(paste('stacomp=  ', stacomp ) , sep='\n')
+          #  message(paste('stacomp=  ', stacomp ) , sep='\n')
 
             Tdif = secdifL(pic1, zpix[stacomp, ])
 
-          #  cat(paste('Tdif=  ', Tdif ) , sep='\n')
+          #  message(paste('Tdif=  ', Tdif ) , sep='\n')
             
             Kstract = abs(Tdif) < TOLERANCE
 
             
-          #  cat(Tdif, sep='\n')
+          #  message(Tdif, sep='\n')
 
             
             
@@ -63,13 +63,13 @@ DELpix<-function(nh, g)
             {
                 Kw = which(Kstract)
                 Ireject = stacomp[Kw[1]]
-                cat(paste(ista, icomp, i1, i2,Kw, Ireject ) , sep='\n')
+                message(paste(ista, icomp, i1, i2,Kw, Ireject ) )
                 TRICK[iz] = Ireject
                 
             }
             else
             {
-                cat('no picks near this cursor location\n')
+                warning('no picks near this cursor location\n')
                 
             }
             
@@ -84,10 +84,13 @@ DELpix<-function(nh, g)
     
 
     if(length(TRICK) > 0 ) { zpix =   deleteWPX(zpix, TRICK) }
-  #  cat('#######################  POST DEL', sep='\n')
-  #  print(data.frame(zpix) )
-
-  #  cat('#######################', sep='\n')
+  #  message('#######################  POST DEL')
+####  message(data.frame(zpix) )
+####      DF = data.frame(zpix)
+####      Atemp = apply(DF , 1, 'paste', collapse=' ')			
+####      message(paste(collapse=' ', names(DF) ))			
+####      message(paste(collapse='\n', Atemp))
+  #  message('#######################')
     g$WPX = zpix
     g$zloc = list(x=NULL, y=NULL)
     g$action = "replot"

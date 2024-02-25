@@ -38,7 +38,7 @@ wy = which( is.na(ydivs) )
     }
   
   if(length(dur)<length(pix$hr)) {
-    print("warning: (markseis24) replace dur with dur[1]")
+    warning("warning: (markseis24) replace dur with dur[1]")
     dur=rep(dur[1], length(pix$hr))
     
   }
@@ -48,11 +48,11 @@ wy = which( is.na(ydivs) )
   
   w = which(pix$yr==yr & pix$jd==jd)
 
-##   print(w)
+##   message(w)
   
   if(length(w)<1)
     {
-      print("No pix times are on the day displayed")
+      warning("No pix times are on the day displayed")
       return(0)
 
     }
@@ -77,8 +77,8 @@ wy = which( is.na(ydivs) )
   yy1 = ydivs[ypos1+2]+ydiff*.4
   yy2 = ydivs[ypos2+2]+ydiff*.2
   
-###  print(yy1)
-###    print(yy2)
+###  message(yy1)
+###    message(yy2)
 ###  
 
   nonwrapper = which(ypos1==ypos2)

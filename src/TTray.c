@@ -39,7 +39,7 @@ static int c__1 = 1;
 	term1, p, pdir = 0., pref = 0.;
     double term[2000], h[2000]; /* h[] is for local pseudo layers */
     double vmax, p1, offset, sum, tref, tdir, t, ztop_save;
-    int lhpz, i, j, lowlr, jlim;
+    int lhpz, i, j, lowlr;
    
 
   
@@ -156,7 +156,7 @@ static int c__1 = 1;
 	    if (vel[lowlr] <= vmax) continue;
 	    
 	    vmax = vel[lowlr];
-	    jlim = lowlr - 1;
+	    /* jlim = lowlr - 1; */
 	    /* calculate offset distance */
 	    p1 = 1.0 / vel[lowlr];
 	    for (j = 0, sum = 0.; j < lhpz+1; ++j) {
@@ -329,7 +329,7 @@ int revarr(int *n, double *a)
     static double den;
     static int lim, lay;
     static double *top, sum;
-    static int layereq;
+    /* static int layereq; */
 
        int   nnodes, nvellay;
 
@@ -456,7 +456,7 @@ L110:
     }
 L120:
 /* 	write(0,*)'lhpz=',lhpz */
-    layereq = lhpz;
+    /* layereq = lhpz; */
 /* --- assign layer thicknesses to internal array h only for those */
 /*     layers above source. */
     lim = lhpz - 1;
@@ -1000,16 +1000,16 @@ L9500:
 {
 
   double tt;
-  double indelta, inhpz,  instaz;
-  int inlay;
+  double indelta, inhpz;
+  /* int inlay; */
 
   int jerr, lolev, indpth;
-  int  j;
+  /* int  j; */
 
   indelta= *delta;
   inhpz=*hpz;
-  instaz= *staz;
-  inlay=*nlay;
+  /* instaz= *staz; */
+  /* inlay=*nlay; */
 
   /*  tt = JMLttlvz(indelta, inhpz, instaz, inlay , ztop ,  vel, dtdr, dtdz, angle); */
  
@@ -1022,7 +1022,7 @@ L9500:
 	      *nnod, indelta,  inhpz, lolev, tt,  jerr);
     }
   
-  j = *nnod;
+  /* j = *nnod; */
 
 
   /*

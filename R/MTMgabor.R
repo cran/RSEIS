@@ -48,10 +48,10 @@ function(a, dt=0, ppoint=95, numf=1024, Ns=0, Nov=0, fl=0, fh=10 )
     
  len2 = 2*next2(numf)
 
-  #####  print(paste(sep=' ', "evolfft kcol=", kcol, "krow=", krow, "Ns=", Ns, "Nov=", Nov,  "numf=" , numf,  "len2=",   len2 ))
+  #####  message(paste(sep=' ', "evolfft kcol=", kcol, "krow=", krow, "Ns=", Ns, "Nov=", Nov,  "numf=" , numf,  "len2=",   len2 ))
     if(kcol<1)
       {
-        print(paste(sep=' ', "error in evolMTM kcol=", kcol, "krow=", krow, "NT", NT, "Ns", Ns, "Nov", Nov))
+        message(paste(sep=' ', "error in evolMTM kcol=", kcol, "krow=", krow, "NT", NT, "Ns", Ns, "Nov", Nov))
         return()
       }
           
@@ -65,7 +65,7 @@ function(a, dt=0, ppoint=95, numf=1024, Ns=0, Nov=0, fl=0, fh=10 )
      iend = ibeg+Ns-1;
     ##   ppoints  =  c(50.0, 90.0, 95.0, 99.0, 99.5, 99.9)
 
-###  print(paste(sep=" ", m, ibeg, iend, NT))
+###  message(paste(sep=" ", m, ibeg, iend, NT))
 
 
     ##########################################   check
@@ -83,7 +83,7 @@ function(a, dt=0, ppoint=95, numf=1024, Ns=0, Nov=0, fl=0, fh=10 )
         Mspec =   mtapspec(tem,dt, klen=len2,  MTP=list(kind=2,nwin=5, npi=5,inorm=1)  )
 
         f=Mspec$freq
-    print(paste(sep=" ", "len f=" , length(f)))
+    message(paste(sep=" ", "len f=" , length(f)))
 
   }
 ##########################################   end check
@@ -91,7 +91,7 @@ function(a, dt=0, ppoint=95, numf=1024, Ns=0, Nov=0, fl=0, fh=10 )
     
     for( i in m)
       { 
-###  print(paste(sep=" ", m, ibeg, iend, NT))
+###  message(paste(sep=" ", m, ibeg, iend, NT))
         tem = a[ibeg[i]:iend[i]]
         tem = tem-mean(tem, na.rm=TRUE)
         
@@ -144,14 +144,14 @@ function(a, dt=0, ppoint=95, numf=1024, Ns=0, Nov=0, fl=0, fh=10 )
     ##     TEV = evolfft(a,dt, Nfft=4096, Ns=250 , Nov=240,  fl=0, fh=nyquistf  )
   ##       plotevol(TEV, log=1, fl=0, fh=nyquistf, col=rainbow(100))
 
-  ####  print("FVMAT")
-   ####   print(dim(FVMAT))
-  ####    print("DOFMAT")
-  ####    print(dim(DOFMAT))
-  ####    print("HIMAT")
-  ####    print(dim(HIMAT))
-  ####    print("DSPEC")
-  ####    print(dim(DSPEC))
+  ####  message("FVMAT")
+   ####   message(dim(FVMAT))
+  ####    message("DOFMAT")
+  ####    message(dim(DOFMAT))
+  ####    message("HIMAT")
+  ####    message(dim(HIMAT))
+  ####    message("DSPEC")
+  ####    message(dim(DSPEC))
 
        
     RET = list(sig=a, dt=dt, numfreqs=numfreqs, wpars=list(Nfft=numfreqs,  Ns=Ns, Nov=Nov, fl=fl, fh=fh), DSPEC=DSPEC, HIMAT=HIMAT, DOFMAT=DOFMAT, FVMAT=FVMAT, kdof=kdof,  ppoint=ppoint, freqs=y, tims=x)

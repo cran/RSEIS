@@ -40,7 +40,7 @@ function(PICS)
             tok.kind = tok[1]
 
            
-            ######### print(tok)
+            ######### message(tok)
             
             if(identical(tok.kind, "P") | identical(tok.kind, "p"))
               {

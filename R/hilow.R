@@ -13,12 +13,12 @@ function(y)
   ka = rep(FALSE, length(aa)+2)
   ka[2:(length(aa)+1)] = aa
   pks = ind[ka]
- ###  print(pks)
+ ###  message(pks)
   
   kb = rep(FALSE, length(ab)+2)
   kb[2:(length(ab)+1)] = ab 
   vals = ind[kb]
-###   print(vals)
+###   message(vals)
 
   return(list(hi=pks, lo=vals))
 

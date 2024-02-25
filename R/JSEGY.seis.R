@@ -82,18 +82,18 @@ if(is.character(Iendian))
       infile = fn
       theENDIAN = endianVEC[i]
 ####
-     ##  print(paste(fn, theENDIAN) );
+     ##  message(paste(fn, theENDIAN) );
 
       
 ###  if this file does not exist, exit!
       if(file.exists(infile)==FALSE)
         {
-          print(paste(sep=' ', "file does not exist", fn) ); 
+          warning(paste(sep=' ', "file does not exist", fn) ); 
           next;
         }
       else
         {
-###  print(paste(sep=' ', "file exists", fn) );
+###  message(paste(sep=' ', "file exists", fn) );
 
         }
 
@@ -232,12 +232,12 @@ if(is.character(Iendian))
       sensorserial=readChar(zz, 8, useBytes = FALSE)
       channelname=readChar(zz, 4, useBytes = FALSE)
       
-      ##  print(paste(sep="", "<",channelname,">"))
+      ##  message(paste(sep="", "<",channelname,">"))
 
 ##  close(zz)
-   ##       cat(paste(sep=" ",paste(sep="", "<",stationname,">"), paste(sep="", "<",channelname,">")), sep="\n") 
+   ##       message(paste(sep=" ",paste(sep="", "<",stationname,">"), paste(sep="", "<",channelname,">")), sep="\n") 
       
- ## print(paste(sep=" ", "Name=", stationname,sensorserial,channelname))  
+ ## message(paste(sep=" ", "Name=", stationname,sensorserial,channelname))  
 
        
       totalStaticHi= readBin(zz, integer() , n = 1 , size =ishort,  endian = theENDIAN, signed = TRUE)
@@ -250,10 +250,10 @@ if(is.character(Iendian))
 
       msecs =readBin(zz, integer() , n = 1 , size =ishort ,  endian = theENDIAN, signed = TRUE)
 
-     ##   print(paste(sep=" ", "time start=", year,day,hour,minute, second,  msecs  ))
+     ##   message(paste(sep=" ", "time start=", year,day,hour,minute, second,  msecs  ))
       
 
-   ##  print(paste(sep=" ", "gains", gainType, gainConst ))
+   ##  message(paste(sep=" ", "gains", gainType, gainConst ))
 
 
     
@@ -265,7 +265,7 @@ if(is.character(Iendian))
       trigsecond=readBin(zz, integer() , n = 1 , size =ishort ,  endian = theENDIAN, signed = TRUE)
       trigmills=readBin(zz, integer() , n = 1 , size =ishort ,  endian = theENDIAN, signed = TRUE)
 
-  ##      print(paste(sep=" ","trigtime=", trigyear,  trigday,trighour , trigminute, trigsecond, trigmills  ))
+  ##      message(paste(sep=" ","trigtime=", trigyear,  trigday,trighour , trigminute, trigsecond, trigmills  ))
       
       scalefac=readBin(zz, numeric() , n = 1 , size =ifloat  ,  endian = theENDIAN, signed = TRUE)
 
@@ -288,8 +288,8 @@ if(is.character(Iendian))
       min =readBin(zz, integer() , n = 1 , size =iint ,  endian = theENDIAN, signed = TRUE)
 
 
-  ##  print(paste(sep=" ", i, "numsamps=", numsamps, "sampleLength=", sampleLength  ))
-  ##  print(paste(sep=" ",  "scalefac=",   scalefac ))
+  ##  message(paste(sep=" ", i, "numsamps=", numsamps, "sampleLength=", sampleLength  ))
+  ##  message(paste(sep=" ",  "scalefac=",   scalefac ))
       ####################################      done reading header
        #####    count = 7+4+8+2+4+13+5+16+6+6+4+7+5
 
@@ -316,8 +316,8 @@ SEGYall = c(A1, A2, A3, A4, A5, A6, sampleLength,
       if( !is.integer(N))
          {
            ##  this is a problem
-           print("ERROR: number of samples is not an integer.")
-           print(paste(i, fn))
+           warning("ERROR: number of samples is not an integer.")
+           message(paste(i, fn))
 
          }
 
@@ -367,7 +367,7 @@ SEGYall = c(A1, A2, A3, A4, A5, A6, sampleLength,
       if(HEADONLY==TRUE)
           {
               
-####   print(paste("headonly ", i))
+####   message(paste("headonly ", i))
               
               x = NULL
               aunits=NA
@@ -397,8 +397,8 @@ SEGYall = c(A1, A2, A3, A4, A5, A6, sampleLength,
                       x = as.vector(D1)
 
                       aunits="counts"
-###  print("using RAW (counts), range:")
-###  print(range(x))
+###  message("using RAW (counts), range:")
+###  message(range(x))
                       
                   }
               else
@@ -432,7 +432,7 @@ SEGYall = c(A1, A2, A3, A4, A5, A6, sampleLength,
       if(PLOT>=0)
         {
           plot(x, type='l', main=paste(sep=' ', thesta, thecomp))
-          print("left CLICK once in WINDOW for NEXT TRACE:")
+          message("left CLICK once in WINDOW for NEXT TRACE:")
            if(PLOT==0) { locator(1) }
           else
             {
@@ -443,9 +443,9 @@ SEGYall = c(A1, A2, A3, A4, A5, A6, sampleLength,
     }
 
 
- ### print("using RAW (counts), range:")
- ### print(range(x))
- ### for(ig in 1:length(GIVE)) { print( range(GIVE[[ig]]$amp ))  }
+ ### message("using RAW (counts), range:")
+ ### message(range(x))
+ ### for(ig in 1:length(GIVE)) { message( range(GIVE[[ig]]$amp ))  }
   
   
   invisible(GIVE)

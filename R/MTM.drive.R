@@ -18,7 +18,8 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
     if(!is.list(a$y)) { a$y = list(y=as.vector(a$y))  }
 
     
-     
+      oldpar <- par(no.readonly = TRUE)
+      on.exit(par(oldpar))
     
     alen = unlist(lapply(a$y,  FUN="length"))
 
@@ -44,7 +45,7 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
     
     i = 1
 
-   ##### print(c(len2, a$dt[[i]], alen) )
+   ##### message(c(len2, a$dt[[i]], alen) )
     nwin=5
     npi=3
     inorm=1
@@ -52,7 +53,7 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
 
     if(any(is.na(a$y[[i]])))
       {
-        print("there are NA's in this time series, can't run mtapspec")
+        warning("there are NA's in this time series, can't run mtapspec")
         return(0)
 
       }
@@ -77,7 +78,7 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
 
             if(any(is.na(a$y[[i]])))
               {
-                print("there are NA's in this time series, can't run mtapspec")
+                warning("there are NA's in this time series, can't run mtapspec")
                 next(0)
                 
               }
@@ -100,10 +101,10 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
     ma = amp;
     flag = f>=f1 & f <= f2;
     freqs = f[flag]
-   ##### print(freqs)
+   ##### message(freqs)
     
     frange = range(freqs, na.rm = TRUE)
-  #####  print(c(frange, length(flag), alen) )
+  #####  message(c(frange, length(flag), alen) )
 
     
     prange = range(amp[[1]][flag], na.rm = TRUE)
@@ -125,7 +126,7 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
         ##    abline(h=qf(ppoints/100, 2, 8))
 
       }
-   ##### print(prange )
+   ##### message(prange )
     
   displ = ma ;
 
@@ -273,10 +274,10 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
           if(K[Nclick] == match("AR", labs, nomatch = NOLAB))
             {
               pord = 500
-              print(paste("AutoRegresive", M))
+              message(paste("AutoRegresive", M))
               pscal =  prange
               
-               print(pscal )
+               message(pscal )
               for(i in 1:M)
                 {
                   squig = list(y=a$y[[i]], dt=a$dt[[i]])
@@ -290,7 +291,7 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
                     }
                   ARmin = min(ZIM$amp, na.rm = TRUE)
                   ARmax = max(ZIM$amp, na.rm = TRUE)
-                  print(c(ARmin, ARmax))
+                  message(paste(collapse=' ', c(ARmin, ARmax)) )
                   why   = RPMG::RESCALE(ZIM$amp , pscal[1]  ,pscal[2] , ARmin, ARmax  )
                   
                   lines(ZIM$freq, why, col=i)
@@ -310,8 +311,8 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
                   mydof = NULL
                 }
 
-              print("mydof")
-              print(mydof)
+              message("mydof")
+              message(mydof)
               DoREPLOT()
             
                 buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
@@ -389,7 +390,7 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
               
                   jx = freqs[freqs>=x1&freqs<=x2]
                   NF = length(jx)
-                  print(paste(sep=' ', x1, x2, "Hz", "N=", NF))
+                  message(paste(sep=' ', x1, x2, "Hz", "N=", NF))
                   
                   for(i in 1:M)
                     {
@@ -454,11 +455,11 @@ function(a, f1=f1, f2=f2, len2=1024, COL=2, PLOT=FALSE, PADDLAB=NULL, GUI=TRUE)
             {
               selef = zloc$x[1:(zenclick-1)]
               alabs = format.default(selef , digits=3)
-              print(paste( paste( sep=' ',"Frequencies: efs=c(", paste(alabs, collapse=","), ")" )))
+              message(paste( paste( sep=' ',"Frequencies: efs=c(", paste(alabs, collapse=","), ")" )))
               if(any(selef<1))
                 {
                   plabs = format.default(1/selef , digits=3)
-                  print(paste( paste( sep=' ',"Periods: periods=c(", paste(plabs, collapse=","), ")" )))
+                  message(paste( paste( sep=' ',"Periods: periods=c(", paste(plabs, collapse=","), ")" )))
 
                 }
 

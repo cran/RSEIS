@@ -1,7 +1,7 @@
 `longreset` <-
 function(NPP, PS)
 {
-
+ 
   if(PS==FALSE)
     {
       locator(1)
@@ -11,7 +11,7 @@ function(NPP, PS)
   else
     {
      
-      print("Ending postscript")
+      message("Ending postscript")
       dev.off()
       kplot = 0
     }

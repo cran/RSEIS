@@ -7,7 +7,7 @@ save.wpix<-function(KOUT, fn= 'wpix.out')
         if(fac!=0)    fac =  file.create(fn)
     ####      if(fac!=0)
     ####        {
-    ####          print("failed to save wpix.  Permission to write file denied")
+    ####          warning("failed to save wpix.  Permission to write file denied")
     ####          return(0)
 
     ####        }

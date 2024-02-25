@@ -91,7 +91,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
 
     if(is.null(DEV)) {
        emsg = c("ERROR: illegal call to evolfft.", "Exit Program SPECT.drive")
-        cat(emsg, sep="\n")
+        warning(emsg)
         return(NULL)
     }
        
@@ -105,7 +105,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
      zloc = list(x=NULL, y=NULL)
     sloc = zloc
 
-  ####   print(paste("Button",K, Nclick,K[Nclick] ))
+  ####   message(paste("Button",K, Nclick,K[Nclick] ))
 
 
 
@@ -159,7 +159,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
         if(K[Nclick] == match("PNG", labs, nomatch = NOLAB))
         {
 
-          print(paste(sep=' ' ,"Starting png file plotevol"))
+          message(paste(sep=' ' ,"Starting png file plotevol"))
            jdev = dev.cur()
            plfname = RPMG::local.file("sgram","png")
            P = round(par('pin'))
@@ -168,7 +168,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
 
           ## postscript(file=plfname, horizontal=TRUE, print.it=FALSE,  onefile=FALSE)
            PE = plotevol(DEV, log=scale.def, fl= flshow, fh=fhshow, col=pal, ygrid=gridon, STAMP=STAMP)
-           cat(paste(sep=' ' ,"Done creating postscript file: ", plfname), sep="\n")
+           message(paste(sep=' ' ,"Done creating postscript file: ", plfname) )
 
           dev.off()
           dev.set(jdev)
@@ -181,7 +181,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
         if(K[Nclick] == match("Postscript", labs, nomatch = NOLAB))
         {
 
-          print(paste(sep=' ' ,"Starting postscript file plotevol"))
+          message(paste(sep=' ' ,"Starting postscript file plotevol"))
            jdev = dev.cur()
            plfname = RPMG::local.file("sgram","eps")
            P = round(par('pin'))
@@ -190,7 +190,7 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
 
           ## postscript(file=plfname, horizontal=TRUE, print.it=FALSE,  onefile=FALSE)
            PE = plotevol(DEV, log=scale.def, fl= flshow, fh=fhshow, col=pal, ygrid=gridon, STAMP=STAMP)
-           cat(paste(sep=' ' ,"Done creating postscript file: ", plfname), sep="\n")
+           message(paste(sep=' ' ,"Done creating postscript file: ", plfname) )
 
           dev.off()
           dev.set(jdev)
@@ -299,15 +299,15 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
         if(K[Nclick]==match("INFO", labs, nomatch = NOLAB))
           {
 
-            ###   print(zloc)
+            ###   message(zloc)
             
             whyat = min(PE$y)+(diff(range(PE$y)))*(zloc$y[1:(Nclick-1)]-min(PE$why))/(diff(range(PE$why)))
             exat  = min(PE$x)+(diff(range(PE$x)))*(zloc$x[1:(Nclick-1)]-min(PE$x))/(diff(range(PE$x)))
             rDUMPLOC(list(x=exat, y=whyat))
              zloc = list(x=NULL, y=NULL) 
             
-           ###  print(exat)
-           ###  print(whyat)            
+           ###  message(exat)
+           ###  message(whyat)            
           }
 
         if(K[Nclick]==match("DOT", labs, nomatch = NOLAB))
@@ -329,12 +329,12 @@ function(Xamp, DT=0.008, NEW=TRUE, STAMP=NULL, freqlim=c(0, 20, 0, 20), winparam
         
       
       
-        ###  print(paste(sep=' ', "scale.def=", scale.def))
+        ###  message(paste(sep=' ', "scale.def=", scale.def))
      
 
       }
 
-    cat("DONE with Sgram", sep="\n")
+    message("DONE with Sgram")
     
     
   }

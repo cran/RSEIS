@@ -71,7 +71,7 @@ plotseis24<-function(JJ, dy=1/18, FIX=24, SCALE=0, FILT=list(ON=FALSE, fl=0.05 ,
                 
                 
                 ked = c(rev(ibeg), zed, rev(iend))
-           ###      print("filtering")
+           ###      message("filtering")
                 if(!any(is.na(ked)))
                   {
                       fy = butfilt(ked,fl=FILT$fl, fh=FILT$fh , deltat = adt, type=FILT$type , proto=FILT$proto , RM=FILT$RM, zp=FILT$zp )
@@ -152,7 +152,7 @@ bigmin = min(miny, na.rm=TRUE)
  
     days = JJ$jd
     
-  ##   print(days)
+  ##   message(days)
     modays = getmoday(days, JJ$yr[1])
 
     tlocs = abs(tix[!is.na(tix)])

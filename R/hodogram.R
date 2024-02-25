@@ -6,8 +6,10 @@
     if(missing(dt))  {  dt=1  }
     if(missing(STAMP))  {  STAMP=""  }
 
-    
-######    par(mfrow=c(1,3))
+       oldpar <- par(no.readonly = TRUE)
+      on.exit(par(oldpar))
+
+######    
 ######
 ######
 

@@ -1,7 +1,8 @@
 `xcor2` <-
 function(a1, a2, DT, PLOT=FALSE, LAG=100)
 {
-  if(missing(PLOT)) { PLOT=FALSE }
+    if(missing(PLOT)) { PLOT=FALSE }
+    
 
   n1 = length(a1)
   n2 = length(a2)
@@ -16,7 +17,7 @@ function(a1, a2, DT, PLOT=FALSE, LAG=100)
   if(PLOT==TRUE)
     {
       opar <- par(no.readonly = TRUE)
-
+      on.exit(par(opar))
       par(mfrow = c(3,1))  
 
     }

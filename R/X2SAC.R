@@ -12,8 +12,8 @@ X2SAC<-function(nh, g)
 
         ipick = ipick[length(ipick)]
         
-        ## cat(paste(sep=" ", ypick, ipick), sep="\n")
-        ## print(ipick)
+        ## message(paste(sep=" ", ypick, ipick) )
+        ## message(ipick)
         ##
        if(g$zenclick>2)
               {
@@ -31,7 +31,7 @@ X2SAC<-function(nh, g)
 
         pstamp = Zdate(jh$info)
 
-        cat(paste("Creating SAC files in dir:", pstamp[1]), sep="\n")
+        message(paste("Creating SAC files in dir:", pstamp[1]), sep="\n")
         
         rseis2sac(jh,   path = pstamp[1], BIGLONG=FALSE )
 
@@ -45,7 +45,7 @@ X2SAC<-function(nh, g)
       }
 else
       {
-        cat("X_R WARNING: no window or trace has been selected:", sep="\n")
+        warning("X_R WARNING: no window or trace has been selected:")
         RETX=NULL
         g$zloc = list(x=NULL, y=NULL) 
         

@@ -12,7 +12,7 @@ getIRIS<-function(fn, skip=0)
       }
     else
       {
-        print(paste( "Cannot find file:", fn) )
+        warning(paste( "Cannot find file:", fn) )
         return(NULL)
         
       }

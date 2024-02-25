@@ -13,7 +13,7 @@ function(ex, Y, PLOT=TRUE, stamps=stamps)
     
     if(nx != ny[1] )
       {
-        print("error, need nx=ny")
+        warning("error, need nx=ny")
         return(0)
       }
 

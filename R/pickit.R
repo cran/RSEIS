@@ -55,7 +55,7 @@ function(ay, deltat=0.008 ,  MED=225, FRWD=8,  BKWD=8,  sbef=1, saft=6, thresh=2
     if(is.null(J))
       {
 
-        print("Nothing in Thresh.J")
+        warning("Nothing in Thresh.J")
         
         return(NULL)
 

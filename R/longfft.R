@@ -43,6 +43,8 @@ def.par = par(no.readonly = TRUE)
     par(mai=c(0.3,0.35,0.3,0.1))
    }
  
+    oldpar <- par(no.readonly = TRUE)
+      on.exit(par(oldpar))
 
   fl=0
   fh=15
@@ -60,7 +62,7 @@ def.par = par(no.readonly = TRUE)
       for(j in 1:length(HRS))
         {
 
-          print(paste(sep=' ',"##########################################",KK, (KK %% (NPP/2))) )
+          message(paste(sep=' ',"##########################################",KK, (KK %% (NPP/2))) )
 
           
           hr = HRS[j]
@@ -71,7 +73,7 @@ def.par = par(no.readonly = TRUE)
           at1 = theday+hr/24
           at2 = at1+1/24
 
-          print(paste(sep=' ',"########", theday, hr, at1, at2, sta, comp))
+          message(paste(sep=' ',"########", theday, hr, at1, at2, sta, comp))
           KH = Mine.seis(at1, at2, DB, sta, comp, kind = kind, Iendian=Iendian, BIGLONG=BIGLONG )
 
           if(is.null(KH)) { next }
@@ -113,7 +115,7 @@ def.par = par(no.readonly = TRUE)
           NOV = round(NS/10)
           NFFT = next2(NS*2)
 
-           print(paste(sep=' ',"########", length(Xamp), NS, NOV, NFFT, fl, fh))
+           message(paste(sep=' ',"########", length(Xamp), NS, NOV, NFFT, fl, fh))
 
           DEV = evolfft(Xamp, DT , Nfft=NFFT, Ns=NS , Nov=NOV,  fl=fl, fh=fh  )
 

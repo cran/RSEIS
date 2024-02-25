@@ -38,7 +38,7 @@ function(y, ex, dt, TIT="")
         xsave = c(xsave, zloc$x)
         ysave = c(ysave, zloc$y)
         N = N+1
-      ###  print(paste("CLICKER ", N, zloc$x, zloc$y , xsave[N], ysave[N], length(xsave)  ))
+      ###  message(paste("CLICKER ", N, zloc$x, zloc$y , xsave[N], ysave[N], length(xsave)  ))
        if(K[Nclick] == match("DONE", labs, nomatch = NOLAB))
          {
            N = N-1
@@ -57,9 +57,9 @@ function(y, ex, dt, TIT="")
           {
             ###  find the zero crossing
 
-             ###print(paste("xing ", N, xsave[N], ysave[N]))
-            ### print(paste("should be  ",xsave[N-1], ysave[N-1]))
-             ### print(xsave)
+             ###message(paste("xing ", N, xsave[N], ysave[N]))
+            ### message(paste("should be  ",xsave[N-1], ysave[N-1]))
+             ### message(xsave)
 
             N = N-1
             xsave = xsave[1:N]
@@ -99,9 +99,9 @@ function(y, ex, dt, TIT="")
           {
             ###  find the zero crossing
 
-             ###print(paste("xing ", N, xsave[N], ysave[N]))
-            ### print(paste("should be  ",xsave[N-1], ysave[N-1]))
-             ### print(xsave)
+             ###message(paste("xing ", N, xsave[N], ysave[N]))
+            ### message(paste("should be  ",xsave[N-1], ysave[N-1]))
+             ### message(xsave)
 
             n = length(xsave)
            ##  xsave = xsave[1:N]
@@ -115,8 +115,8 @@ function(y, ex, dt, TIT="")
 
            m = (y2-y1)/(x2-x1)
            b = y2-m*x2
-          ###  print(paste(sep=' ',"slope and intercept", m,b))
-          ###  print(paste(sep=' ', n, x1,y1, x2,y2))
+          ###  message(paste(sep=' ',"slope and intercept", m,b))
+          ###  message(paste(sep=' ', n, x1,y1, x2,y2))
            xingx = -b/m
            xingy = 0
            points(c(x1,x2,xingx), c(y1, y2, xingy), col=2)
@@ -144,7 +144,7 @@ function(y, ex, dt, TIT="")
 
 
             
-           ### print(paste("MAX ", N, xsave[N], ysave[N]))
+           ### message(paste("MAX ", N, xsave[N], ysave[N]))
             LX = xsave[N]
             LY =  ysave[N]
             ax = LX
@@ -175,7 +175,7 @@ function(y, ex, dt, TIT="")
             xsave = xsave[1:N]
             ysave = ysave[1:N]
 
-           ### print(paste("MIN ", N, xsave[N], ysave[N]))
+           ### message(paste("MIN ", N, xsave[N], ysave[N]))
             LX = xsave[N]
             LY =  ysave[N]
             ax = LX
@@ -243,7 +243,7 @@ function(y, ex, dt, TIT="")
        Nclick = length(zloc$x)
        if(is.null(zloc$x)) { return(sloc) }
        K =  RPMG::whichbutt(zloc ,buttons)
-      ###  print(paste("Button",K, Nclick))
+      ###  message(paste("Button",K, Nclick))
      }
    
    

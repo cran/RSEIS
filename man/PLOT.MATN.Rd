@@ -6,7 +6,7 @@
  Matrix of several seismograms
 }
 \usage{
-PLOT.MATN(ascd, tim=1, dt=1,  WIN=c(0,1), labs="",
+PLOT.MATN(ascd, tim=1, dt=1, T1=0,  WIN=c(0,1), labs="",
 notes=notes, sfact=1,ampboost=0,  shift=NULL, LOG="",
 COL='red', add=1, AXES=1, units=NULL, VS=FALSE)
 }
@@ -15,6 +15,8 @@ COL='red', add=1, AXES=1, units=NULL, VS=FALSE)
   \item{ascd}{N by K matrix of seismograms where }
   \item{tim}{time values fo x-axis}
   \item{dt}{sample interval, seconds}
+  \item{T1}{Time for starting sample (default=0)}
+  
   \item{WIN}{vector, time window for zoom}
   \item{labs}{vector of labels for each panel}
   \item{notes}{vector of notes for each panel}

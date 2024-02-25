@@ -13,7 +13,11 @@ function(y, dt=0.008, fwlen =  125,  bwlen  = 125, stretch=1000, MED=255, PLOT=F
   if(missing(MED))  {  MED = 255 }
      
    if(missing(PLOT))  {  PLOT=FALSE }
- 
+
+     oldpar <- par(no.readonly = TRUE)
+      on.exit(par(oldpar))
+
+    
   lx = length(y)
   r = range(y)
 
@@ -45,7 +49,7 @@ function(y, dt=0.008, fwlen =  125,  bwlen  = 125, stretch=1000, MED=255, PLOT=F
 
      ey = envelope(y-mean(y))
      ##########apply a robust smoothing filter (running median)
-    ####       print(paste(sep=' ', "################ in STLT ", lx)) 
+    ####       message(paste(sep=' ', "################ in STLT ", lx)) 
      s = runmed(ey, MED, algorithm ="Stuetzle")    
      rs = range(s)
      ess = stretch*(0.5+(s-rs[1])/(rs[2]-rs[1]))     
@@ -74,7 +78,7 @@ function(y, dt=0.008, fwlen =  125,  bwlen  = 125, stretch=1000, MED=255, PLOT=F
 
      if(PLOT==TRUE)
        {
-         opar <- par(no.readonly = TRUE)
+         
          x = seq(1:length(y))
          
          par(mfrow=c(3,1))
@@ -96,7 +100,7 @@ function(y, dt=0.008, fwlen =  125,  bwlen  = 125, stretch=1000, MED=255, PLOT=F
          z = u[3]+0.95*(u[4]-u[3])
       segments(L, z, L+bwlen, z, col=2, lwd=3)
       segments(L+bwlen+1000, z,  L+bwlen+1000+fwlen, z, col=4, lwd=3)
-         invisible( par(opar))
+       
  
        }
 

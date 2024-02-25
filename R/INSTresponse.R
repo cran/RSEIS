@@ -6,6 +6,10 @@ function(Kal,key,ff,tt=tt,plotkey=NULL)
     
     if(missing(tt)) {   tt=c(20,0.008) }
 
+      oldpar <- par(no.readonly = TRUE)
+      on.exit(par(oldpar))
+
+      
     verb = FALSE
 
     nams=names(Kal)
@@ -21,11 +25,12 @@ function(Kal,key,ff,tt=tt,plotkey=NULL)
 
     if(verb)
       {
-        print(paste(sep=" ","RESPONSE:", nam, npole, nzero, norm, gain))
-        print('poles')
-        print(poles)
-        print('zeros')
-        print(zeroes)
+        message(paste(sep=" ","RESPONSE:", nam, npole, nzero, norm, gain))
+        message('poles')
+        message(paste(collapse='\n', poles) )
+        
+        message('zeros')
+        message(paste(collapse='\n',zeroes))
       }
 
     if(is.null(zeroes))

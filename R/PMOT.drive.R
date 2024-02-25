@@ -5,7 +5,11 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
     if(missing(STAMP)) { STAMP = " " }
     if(missing(baz)) { baz=0 }
     if(missing(pmolabs)) {pmolabs=c("Vertical", "North", "East")  }
-    
+
+      oldpar <- par(no.readonly = TRUE)
+      on.exit(par(oldpar))
+      
+      
     TPALS = c("rainbow", "topo.colors", "terrain.colors", "JGRAY", "tomo.colors")
     APALS = c("rainbow", "topo", "terrain", "JGRAY", "tomo")
     ADDBUTS = c("More" )
@@ -160,7 +164,7 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
         if(K[Nclick] == match("REPLOT", BLABS, nomatch = NOLAB))
         {
           YN = DOreplot()
-          ## print("clicked REPLOT")
+          ## message("clicked REPLOT")
           buttons = RPMG::rowBUTTONS(global.vars$BLABS, col=global.vars$colabs, pch=global.vars$pchlabs, cex=global.vars$buttoncex)
           Nclick = 0
           K = 0
@@ -176,13 +180,13 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
         if(K[Nclick] == match("Postscript", BLABS, nomatch = NOLAB))
         {
 
-          print("Start postscript plot.ts")
+          message("Start postscript plot.ts")
           plfname = RPMG::local.file("pmot","eps")
           jdev = dev.cur()
           RPMG::jpostscript("pmot")
           YN = DOreplot()
           
-           print("Done creating postscript")
+           message("Done creating postscript")
           dev.off()
           dev.set(jdev)
           zloc = list(x=NULL, y=NULL) 
@@ -205,7 +209,7 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
           {
             
             
-            print(zloc$x[1:(zenclick-1)])
+            message(paste(zloc$x[1:(zenclick-1)], collapse=' ') )
             LN = length(zloc$x[1:(zenclick-1)])
             LN = 2*(floor(LN/2))
             ###  use only pairs of clicks
@@ -213,9 +217,10 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
             sn1 = seq(from=1, to=LN-1, by=2)
             sn2 = sn1+1
             segments(zloc$x[sn1], zloc$y[sn1], zloc$x[sn2], zloc$y[sn2], col="black")
-            print(STAMP)
+            message(STAMP)
             a1 = 180*atan2(zloc$y[sn2]-zloc$y[sn1], zloc$x[sn2]-zloc$x[sn1])/pi
-            print(a1)
+             
+              message(paste(a1 , collapse=' ') )
             zloc = list(x=NULL, y=NULL) 
           
           }
@@ -225,7 +230,7 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
           {
 
             
-            cat(paste(zloc$x, collapse=' '), sep='\n')
+            message(paste(zloc$x, collapse=' ') )
             LN = length(zloc$x[1:(zenclick-1)])
             if(LN>=2)
               {
@@ -233,7 +238,7 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
                 TEES = RPMG::RESCALE(Timex , 0,  txlen , 0, 3)
                 NEES = round( RPMG::RESCALE(Timex , 0,  ddim[1] , 0, 3) )
 
-                print(NEES)
+                message(NEES)
 
                 
                 tsel = NEES[1]:NEES[2]
@@ -265,7 +270,7 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
                princdir =  RPMG::fmod(princdir , 180)
                 
                 slop = paste(global.vars$stamp , format(princdir))
-                cat(slop, sep="\n")
+                message(slop )
                 title(main=slop )
 
                 
@@ -301,22 +306,29 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
         
         if(K[Nclick]==match("LOCS", BLABS, nomatch = NOLAB))
           {
-            print(zloc$x)
+              
+              message(paste(zloc$x , collapse=' ') )
+
             LN = length(zloc$x[1:(zenclick-1)])
             sn1 = seq(from=1, to=LN, by=1)
-            print(STAMP)
+              
+              message(paste(STAMP , collapse=' ') )
 
             plt1 = 1+floor(zloc$x[sn1])
+
+              message(paste(zloc$x[sn1] , collapse=' ') )
+               message(paste(plt1 , collapse=' ') )
+              
            
-            print(zloc$x[sn1])
-            print(plt1)
+            
 
             ids = idpoints.hodo(temp, YN, zloc$x[sn1], zloc$y[sn1])
             
             if(length(ids)>=2)
               {
-                print(ids)
-
+                
+                message(paste(ids , collapse=' ') )
+                
                 t1 = ids[1]*dt
                 t2t1 = dt*(ids[2]-ids[1])
                 
@@ -342,7 +354,8 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
                   "T1=", format.default(t1, width=5,digits=4, trim=FALSE),
                   "T2-T1=", format.default(t2t1, width=5,digits=4, trim=FALSE)
                   )
-                print(plop)
+                  message(plop)
+                  
                 text(0, 1.05, labels=plop, adj=0)
               }
              zloc = list(x=NULL, y=NULL) 
@@ -393,7 +406,7 @@ function(temp,  dt, pmolabs=c("Vertical", "North", "East"), STAMP="", baz=0 )
 
       }
 
-    print("DONE with PMOT")
+    message("DONE with PMOT")
     
     
   }

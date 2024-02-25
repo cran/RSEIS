@@ -49,7 +49,7 @@ repairWPX<-function(wpx)
 
     if(length(unique(nn))>1)
       {
-        print("repairWPX: There are still problem with this WPX")
+        warning("repairWPX: There are still problems with this WPX")
       }
     #######   fix names?
 

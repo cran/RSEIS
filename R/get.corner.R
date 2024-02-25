@@ -12,7 +12,9 @@ function( INfreq, INspec, dt, f1, f2, PLOT=FALSE, VERBOSE = FALSE)
     if(missing(PLOT)) { PLOT=FALSE }
     if(missing(VERBOSE)) {  VERBOSE = FALSE}
 
-    
+     oldpar <- par(no.readonly = TRUE)
+      on.exit(par(oldpar))
+
     n = length(INfreq);
     corn = 0
     ave = 0
@@ -74,7 +76,7 @@ function( INfreq, INspec, dt, f1, f2, PLOT=FALSE, VERBOSE = FALSE)
 
     if(VERBOSE)
       {
-     print(paste(sep=' ', "Gcorn:",
+     message(paste(sep=' ', "Gcorn:",
                  formatC(ave) ,
                  formatC(omega0),
                  formatC(fc),

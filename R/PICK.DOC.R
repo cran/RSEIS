@@ -108,12 +108,12 @@ J = 1:N
         
       }
     
-    if(length(J)<1) { print(DOC) }
+    if(length(J)<1) { message(paste(collapse='\n', DOC)) }
 
     
     else
       {
-        for(i in 1:length(J)){   cat(paste(ALLLABS[i], "=", DOC[[J[i]]])); cat("\n")  }
+        for(i in 1:length(J)){   message(paste(ALLLABS[i], "=", DOC[[J[i]]]))  }
       }
 #####    grep 'K\[Nclick\]\=\=match' PICK.R > ho.doc
 #####  ho.doc = scan("/home/lees/Progs/R_stuff/ho.doc", what="", sep="\n")

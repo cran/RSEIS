@@ -23,7 +23,7 @@ function(uwpickfile, stafile=NULL)
         }
       else
         {
-          print("problem with pickfile")
+         warning("problem with pickfile")
           return(NULL)
 
         }

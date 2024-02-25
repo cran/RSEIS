@@ -14,7 +14,11 @@ function(y, dt=0.008, fwlen =  125,  bwlen  = 125, perc=0.05, stretch=1000, MED=
   if(missing(perc))  {  perc = 0.05  }
      
    if(missing(PLOT))  {  PLOT=FALSE }
- 
+
+     oldpar <- par(no.readonly = TRUE)
+      on.exit(par(oldpar))
+
+    
   lx = length(y)
 
      if(lx<(fwlen+bwlen+MED))
@@ -38,7 +42,7 @@ function(y, dt=0.008, fwlen =  125,  bwlen  = 125, perc=0.05, stretch=1000, MED=
 
      
      ##########apply a robust smoothing filter (running median)
-     #### print(paste(sep=' ', "################ in PSTLT ", lx)) 
+     #### message(paste(sep=' ', "################ in PSTLT ", lx)) 
      s = runmed(ey, MED, algorithm ="Stuetzle", endrule ="constant")    
      rs = range(s)
      s = stretch*(0.5+(s-rs[1])/(rs[2]-rs[1]))
@@ -58,13 +62,13 @@ function(y, dt=0.008, fwlen =  125,  bwlen  = 125, perc=0.05, stretch=1000, MED=
      if(1 == 1 )
        {
      prat = peaks(therat)
-     ####print(therat[prat])
+     ####message(therat[prat])
      mrat = mean(c(mean(therat), therat[ix]), na.rm=TRUE)
-      ####print(mrat)
+      ####message(mrat)
      rx =   which(prat)
-     #### print(rx)
+     #### message(rx)
      gx = rx[therat[rx]>=mrat]
-     ####print(gx)
+     ####message(gx)
      mix = min(gx, na.rm=TRUE)
    }
      if(is.na(mix)) { mix = ix }
@@ -83,13 +87,13 @@ function(y, dt=0.008, fwlen =  125,  bwlen  = 125, perc=0.05, stretch=1000, MED=
      
      if(length(el)<1)
        {
-         print(paste(sep=' ',"problem in PSTLTcurve", M) )
+         warning(paste(sep=' ',"problem in PSTLTcurve", M) )
          return(NA)
        }
 
      if(length(which(is.na(el)))>1)
        {
-         print(paste(sep=' ',"problem in PSTLTcurve", M) )
+         warning(paste(sep=' ',"problem in PSTLTcurve", M) )
          return(NA)
        }
      
@@ -231,13 +235,13 @@ function(y, dt=0.008, fwlen =  125,  bwlen  = 125, perc=0.05, stretch=1000, MED=
          L = 0
          z = u[3]+0.95*(u[4]-u[3])
          
-     ######    print(paste(sep=' ', "psegments 1", L, z, L+bwlen, z))
+     ######    message(paste(sep=' ', "psegments 1", L, z, L+bwlen, z))
          if(all(is.numeric(c(L, z, L+bwlen, z))))
            {
              segments(L, z, L+bwlen, z, col=2, lwd=3, xpd=TRUE)
            }
          
-    ######    print(paste(sep=' ', "psegments 2",L+bwlen+100, z,  L+bwlen+100+fwlen, z))
+    ######    message(paste(sep=' ', "psegments 2",L+bwlen+100, z,  L+bwlen+100+fwlen, z))
          if(all(is.numeric(c(L+bwlen+10, z,  L+bwlen+10+fwlen, z))))
            {
              segments(L+bwlen+10, z,  L+bwlen+10+fwlen, z, col=4, lwd=3, xpd=TRUE)

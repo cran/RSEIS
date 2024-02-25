@@ -4,13 +4,13 @@ pADDPIX<-function(nh, g, phase)
     
    zappa = match(g$KLICK, g$PADDLAB)
     azap = g$PADDLAB[zappa]
-    print(paste(sep=" ", "My PICKIN", azap, zappa))
+    message(paste(sep=" ", "My PICKIN", azap, zappa))
 
     kix = legitpix(g$sel, g$zloc, g$zenclick)
     ypick =  kix$ypick
     ppick = kix$ppick
     
-###   print(paste(sep=" " , "WIN=",sloc$x))
+###   message(paste(sep=" " , "WIN=",sloc$x))
     
 ###        abline(v=ppick, col=4)
     
@@ -26,7 +26,7 @@ pADDPIX<-function(nh, g, phase)
     ipick = ipick[1]
 
     
- ###   print(paste(sep=" ", "ZPICK=", nh$info$yr[ipick],
+ ###   message(paste(sep=" ", "ZPICK=", nh$info$yr[ipick],
   ###              nh$info$jd[ipick], nh$info$hr[ipick],
  ###               nh$info$mi[ipick], "sta=",
  ###               nh$STNS[ipick], "comp=", nh$COMPS[ipick] ))
@@ -54,13 +54,13 @@ pADDPIX<-function(nh, g, phase)
       }
 
 ###########   this looks like a bug./....
- ###   print(paste(  nh$STNS[ipick],   nh$COMPS[ipick], phase))
+ ###   message(paste(  nh$STNS[ipick],   nh$COMPS[ipick], phase))
 
   
     iseek = which(g$WPX$phase==phase & g$WPX$name==nh$STNS[ipick]
       &  g$WPX$comp==nh$COMPS[ipick])
 
-###  print(paste(sep=" ", phase, nh$STNS[ipick], nh$COMPS[ipick],
+###  message(paste(sep=" ", phase, nh$STNS[ipick], nh$COMPS[ipick],
 ###              "ISEEK",  iseek, length(iseek) ))
 
    onepx = cleanWPX()

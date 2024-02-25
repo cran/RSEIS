@@ -41,14 +41,14 @@ function(a, fl=0, fh=0.5, deltat=1, type="BP", proto="BU", npoles=5, chebstop=30
   if(RM) { removemean=1 } else { removemean=0 }
   if(zp) { zerophase=1 } else { zerophase=0 }
 
-  if(any(is.na(a))){ print("ERROR in BUTFILT: NA in data"); return(NULL)      }
-  if(any(is.null(a))){ print("ERROR in BUTFILT: NULL in data"); return(NULL)      }
-  if(length(a)<1){ print("ERROR in BUTFILT: length in data"); return(NULL)      }
+  if(any(is.na(a))){ warning("ERROR in BUTFILT: NA in data"); return(NULL)      }
+  if(any(is.null(a))){ warning("ERROR in BUTFILT: NULL in data"); return(NULL)      }
+  if(length(a)<1){ warning("ERROR in BUTFILT: length in data"); return(NULL)      }
   
   
-  if(is.null(fl) ){ print("ERROR in BUTFILT: filter definition"); return(NULL)      }
-  if(is.null(fh) ){ print("ERROR in BUTFILT: filter definition"); return(NULL)      }
-  if(is.null(deltat) ){ print("ERROR in BUTFILT: deltat null"); return(NULL)      }
+  if(is.null(fl) ){ warning("ERROR in BUTFILT: filter definition"); return(NULL)      }
+  if(is.null(fh) ){ warning("ERROR in BUTFILT: filter definition"); return(NULL)      }
+  if(is.null(deltat) ){ warning("ERROR in BUTFILT: deltat null"); return(NULL)      }
 
 
   

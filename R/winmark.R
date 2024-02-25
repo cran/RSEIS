@@ -55,18 +55,18 @@
 
   if(is.null(a1)==TRUE )
     {
-      print("missing a1 in winmark")
+      warning("missing a1 in winmark")
       return(0)
     }
 
   if(is.null(a2)==TRUE )
     {
-      print("missing a2 in winmark")
+       warning("missing a2 in winmark")
       return(0)
     }
 
- ###### print(bar)
- ###### print(leg)
+ ###### message(bar)
+ ###### message(leg)
 
 ###############  take careof conflicts in bar, leg and side
 ######   if bar>leg but side = 1 or 2 this is a conflict

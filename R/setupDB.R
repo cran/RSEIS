@@ -11,7 +11,7 @@ setupDB<-function(DB, token=TRUE, split="\\.")
       {
         SP1 = strsplit(DB$fn[1], split=split)
 
-        print(SP1)
+        message(paste( collapse=' ', SP1) )
 
         readline(prompt = "First HIT return, then answer question:")
         

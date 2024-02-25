@@ -12,8 +12,8 @@ PickWin<-function(nh, g)
 
         ipick = ipick[length(ipick)]
         
-        ## cat(paste(sep=" ", ypick, ipick), sep="\n")
-        ## print(ipick)
+        ## message(paste(sep=" ", ypick, ipick) )
+        ## message(ipick)
         ##
         
         ma = which(!is.na(match( nh$STNS, nh$STNS[ipick])))
@@ -32,7 +32,7 @@ PickWin<-function(nh, g)
             
             jsta = ((ksta-1) %% uN) + 1
             
-            cat(paste(jsta, ksta), sep="\n" )
+            message(paste(jsta, ksta)  )
             ma = which(!is.na(match( nh$STNS, usta[jsta] )))
 ##########   sort so Vertical is on top and then North and East
             acomp  = nh$COMPS[ma]
@@ -44,7 +44,7 @@ PickWin<-function(nh, g)
             ma = ma[order(icomp)]
 
             
-####  print(cbind(nh$STNS[ma], nh$COMPS[ma]))
+####  message(cbind(nh$STNS[ma], nh$COMPS[ma]))
 
             
             if(is.null(g$Pickdev))
@@ -89,10 +89,10 @@ PickWin<-function(nh, g)
             
             ##  SWP = selAPX(WPX,  nh$STNS[ma[1]], icomp=NULL )
 
-            ##   print(data.frame(SWP))
+            ##   message(data.frame(SWP))
             ##   SWP = rectifyAPX(SWP)
             ##
-            ## print(SWP)
+            ## message(SWP)
 
             
 
@@ -100,8 +100,9 @@ PickWin<-function(nh, g)
               STDLAB=PICKLAB ,PADDLAB=PLAB, PHASE=1   ,
               SHOWONLY = FALSE, TIT=stit)
 
-            print(newpicks$but)
             
+            message(paste(newpicks$but , collapse=' ') )
+
             if(length(newpicks$g$WPX)>=1)
               {
                 if(!is.null(newpicks$g$WPX))
@@ -112,7 +113,7 @@ PickWin<-function(nh, g)
             if(newpicks$but=="DONE" | newpicks$but=="QUIT"  ) break
             if(newpicks$but=="iNEXT")
               {
-                print("pressed iNEXT")
+                message("pressed iNEXT")
                 ksta = ksta + 1
 
               }
@@ -120,9 +121,9 @@ PickWin<-function(nh, g)
           }
         ##  
         ##
-####    print(cbind(WPX$name, WPX$comp, WPX$phase, WPX$onoff))
+####    message(cbind(WPX$name, WPX$comp, WPX$phase, WPX$onoff))
         g$NPX = length(g$WPX$name)
-####                print(paste(sep=' ', "DONE with PICKWIN", g$NPX))
+####                message(paste(sep=' ', "DONE with PICKWIN", g$NPX))
         dev.set( g$MAINdev)
 
       }

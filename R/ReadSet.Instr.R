@@ -16,7 +16,7 @@ function(file)
             INSTF =file
             if(length(INSTF)<2)
                 {
-                    cat('\nERROR: ReadSet.Instr, no poles and zeros in character string\n\n')
+                    warning('ERROR: ReadSet.Instr, no poles and zeros in character string')
                     return(NULL)
                 }
         }

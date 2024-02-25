@@ -6,13 +6,19 @@
   showing P-wave and S-wave layered models.
 }
 \usage{
-Plot1Dvel(v, tit = NULL)
+Plot1Dvel(v, tit = NULL, col=c('blue', 'brown'), ...)
 }
 \arguments{
   \item{v}{Velocity models 
 }
   \item{tit}{Title for plot (character)
-}
+  }
+  \item{col}{2-colors for P and swave
+  }
+\item{\dots}{other graphical parameters (e.g. lty, lwd) }
+
+
+  
 }
 \details{
   Velocity model consists of a list

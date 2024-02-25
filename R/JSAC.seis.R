@@ -71,16 +71,16 @@ if(is.character(Iendian))
       fn = fnames[i]
       infile = fn
       theENDIAN = endianVEC[i]
-####   print(fn);
+####   message(fn);
 ###  if this file does not exist, exit!
       if(file.exists(infile)==FALSE)
         {
-          print(paste(sep=' ', "file does not exist", fn) ); 
+          warning(paste(sep=' ', "file does not exist", fn) ); 
           next;
         }
       else
         {
-###  print(paste(sep=' ', "file exists", fn) );
+###  message(paste(sep=' ', "file exists", fn) );
 
         }
    sacheadnames = c("delta", "depmin", "depmax", "scale", "odelta", "b", 
@@ -177,7 +177,7 @@ if(is.character(Iendian))
 
      ###   thecomp= B4[18]
       aunits="volts"
-     ###  print(paste(sep=' ', infile, thesta, thecomp, aunits, N, dt, sec))
+     ###  message(paste(sep=' ', infile, thesta, thecomp, aunits, N, dt, sec))
       
       md = getmoday(DATIM[2], DATIM[1])
 
@@ -198,7 +198,7 @@ if(is.character(Iendian))
       if(HEADONLY==TRUE)
         {
           
-         ###  print(paste("headonly ", i))
+         ###  message(paste("headonly ", i))
           
           x = NULL
           aunits=NA
@@ -220,7 +220,7 @@ if(is.character(Iendian))
       if(PLOT>=0)
         {
           plot(x, type='l', main=paste(sep=' ', thesta, thecomp))
-          print("left CLICK in WINDOW for NEXT TRACE:")
+          message("left CLICK in WINDOW for NEXT TRACE:")
           if(PLOT==0) { locator(1) }
           else
             {

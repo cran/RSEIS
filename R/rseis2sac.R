@@ -26,7 +26,7 @@ rseis2sac<-function(GH, sel=1, win=c(0,1), path=".", BIGLONG=FALSE )
         if(tdir==TRUE) { setwd(newdir)  }
         else
           {
-            print("ERROR: CANNOT create or write in this directory")
+            warning("ERROR: CANNOT create or write in this directory")
           }
       }
     

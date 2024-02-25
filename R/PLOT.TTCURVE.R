@@ -12,7 +12,7 @@ function(GH, STAXY=NULL, DIST=c(0,10), DY=.1, tim=1, dt=1,  sel=c(1:4), WIN=c(1,
 ###   source("/home/lees/Progs/R_PAX/RSEIS/R/PLOT.TTCURVE.R")
 
 
-  if(missing(STAXY)) { print("NO STATION LIST"); return(0) }
+  if(missing(STAXY)) { warning("NO STATION LIST"); return(0) }
   if(missing(DIST)) {DIST = range(STAXY$dist) }
  
  
@@ -75,11 +75,11 @@ function(GH, STAXY=NULL, DIST=c(0,10), DY=.1, tim=1, dt=1,  sel=c(1:4), WIN=c(1,
 
   if(is.null(WIN)==TRUE){ WIN =range(tim) }
   
-  ###  print(paste(sep=' ', "WIN", WIN[1], WIN[2]))
+  ###  message(paste(sep=' ', "WIN", WIN[1], WIN[2]))
   ###  this following does not work as I expected it to.
   ### if(exists(deparse(substitute(WIN)))==FALSE){ WIN =range(tim) }
   
-  ###  print(paste(sep=' ', "WIN", WIN[1], WIN[2]))
+  ###  message(paste(sep=' ', "WIN", WIN[1], WIN[2]))
   mindist=DIST[1]; maxdist= DIST[2];
 
   
@@ -88,8 +88,8 @@ function(GH, STAXY=NULL, DIST=c(0,10), DY=.1, tim=1, dt=1,  sel=c(1:4), WIN=c(1,
   tr1 = 0.05
   tr2 = .9
 
- ###  print("plot.seisn sel")
-  ### print(sel)
+ ###  message("plot.seisn sel")
+  ### message(sel)
   
   nn = length(sel)
 
@@ -126,7 +126,7 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
       amp = GH$JSTR[[ii]][tflag]
       meanS[i] = mean(amp, na.rm =TRUE)
       if(rm.mean==TRUE) amp = amp -meanS[i]
-     ###  print(range(amp[!is.na(amp)]))
+     ###  message(range(amp[!is.na(amp)]))
       lamp = length(amp[!is.na(amp)])
      
       if(lamp<1)
@@ -195,7 +195,7 @@ ADIST =STAXY$dist[MSTA]
       tflag = tim>=WIN[1]&tim<=WIN[2]
       if(!is.null(SHIFT)==TRUE)
         {
-          print(paste(sep=" ", i, ii, SHIFT[ii]))
+          message(paste(sep=" ", i, ii, SHIFT[ii]))
           tim = tim-SHIFT[ii]
         }
       tflag = tim>=WIN[1]&tim<=WIN[2]      
@@ -203,7 +203,7 @@ ADIST =STAXY$dist[MSTA]
       if(rm.mean==TRUE) amp = amp - meanS[i]
       tcol = COL[i]
       lamp = length(amp[!is.na(amp)])
-      ###### print(paste(sep=' ',i, ii, lamp))
+      ###### message(paste(sep=' ',i, ii, lamp))
       if(lamp<1)
         {
           next;
@@ -224,7 +224,7 @@ ADIST =STAXY$dist[MSTA]
           maxamp= maxS[i];
 
         }
-           ###  print( paste(sep=' ', "IN PLOT.SEISN", minamp, maxamp))
+           ###  message( paste(sep=' ', "IN PLOT.SEISN", minamp, maxamp))
 
      ### if(add!=3) addtix(side=3, pos=y3+dy,   tck=0.005, at=ttics, labels=FALSE, col=gray(0.8) )
       
@@ -241,7 +241,7 @@ ADIST =STAXY$dist[MSTA]
           
       if(note.flag==TRUE)
         {
-                                        #  print( paste(sep=' ', "IN PLOT.MATN", notes[i]))
+#####  message( paste(sep=' ', "IN PLOT.MATN", notes[i]))
           
           if(add!=3)text(max(tim[tflag]), y3-dy*0.1, notes[i], adj=1, col=tcol)
           

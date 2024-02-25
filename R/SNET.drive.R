@@ -89,7 +89,7 @@ iloc = RPMG::ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=-1)
         if(zenclick == 1 &  K[Nclick]==0 )
           {
             ###  replot
-            ###print(K[Nclick])
+            ###message(K[Nclick])
             
            sx = partmotnet(temp, STAMP=STAMP, LINES=ADDLINES, COL=pal)
             buttons = RPMG::rowBUTTONS(labs, col=colabs, pch=pchlabs)
@@ -102,12 +102,12 @@ iloc = RPMG::ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=-1)
         if(K[Nclick] == match("Postscript", labs, nomatch = NOLAB))
         {
 
-          print("Start postscript plot.ts")
+          message("Start postscript plot.ts")
           plfname = RPMG::local.file("pmotnet","eps")
           jdev = dev.cur()
           RPMG::jpostscript("pmot")
           sx = partmotnet(temp, STAMP=STAMP, LINES=ADDLINES, COL=pal)
-           print("Done creating postscript")
+           message("Done creating postscript")
           dev.off()
           dev.set(jdev)
           zloc = list(x=NULL, y=NULL) 
@@ -152,7 +152,7 @@ iloc = RPMG::ilocator(1, COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=1, style=-1)
 
       }
 
-    print("DONE with partmotnet")
+    message("DONE with partmotnet")
     
     
   }

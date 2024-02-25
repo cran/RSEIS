@@ -62,7 +62,7 @@ BUTREPLOT<- function(opts , ncol=5, HOZ=TRUE, TOP=TRUE, cols="white", main="", x
 
     cols[is.na(lab)] = NA
 
-    ##print(c(ncol, nrow))
+    ##message(c(ncol, nrow))
     
     ##  B =  RPMG::itoxyz(1:N, ncol, nrow, 1)
 

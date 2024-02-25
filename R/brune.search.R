@@ -2,7 +2,7 @@
 function(infreq, inspec, f1, f2, omega0, fcorn, tstar0, gamma  )
 {
 
-  ##  print(paste(sep=' ', "Bsearch", f1, f2, omega0, fcorn, tstar0, gamma))
+  ##  message(paste(sep=' ', "Bsearch", f1, f2, omega0, fcorn, tstar0, gamma))
 flim = infreq>=f1&infreq<=f2
 x = infreq[flim]
 y = inspec[flim]

@@ -13,7 +13,7 @@ pickhandler<-function(i1=1, ppick=0, kzap="Y", err=NA, res=0, ycol=rgb(0,0,1) , 
 
     if(missing(NH))
       {
-        print("Missing RSEIS (NH) list in pickhandler: need datetime")
+        warning("Missing RSEIS (NH) list in pickhandler: need datetime")
         return(NULL)
       }
     
@@ -22,7 +22,7 @@ pickhandler<-function(i1=1, ppick=0, kzap="Y", err=NA, res=0, ycol=rgb(0,0,1) , 
         WPX = cleanWPX()
       }
     
-    ## print(i1)
+    ## message(i1)
     
     asec = NH$info$sec[i1]+NH$info$msec[i1]/1000+NH$info$t1[i1]-NH$info$off[i1]+ppick
     pic1 = recdate(NH$info$jd[i1], NH$info$hr[i1], NH$info$mi[i1], asec)

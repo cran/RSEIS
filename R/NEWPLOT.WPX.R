@@ -20,10 +20,10 @@ function(t0, STNS, COMPS, YPX, FILL=FALSE, FORCE=TRUE, cex=cex, srt=srt)
     du = 1/length(STNS)
 
     
- ###  print(YPX)
-  ### print(paste(sep=' ', "PLOT.WPX NPX=", length(YPX), "du=", du))
+ ###  message(YPX)
+  ### message(paste(sep=' ', "PLOT.WPX NPX=", length(YPX), "du=", du))
 
-    ### print(cbind(STNS, COMPS))
+    ### message(cbind(STNS, COMPS))
 
     for(i in 1:length(YPX))
       {
@@ -59,7 +59,7 @@ function(t0, STNS, COMPS, YPX, FILL=FALSE, FORCE=TRUE, cex=cex, srt=srt)
           {
             if(FORCE==TRUE)
               {
-                print(paste(sep=' ', "ERROR: No Match in PLOT.WPX", i, imatch, qpix$sta, qpix$comp))
+                message(paste(sep=' ', "ERROR: No Match in PLOT.WPX", i, imatch, qpix$sta, qpix$comp))
                 imatch=1
               }
             else
@@ -68,7 +68,7 @@ function(t0, STNS, COMPS, YPX, FILL=FALSE, FORCE=TRUE, cex=cex, srt=srt)
               }
           }
         
-      ### print(paste(sep=' ', "PLOT.WPX", i, imatch, qpix$sta, qpix$comp))
+      ### message(paste(sep=' ', "PLOT.WPX", i, imatch, qpix$sta, qpix$comp))
 
               
         ypixA = (length(STNS)-imatch)*du
@@ -78,11 +78,11 @@ function(t0, STNS, COMPS, YPX, FILL=FALSE, FORCE=TRUE, cex=cex, srt=srt)
         x1 = secdif(   t0$jd, t0$hr, t0$mi, t0$sec, qpix$pick[2],  qpix$pick[3],  qpix$pick[4], qpix$pick[5])
 
         
-      ###  print(paste(sep=' ', "PLOT.WPX", i, x1, ypixA, x1, ypixB, qpix$sta, qpix$comp, qpix$kind, imatch))
+      ###  message(paste(sep=' ', "PLOT.WPX", i, x1, ypixA, x1, ypixB, qpix$sta, qpix$comp, qpix$kind, imatch))
 
        ###  if(x1>0 & x1 <3600)
         #####   {
-       #####      print(paste(sep=' ', "PLOT.WPX", i, x1, ypixA, x1, ypixB))
+       #####      message(paste(sep=' ', "PLOT.WPX", i, x1, ypixA, x1, ypixB))
        #####    }
 
         

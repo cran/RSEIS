@@ -46,10 +46,10 @@ function(a, dt=0, numf=1024, Ns=0, Nov=0, fl=0, fh=10 )
     
  len2 = 2*next2(numf)
 
-   ###  print(paste(sep=' ', "evolfft kcol=", kcol, "krow=", krow, "Ns", Ns, "Nov", Nov))
+   ###  message(paste(sep=' ', "evolfft kcol=", kcol, "krow=", krow, "Ns", Ns, "Nov", Nov))
     if(kcol<1)
       {
-        print(paste(sep=' ', "error in evolMTM kcol=", kcol, "krow=", krow, "NT", NT, "Ns", Ns, "Nov", Nov))
+        message(paste(sep=' ', "error in evolMTM kcol=", kcol, "krow=", krow, "NT", NT, "Ns", Ns, "Nov", Nov))
         return()
       }
           
@@ -61,7 +61,7 @@ function(a, dt=0, numf=1024, Ns=0, Nov=0, fl=0, fh=10 )
     
     for( i in m)
       { 
-       ###  print(paste(sep=" ", m, ibeg, iend, NT))
+       ###  message(paste(sep=" ", m, ibeg, iend, NT))
         tem = a[ibeg[i]:iend[i]]
         tem = tem-mean(tem, na.rm=TRUE)
 

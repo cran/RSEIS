@@ -6,7 +6,8 @@ plotGH<-function(h)
 
         stachan = paste(h$sta, h$comp)
         dstmp = RSEIS::dateStamp(h$DATTIM)
-        mtext(stachan, side = 3, line = 0 )
+        
+        mtext(stachan, side = 3, line = 1 )
         
         mtext(dstmp, side = 3, line = 0, at =0, adj=c(0,0)   )
 

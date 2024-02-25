@@ -1511,7 +1511,7 @@ c  set tolerance for iterative scheme exit */
 
 */
 
-	int             i, j, k;
+	int             i, j;
 	double         *lambda, *tapers;
 /* 	long            len, longlen; */
 	/* double          *xt; */
@@ -1530,8 +1530,9 @@ c  set tolerance for iterative scheme exit */
         double            *ReSpec, *ImSpec;
 	double         *sqr_spec,  *amu;
 	double          *amp, *fv;
-	double          avamp, temp, sqramp;
-	double          sum, *tapsum;
+	double           sqramp;
+	double           *tapsum;
+	/* double    sum; */
 	/************/
          int num_freqs;
          int len_taps, num_freq_tap;
@@ -1564,7 +1565,7 @@ c  set tolerance for iterative scheme exit */
 
        /* get a slepian taper  */
 
-	k = multitap(npoints, nwin, lambda,  npi, tapers, tapsum);
+	multitap(npoints, nwin, lambda,  npi, tapers, tapsum);
 
 
 
@@ -1613,19 +1614,12 @@ c  set tolerance for iterative scheme exit */
 
 		mt_get_spec(b, npoints, klen, amp);  /* calculate the eigenspectrum */
 
-	       
-          
-		
-		sum = 0.0;
-
+		/* sum = 0.0;  */
 
 /* get spectrum from real fourier transform    */
 
 
           norm = 1.0/(anrm*anrm);
-
-     
-
 
 
             for(i=1; i<num_freqs-1; i++){
@@ -1641,7 +1635,7 @@ c  set tolerance for iterative scheme exit */
 
             sqr_spec[i+kf] =    norm*(sqramp);
 
-             sum += sqr_spec[i+kf];
+             /* sum += sqr_spec[i+kf]; */
             }
           sqr_spec[0+kf] = norm*SQR(fabs(amp[0]));
           sqr_spec[num_freqs-1+kf] = norm*SQR(fabs(amp[1]));
@@ -1652,17 +1646,21 @@ c  set tolerance for iterative scheme exit */
             ReSpec[num_freqs-1+kf] = amp[1];
             ImSpec[num_freqs-1+kf] = 0.0;
 
-             sum += sqr_spec[0+kf] + sqr_spec[num_freqs-1+kf];
+             /* sum += sqr_spec[0+kf] + sqr_spec[num_freqs-1+kf]; */
 
         if(num_freqs-1+kf>num_freq_tap )REprintf("error in index\n");
 
-		temp = sum / (double) num_freqs;
+	
+
+		/*
+		  temp = sum / (double) num_freqs;
 		if (temp > 0.0)
 			avamp = sqrt(temp) / anrm;
 		else {
 			avamp = 0.0;
 			 
 		}
+		*/
 
 
 		/* free_djector(amp,(long) 0,(long) klen); */
@@ -1834,7 +1832,7 @@ c  set tolerance for iterative scheme exit */
 
 */
 
-	int             i, j, k;
+	int             i, j;
 	double         *lambda, *tapers;
 /* 	long            len, longlen; */
 /* 	double          *xt; */
@@ -1852,14 +1850,16 @@ c  set tolerance for iterative scheme exit */
         
 	double         *sqr_spec,  *amu;
 	double          *amp, *fv;
-	double          avamp, temp, sqramp;
-	double          sum, *tapsum;
+	double          sqramp;
+	double           *tapsum;
 	/************/
          int num_freqs;
          int len_taps, num_freq_tap;
    
 	double         *dcf, *degf, avar;
 	int             n1, n2, kf;
+
+	/* double sum; */
 	/* int             flag; */
 	/* int             one = 1; */
 
@@ -1884,7 +1884,7 @@ c  set tolerance for iterative scheme exit */
 
        /* get a slepian taper  */
 
-	k = multitap(npoints, nwin, lambda,  npi, tapers, tapsum);
+	multitap(npoints, nwin, lambda,  npi, tapers, tapsum);
 
 #if 0
 	for (j = 0; j < npoints; j++)
@@ -1952,7 +1952,7 @@ c  set tolerance for iterative scheme exit */
 	   
 	  
 	   
-	   sum = 0.0;
+	    /* sum = 0.0;  */
 	   
 	   
 /* get spectrum from real fourier transform    */
@@ -1978,7 +1978,7 @@ c  set tolerance for iterative scheme exit */
 	      
 	      sqr_spec[i+kf] =    norm*(sqramp);
 	      
-	      sum += sqr_spec[i+kf];
+	      /* sum += sqr_spec[i+kf]; */
 	   }
 	   sqr_spec[0+kf] = norm*SQR(fabs(amp[0]));
 	   sqr_spec[num_freqs-1+kf] = norm*SQR(fabs(amp[1]));
@@ -1989,17 +1989,21 @@ c  set tolerance for iterative scheme exit */
 	   ReSpec[num_freqs-1+kf] = amp[1];
 	   ImSpec[num_freqs-1+kf] = 0.0;
 
-	   sum += sqr_spec[0+kf] + sqr_spec[num_freqs-1+kf];
+	   /* sum += sqr_spec[0+kf] + sqr_spec[num_freqs-1+kf]; */
 	   
 	   if(num_freqs-1+kf>num_freq_tap )REprintf("error in index\n");
 	   
-	   temp = sum / (double) num_freqs;
+	 
+
+	   /*
+	     temp = sum / (double) num_freqs;
 	   if (temp > 0.0)
 	      avamp = sqrt(temp) / anrm;
 	   else {
 	      avamp = 0.0;
 	      
 	   }
+	   */
 	   
 	   
 	   /* free_djector(amp,(long) 0,(long) klen); */
@@ -2131,10 +2135,10 @@ c  set tolerance for iterative scheme exit */
 
 /** FUNC DEF */ void  CALL_slepian(int *anpoints,int *inwin, double *dnpi, double *tapers)
 {
-  int k;
+  /* int k; */
   double         *lambda;
   double           *tapsum;
-  int len_taps;
+  /* int len_taps; */
   double npi;
   int nwin;
   int npoints;
@@ -2147,11 +2151,11 @@ c  set tolerance for iterative scheme exit */
 
   lambda = djector((long)0, (long)nwin);
   tapsum=djector((long)0,(long)nwin);
-  len_taps = npoints * nwin;
+  /* len_taps = npoints * nwin; */
 
 
   /* tapers = djector((long)0,(long) len_taps); */
-  k = multitap(npoints, nwin, lambda,  npi, tapers, tapsum);
+  multitap(npoints, nwin, lambda,  npi, tapers, tapsum);
 #if 0
 
   tap_file = fopen("taper_file", "w");

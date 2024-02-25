@@ -2,20 +2,20 @@
 function(butt="",clicks=NULL, x=NULL)
   {
 
-    print(paste(sep=' ', "Hi there you dummy", butt))
-    print(clicks)
+    message(paste(sep=' ', "Hi there you dummy", butt))
+    message(clicks)
     
     if(identical("MED", butt) )
           {
-            print(median(x))
+            message(median(x))
           }
     if(identical("AVE", butt) )
           {
-            print(mean(x))
+            message(mean(x))
           }
     if(identical("MIN", butt) )
           {
-            print(min(x))
+            message(min(x))
           }
 
     

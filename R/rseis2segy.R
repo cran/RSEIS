@@ -76,7 +76,7 @@ rseis2segy<-function(GH, sel=1, win=c(0,1), path=".", BIGLONG=FALSE )
         if(tdir==TRUE) { setwd(newdir)  }
         else
           {
-            print("ERROR: CANNOT create or write in this directory")
+            warning("ERROR: CANNOT create or write in this directory")
           }
       }
 
@@ -123,7 +123,7 @@ rseis2segy<-function(GH, sel=1, win=c(0,1), path=".", BIGLONG=FALSE )
                 w1 = which(wawa)
                 w2 = which(!wawa)
                 w1 = which(wawa)
-            if(any(diff(w1)>1) ) { print('discontiguous NA sequence') }
+                if(any(diff(w1)>1) ) { warning('discontiguous NA sequence') }
                 w2 = which(!wawa)
                 
                 rw1 =  range(w1)

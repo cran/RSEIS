@@ -12,10 +12,10 @@ checkWPX<-function(wpx)
     
     if(any(is.na(m1)))
       {
-        print("Error WPX list is incomplete")
+        warning("Error WPX list is incomplete")
         ww = which(is.na(m1))
         p1 = paste(collapse=" ", nam1[ww])
-        print(paste("MISSING:",p1))
+        warning(paste("MISSING:",p1))
         SUCCESScode = 1
       
       }
@@ -24,19 +24,19 @@ checkWPX<-function(wpx)
 
     if(any(is.na(wpx$name)))
        {
-         print("Error WPX: station names")
+         warning("Error WPX: station names")
          SUCCESScode = 2
        }
     if(any(is.na(wpx$comp)))
        {
-         print("Error WPX: component names")
+         warning("Error WPX: component names")
          SUCCESScode = 3
        }
 
     ###  check the dates and times
     if(any(is.na(c(wpx$yr, wpx$jd, wpx$hr, wpx$mi, wpx$sec)         ) ))
        {
-         print("Error WPX: incomplete dates")
+         warning("Error WPX: incomplete dates")
          SUCCESScode = 4
        }
 

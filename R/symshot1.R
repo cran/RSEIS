@@ -111,8 +111,8 @@ symshot1<-function(PLOT=FALSE)
         vrms = sqrt( sum( v[1:n]^2*Delt0)/sum(Delt0) )
         t0 = sum(Delt0[1:n])
         tt = sqrt((x^2)/vrms^2 + t0^2)
-        ## print(c(n, vrms, t0))
-        ## print(range(tt))
+        ## message(c(n, vrms, t0))
+        ## message(range(tt))
         ##points(x, tt, col=n)
         treflex[k,] = tt
       }

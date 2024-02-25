@@ -764,7 +764,8 @@ int dfbrat(double *seis, double *fbcurv, int npts,
     int fwlen, int bwlen, int logflg)
 {
     /* Local variables */
-   double  bbox, fbox, btri, ftri;
+  double  bbox, fbox;
+  /* btri, ftri; */
    int i, begpt, endpt, winpt;
    double  tscale;
    int beg, end;
@@ -793,8 +794,8 @@ int dfbrat(double *seis, double *fbcurv, int npts,
     /* Set up the windows to start at beginning and compute
    first value. */
 
-    ftri = 0;
-    btri = 0;
+    /* ftri = 0; */
+    /* btri = 0; */
     fbox = 0;
     bbox = 0;
     for (i = 0; i < fwlen; i++) {

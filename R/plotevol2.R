@@ -40,7 +40,7 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
     
     ##   image(x,why,log10(t(DSPEC[1:(numfreqs/2),])), add=TRUE, col = col,xlab='time', ylab='freq', axes=FALSE)
 
-   ##   print("in plotevol...")
+   ##   message("in plotevol...")
     
     if(identical(STYLE, "fft"))
        {
@@ -82,7 +82,7 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
       {
         plot(range(tim), c(0,1), axes=FALSE, type='n', xlab='', ylab='')
       }
-    print(range( why))
+    message(paste(collapse=' ', range( why)))
 
     if(IMAGE)
       {
@@ -93,8 +93,8 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
     
     trace = RPMG::RESCALE( a, perc , 1.0  , min(a, na.rm=TRUE), max(a, na.rm=TRUE) )
 
-     print(paste(sep=" ", "in plotevol...2  ADD=", add))
-    print(range( trace))
+     message(paste(sep=" ", "in plotevol...2  ADD=", add))
+    message(paste(collapse=' ', range( trace)))
        
     if(WIG) lines(tim, trace)
 
@@ -109,7 +109,7 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
     xtix = pretty(x, n=10)
     xtix = xtix[xtix>=min(x)&xtix<max(x)]
 
-    ### print(paste(sep=" ",min(x),  max(x), paste(xtix)))
+    ### message(paste(sep=" ",min(x),  max(x), paste(xtix)))
 
   #   xtix = c(floor(min(x)),xtix,  floor(max(x)))
     axis(3,tck=.01,at=xtix,labels=FALSE)
@@ -191,7 +191,7 @@ function(DEVOL, log=0,  fl=0, fh=10 , col=col, ylog=FALSE, ygrid=FALSE, AXE=c(1,
     else
       {
 
-        print("plotevol error in input amplitudes")
+        message("plotevol error in input amplitudes")
       }
     
 

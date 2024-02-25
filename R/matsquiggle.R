@@ -23,7 +23,7 @@ matsquiggle<-function(XMAT, dt1, dist=NULL, thick=1 , FLIP=FALSE, filcol='blue',
 
       }
     
-   ###  print(y1)
+   ###  message(y1)
 
     Ry  = range(y1)
     

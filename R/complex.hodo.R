@@ -6,7 +6,9 @@ function(nbaz, dt=dt, labs=c("Vertical", "North", "East"), COL=rainbow(100) , ST
     if(missing(dt))  {  dt=1  }
     if(missing(STAMP))  {  STAMP=""  }
 
-    
+     oldpar <- par(no.readonly = TRUE)
+      on.exit(par(oldpar))
+
 ######    par(mfrow=c(1,3))
 ######
 ######

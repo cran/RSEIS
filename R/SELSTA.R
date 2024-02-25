@@ -69,8 +69,8 @@ litecolors = c( "peachpuff2",      "darkolivegreen2", "slategray1" ,     "lightg
         scols1 =  rep(stacols1, length(gvars$ustas))
         ccols1 = rep(compscols1, length(gvars$ucomps))
 
-      ##  print(gvars$sonoff)
-        ##   print(gvars$conoff)
+      ##  message(gvars$sonoff)
+        ##   message(gvars$conoff)
 
         
         scols1[gvars$sonoff==0] = stacols2
@@ -157,7 +157,7 @@ litecolors = c( "peachpuff2",      "darkolivegreen2", "slategray1" ,     "lightg
 ###  Right button was clicked
             Nclick = 0
 ###  zenclick=zenclick+1
-###   print(zenclick)
+###   message(zenclick)
             K = 0
             gvars$zenclick = length(zloc$x)
             if(gvars$zenclick<1)
@@ -167,8 +167,8 @@ litecolors = c( "peachpuff2",      "darkolivegreen2", "slategray1" ,     "lightg
                 Aselcomps = gvars$ucomps[gvars$conoff==1]
                 Aselstas  = gvars$ustas[gvars$sonoff==1]
                 
-               ##    print(Aselcomps)
-               ##    print(Aselstas )
+               ##    message(Aselcomps)
+               ##    message(Aselstas )
                 
                 
                 selp = which( GH$COMPS %in% Aselcomps & GH$STNS %in% Aselstas )
@@ -198,10 +198,10 @@ litecolors = c( "peachpuff2",      "darkolivegreen2", "slategray1" ,     "lightg
               {
                 gvars$zenclick = length(zloc$x)
                 w1 = gclick(gvars, zloc, Y$YS)
-                 ##  print(w1)
+                 ##  message(w1)
                 
                 w2 = gclick(gvars, zloc, Y$YC)
-                  ## print(w2)
+                  ## message(w2)
                 if(length(w1)>0)
                   {
                     gvars$sonoff[w1] =  1
@@ -230,12 +230,12 @@ litecolors = c( "peachpuff2",      "darkolivegreen2", "slategray1" ,     "lightg
                 
                 gvars$sonoff = rep(0, gvars$NS)
                 gvars$conoff = rep(0, gvars$NC)
-                 ##   print(w1)
+                 ##   message(w1)
                 if(length(w1)>0)
                   {
                     gvars$sonoff[w1] =  1
                   }
-               ##    print(w2)
+               ##    message(w2)
                 if(length(w2)>0)
                   {
                     gvars$conoff[w2] =  1
@@ -256,12 +256,12 @@ litecolors = c( "peachpuff2",      "darkolivegreen2", "slategray1" ,     "lightg
                 w1 = gclick(gvars, zloc, Y$YS)
                 w2 = gclick(gvars, zloc, Y$YC)
                
-                ##    print(w1)
+                ##    message(w1)
                 if(length(w1)>0)
                   {
                     gvars$sonoff[w1] =  1
                   }
-             ##      print(w2)
+             ##      message(w2)
                 if(length(w2)>0)
                   {
                     gvars$conoff[w2] =  1
@@ -282,12 +282,12 @@ litecolors = c( "peachpuff2",      "darkolivegreen2", "slategray1" ,     "lightg
                 w1 = gclick(gvars, zloc, Y$YS)
                 w2 = gclick(gvars, zloc, Y$YC)
                
-                 ##   print(w1)
+                 ##   message(w1)
                 if(length(w1)>0)
                   {
                     gvars$sonoff[w1] =  0
                   }
-                ##   print(w2)
+                ##   message(w2)
                 if(length(w2)>0)
                   {
                     gvars$conoff[w2] =  0
@@ -359,8 +359,8 @@ litecolors = c( "peachpuff2",      "darkolivegreen2", "slategray1" ,     "lightg
 
 
     
-    ##   print(Aselcomps)
-    ##   print(Aselstas )
+    ##   message(Aselcomps)
+    ##   message(Aselstas )
     
     
     selp = which( GH$COMPS %in% Aselcomps & GH$STNS %in% Aselstas )
@@ -384,7 +384,7 @@ litecolors = c( "peachpuff2",      "darkolivegreen2", "slategray1" ,     "lightg
 
 ####  g = selpgen(GH, newdev=FALSE, STAY=TRUE)
 
-### cat(paste(GH$STNS[g], GH$COMPS[g]), sep="\n")
+### message(paste(GH$STNS[g], GH$COMPS[g]) )
 
 
 

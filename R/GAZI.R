@@ -30,9 +30,11 @@ function(ADAT, dt=1, ex=seq(0, 100), comp=c(4,5,6), sta="ZZZ", az=0, len=50, shi
        if(missing(labs)) {  labs=NA  }
 
 
+    oldpar <- par(no.readonly = TRUE)
+    on.exit(par(oldpar))
 
 
-	opar=par(no.readonly = TRUE)
+
 	alen=length(ADAT[,1])
 	dt=dt
 	ex = ex
@@ -84,7 +86,7 @@ function(ADAT, dt=1, ex=seq(0, 100), comp=c(4,5,6), sta="ZZZ", az=0, len=50, shi
       winb=round((wincen/dt)+winhalf+1)
       
       winb=min(winb,alen)
-      #    print(c(wina, winb))
+      #    message(paste(collapse=' ', c(wina, winb)))
 
       tem=dtem[wina:winb,]
 					# need to remove the mean value from each column (we did this above)
@@ -271,7 +273,7 @@ axis(2, at=seq(0,90, by=10), tck=1, las=1, lty=2, lwd=0.5)
   #  invisible(par(opar))
   #
 	newpar=par(no.readonly = TRUE)
-       par(opar)
+       
   invisible(list(aex=aex[1:jall], rateig=rateig[1:jall], aaz=aaz[1:jall], ai=ai[1:jall], figaz=figaz, azpar=azpar, incpar=incpar, par=newpar  )  )	
 }
 

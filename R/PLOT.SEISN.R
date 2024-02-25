@@ -85,19 +85,19 @@
     }
 
   if(is.null(WIN)==TRUE){ WIN =range(tim) }
-  ###  print(paste(sep=' ', "WIN", WIN[1], WIN[2]))
+  ###  message(paste(sep=' ', "WIN", WIN[1], WIN[2]))
   ###  this following does not work as I expected it to.
   ### if(exists(deparse(substitute(WIN)))==FALSE){ WIN =range(tim) }
   
-  ###  print(paste(sep=' ', "WIN", WIN[1], WIN[2]))
+  ###  message(paste(sep=' ', "WIN", WIN[1], WIN[2]))
   
   tflag = tim>=WIN[1]&tim<=WIN[2]
   
   tr1 = 0.05
   tr2 = .9
 
- ###  print("plot.seisn sel")
-  ### print(sel)
+ ###  message("plot.seisn sel")
+  ### message(sel)
 
   if(is.logical(sel)) { sel = which(sel)  } 
   
@@ -127,7 +127,7 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
       }
 
   
-  ##  print(paste("i am here",xtickfactor ))
+  ##  message(paste("i am here",xtickfactor ))
   if(xtickfactor==1)
     {
       XLAB = "Time(s)"
@@ -192,7 +192,7 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
       amp = GH$JSTR[[ii]][tflag]
       meanS[i] = mean(amp, na.rm =TRUE)
       if(rm.mean==TRUE) amp = amp -meanS[i]
-     ###  print(range(amp[!is.na(amp)]))
+     ###  message(range(amp[!is.na(amp)]))
       lamp = length(amp[!is.na(amp)])
      
       if(lamp<1)
@@ -252,7 +252,7 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
       tflag = tim>=WIN[1]&tim<=WIN[2]
       if(!is.null(SHIFT)==TRUE)
         {
-       ###   print(paste(sep=" ", i, ii, SHIFT[ii]))
+       ###   message(paste(sep=" ", i, ii, SHIFT[ii]))
           tim = tim-SHIFT[ii]
         }
       tflag = tim>=WIN[1]&tim<=WIN[2]      
@@ -260,12 +260,12 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
       if(rm.mean==TRUE) amp = amp - meanS[i]
       tcol = COL[ii]
       lamp = length(amp[!is.na(amp)])
-     ##  print(paste(sep=' ',i, ii, lamp))
+     ##  message(paste(sep=' ',i, ii, lamp))
       y3 = 1-(dy*i)
       if(COLLAPSE) y3 = 0
          if(note.flag==TRUE)
         {
-                                      ##   print( paste(sep=' ', "IN PLOT.MATN", i, notes[i]))
+                                      ##   message( paste(sep=' ', "IN PLOT.MATN", i, notes[i]))
           
           if(add!=3)text(max(tim[tflag]), y3+dy-dy*0.1, notes[i], adj=1)
           
@@ -274,7 +274,7 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
       if(lamp<1)
         {
             ##  if the trace is empty we have a problem.
-           ##   print( paste(sep=' ', "IN PLOT.SEISN", "PROBLEMS: no samples?" ))
+           ##   message( paste(sep=' ', "IN PLOT.SEISN", "PROBLEMS: no samples?" ))
           next;
         }
 
@@ -295,7 +295,7 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
 
         }
 
-           ###  print( paste(sep=' ', "IN PLOT.SEISN", minamp, maxamp))
+           ###  message( paste(sep=' ', "IN PLOT.SEISN", minamp, maxamp))
 
       if(add!=3) addtix(side=3, pos=y3+dy,   tck=0.005, at=ttics, labels=FALSE, col=gray(0.8) )
       z = RPMG::RESCALE(amp, y3, y3+dy, minamp, maxamp )
@@ -305,14 +305,14 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
       if(add!=2)lines(tim[tflag], z, col=tcol)
       if(pts==TRUE)points(tim[tflag], z, col=tcol, pch=4)
       
-   ###  print( paste(sep=' ', "IN PLOT.SEISN", y3, y3+dy, minamp, maxamp))
+   ###  message( paste(sep=' ', "IN PLOT.SEISN", y3, y3+dy, minamp, maxamp))
       
       cmm = c(minamp, maxamp)
       lcmm = length(cmm[!is.na(cmm)])
       dmm = maxamp-minamp
       if( lcmm < 2   | dmm<=0)
         {
-            ##    print( paste(sep=' ', "IN PLOT.SEISN", "PROBLEMS", lcmm ,dmm ))
+            ##    message( paste(sep=' ', "IN PLOT.SEISN", "PROBLEMS", lcmm ,dmm ))
             cmm = c(0, 1)
             yy = c(minamp, maxamp)
       
@@ -331,7 +331,7 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
       
       yts = RPMG::RESCALE(yt, y3, y3+dy, minamp, maxamp )
   }
-       ### print(paste(sep =  ' ' ,minamp,maxamp,  paste(collapse=" ", yt) ))
+       ### message(paste(sep =  ' ' ,minamp,maxamp,  paste(collapse=" ", yt) ))
                                         #
 
       #########  plot all the mini axes on the y-axis if YAX == 2
@@ -403,19 +403,19 @@ if(length(COL)<nn) {  COL=c(COL, rep(1, nn-length(COL))) }
 
       
       
-      # axis(side=3, pos=y3+dy,   tck=0.005, at=ttics, labels=FALSE, col=2 )
+#### axis(side=3, pos=y3+dy,   tck=0.005, at=ttics, labels=FALSE, col=2 )
       
       
       ##  mtext(side=2, at=y3+dy/2, text=ylab , line=1)
 
       
       
-                                        #    print( paste(sep=' ', "IN PLOT.SEISN",note.flag))
+####    message( paste(sep=' ', "IN PLOT.SEISN",note.flag))
       
    
       if(subnote.flag==TRUE)
         {
-                                        #  print( paste(sep=' ', "IN PLOT.MATN", notes[i]))
+####  message( paste(sep=' ', "IN PLOT.MATN", notes[i]))
           
           if(add!=3)text(max(tim[tflag]), y3+dy*0.1, subnotes[i], adj=0)
           

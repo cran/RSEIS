@@ -16,7 +16,7 @@ function(y, dt, rm.mean=TRUE )
 
      if(any(is.na(z)))
        {
-         print("error in trapz, NA's exist")
+         warning("error in trapz, NA's exist")
          return(NULL) 
 
        }

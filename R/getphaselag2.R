@@ -12,6 +12,9 @@ function(y1,y2, DT=0.008, frange=c(0,20), PLOT=FALSE, PLOT1=FALSE,  PLOT2=FALSE)
     if(missing(PLOT2)) { PLOT2=FALSE }
     if(missing(frange)) { frange=c(0,20) }
 
+      oldpar <- par(no.readonly = TRUE)
+      on.exit(par(oldpar))
+
        ##   PLOT1 = FALSE
      ##   PLOT2 = FALSE
 

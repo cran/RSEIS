@@ -306,7 +306,8 @@ FLIP<-function(nh, g)
         ypick = length(g$sel)-floor(length(g$sel)*g$zloc$y[nc])
         ipick = unique( g$sel[ypick] )
 
-        cat("FLIP: pwig POLARITY REVERSED: "); cat(ipick, sep=" " ); cat("\n")
+        message("FLIP: pwig POLARITY REVERSED: ");
+        message(ipick  );
         
         for(JJ in 1:length(ipick) )
           {
@@ -316,7 +317,7 @@ FLIP<-function(nh, g)
       }
     else
       {
-        cat("FLIP: No traces selected: Try Again"); cat("\n")
+        message("FLIP: No traces selected: Try Again");
 
       }
      g$zloc = list(x=NULL, y=NULL) 
@@ -343,7 +344,7 @@ PTS<-function(nh, g)
 FILT<-function(nh, g)
   {
 #####  BUTTONDOC:FILT:'Filter trace'
-    ### print( data.frame(g$filters) )
+    ### message( data.frame(g$filters) )
 
      
     Fdef = choosfilt(thefilts=g$filters, ncol=5)
@@ -417,7 +418,7 @@ fspread<-function(nh, g)
       {
         ypick = length(g$sel)-floor(length(g$sel)*g$zloc$y[zenclick-1])
         ipick = g$sel[ypick]
-        print(paste(sep=' ',"fspread", ypick, nh$info$name[ ipick]))
+        message(paste(sep=' ',"fspread", ypick, nh$info$name[ ipick]))
 
         famp = nh$JSTR[[ipick]]
 
@@ -470,7 +471,7 @@ fspread<-function(nh, g)
       }
     else
       {
-        cat("XTR WARNING: no window or trace has been selected:", sep="\n")
+        warning("XTR WARNING: no window or trace has been selected:", sep="\n")
         RETX=NULL
         g$zloc = list(x=NULL, y=NULL) 
         
@@ -510,9 +511,9 @@ SPEC<-function(nh, g)
         
         ypick = length(g$sel)-floor(length(g$sel)*g$zloc$y[nc])
         ipick = g$sel[ypick]
-### print(paste(sep=' ',ypick, NH$info$name[ ipick]))
+### message(paste(sep=' ',ypick, NH$info$name[ ipick]))
 
-        print(ipick)
+        message(ipick)
         
         i1 = seq(from=1, to=max(nc), by=2)
         i1 = i1[i1<max(nc)]
@@ -525,7 +526,7 @@ SPEC<-function(nh, g)
         for(ipix in i1)
           {
             pwin = sort(c(g$zloc$x[ipix], g$zloc$x[ipix+1]))
-            print(c(ipix, pwin))
+            message(paste(c(ipix, pwin)))
 
             kpix = ipick[ipix]
 
@@ -538,7 +539,7 @@ SPEC<-function(nh, g)
 
             if(any(is.na(temp)))
               {
-                print(paste("getting NA in trace",kpix, nh$STNS[kpix],nh$COMPS[kpix],pwin[1],  pwin[2]  ))
+                message(paste("getting NA in trace",kpix, nh$STNS[kpix],nh$COMPS[kpix],pwin[1],  pwin[2]  ))
                 next
               }
             
@@ -557,7 +558,7 @@ SPEC<-function(nh, g)
             
           }
 
-        print(stamps)
+        message(paste(collapse=' ', stamps))
         a = list(y=amp, dt=dees, stamps=stamps)
 
         if(length(a$y)>0)
@@ -579,7 +580,7 @@ SPEC<-function(nh, g)
       }
     else
       {
-        cat("SPEC WARNING: no window or trace has been selected:", sep="\n")
+        warning("SPEC WARNING: no window or trace has been selected:", sep="\n")
       }
     
 
@@ -602,9 +603,9 @@ WWIN<-function(nh, g)
         
         ypick = length(g$sel)-floor(length(g$sel)*g$zloc$y[nc])
         ipick = g$sel[ypick]
-### print(paste(sep=' ',ypick, NH$info$name[ ipick]))
+### message(paste(sep=' ',ypick, NH$info$name[ ipick]))
 
-        print(ipick)
+        message(ipick)
         
         i1 = seq(from=1, to=max(nc), by=2)
         i1 = i1[i1<max(nc)]
@@ -617,7 +618,7 @@ WWIN<-function(nh, g)
         for(ipix in i1)
           {
             pwin = sort(c(g$zloc$x[ipix], g$zloc$x[ipix+1]))
-            print(c(ipix, pwin))
+            message(paste( collapse=' ',c(ipix, pwin)))
 
             kpix = ipick[ipix]
 
@@ -630,7 +631,7 @@ WWIN<-function(nh, g)
 
             if(any(is.na(temp)))
               {
-                print(paste("getting NA in trace",kpix, nh$STNS[kpix],nh$COMPS[kpix],pwin[1],  pwin[2]  ))
+                message(paste("getting NA in trace",kpix, nh$STNS[kpix],nh$COMPS[kpix],pwin[1],  pwin[2]  ))
                 next
               }
             
@@ -654,7 +655,7 @@ WWIN<-function(nh, g)
         for(i in 1:ni) {
           y = amp[[i]]
           len = length(amp[[i]])
-          print(c(i, len, dees[[i]]))
+          message(paste( collapse=' ',c(i, len, dees[[i]])))
           xt = seq(from=0, by=dees[[i]], length=len)
           plot(xt , amp[[i]],main=stamps[[i]], type='l');
           
@@ -688,7 +689,7 @@ SGRAM<-function(nh, g)
                 {
                   ypick = length(g$sel)-floor(length(g$sel)*g$zloc$y[zenclick-1])
                   ipick = g$sel[ypick]
-###  print(paste(sep=' ',ypick, NH$info$name[ipick]))
+###  message(paste(sep=' ',ypick, NH$info$name[ipick]))
                   pwin = g$WIN
                 }
               else
@@ -696,13 +697,13 @@ SGRAM<-function(nh, g)
                   
                   ypick = length(g$sel)-floor(length(g$sel)*g$zloc$y[zenclick-1])
                   ipick = g$sel[ypick]
-### print(paste(sep=' ',ypick, NH$info$name[ ipick]))
+### message(paste(sep=' ',ypick, NH$info$name[ ipick]))
                   pwin = sort(c(g$zloc$x[zenclick-2], g$zloc$x[zenclick-1]))
                 }
            
           g$LASTwin = pwin
    
-          ### print(paste(sep=" ", "DOING SGRAM  Nclick, ipick, pwin", Nclick, ipick, pwin))
+          ### message(paste(sep=" ", "DOING SGRAM  Nclick, ipick, pwin", Nclick, ipick, pwin))
           
           famp = nh$JSTR[[ipick]]
          
@@ -716,11 +717,11 @@ SGRAM<-function(nh, g)
             ftime =  ghstamp(nh, sel=g$sel[ypick], WIN=pwin )
 
               
-	print(paste(sep=" ",min(ex), max(ex)))
+	message(paste(sep=" ",min(ex), max(ex)))
 	
-	print(paste(sep=" ",pwin[1], pwin[2]))
+	message(paste(sep=" ",pwin[1], pwin[2]))
 	
-          print(paste(sep=" ", ipick, length(famp),length(temp),length(Xamp), nh$dt[ipick],ftime)) 
+          message(paste(sep=" ", ipick, length(famp),length(temp),length(Xamp), nh$dt[ipick],ftime)) 
 
           SPECT.drive(Xamp, DT=nh$dt[ipick], STAMP=ftime)
 
@@ -731,7 +732,7 @@ SGRAM<-function(nh, g)
               pwin = g$LASTwin
               ypick = 1
               ipick = g$sel[1]
-              cat("SGRAM WARNING: no window or trace has been selected:" , sep="\n")
+              warning("SGRAM WARNING: no window or trace has been selected:" , sep="\n")
             }
 
           dev.set(g$MAINdev)
@@ -757,7 +758,7 @@ WLET<-function(nh, g)
                 {
                   ypick = length(g$sel)-floor(length(g$sel)*g$zloc$y[zenclick-1])
                   ipick = g$sel[ypick]
-###  print(paste(sep=' ',ypick, NH$info$name[ipick]))
+###  message(paste(sep=' ',ypick, NH$info$name[ipick]))
                   pwin = g$WIN
                 }
               else
@@ -765,13 +766,13 @@ WLET<-function(nh, g)
                   
                   ypick = length(g$sel)-floor(length(g$sel)*g$zloc$y[zenclick-1])
                   ipick = g$sel[ypick]
-### print(paste(sep=' ',ypick, NH$info$name[ ipick]))
+### message(paste(sep=' ',ypick, NH$info$name[ ipick]))
                   pwin = sort(c(g$zloc$x[zenclick-2], g$zloc$x[zenclick-1]))
                 }
            
           g$LASTwin = pwin
    
-          ### print(paste(sep=" ", "DOING SGRAM  Nclick, ipick, pwin", Nclick, ipick, pwin))
+          ### message(paste(sep=" ", "DOING SGRAM  Nclick, ipick, pwin", Nclick, ipick, pwin))
           
           famp = nh$JSTR[[ipick]]
          
@@ -798,7 +799,7 @@ WLET<-function(nh, g)
               pwin = g$LASTwin
               ypick = 1
               ipick = g$sel[1]
-              cat("WLET WARNING: no window or trace has been selected:" , sep="\n")
+              warning("WLET WARNING: no window or trace has been selected:" , sep="\n")
             }
 
           dev.set(g$MAINdev)
@@ -822,7 +823,7 @@ XTR<-function(nh, g)
       {
         ypick = length(g$sel)-floor(length(g$sel)*g$zloc$y[zenclick-1])
         ipick = g$sel[ypick]
-        print(paste(sep=' ',"EXTRACT", ypick, nh$info$name[ ipick]))
+        message(paste(sep=' ',"EXTRACT", ypick, nh$info$name[ ipick]))
 
         famp = nh$JSTR[[ipick]]
 
@@ -857,7 +858,7 @@ XTR<-function(nh, g)
       }
     else
       {
-        cat("XTR WARNING: no window or trace has been selected:", sep="\n")
+        warning("XTR WARNING: no window or trace has been selected:", sep="\n")
         RETX=NULL
         g$zloc = list(x=NULL, y=NULL) 
         
@@ -895,10 +896,10 @@ Pinfo<-function(nh, g)
       ###  jj = floor(( g$zloc$y[zenclick-1])/du)
         asec = nh$info$sec[ipick]+nh$info$msec[ipick]/1000+nh$info$t1[ipick]-nh$info$off[ipick]+ppick[zenclick-1]
 
-        print(paste(sep=" ", "PICK=",
+        message(paste(sep=" ", "PICK=",
                     nh$info$yr[ipick], nh$info$jd[ipick], nh$info$hr[ipick],
                     nh$info$mi[ipick], asec, "sta=", nh$STNS[ipick], "comp=", nh$COMPS[ipick] ))
-        print(ppick)
+        message(paste( collapse=' ', ppick))
 
         ##  pstas = paste(nh$STNS[ipick], nh$COMPS[ipick], sep=".")
 
@@ -923,52 +924,52 @@ Pinfo<-function(nh, g)
 
         ##    pcomps =nh$COMPS[ipick]
 
-        apcomps = paste(sep="", '"', paste(rd$comp, collapse='","'), '"')
+        apcomps = paste(sep="", '"', paste(rd$comp, collapse='","'))
 
-        cat("", sep="\n")
-        cat("", sep="\n")
-        cat("##################", sep="\n")
-        cat( paste(sep=" ", "orgtim=c(", apickorg , ")") , sep="\n")
+        message("")
+        message("")
+        message("##################")
+        message( paste(sep=" ", "orgtim=c(", apickorg , ")"))
         
-        cat("", sep="\n")
-        cat( paste(sep=" ", "stns=c(", apstas, ")") , sep="\n")
-        cat( paste(sep=" ", "comps=c(", apcomps, ")") , sep="\n")
+        message("", sep="\n")
+        message( paste(sep=" ", "stns=c(", apstas, ")") )
+        message( paste(sep=" ", "comps=c(", apcomps, ")"))
 
-        cat( paste(sep=" ", "tims=c(", paste(DEEtimes, collapse=","), ")") , sep="\n")
+        message( paste(sep=" ", "tims=c(", paste(DEEtimes, collapse=","), ")") )
 
-        cat("", sep="\n")
-        cat("##################", sep="\n")
-        cat("", sep="\n")
-        cat("Time Differences between picks:", sep="\n")
+        message("")
+        message("##################")
+        message("")
+        message("Time Differences between picks:")
         
-        cat(paste(dpick), sep="\n")
+        message(paste(dpick))
 
-        cat("", sep="\n")
-####  print(zloc$y[1:(zenclick-1)])  
-####  print(ypick)     
-####  print(ipick)
-         cat("##################", sep="\n")
-        cat("rd = scan(file='', what=list(jd=0,hr=0,mi=0,sec=0,yr=0,stn='',comp=''))" , sep="\n")
+        message("")
+####  message(zloc$y[1:(zenclick-1)])  
+####  message(ypick)     
+####  message(ipick)
+         message("##################")
+        message("rd = scan(file='', what=list(jd=0,hr=0,mi=0,sec=0,yr=0,stn='',comp=''))")
         write.table(file="", data.frame(rd), row.names =FALSE, col.names =FALSE )
-        cat(" ", sep="\n")
+        message(" ")
 
         
-        cat("GMT TIME: ", sep="\n")
+        message("GMT TIME: ")
         showdatetime(rd)
 
-        cat(" ", sep="\n")
+        message(" ")
         
         PAS = paste(sep=" ", "Jtim(", rd$jd, ", hr=" , rd$hr , ", mi=", rd$mi, ",sec=", rd$sec, ")")
-        cat("", sep="\n")
-        cat(PAS, sep="\n")
+        message("")
+        message(PAS)
 
 
         if(!is.null(nh$TZ))
           {
             rdlocal = recdate(jd=rd$jd, hr=rd$hr+nh$TZ, mi=rd$mi, sec=rd$sec , yr=rd$yr)
-            cat(" ", sep="\n")
+            message(" ")
             
-            cat(paste(sep=" ", "LOCAL TIMES, SHIFT=", nh$TZ) , sep="\n")
+            message(paste(sep=" ", "LOCAL TIMES, SHIFT=", nh$TZ) )
             showdatetime(rdlocal, AMPM=TRUE)
             
           }
@@ -976,7 +977,7 @@ Pinfo<-function(nh, g)
       }
     else
       {
-        cat("Pinfo WARNING: no pick or trace has been selected:", sep="\n")
+        warning("Pinfo WARNING: no pick or trace has been selected:")
         
       }
   
@@ -1005,7 +1006,7 @@ TSHIFT<-function(nh, g)
               dpick = c(0, diff(ppick))
               ipick = g$sel[ypick]
 
-              print(paste(nh$STNS[ipick], nh$COMPS[ipick]))
+              message(paste(nh$STNS[ipick], nh$COMPS[ipick]))
 
               
               tshft = rep(0,times=length(nh$STNS))
@@ -1013,22 +1014,24 @@ TSHIFT<-function(nh, g)
               
               tshft[ipick] = ppick-ppick[1]
               
-              ## print(data.frame(list(sta=nh$STNS, comp=nh$COMPS, tshft=tshft)))
+              ## message(data.frame(list(sta=nh$STNS, comp=nh$COMPS, tshft=tshft)))
 
-              print(data.frame(list(sta=nh$STNS[ipick] , comp=nh$COMPS[ipick] , tshft=tshft[ipick] )))
+             
+                message(paste( collapse=' ', 'sta=', nh$STNS[ipick] , 'comp=',
+                              nh$COMPS[ipick] , 'tshft=', tshft[ipick] ))
 
 
               
               Tshift = list(name = nh$STNS[ipick], t=tshft[ipick])
 
-              cat(file = "","\n\n")
+              message(file = "")
               
               nam = "kshift"
-              cat(file = "", paste(sep = "", nam, "=list()")   )
-              cat(file = "","\n")
-              cat(file = "", paste(sep = "", nam, "$name=c(\"", paste(format(Tshift$name), collapse = "\",\""), "\")"), fill = TRUE)
-              cat(file = "", paste(sep = "", nam, "$t=c(", paste(format(Tshift$t), collapse = ","), ")"), fill = TRUE)
-              cat(file = "","\n")
+              message( paste(sep = "", nam, "=list()")   )
+              message("")
+              message( paste(sep = "", nam, "$name=c(\"", paste(format(Tshift$name), collapse = "\",\""), "\")"), fill = TRUE)
+              message( paste(sep = "", nam, "$t=c(", paste(format(Tshift$t), collapse = ","), ")"), fill = TRUE)
+              message("")
               
               g$ASHIFT = tshft
                g$BLAHSHIFT = tshft
@@ -1100,8 +1103,8 @@ RMS<-function(nh, g)
                 
                 rms = sqrt( mean( rsig^2 ))
                 
-                cat(paste(sep=" ", "#########", iz, i1, format(ppick[iz]), format(ppick[iz+1]),
-                          format(asec) , format(bsec), length(rsig), format(rms) ), sep="\n" )
+                message(paste(sep=" ", "#########", iz, i1, format(ppick[iz]), format(ppick[iz+1]),
+                          format(asec) , format(bsec), length(rsig), format(rms) )  )
 
                 Output2[iz] = paste(sep=" ",
                          nh$STNS[i1],
@@ -1129,18 +1132,18 @@ RMS<-function(nh, g)
                #### g$WPX =rbind(g$WPX, rep(NA, length(Nn)))
               }
 
-            cat("############", sep="\n")
-            cat( "OUTrms =scan(file=\"\", what=list(stn=\"\", comp=\"\", yr=0, jd=0, hr=0, mi=0, t1=0, t2=0, rms=0))", sep="\n" ) 
+            message("############" )
+            message( "OUTrms =scan(file=\"\", what=list(stn=\"\", comp=\"\", yr=0, jd=0, hr=0, mi=0, t1=0, t2=0, rms=0))"  ) 
             for(iz in  pairseq)
               {
-                cat(Output2[iz], sep="\n")
+                message(Output2[iz])
               }
-            cat("\n" )
-            cat("######", sep="\n")
+            message("" )
+            message("######")
           }
         else
           {
-            print("not enough legitimate picks, need at least 2 or more")
+            warning("not enough legitimate picks, need at least 2 or more")
             
           }
         
@@ -1149,7 +1152,7 @@ RMS<-function(nh, g)
       {
         
        
-         print("not enough legitimate picks, need at least 2 or more")
+         warning("not enough legitimate picks, need at least 2 or more")
       }
 
      g$zloc = list(x=NULL, y=NULL) 

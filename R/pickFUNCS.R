@@ -20,7 +20,7 @@ WPIX<-function(nh, g)
             kzap = "W"
             ipick = g$sel[ypick]
             
-print(paste(sep=" ", "DUMP WPIX", zappa, azap, kzap , ppick , ypick,ipick)) 
+message(paste(sep=" ", "DUMP WPIX", zappa, azap, kzap , ppick , ypick,ipick)) 
             
             for(LZ in 1:LIX)
               {
@@ -35,7 +35,7 @@ print(paste(sep=" ", "DUMP WPIX", zappa, azap, kzap , ppick , ypick,ipick))
                 if(is.na(ycol)) { ycol = rgb(0,0,1) }
                 err = NA
                 res = ppick[iz+1]-ppick[iz]
-                print(paste(i1, iz, ppick[iz], kzap, res, err, ycol))
+                message(paste(i1, iz, ppick[iz], kzap, res, err, ycol))
                 g$WPX =  pickhandler(i1=i1, ppick=ppick[iz], kzap=kzap, res=res, err=err, ycol=ycol, NPX=g$NPX, WPX=g$WPX, NH=nh)
                 g$NADDPIX = g$NADDPIX+1
                 
@@ -63,7 +63,7 @@ NOPIX<-function(nh, g)
 noPS<-function(nh, g)
   {
     #####  BUTTONDOC:NOPIX:'Turn off 1 station Picks (set onoff to zero)'
-    print(g$sel)
+    message(g$sel)
     
     usta = unique( nh$STNS[g$sel] )
     m = which (g$WPX$name  %in% usta )
@@ -128,19 +128,19 @@ RIDPIX<-function(nh, g)
                 
                 i1 = ipick[iz]
                 i2 = ypick[iz]
-              ##  print(paste(iz, i1, i2))
+              ##  message(paste(iz, i1, i2))
 
                 
                 asec = nh$info$sec[i1]+nh$info$msec[i1]/1000+nh$info$t1[i1]-nh$info$off[i1]+ppick[iz]
                 pic1 = recdate(nh$info$jd[i1], nh$info$hr[i1], nh$info$mi[i1], asec)
 
 
-             ##  print(pic1)
+             ##  message(pic1)
                 
                 ds = abs(secdifL(g$WPX, pic1))
                 
 
-            ##    print(ds)
+            ##    message(ds)
 
                 if( any(ds<=tol) )
                   {
@@ -148,7 +148,7 @@ RIDPIX<-function(nh, g)
                     irid = which.min(ds)
 
                     
-                  ##   print(irid)
+                  ##   message(irid)
                     samesta = g$WPX$name[irid]==nh$STNS[i1] & g$WPX$comp[irid]==nh$COMPS[i1]
                     if(samesta) g$WPX$onoff[irid] = -1
                   }
@@ -180,7 +180,12 @@ SEEPIX<-function(nh, g)
   {
     #####  BUTTONDOC:SEEPIX:'print picks to screen'
     options(width=180)
-    print(g$WPX)
+      ## message(g$WPX)
+      DF = data.frame(g$WPX) 
+      Atemp = apply(DF, 1, 'paste', collapse=' ')			
+      message(paste(collapse=' ', names(DF) ))			
+      message(paste(collapse='\n', Atemp))
+               
     
     #### write.table(g$WPX)
     g$zloc = list(x=NULL, y=NULL) 
@@ -245,7 +250,7 @@ POLSWITCH<-function(nh, g, dir)
 #####  BUTTONDOC:POLSWITCH:'Switch Polarity'
     zappa = match(g$KLICK, g$PADDLAB)
     azap = g$PADDLAB[zappa]
-###     print(paste(sep=" ", "My PICK", dir, azap, zappa))
+###     message(paste(sep=" ", "My PICK", dir, azap, zappa))
 
     kix = legitpix(g$sel, g$zloc, g$zenclick)
     ypick =  kix$ypick
@@ -255,17 +260,17 @@ POLSWITCH<-function(nh, g, dir)
     
     ipick = g$sel[ypick]
 
-    ##   print(ipick)
+    ##   message(ipick)
     
     if(length(ipick)<1)
       {
         ipick = g$sel[which(nh$COMPS[g$sel]=="V" )]
       }
-    ##   print(g$sel)
-   ##  print(nh$STNS)
-   ##  print(nh$COMPS)
+    ##   message(g$sel)
+   ##  message(nh$STNS)
+   ##  message(nh$COMPS)
     
-    print(paste(sep=" ", "PICK=", nh$info$yr[ipick],
+    message(paste(sep=" ", "PICK=", nh$info$yr[ipick],
                 nh$info$jd[ipick], nh$info$hr[ipick],
                 nh$info$mi[ipick], "sta=", nh$STNS[ipick],
                 "comp=", nh$COMPS[ipick] ))
@@ -275,7 +280,7 @@ POLSWITCH<-function(nh, g, dir)
     jj = floor((g$zloc$y[g$zenclick-1])/g$du)
     
     iseek = which(g$WPX$phase=="P" & g$WPX$name==nh$STNS[ipick] &  g$WPX$comp==nh$COMPS[ipick])
-####  print(paste(sep=" ", "ISEEK",  iseek, length(iseek) ))
+####  message(paste(sep=" ", "ISEEK",  iseek, length(iseek) ))
     
     if(length(iseek)==1)
       {
@@ -286,8 +291,8 @@ POLSWITCH<-function(nh, g, dir)
       }
     else
       {
-        print(paste(sep=" ", "NO MATCH FOUND ISEEK",  iseek, length(iseek) ))
-        print("Click in a panel first, then select polarity")
+        message(paste(sep=" ", "NO MATCH FOUND ISEEK",  iseek, length(iseek) ))
+        message("Click in a panel first, then select polarity")
 
       }
     return(g)

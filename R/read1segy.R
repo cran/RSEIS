@@ -209,14 +209,14 @@ zz <- file(fname , "rb")
 
 for(i in 1:length(formsegy) )
   {
-##    print(paste(i,SEGYhead.names[i], formsegy[i]) )
+##    message(paste(i,SEGYhead.names[i], formsegy[i]) )
        if(formsegy[i]=="char")
          {
            fchar =  paste(format(SEGYhead.names[i] , width=charlen[i]-1), "\\0" , sep="" )
            
            fchar=readChar(zz, charlen[i], useBytes = FALSE)
              HEAD[[i]] = fchar
-             ## print(HEAD[[i]])
+             ## message(HEAD[[i]])
          }
        else
            {
@@ -232,7 +232,7 @@ for(i in 1:length(formsegy) )
                else
                    {
                        
-                      ##   print(i, isize[i] )
+                      ##   message(i, isize[i] )
                        A1 =  readBin(zz, numeric() , n = 1, size = isize[i] , signed = usign[i],
                            endian = theENDIAN)
                    }

@@ -14,7 +14,7 @@ getANSS<-function(fn, skip=2)
       }
     else
       {
-        print(paste( "Cannot find file:", fn) )
+        warning(paste( "Cannot find file:", fn) )
         return(NULL)
         
       }

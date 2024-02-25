@@ -43,7 +43,7 @@ doGABOR.AR<-function(Xamp, DT = 0.008, multi = 1, scale.def =0, TWIN=2, TSKIP=.2
 
   Kcol  = seq(from=Nhalf, to=N-Nhalf, by=Nskip)
 
-  ##  print(paste(sep=" ", "Len Kcol=", length(Kcol) ))
+  ##  message(paste(sep=" ", "Len Kcol=", length(Kcol) ))
   
   if(FALSE)
     {

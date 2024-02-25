@@ -38,7 +38,7 @@ function(Xamp, DT=0.008, noctave=6, nvoice=20, w0=5, STAMP=NULL)
    ###  X11(width=15, height=10)
 ###  
     WOUT =  wlet.do(Xamp, DT, noctave=noctave, nvoice=nvoice, w0=w0,   zscale=scale.def,  col=pal, STAMP=STAMP)
-    print("Finished calculation for  wlet.do")
+    message("Finished calculation for  wlet.do")
 
     faha = WOUT$baha
     PE = WOUT$PE
@@ -53,7 +53,7 @@ function(Xamp, DT=0.008, noctave=6, nvoice=20, w0=5, STAMP=NULL)
     
        zloc = list(x=NULL, y=NULL)
        sloc = zloc 
-####   print(paste("Button",K, Nclick,K[Nclick] ))
+####   message(paste("Button",K, Nclick,K[Nclick] ))
        while(TRUE)
          {
            
@@ -90,10 +90,10 @@ function(Xamp, DT=0.008, noctave=6, nvoice=20, w0=5, STAMP=NULL)
       
         if(K[Nclick] == match("ZBOUNDS", labs, nomatch = NOLAB))
           {
-            print("Click pairs of points in window, end with middle mouse")
+            message("Click pairs of points in window, end with middle mouse")
 
             zloc = plocator(COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=NSEL, style=-1)
-            print(zloc)
+            message(paste('nclicks = ', length(zloc$x) ) )
             numc = ncol(faha$img)
             numf = nrow(faha$img)
             
@@ -135,17 +135,17 @@ function(Xamp, DT=0.008, noctave=6, nvoice=20, w0=5, STAMP=NULL)
               
             rDUMPLOC(list(x=MYx, y=MYy))
             
-            print(paste(sep=" ", "MAX=", MAT[w], "MIN=", MAT[wmin]))
+            message(paste(sep=" ", "MAX=", MAT[w], "MIN=", MAT[wmin]))
             
             dbounds = range(MAT)
-            print(dbounds)
+            message(dbounds)
 
             
          ###   if(FALSE) {   ### this code is removed
          ###   RIM = range(faha$img, na.rm=TRUE)
 
             
-        ###    print("Type in the upper and lower Z Bounds for the plot")
+        ###    message("Type in the upper and lower Z Bounds for the plot")
          ###   
          ###   JEAD = readline(prompt="ZBounds: ")
             
@@ -164,7 +164,7 @@ function(Xamp, DT=0.008, noctave=6, nvoice=20, w0=5, STAMP=NULL)
       
         if(K[Nclick] == match("Postscript", labs, nomatch = NOLAB))
           {
-            print(paste(sep=' ' ,"Start postscript file plotwlet"))
+            message(paste(sep=' ' ,"Start postscript file plotwlet"))
             jdev = dev.cur()
             plfname = RPMG::local.file("wlet","eps")
 
@@ -181,7 +181,7 @@ function(Xamp, DT=0.008, noctave=6, nvoice=20, w0=5, STAMP=NULL)
             PE =plotwlet(faha, Xamp, DT, zscale=scale.def, col=pal,  ygrid=FALSE, STAMP=STAMP)
             pwlet2freqs(faha$noctave, faha$nvoice, DT, flip=faha$flip, pfreqs  , plot=TRUE)
             
-            print(paste(sep=' ' ,"Done creating postscript file:", plfname))
+            message(paste(sep=' ' ,"Done creating postscript file:", plfname))
 
             
             dev.off()
@@ -192,7 +192,7 @@ function(Xamp, DT=0.008, noctave=6, nvoice=20, w0=5, STAMP=NULL)
 
         if(K[Nclick] == match("ContPS", labs, nomatch = NOLAB))
           {
-            print(paste(sep=' ' ,"Start postscript file plotwlet"))
+            message(paste(sep=' ' ,"Start postscript file plotwlet"))
             jdev = dev.cur()
             plfname = RPMG::local.file("wletc","eps")
 
@@ -216,14 +216,14 @@ function(Xamp, DT=0.008, noctave=6, nvoice=20, w0=5, STAMP=NULL)
               {
                 PEAX=PEAXBoxes
 
-                 print("bef cont: PEAX:")
-                print(PEAX)
+                 message("bef cont: PEAX:")
+                message(PEAX)
               }
             PE =contwlet(faha, Xamp, DT,   clev=0.75,  NLEV=20, zscale=scale.def, zbound=dbounds,
               col=col, ygrid=FALSE, PEAX=PEAX)
             pwlet2freqs(faha$noctave, faha$nvoice, DT, flip=faha$flip, pfreqs  , plot=TRUE)
             
-            print(paste(sep=' ' ,"Done creating postscript file:", plfname))
+            message(paste(sep=' ' ,"Done creating postscript file:", plfname))
 
             
             dev.off()
@@ -310,7 +310,7 @@ function(Xamp, DT=0.008, noctave=6, nvoice=20, w0=5, STAMP=NULL)
         if(K[Nclick]==match("BOXZ", labs, nomatch = NOLAB))
           {  
             zloc = plocator(COL=rgb(1,0.8, 0.8), NUM=FALSE , YN=NSEL, style=-1)
-            print(zloc)
+            message(zloc)
             numc = ncol(faha$img)
             numf = nrow(faha$img)
 
@@ -363,7 +363,7 @@ function(Xamp, DT=0.008, noctave=6, nvoice=20, w0=5, STAMP=NULL)
         
       }
     
-    print("DONE with Wlet")
+    message("DONE with Wlet")
     
     
   }
