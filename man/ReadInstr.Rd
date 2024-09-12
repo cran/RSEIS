@@ -30,24 +30,22 @@ ReadInstr(fn)
 }
 \examples{
 
-\dontrun{
-library(RSEIS)
-source('ReadInstr.R')
-S  <-  JSAC.seis('2010.012.21.54.46.6195.IU.OTAV.00.BHZ.R.SAC', BIGLONG = FALSE)
-GH  <-  prepSEIS(S)
-swig(GH)
-RESP <-
-ReadInstr('SAC_PZs_IU_OTAV_BHZ_00_2009.091.00.00.00.0000_2010.136.22.12.60.99999')
-GHV  <-  VELOCITY.SEISN(GH, Kal = RESP,  FILT = list(ON = TRUE, fl = 1/160,
-fh = 7, type = "HP", proto = "BU"))
-swig(GHV)
-GHD  <-  DISPLACE.SEISN(GH, Kal = RESP,  FILT = list(ON = TRUE, fl = 1/160,
-fh = 7, type = "HP", proto = "BU"))
-swig(GHD)
+######  create a SAC format response file:
+temp.file= tempfile("PZ")
+cat(file=temp.file, c(
+"ZEROS 4",
+"-999.0260  0.0000",
+"POLES 6",
+"-0.1480  0.1480",
+"-0.1480  -0.1480",
+"-314.1600  0.0000",
+"-9904.8000  3786.0000",
+"-9904.8000  -3786.0000",
+"-12507.0000  0.0000",
+"CONSTANT 4.540182e+20"),  sep='\n')
 
 
-}
-
+RESP <- ReadInstr(temp.file)
 
 }
 \keyword{misc}

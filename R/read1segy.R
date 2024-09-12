@@ -212,9 +212,11 @@ for(i in 1:length(formsegy) )
 ##    message(paste(i,SEGYhead.names[i], formsegy[i]) )
        if(formsegy[i]=="char")
          {
-           fchar =  paste(format(SEGYhead.names[i] , width=charlen[i]-1), "\\0" , sep="" )
+          #### fchar =  paste(format(SEGYhead.names[i] , width=charlen[i]-1), "\\0" , sep="" )
            
-           fchar=readChar(zz, charlen[i], useBytes = FALSE)
+         ####  this was a problem:  suppressWarnings()
+         ####  fchar=readChar(zz, charlen[i], useBytes = FALSE)
+           fchar=readChar(zz, charlen[i], useBytes = TRUE) 
              HEAD[[i]] = fchar
              ## message(HEAD[[i]])
          }

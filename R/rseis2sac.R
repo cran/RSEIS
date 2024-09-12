@@ -11,35 +11,17 @@ rseis2sac<-function(GH, sel=1, win=c(0,1), path=".", BIGLONG=FALSE )
 
     aunits = "volts"
 
-
-    OLDir = getwd()
+    
     RDT = rangedatetime(GH$info)
     newdir  = paste(path,filedatetime(RDT$min), sep="/")
 
-    if(file.exists(newdir))
+     tdir =  dir.create(newdir)
+      
+    if(!dir.exists(newdir))
       {
-        setwd(newdir)
-      }
-    else
-      {
-        tdir = dir.create(newdir, recursive=TRUE )
-        if(tdir==TRUE) { setwd(newdir)  }
-        else
-          {
-            warning("ERROR: CANNOT create or write in this directory")
-          }
+        stop("Stopping: Output Directory Does not Exist")
       }
     
-
-
-    
-    if( !identical(path, ".")) 
-      {
-        OLDir = getwd()
-        dir.create(path)
-        setwd(path)
-      }
-
     for(j in 1:length(sel))
       {
         i = sel[j]
@@ -76,19 +58,17 @@ rseis2sac<-function(GH, sel=1, win=c(0,1), path=".", BIGLONG=FALSE )
           thecomp,
           "SAC")
 
-     
+        output.fn = paste(newdir,sacfn, sep='/') 
         
         a1 = list(fn=fn, sta=thesta,  comp=thecomp, dt=dt, DATTIM=tstart,
           N=N, units=aunits , amp=sig , IO=list(kind=2, Iendian=theENDIAN,
                                           BIGLONG=BIGLONG))
 
         ######################  write out the SAC file
-        write1sac(a1, fn=sacfn, BIGLONG=BIGLONG )
+        write1sac(a1, fn=output.fn, BIGLONG=BIGLONG )
         
       }
 
+      return(newdir)
 
-
-        setwd(  OLDir)
-    
   }

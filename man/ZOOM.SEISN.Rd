@@ -24,14 +24,14 @@ ZOOM.SEISN(GH, sel = 1:length(GH$dt), WIN = NULL)
 
 \seealso{swig}
 \examples{
-\dontrun{
+
 
 data("GH")
 sel <-  which(GH$COMPS=="V")
 
 KF  <-  ZOOM.SEISN(GH, sel=sel, WIN = c(0 , 5)  )
 
-swig(KF)
+if(interactive()){  swig(KF)
 }
 }
 

@@ -74,9 +74,7 @@ zz  <-  AUGMENTbutfilt(ts1, fl=1, fh=15,  deltat=CE1$dt, type="LP" ,  proto="BU"
 npoles=5 )
 
 
-
-###  try plotting:
-\dontrun{
+##############    second example with plotting
 
 
 data(KH, package ='RSEIS' )
@@ -108,7 +106,7 @@ title(sub='AUGMENTbutfilt')
 
 
 
-}
+
 
 
 }

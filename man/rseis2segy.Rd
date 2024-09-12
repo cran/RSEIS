@@ -46,11 +46,24 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
   read1segy, sac2rseis, segy2rseis
 }
 \examples{
-\dontrun{
 
-rseis2segy(GH,  path="./MYSEGFILES", BIGLONG=FALSE )
 
-}
+data(KH)
+apath = tempdir()
+
+J = rseis2segy(KH, sel=1, path=apath, BIGLONG=FALSE )
+L = list.files(path=J, full.names=TRUE)
+Z = read1segy(L[1], Iendian = 1, HEADONLY = FALSE, BIGLONG = FALSE)
+
+
+
+#    data(KH)
+#    apath = tempdir()
+J =  rseis2sac(KH, sel = 1, win = c(0, 1), path = apath, BIGLONG = FALSE)
+
+L = list.files(path=J, full.names=TRUE)
+Z = read1sac(L[1], Iendian = 1, HEADONLY = FALSE, BIGLONG = FALSE)
+
 
 }
 \keyword{misc}

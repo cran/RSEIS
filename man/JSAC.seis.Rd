@@ -109,42 +109,25 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 }
 
 
-\seealso{Mine.seis
+\seealso{Mine.seis, rseis2sac
 }
 \examples{
 
-\dontrun{
+#####  make some SAC files, then read them in
+data(GH)
+apath = tempdir()
+##  setwd(apath)
+## apath = 'TEMP'
+J =  rseis2sac(GH, sel =1:5,  path = apath, BIGLONG =FALSE )
 
+####### next read them in
+Lname  <-  list.files(path=J , pattern='SAC', full.names=TRUE)
 
-####  this will return a list of traces
-Lname  <-  list.files(path='/data/wadati/bourbon/LaurelCanNC/R005.01' ,
- pattern="08.005.01.41.23.9024", full.names=TRUE)
+S1   <-  JSAC.seis(Lname, Iendian = .Platform$endian, BIGLONG =FALSE ,  PLOT = -1)
 
-S1   <-  JSAC.seis(Lname, Iendian = 1, PLOT = -1)
-
-
-#####################   from a data base example: this will return one
-#####                    trace header
-f1  <-  DB$fn[200]
-
-j1  <-  JSAC.seis(f1, Iendian=1, HEADONLY=TRUE , BIGLONG=FALSE, PLOT=-1)
-
-print( j1[[1]]$HEAD )
-
-
-#############   example for SEGY data: one SEGY  header
-
-dir  <-  "/data/wadati/soju/SEISMIC_DATA/Reventador2005/rev05/SEGY/R251.01"
-lf  <-  list.files(path=dir, pat="05.251", full.names=TRUE)
-f1  <-  lf[1]
-j1  <-  JSEGY.seis(f1, Iendian=1, HEADONLY=TRUE , BIGLONG=FALSE, PLOT=-1)
-
-
-print( j1[[1]]$HEAD )
-
-}
-
-
+####  check just the first one
+i = 1
+  plotGH(S1[[i]])
 
 
 }

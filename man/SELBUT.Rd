@@ -34,7 +34,7 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 }
 \examples{
 
-\dontrun{
+if(interactive()){ 
 STDLAB <- c("DONE", "QUIT", "zoom.out", "zoom.in", "SELBUT",
 "FILT","UNFILT", "PSEL", "SGRAM", "WLET", "SPEC", "XTR" )
 onoff = rep(0, length(STDLAB))

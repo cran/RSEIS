@@ -62,12 +62,23 @@ http://earthquake.usgs.gov/earthquakes/eqarchives/epic/epic_global.php
 \seealso{getjul
 }
 \examples{
-\dontrun{
-fn <- "/home/lees/WORK/SENDAI.EVENT/catsearch.8757"
 
-g <- getANSS(fn)
+fn <- tempfile()
+K = c(
+'Date       Time             Lat       Lon  Depth   Mag Magt  Nst Gap  Clo  RMS  SRC   Event ID',
+'----------------------------------------------------------------------------------------------',
+'1994/09/06 09:37:36.48  40.1330  144.6240  33.40  4.60   Mb   28          1.22  NEI 199409064025',
+'1994/09/06 10:00:02.97  36.4840  140.5730  66.60  4.90   Mb   39          0.88  NEI 199409064028',
+'1994/09/06 10:07:16.53  40.1700  144.5890  33.00  4.70   Mb   49          1.09  NEI 199409064029',
+'1994/09/06 17:31:52.27  42.6220  142.7000  33.00  5.00   Mb   13          0.54  NEI 199409064042')
+
+cat(file=fn, K, sep='\n')
+
+### check: z = scan(file=fn, what='', sep='\n')
+
+g <- getANSS(fn, skip=2)
 g$jd <- getjul(g$yr, g$mo, g$dom)
-}
+
 
 }
 \keyword{misc}

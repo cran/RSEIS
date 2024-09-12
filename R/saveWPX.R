@@ -18,7 +18,7 @@ saveWPX<-function(twpx, destdir="." )
 
     fout3 = paste(destdir, fout2, sep="/")
 
-    save(file=fout2, twpx)
+    save(file=fout3, twpx)
 
-    invisible(fout2)
+    invisible(fout3)
   }

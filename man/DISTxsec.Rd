@@ -51,7 +51,6 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 }
 \examples{
 
-\dontrun{
 #### example using data in the RSEIS package
 data(GH)
 ####  get the source location
@@ -80,12 +79,6 @@ plot=FALSE )
 #####  add traces
 B = DISTxsec(KF, dist.GH, TIM.WIN, sel, trace.width = 0.5 , add=TRUE,
 plot=TRUE, col='black'  , text.col='red', text.size=1  )
-
-
-
-
-}
-
 
 
 

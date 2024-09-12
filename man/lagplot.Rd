@@ -3,7 +3,7 @@
 
 \title{Plot phase lags}
 \description{
- adds a bar showing phase lag.
+ Shift a times series by a specified  phase lag.
 }
 \usage{
 lagplot(y1, dt, lag, PLOT = FALSE)
@@ -25,14 +25,11 @@ lagplot(y1, dt, lag, PLOT = FALSE)
 
 \examples{
 
+data(KH)
 
-\dontrun{
-plot(MTS1$freq, nphase,  main=paste(sep=' ', "thelag=",phaselag) )
-     abline(MOD)
-    
- lagplot(ts1, DT, phaselag, PLOT=TRUE )
-}
+ts1 = KH$JSTR[[1]]
 
+ lagplot(ts1, KH$dt[1], 300, PLOT=TRUE )
 
 
 }

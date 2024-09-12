@@ -29,12 +29,13 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 \seealso{XTR, X2SAC, swig
 }
 \examples{
-\dontrun{
+if(interactive()){
 ###  get data:
 GH <-  Mine.seis(at1, at2, DB, NULL , NULL,
         kind = 1, Iendian=1)
 w <- swig(GH, PADDLAB=c("X2SAC","X2RSEIS","YPIX" ) )
 
 }
+
 }
 \keyword{misc}

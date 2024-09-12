@@ -28,17 +28,15 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 \seealso{plotGH, swig
 }
 \examples{
-\dontrun{
+
 data(GH)
 gg = SEIS2list(GH)
-for(i in 1:length(gg) )
+##   for(i in 1:length(gg) )
+i = 1
+
 {
 plotGH(gg[[i]]); Sys.sleep(0.2) 
 }
-
-
-}
-
 
 
 }

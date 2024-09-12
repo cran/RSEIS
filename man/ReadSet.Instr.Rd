@@ -15,11 +15,13 @@ ReadSet.Instr(file)
 \details{
   If file is a path to a file it is read in and processed.  If file is a
   vector of character strings from a file that has already been read in,
-  the file is processed directly.
+  the file is processed directly. The tag names (ZEROS, POLES, SENSE,
+  CONSTANT) can be upper,lower or mixed case.  Alternative to SENSE =
+  sensitivity, and CONSTANT=norm or knorm.
 }
 \value{
   list:
-  \item{np}{NUmber of poles}
+  \item{np}{Number of poles}
   \item{poles}{complex vector of poles}
   \item{nz}{number of zeros}
   \item{zeros}{complex vector of zeros}
@@ -42,11 +44,6 @@ CMG <- c(
       "SENSE 800")
 
 ReadSet.Instr(CMG)
-
-\dontrun{
-RL28  <-  ReadSet.Instr('/pathto/Equipment/Sensors/L28.inst.response')
-}
-
 
 }
 

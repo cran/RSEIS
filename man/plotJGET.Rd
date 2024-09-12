@@ -31,17 +31,22 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 }
 \examples{
 
-\dontrun{
+data(GH)
+ Iendian = .Platform$endian
+apath = tempdir()
+##  setwd(apath)
+##
+ Iendian = .Platform$endian
+##    apath = './TEMP'
+### dir.create(apath)
 
-fn <- '/home/lees/taurus_2050_20100302_100000_BHE.sac'
+J =  rseis2sac(GH, sel = 1:5, path = apath, BIGLONG =FALSE )
 
-J  <- JGET.seis(fn,kind=2,BIGLONG=FALSE,HEADONLY=FALSE,Iendian=3,PLOT=0)
+Lname  <-  list.files(path=J , pattern='SAC', full.names=TRUE)
 
-plotJGET(J)
+J  <- JGET.seis(Lname,kind=2,BIGLONG=FALSE,HEADONLY=FALSE,Iendian=Iendian,PLOT=0)
 
-}
-
-
+if(interactive()) { plotJGET(J) }
 
 }
 \keyword{iplot}

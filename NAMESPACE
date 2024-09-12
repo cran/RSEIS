@@ -17,5 +17,5 @@ importFrom("graphics", "abline", "arrows", "axis", "box", "contour",
 importFrom("stats", "ccf", "coef", "convolve", "deltat", "dt", "embed",
              "fft", "is.ts", "lm", "median", "mvfft", "plot.ts", "qf",
              "quantile", "runif", "runmed", "smooth.spline", "spline",
-             "ts", "var")
+             "ts", "var", "rnorm", "approx", "sd")
 importFrom("utils", "write.table")

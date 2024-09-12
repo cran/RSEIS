@@ -89,11 +89,6 @@ HEADONLY=FALSE,  PLOT = -1, RAW=FALSE)
 
   See examples below for different cases.
   
-
-  
-
-
-   
    }
 \seealso{plotJGET, JSAC.seis , prepSEIS, Mine.seis}
 \note{
@@ -120,13 +115,9 @@ HEADONLY=FALSE,  PLOT = -1, RAW=FALSE)
    is available for LINUX systems, but there were problems compiling in
    WINDOWS and MACOS so this feature was removed.
    
-   A filter for mseed format is currently being developed.
+   A filter for mseed format is currently being developed. Could use
+   package 'IRISSeismic'
 
-    
-
-
-
-   
 }
 
 
@@ -134,53 +125,65 @@ HEADONLY=FALSE,  PLOT = -1, RAW=FALSE)
 \author{Jonathan M. Lees <jonathan.lees@unc.edu>}
 
 
-\examples{  
-\dontrun{
+\examples{
 
-Lname  <-  list.files(path='/data/wadati/bourbon/LaurelCanNC/R005.01' ,
-         pattern="08.005.01.41.23.9024", full.names=TRUE)
 
-S1   <-  GET.seis(Lname, kind = 1, PLOT = -1)
+data(GH)
+
+DD = data.frame(GH$info)
+
+#### get only vertical traces
+WV = which( GH$COMPS=='V' )
+L1 = length(WV)
+
+GIVE = vector(mode='list')
+
+for(j in 1:L1 )
+{
+    i = WV[j]
+    AA = DD[i,]
+    GIVE[[j]] = list(fn = AA$fn, sta =GH$STNS[i] , comp = GH$COMP[i], 
+                     dt = AA$dt, DATTIM = AA, N = AA$n1, units = NA, 
+                     coords = NA, amp = GH$JSTR[[i]]  )
+}
+#### par(mfrow=c(length(GIVE) , 1) )
+#   for(i in 1:length(GIVE) ) { plotGH(GIVE[[i]])   }
+tdir = tempdir()
+for(i in 1:length(GIVE) )
+{
+    sig = GIVE[[i]]
+  d1 =  dateStamp(sig$DATTIM, sep='_')
+   nam1 =  paste(d1,sig$sta, sig$comp, sep='_')
+    nam2 = paste0(nam1, '.RDS')
+    nam3 = paste(tdir, nam2, sep='/')
+    saveRDS(file=nam3, sig) 
+    }
+########################  Now  read files and make the DataBase:
+LF  = list.files(path=tdir,pattern='.RDS',  full.names=TRUE)
+
+
+Gseis = GET.seis(LF, kind = -1, Iendian=1, BIGLONG=FALSE ,
+HEADONLY=FALSE,  PLOT = -1, RAW=FALSE)
+
+zed <- prepSEIS(Gseis)
+
+####   plot the data, and interact with the data
+swig(zed, sel=which(zed$COMPS=='V'),  SHOWONLY=0)
+
+if(interactive()){ plotJGET(Gseis) }
 
 ###   for data created on UNIX (SUN) but read on linux:
-
-S1   <-  GET.seis(Lname, kind = 1, Iendian="swap", BIGLONG=FALSE, PLOT = -1)
+###   S1   <-  GET.seis(Lname, kind = 1, Iendian="swap", BIGLONG=FALSE, PLOT = -1)
 
 ###   for data created on linux (32 bit)  but read on linux 64 bit:
-
-S1   <-  GET.seis(Lname, kind = 1, Iendian="little", BIGLONG=FALSE, PLOT = -1)
+###  S1   <-  GET.seis(Lname, kind = 1, Iendian="little", BIGLONG=FALSE, PLOT = -1)
 
 ###   for SEGY data created on linux (64 bit)  but read on linux 32 bit:
-
-S1   <-  GET.seis(Lname, kind = 1, Iendian="little", BIGLONG=TRUE, PLOT = -1)
+###  S1   <-  GET.seis(Lname, kind = 1, Iendian="little", BIGLONG=TRUE, PLOT = -1)
 
 
 ###   for SAC data created on MAC-OS (64 bit)  but read on linux 32 bit:
-
-S1   <-  GET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = -1)
-
-
-##################   
-
-
-
-##########    to use other parts of the seismic
-############               analysis package convert to rseis format:
-
-
-####  prepare the data for further processing:
-
-S1   <-  JGET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = -1)
-
- GH <- prepSEIS(S1)
-####   plot the data, and interact with the data
-swig(GH, SHOWONLY=0)
-
-###  or simply:
-
-plotJGET(S1)
-
-}
+###  S1   <-  GET.seis(Lname, kind = 2, Iendian="swap", BIGLONG=TRUE, PLOT = -1)
 
 
 }

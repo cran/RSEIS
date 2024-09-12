@@ -5,7 +5,7 @@ ASCII.SEISN<-function(GH, sel=1,  HEAD=TRUE, destdir='.'  )
   if(missing(HEAD)) { HEAD=TRUE }
 
 
-  Aname =  Zdate(GH$info, sel, 0)
+  Aname =  Zdate(GH$info, sel, 0, sep="_")
 
 
   for(i in 1:length(sel))
@@ -15,7 +15,8 @@ ASCII.SEISN<-function(GH, sel=1,  HEAD=TRUE, destdir='.'  )
       fn = paste(destdir, fn, sep='/')
 
       sec = GH$info$sec[i]
-      hed = paste(GH$info$yr[i], GH$info$jd[i], GH$info$hr[i], GH$info$mi[i],  sec, GH$info$dt[i])
+      hed = paste(GH$info$yr[i], GH$info$jd[i], GH$info$hr[i],
+                  GH$info$mi[i],  sec, GH$info$dt[i])
       
       cat(paste(i, fn, sep=" "), sep="\n")
       ACON = file(description =fn, open = "w")

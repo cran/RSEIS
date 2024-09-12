@@ -1,11 +1,11 @@
 Package: RSEIS
 Type: Package
 Title: Seismic Time Series Analysis Tools
-Version: 4.2-0
-Date: 2024-02-22
+Version: 4.2-4
+Date: 2024-09-12
 Depends: R (>= 3.0)
-Imports: RPMG, Rwave
-Suggests: stats
+Imports: RPMG, Rwave, stats
+Suggests: GEOmap
 Authors@R: c(person(given="Jonathan M.", family="Lees",
 	   role = c("aut", "cre"),email = "jonathan.lees@unc.edu"),
 	   	person(given="Jake", family="Anderson", role = "ctb", email = "ajakef@gmail.com"),
@@ -19,7 +19,7 @@ Maintainer: Jonathan M. Lees <jonathan.lees@unc.edu>
 Description: Multiple interactive codes to view and analyze seismic data, via spectrum analysis, wavelet transforms, particle motion, hodograms.  Includes general time-series tools, plotting, filtering, interactive display.
 License: GPL (>= 2)
 Copyright: see inst/COPYRIGHTS
-Packaged: 2024-02-25 21:53:21 UTC; lees
+Packaged: 2024-09-12 18:55:00 UTC; lees
 NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2024-02-25 22:30:03 UTC
+Date/Publication: 2024-09-12 22:10:28 UTC

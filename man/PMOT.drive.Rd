@@ -40,7 +40,7 @@ GH$JSTR[[sel[3]]][1168:1500])
 dt  <-   GH$dt[ sel[1] ]
 ftime  <-  Zdate(GH$info, sel[1], 1)
 
-\dontrun{
+if(interactive()){
 PMOT.drive(YMAT, dt, pmolabs = c("Vertical", "North", "East"),
 STAMP =ftime )
 

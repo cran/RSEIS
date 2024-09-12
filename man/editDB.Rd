@@ -52,29 +52,52 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 }
 \examples{
 
-\dontrun{
+##########   create a data set and a DB
+tdir = tempdir()
+data(GH)
 
-DB <- makeDB('/media/disk-1/TUNG_2010', "2010",
-kind=2,Iendian=1, BIGLONG=FALSE )
+DD = data.frame(GH$info)
+WV = which(GH$COMPS=='V')
 
-sw <- which(DB$yr>2011)
+L1 = length(WV)
 
-##########   remove the bad lines from the DB
-DDB <- editDB(DB, -sw)
-infoDB(DB)
+######
+GIVE = vector(mode='list')
 
-#############  to change the path names if the data
-##   moves to a different server:
+for(j in 1:L1)
+{
+ i = WV[j]   
+AA = DD[i,]
 
-###for example: 
-###  
-
-path1<-"/data/wadati/soju"
-path2<-"/mnt"
-
-newDB <- pathDB(DB, path1, path2 )
+GIVE[[j]] = list(fn = AA$fn, sta =GH$STNS[i] , comp = GH$COMP[i], 
+            dt = AA$dt, DATTIM = AA, N = AA$n1, units = NA, 
+            coords = NA, amp = GH$JSTR[[i]]  )
 
 }
+
+#######  save files in the tempdir
+for(i in 1:length(GIVE) )
+{
+
+    sig = GIVE[[i]]
+  d1 =  dateStamp(sig$DATTIM)
+   nam1 =  paste(d1,sig$sta, sig$comp, sep='_')
+    nam2 = paste0(nam1, '.RDS')
+    nam3 = paste(tdir, nam2, sep='/')
+    saveRDS(file=nam3, sig) 
+    }
+LF  = list.files(path=tdir,pattern='.RDS', full.names=TRUE)
+
+#######   make the database
+cosoDB = FmakeDB(LF, kind=-1)
+
+######  change the DB path:
+path1<-tdir
+path2<-"."
+
+#######  change the path name of the trace files
+newDB <- pathDB(cosoDB, path1, path2 )
+
 
 
 }

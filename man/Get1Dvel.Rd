@@ -38,12 +38,10 @@ LIST:
 
 \examples{
 
-\dontrun{ VELMOD1D = Get1Dvel("/home/lees/Progs/R_PAX/wu_coso.vel", PLOT=TRUE)}
-\dontrun{
 data(VELMOD1D)
 
 Get1Dvel(VELMOD1D, PLOT=TRUE)
-}
+
  }
 
 

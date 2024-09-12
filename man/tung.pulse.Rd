@@ -3,7 +3,7 @@
 
 \title{Volcanic Pulse Analysis}
 \description{
-  given a seiries of pulses, do analysis on each one
+  Given a seiries of pulses, do analysis on each one
 }
 \usage{
 tung.pulse(r, q, dt)
@@ -16,7 +16,7 @@ tung.pulse(r, q, dt)
 }
 \details{
   Calculates, min, max of edges and center, then
-  models the pulse with a triangular pulse and integegrates.
+  models the pulse with a triangular pulse and integrates.
 }
 \value{
   vector=c(Ex[1], Ex[2], Ey[1], Ey[2], Cx, Cy, ar2, DefInt[1],
@@ -37,14 +37,19 @@ tung.pulse(r, q, dt)
 \seealso{peaks}
 \examples{
 
-\dontrun{
+
+if(interactive()){
 data(CE1)
 
 ex <- CE1$x[CE1$x>5.453291 &CE1$x< 5.507338]
 why <- CE1$y[CE1$x>5.453291 &CE1$x< 5.507338]
 plot(ex, why, type='l')
+
 tung.pulse(ex, why, CE1$dt)
+
+
 }
+
 
 
 }

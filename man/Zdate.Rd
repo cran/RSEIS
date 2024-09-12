@@ -9,9 +9,9 @@
  Make character vector from dates
 }
 \usage{
-Zdate(info, sel=1, t1=0, sep=':')
+Zdate(info, sel=1, t1=0, sep='_')
 dateList(datevec)
-dateStamp(datelist, sep=':')
+dateStamp(datelist, sep='_')
 }
 
 \arguments{
@@ -49,7 +49,7 @@ ftime  <-  Zdate(GH$info, sel[1:5], 1)
 
 dvec  <-  c(2009, 134, 5, 14, 10, 32, 24.5, 0)
 A  <-  dateList(dvec)
-dateStamp(A)
+dateStamp(A, sep=".")
 
 dateStamp(A, sep="_")
 

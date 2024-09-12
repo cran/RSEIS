@@ -1,6 +1,7 @@
 `DECIMATE.SEISN` <-
 function(TH, sel=1:length(TH$JSTR), dec=5 , type="LP", proto="BU" , fl=2,  fh=10, RM=FALSE, zp=TRUE  )
-  {
+{
+    #####  it type= FALSE, no filter 
     if(missing(sel)) { sel = 1:length(TH$JSTR) }
     if(missing(fh)) { fh=10 }
     if(missing(dec)) { dec=5 }
@@ -15,8 +16,23 @@ function(TH, sel=1:length(TH$JSTR), dec=5 , type="LP", proto="BU" , fl=2,  fh=10
         xamp[nacop] = mn
         
         dt = TH$dt[ii]
-        
-        ynew = butfilt(xamp, fl=fl, fh=fh, deltat=dt, type=type, proto=proto, RM=RM, zp=zp  )
+
+        if(!is.logical(type) )
+        {
+#####  type must be 'LP', 'HP' or 'BP', 'BR'
+            m =  match(type, c('LP', 'HP', 'BP', 'BR' ) )
+            if(is.na(m) )
+            {
+                stop('WRONG type designation for filter')
+                
+                }
+            ynew = butfilt(xamp, fl=fl, fh=fh, deltat=dt, type=type, proto=proto, RM=RM, zp=zp  )
+        }
+        else
+          {
+              ynew =xamp
+
+              }
         
         ynew[nacop] = NA
         TH$JSTR[[ii]] = ynew[seq(from=1, to=length(ynew), by=dec)]

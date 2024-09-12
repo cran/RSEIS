@@ -27,10 +27,16 @@ setstas(stafile)
 }
 
 \examples{
+data(GH)
 
-\dontrun{
-sta <- setstas("/pathto/stationfile")
-}
+tsta = GH$stafile
+
+tfile = tempfile()
+
+write.table(file=tfile, tsta, row.names=FALSE, col.names=FALSE )
+
+sta <- setstas(tfile)
+
 }
 
 

@@ -1,4 +1,4 @@
-getPDEscreen<-function(pde = '/home/lees/Site/Santiaguito/pdq.eqs')
+getPDEscreen<-function(pde = 'filename')
   {
     spde  = scan(file=pde, what="", sep="\n")
 

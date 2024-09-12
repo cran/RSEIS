@@ -27,8 +27,13 @@ index vector
 
 \examples{
 
-\dontrun{SEARCHPIX(KPX, IPX, tol = 0.5) }
+data(GH, package='RSEIS')
+IPX = data.frame( uwpfile2ypx(GH$pickfile ) )
+ 
+#######  take for example on pick
+KPX = IPX[6, ]
 
+SEARCHPIX(KPX, IPX, tol = 0.5)
 
 }
 

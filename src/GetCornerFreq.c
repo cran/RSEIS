@@ -56,7 +56,7 @@ double *advector(long nl)
 void free_advector(double *v)
 /* free a double vector allocated with advector() */
 {
-        Free( v);
+        R_Free( v);
 }
 
 

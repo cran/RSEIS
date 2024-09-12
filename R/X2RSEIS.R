@@ -33,8 +33,9 @@ X2RSEIS<-function(nh, g)
         outfile = pstamp[1]
         message(paste("Creating RSEIS GH file:", outfile ), sep="\n")
         
-        
-        save(file=paste(outfile, "GH.RDATA", sep="."), GH)
+          fout3 = paste(g$destir, paste(outfile, "GH.RDATA", sep="."), sep='/')
+          
+          save(file=fout3, GH)
 
         
          g$zloc = list(x=NULL, y=NULL) 

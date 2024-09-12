@@ -1,5 +1,5 @@
 `Zdate` <-
-function(info, sel=1, t1=0, sep=':' )
+function(info, sel=1, t1=0, sep='_' )
   {
     if(missing(sel)) { sel = 1:length(info$jd) }
     if(missing(t1)) { t1 = 0 }

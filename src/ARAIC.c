@@ -23,7 +23,7 @@ double *dvector(long nl)
 /* allocate a double vector with subscript range v[nl..nh] */
 {
         double *v;
-	v=(double *)Calloc((size_t) (nl) , double);
+	v=(double *)R_Calloc((size_t) (nl) , double);
 	
         if (!v) Rprintf("allocation failure in dvector()");
         return v;
@@ -33,7 +33,7 @@ void free_dvector(double *v)
 /* free a double vector allocated with dvector() */
 {
         /* free((FREE_ARG) (v+nl-NR_END)); */
-  Free( v );
+  R_Free( v );
 }
 
 /** FUNC DEF */ void memcof(double  data[], int n, int m, double  *xms, double  d[])

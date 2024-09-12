@@ -72,7 +72,7 @@ npoles=5 )
 
 
 ###  try plotting:
-\dontrun{
+
 ### the above, by default, is zero phase.
 #####  next filter with non-zero-phase
 z2  <-  butfilt(ts1, fl=1, fh=15,  deltat=CE1$dt, type="LP" ,  proto="BU",
@@ -88,9 +88,6 @@ plot(ex[ex<0.5],  ts1[ex<0.5], type='l')
 lines(ex[ex<0.5], zz[ex<0.5], col='red')
 lines(ex[ex<0.5], z2[ex<0.5], col='blue')
 
-
-
-}
 
 
 }

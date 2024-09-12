@@ -50,17 +50,26 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 \seealso{read1sac, read1segy, sac2rseis, prepSEIS
 }
 \examples{
-\dontrun{
-
-fnames =
-list.files(path="./SEISMIC_DATA/KARYMSKY/1999/kar99/Day254",
-pattern="", full.names=TRUE )
-
-MANY = segy2rseis(fnames, Iendian=1 , HEADONLY=FALSE,
-    BIGLONG=FALSE,  PLOT=1, RAW=FALSE )
 
 
-}
+#####  make some SAC files, then read them in
+data(GH)
+apath = tempdir()
+##  setwd(apath)
+## apath = 'TEMP'
+J =  rseis2sac(GH, sel =1:5,  path = apath, BIGLONG =FALSE )
+Iendian = .Platform$endian
+####### next read them in
+Lname  <-  list.files(path=J , pattern='SAC', full.names=TRUE)
+
+H = sac2rseis(Lname , Iendian =Iendian , HEADONLY = FALSE,
+BIGLONG = FALSE, PLOT = -1, RAW = FALSE)
+
+####  should have 5 traces, look at elements of the first one:
+names(H[[1]])
+
+plotGH(H[[1]])
+
 
 }
 \keyword{misc}

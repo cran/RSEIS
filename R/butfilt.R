@@ -22,10 +22,23 @@ function(a, fl=0, fh=0.5, deltat=1, type="BP", proto="BU", npoles=5, chebstop=30
    #####  float ts:      time sample interval in secs (e.g.,0.01 = 100 samp/sec)
    #####                (SAC default = 0.01)
    ###    checks to avoid problems
+    available.types =  c('LP', 'HP', 'BP', 'BR' )
 
+    
   if(missing(npoles)) { npoles=5 }
   if(missing(proto)) { proto="BU" }
-  if(missing(type)) { type="BP" }
+    if(missing(type)) { type="BP" }
+  
+    m =  match(toupper(type) ,  available.types  )
+    if(is.na(m))
+    {
+        warning("Incorrect type provided: setting to DEFAULT= BP")
+        type = "BP"
+    }
+    else
+    {
+     type =   toupper(type)
+        }
     if(missing(deltat)) { deltat = 1 }
 
 #####  fh can not be higher than nyquist frequency

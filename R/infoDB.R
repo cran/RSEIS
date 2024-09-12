@@ -67,21 +67,21 @@ infoDB<-function(DB, verbose=TRUE)
     
     if(verbose==TRUE)
     {
-        cat("Unique Stations:\n")
-    cat(usta, sep=" "); cat("\n")
-    cat("Unique Components:\n")
-    cat(ucomp, sep=" "); cat("\n")
-    cat("Times(jd):\n")
-    cat(times, sep=" "); cat("\n")
-
-        cat("Dates 1:\n")
-        cat(D1, sep="\n")
-        cat(D2, sep="\n")
-        cat('####', sep="\n")
-        cat("Dates Gregorian:\n")
-        cat(CAL1, sep="\n")
-        cat(CAL2, sep="\n")
-
+        message("Unique Stations:")
+        message(paste(usta, collapse=' ') ); 
+        message("Unique Components:")
+        message(paste(ucomp, collapse=" ") )
+        message("Times(jd):")
+        message(paste(times, collapse=" "))
+        
+        message("Dates 1:")
+        message(D1 )
+        message(D2 )
+        message('####' )
+        message("Dates Gregorian:")
+        message(CAL1 )
+        message(CAL2 )
+        
 
         
     }

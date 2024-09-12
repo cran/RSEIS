@@ -1,6 +1,7 @@
 `ReadSet.Instr` <-
 function(file)
-  {
+{
+    #####  modification made to get rid of the upper lower case
     ##  cmd = paste(sep=" ","cat ", file)
     ##    INSTF = system(cmd, intern=TRUE)
 
@@ -33,9 +34,12 @@ function(file)
 
 
     i.zeros = 1
-    
-    i.zeros = grep('ZEROS', INSTF)
-    i.poles = grep('POLES', INSTF)
+
+      INSTF = tolower(INSTF)
+      
+      i.zeros = grep('zeros', INSTF)
+      
+    i.poles = grep('poles', INSTF)
 
     poles = NULL
     zeros = NULL
@@ -80,15 +84,27 @@ function(file)
       }
     ip= np+nz+2+1
 
-    i.K = grep('CONSTANT', INSTF)
-    i.SENSE = grep('SENSE', INSTF)
+   #######  several synonyms for the constant
+    i.K =  which( grepl('constant', INSTF) |
+                  grepl('norm', INSTF)|
+                  grepl('knorm', INSTF) ) 
 
-
-    
-    a = unlist(strsplit(INSTF[i.K],split=' '))
+    ####  take the first instance 
+    a = unlist(strsplit(INSTF[i.K[1] ],split=' '))
+    a = a[a!='']
     Knorm =  as.numeric(a[2])
-    ip= ip+1
-    a = unlist(strsplit(INSTF[i.SENSE],split=' '))
+
+
+
+#######  several synonyms for the sensitivity
+    i.SENSE1 = grepl('sense', INSTF)
+    i.SENSE2 = grepl('sensitivity', INSTF)
+
+    i.SENSE =which( i.SENSE1  | i.SENSE2)
+    
+  
+    a = unlist(strsplit(INSTF[ i.SENSE[1] ],split=' '))
+    a = a[a!='']
     Sense =  as.numeric(a[2])
     return(list(np=np, poles=poles, nz=nz, zeros=zeros, Knorm=Knorm, Sense=Sense, Comments=COMMENTS))
     

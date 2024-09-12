@@ -25,6 +25,7 @@ rdistaz(olat, olon, tlat, tlon)
 }
 \details{
 
+  The azimuth is returned in degrees from North.
   
   Program is set up for one origin (olat, olon) pair and many
   target (tlat, tlon) pairs given as vectors.
@@ -76,6 +77,30 @@ targ[3,1] <-  -91.3
 
 
 rdistaz(org[1], org[2], targ[,1], targ[,2])
+###########
+### New York and Chapel Hill
+NY =list(lat=40.6698,  lon=286.0562)
+CH = list(lat=35.92761, lon=280.9594)
+##    h = GEOmap::distaz(CH$lat, CH$lon, NY$lat, NY$lon)
+h = rdistaz(CH$lat, CH$lon, NY$lat, NY$lon)
+
+####### get great circle ray path
+RAY =  GEOmap::getgreatarc(CH$lat, CH$lon, NY$lat, NY$lon, 100)
+#### get great circle through north pole
+Nor1 =  GEOmap::getgreatarc(CH$lat, CH$lon, 90,  CH$lon,   100)
+PROJ = GEOmap::setPROJ(2, CH$lat, CH$lon)
+RAY.XY = GEOmap::GLOB.XY(RAY$lat, RAY$lon, PROJ)
+Nor1.XY = GEOmap::GLOB.XY(Nor1$lat, Nor1$lon, PROJ)
+ VEE1 = c(Nor1.XY$x[2]-Nor1.XY$x[1], Nor1.XY$y[2]-Nor1.XY$y[1])
+     VEE2 = c(RAY.XY$x[2]-RAY.XY$x[1], RAY.XY$y[2]-RAY.XY$y[1] )
+     VEE1 = VEE1/sqrt(sum(VEE1^2) )
+VEE2 =  VEE2/sqrt(sum(VEE2^2) )
+######  get angle from north:
+ ANG =    acos( sum(VEE1*VEE2)     ) *180/pi
+####   compare with h
+
+print(paste(h$az, ANG, h$az-ANG) )
+
 
 
 }

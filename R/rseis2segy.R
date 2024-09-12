@@ -71,14 +71,24 @@ rseis2segy<-function(GH, sel=1, win=c(0,1), path=".", BIGLONG=FALSE )
         setwd(newdir)
       }
     else
-      {
-        tdir = dir.create(newdir, recursive=TRUE )
-        if(tdir==TRUE) { setwd(newdir)  }
-        else
-          {
-            warning("ERROR: CANNOT create or write in this directory")
-          }
-      }
+        {
+            if(!dir.exists(newdir) )
+            {
+                tdir = dir.create(newdir, recursive=TRUE )
+            }
+            else
+            {
+                tdir = TRUE
+            }
+            if(tdir==TRUE)
+            {
+                setwd(newdir)
+            }
+            else
+            {
+                warning("ERROR: CANNOT create or write in this directory")
+            }
+        }
 
 
     ############# for back compatability, need something in here if its missing
@@ -165,15 +175,15 @@ rseis2segy<-function(GH, sel=1, win=c(0,1), path=".", BIGLONG=FALSE )
   
          if(any(is.na(sig) ) )
             {
-                cat('ERROR!', sep='\n')
-                 cat(paste(c(i,scalefac, range(sig, na.rm=TRUE) ), collapse= ' ') , sep='\n')
+                message('ERROR!')
+                message(paste(c(i,scalefac, range(sig, na.rm=TRUE) ), collapse= ' ') , sep='\n')
 
                 break
             }
 
         a1 =  initsegy()
 
-###  cat(paste("a1$HEAD$",SEGYhead.names,"=",  sep="")  , sep="\n")
+###  message(paste("a1$HEAD$",SEGYhead.names,"=",  sep=""))
 
         sec = floor(STARTDATE$sec)
         msec = (STARTDATE$sec - sec)*1000
@@ -243,12 +253,12 @@ rseis2segy<-function(GH, sel=1, win=c(0,1), path=".", BIGLONG=FALSE )
           "SEGY")
 
 
-        cat(segyfn, sep='\n')
-        ########cat(paste(c(i, scalefac, range(sig) , range(a1$amp) ), collapse= ' ') , sep='\n')
+        message(segyfn )
+### message(paste(c(i, scalefac, range(sig) , range(a1$amp) ), collapse= ' ') )
 
         ######################  write out the SEGY file
         write1segy(a1, fn=segyfn , BIGLONG=BIGLONG  )
-        ###  cat('done write1segy1' , sep='\n')
+        ###  message('done write1segy1' )
       }
 
 

@@ -24,7 +24,7 @@ getANSS<-function(fn, skip=2)
     labs = unlist( strsplit( send1[1], split=" ") )
     labs = labs[labs!=""]
 
-    send1 = send1[3:length(send1)]
+   ##  send1 = send1[1:length(send1)]
     s1 = strsplit( send1, split=" ")
 
     anss = list(yr=0, dom=0, mo=0, hr=0, mi=0, sec=0, lat=0, lon=0, z=0, mag=0)
@@ -50,7 +50,7 @@ getANSS<-function(fn, skip=2)
         anss$mo[i] = d1[2]
         anss$dom[i] = d1[3]
         anss$hr[i] = t1[1]
-        anss$mi=t1[2]
+        anss$mi[i]=t1[2]
         anss$sec[i] = t1[3]
         anss$lat[i] = lat
         anss$lon[i] = lon

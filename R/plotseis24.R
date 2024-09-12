@@ -1,9 +1,15 @@
-plotseis24<-function(JJ, dy=1/18, FIX=24, SCALE=0, FILT=list(ON=FALSE, fl=0.05 , fh=20.0, type="BP", proto="BU"), RCOLS=c(rgb(0.2, .2, 1), rgb(.2, .2, .2))  , add=FALSE )
+plotseis24<-function(JJ, dy=1/18, FIX=24, SCALE=0,
+                     FILT=list(ON=FALSE, fl=0.05 , fh=20.0, type="BP", proto="BU"),
+                     RCOLS=c(rgb(0.2, .2, 1), rgb(.2, .2, .2))  , add=FALSE )
   {
     if(missing(FIX)) { FIX=24 }
     if(missing(dy)) { dy  = 1/18 }
 
-    if(missing(RCOLS)) { RCOLS = c(rgb(0.2, .2, 1), rgb(.2, .2, .2),"tomato3","royalblue","forestgreen","blueviolet","tan3","lightseagreen","deeppink","cyan3","bisque3","magenta1","lightsalmon3","darkcyan") }
+    if(missing(RCOLS)) { RCOLS = c(rgb(0.2, .2, 1), rgb(.2, .2, .2),
+                                   "tomato3","royalblue","forestgreen",
+                                   "blueviolet","tan3","lightseagreen",
+                                   "deeppink","cyan3","bisque3","magenta1",
+                                   "lightsalmon3","darkcyan") }
     
 
     if(missing(SCALE )) { SCALE = 0 }  ###   SCALE=0 scale by trace, !=0 scale by page
@@ -24,7 +30,10 @@ plotseis24<-function(JJ, dy=1/18, FIX=24, SCALE=0, FILT=list(ON=FALSE, fl=0.05 ,
     gcol = rgb(.8, 1, .8)
    
  rcol = RCOLS
-    
+
+     oldpar <- par(no.readonly = TRUE)
+      on.exit(par(oldpar))
+      
     par(mar=c(5, 4, 4, 4)+0.1,  xaxs='i', yaxs='i', lwd=0.5, bty="u")
 
     
@@ -47,7 +56,8 @@ plotseis24<-function(JJ, dy=1/18, FIX=24, SCALE=0, FILT=list(ON=FALSE, fl=0.05 ,
     maxy = rep(NA, length(24))
 
     
-    
+############  filter the traces here
+######################
     for(i in 1:24 )
       {
         
@@ -74,7 +84,9 @@ plotseis24<-function(JJ, dy=1/18, FIX=24, SCALE=0, FILT=list(ON=FALSE, fl=0.05 ,
            ###      message("filtering")
                 if(!any(is.na(ked)))
                   {
-                      fy = butfilt(ked,fl=FILT$fl, fh=FILT$fh , deltat = adt, type=FILT$type , proto=FILT$proto , RM=FILT$RM, zp=FILT$zp )
+                      fy = butfilt(ked,fl=FILT$fl, fh=FILT$fh ,
+                                   deltat = adt, type=FILT$type ,
+                                   proto=FILT$proto , RM=FILT$RM, zp=FILT$zp )
                   }
                 else
                   {
@@ -93,13 +105,16 @@ plotseis24<-function(JJ, dy=1/18, FIX=24, SCALE=0, FILT=list(ON=FALSE, fl=0.05 ,
               }
             
           }
+
+          #######  remove mean 
         fy = fy-mean(fy, na.rm=TRUE)
         miny[i] = min(fy, na.rm=TRUE)
         maxy[i]  = max(fy, na.rm=TRUE)
         JJ$sigs[[i]] = fy
             
       }
-  
+######################
+######################
 
 
 bigmax = max(maxy, na.rm=TRUE)
@@ -219,6 +234,6 @@ if(FILT$ON==TRUE)
 
 
     
-    
-    invisible(list( x=xa, y=tix,  yr=JJ$yr[1],  jd=JJ$jd[1] ))
+    mypar= par(no.readonly = TRUE)
+    invisible(list( x=xa, y=tix,  yr=JJ$yr[1],  jd=JJ$jd[1], mypar=mypar  ) )
   }

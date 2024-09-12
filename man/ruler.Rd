@@ -27,10 +27,10 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
   
 \examples{
 
-\dontrun{
 aa <- paste(runif(n=5), collapse='-')
+aa = substr(aa, 1, 72)
 ruler(aa)
-}
+
 
 }
 \keyword{misc}

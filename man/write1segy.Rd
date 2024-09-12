@@ -3,7 +3,7 @@
 \alias{write1sac}
 
 
-\title{Write One segy file
+\title{Write One segy/sac  file
 }
 \description{
   Write out one segy binary format file.
@@ -46,14 +46,29 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 \seealso{rseis2segy, read1sac, read1segy
 }
 \examples{
+
 \dontrun{
-tdir = tempdir()
+ theENDIAN =  .Platform$endian
+BIGLONG = FALSE
+###  write1segy is in rseis2segy
+data(KH)
+apath = tempdir()
+J = rseis2segy(KH, sel=1, path=apath, BIGLONG=BIGLONG )
+L = list.files(path=J, full.names=TRUE)
 
-bed =  read1segy(fn1   , Iendian = 1 , HEADONLY=FALSE, BIGLONG=FALSE)
+Z = read1segy(L[1], Iendian = theENDIAN, HEADONLY = FALSE, BIGLONG = BIGLONG)
+plot(Z$amp, type='l')
 
-haname =  write1segy(bed  , fn=paste(tdir,"jimmy.SEGY", sep='/') , BIGLONG=FALSE)
+##########   same with SAC files:
+J =  rseis2sac(KH, sel = 1, win = c(0, 1), path = apath, BIGLONG = BIGLONG)
+L = list.files(path=J, pattern='.SAC', full.names=TRUE)
+
+Z = read1sac(L[1], Iendian = theENDIAN, HEADONLY = FALSE, BIGLONG = BIGLONG)
+
+plot(Z$amp, type='l')
 
 }
+
 
 }
 \keyword{misc}

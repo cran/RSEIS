@@ -47,24 +47,17 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 \seealso{write1sac, write1segy, sac2rseis, segy2rseis, prepSEIS
 }
 \examples{
-\dontrun{
 
-fnames = list.files(path="/Users/lees/Site/Buf2014/ALL_SEGY",
-                                     pattern=NULL, full.names=TRUE )
+data(GH)
+theENDIAN =.Platform$endian
 
-for(i in 1:length(fnames))
-{
-fn1  = fnames[i]
+apath = tempdir()
+J = rseis2segy(GH, sel=1:5,  path=apath , BIGLONG=FALSE )
 
-bed =  read1segy(fn1   , Iendian = 1 , HEADONLY=TRUE, BIGLONG=FALSE)
-scaly[i] =  bed$HEAD$scale_fac
-print(paste(i, fn1, bed$HEAD$station_name , bed$HEAD$channel_name,
-       bed$HEAD$scale_fac, bed$HEAD$gainConst)  )
+Lname  <-  list.files(path=J , pattern='SEGY', full.names=TRUE)
 
-}
-
-
-}
+zed = read1segy(Lname[1], Iendian = theENDIAN,
+     HEADONLY = FALSE, BIGLONG = FALSE)
 
 }
 \keyword{misc}

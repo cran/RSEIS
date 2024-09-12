@@ -71,7 +71,6 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 \examples{
 
 
-\dontrun{
 data(KH)
 ###   swig(KH)
 
@@ -83,13 +82,14 @@ fl <- 0        ###  low frequency to return
 fh <- 12     ###  high frequency to return
  dt  <-  KH$dt[1]
 
+####  shorten the signal here, just for speed on the example:
+sig = Xamp[37501:75001]
 
-EV <-   MTMgabor(Xamp, dt = dt, numf =Nfft , Ns = Ns, Nov = Nov, fl = fl, fh= fh)
+EV <-   MTMgabor(sig, dt = dt, numf =Nfft , Ns = Ns, Nov = Nov, fl = fl, fh= fh)
 
 PE   <- plotevol(EV, log=1, fl=0.01, fh=fh, col=rainbow(100),
               ygrid=FALSE, STAMP="", STYLE="ar")
 
-}
 
 
 }

@@ -27,17 +27,19 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 \seealso{swig, Mine.seis, prepSEIS
 }
 \examples{
-\dontrun{
+
 #######  say you have 2 databases - extract from each:
-GH = Mine.seis(at1, at2, DB1, grepsta, grepcomp, kind = -1)
-JH = Mine.seis(at1, at2, DB2, grepsta, grepcomp, kind = -1)
+####GH = Mine.seis(at1, at2, DB1, grepsta, grepcomp, kind = -1)
+####JH = Mine.seis(at1, at2, DB2, grepsta, grepcomp, kind = -1)
 #### merge the 2 structures
-BH = combineSEIS(GH, JH)
+
+data(KH)
+
+MH = KH
+
+BH = combineSEIS(KH, MH)
 ###### plot and interact
-swig(BH)
-
-}
-
+swig(BH, SHOWONLY=TRUE )
 
 }
 \keyword{misc}

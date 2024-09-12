@@ -31,11 +31,14 @@ RSEIS list
   prepSEIS
 }
 \examples{
+if(interactive()){
+data(GH)
 
-\dontrun{
-
+#### click twice and  select the XTR button
 P1 <- swig(GH)
+
 LH <- P2GH(P1)
+L1 <- swig(LH)
 
 }
 

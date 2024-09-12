@@ -34,10 +34,17 @@ swig.ALLPX(t0, STNS, COMPS, YPX, PHASE = NULL, POLS = TRUE,
 \seealso{PLOT.SEISN, swig}
 \examples{
 
+#####  this example needs some work:
+data(GH)
+WPX = uwpfile2ypx(GH$pickfile)
 
-\dontrun{
-swig.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE,
-FORCE=forcepix) }
+swig(GH, SHOWONLY=TRUE )
+
+swig.ALLPX(GH$pickfile$LOC  , GH$STNS, GH$COMPS, WPX, PHASE='P',
+FORCE=TRUE)
+
+
+
 
 }
 

@@ -98,57 +98,39 @@ FmakeDB(LF2, kind =1, Iendian=1, BIGLONG=FALSE)
 
 \seealso{setupDB, Mine.seis , getseis24, plotseis24, EPOCHday, swig}
 \examples{
-\dontrun{
-
-#####  set directory
-path <- '/home/lees/Site/Santiaguito/SG09'
-pattern <- "R0*"
-
-###   get DB information
-XDB  <-  makeDB(path, pattern, kind =1)
-
-##### select a station
-usta <- "CAL"
-acomp <- "V"
-
-#####   extract 24 hours worht of data
-JJ <- getseis24(DB, 2009, 2, usta, acomp, kind = 1)
 
 
-#####  plot 24 hours worth of data
+##########  to illustrate, we make a set of individual seismograms
+data(GH)
+L1 = length(GH$JSTR)
+DD = data.frame(GH$info)
 
-pjj <- plotseis24(JJ, dy=1/18, FIX=24, SCALE=0,
-FILT=list(ON=FALSE, fl=0.05 , fh=20.0, type="BP", proto="BU"),
-RCOLS=c(rgb(0.2, .2, 1), rgb(.2, .2, .2))  )
+GIVE = vector(mode='list')
 
-
-###  window a small portion on 24 hour display
-w <- winseis24(pjj)
-
-###  open a new window
-X11()
-VNE <- c("V", "N", "E")
-###  IJK <- c("I", "J", "K")
-
-gsta <- c("CAL", "KAM", "DOM",  "LAV")
-
-ucomp<-VNE
-
-###  or:   ucomp<-IJK
-
-###   set epoch day and get the times
- eday <- EPOCHday(w$yr, jd = w$jd, origyr = DB$origyr)
-
-##  using epoch day, set times for beginning and end of window
-        at1 <- eday$jday + (w$hr[1])/24
-        at2 <- eday$jday + (w$hr[2])/24
-###  extract data from the data base:
-        GH <- Mine.seis(at1, at2, DB, gsta, ucomp)
-
-###  show data:
-        swig(GH)
-
+for(i in 1:L1)
+{
+AA = DD[i,]
+GIVE[[i]] = list(fn = AA$fn, sta =GH$STNS[i] , comp = GH$COMP[i], 
+            dt = AA$dt, DATTIM = AA, N = AA$n1, units = NA, 
+            coords = NA, amp = GH$JSTR[[i]]  )
 }
+
+###########  save the seismic data in a temporary directory
+####   each trace in a separate file
+tdir = tempdir()
+for(i in 1:length(GIVE) )
+{
+    sig = GIVE[[i]]
+  d1 =  dateStamp(sig$DATTIM, sep='_')
+   nam1 =  paste(d1,sig$sta, sig$comp, sep='_')
+    nam2 = paste0(nam1, '.RDS')
+    nam3 = paste(tdir, nam2, sep='/')
+    saveRDS(file=nam3, sig) 
+    }
+
+########################  Now  read files and make the DataBase:
+LF  = list.files(path=tdir,pattern='.RDS',  full.names=TRUE)
+DB = FmakeDB(LF, kind=-1)
 
 
 }

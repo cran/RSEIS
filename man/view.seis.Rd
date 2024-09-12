@@ -5,7 +5,9 @@
 }
 \usage{
 view.seis(aday, ihour, inkhour, SAVEFILE, days,
-DB, usta, acomp,  STDLAB =c("QUIT",  "NEXT", "PREV", "HALF"),
+DB, usta, acomp,
+STDLAB =c("QUIT",  "NEXT", "PREV", "HALF"),
+kind = -1, Iendian=1, BIGLONG=FALSE,
 TZ=NULL)
 }
 \arguments{
@@ -20,12 +22,25 @@ TZ=NULL)
   \item{STDLAB}{vector of buttons,  DEFAULT = c("QUIT",  "NEXT", "PREV", "HALF",  "WPIX", "zoom out",
          "refresh", "restore",  "SPEC", "SGRAM" ,"WLET", "FILT",
          "Pinfo", "WINFO") }
+  \item{kind}{an integer -1, 0, 1, 2 ; 0="RDATA" , -1="RDS", 0="RDATA", 1 = "segy",
+    2 = "sac", see notes below}
+  \item{Iendian}{ vector,   Endian-ness of the data: 1,2,3: "little", "big", "swap".
+    Default = 1 (little)
+  }
+  \item{BIGLONG}{ logical, TRUE=long=8 bytes
+  }
+   
   \item{TZ}{Number of hours to add to GMT to get local time}
 }
 \details{
   The program view.seis assumes the data is stored in files accessable
   by the user and that the DB list has been scanned
   in and parsed.
+
+   "kind" can be numeric or character: options are
+   'RDS', 'RDATA', 'SEGY', 'SAC', corresponding to (-1, 0, 1, 2)
+   
+
   
 }
 \value{
@@ -41,82 +56,53 @@ TZ=NULL)
 \seealso{swig, save.wpix}
 \examples{
 
-\dontrun{
+if(interactive() ) {
 
+data(KH)
 
-##############  method one:
-#######  read in data base from files:
-DB  <- scan(file="/home/lees/Site/Santiaguito/SG09/segyDB", list(fn="",
-yr=0, jd=0, hr=0, mi=0, sec=0, dur=0))
+amp = KH$JSTR[[1]]
+OLDdt = KH$dt[1]
+newdt = 0.1
+yr = 2000
+GIVE = FAKEDATA(amp, OLDdt=0.01, newdt = 0.1, yr = 2000,
+         JD = 4, mi = 12, sec = 0,  Ntraces = 24*3,
+seed=200, noise.est=c(1, 100) , verbose=TRUE  )
 
+tdir = tempdir()
+for(i in 1:length(GIVE) )
+{
+    sig = GIVE[[i]]
+  d1 =  dateStamp(sig$DATTIM,  sep='_')
+   nam1 =  paste(d1,sig$sta, sig$comp, sep='_')
+    nam2 = paste0(nam1, '.RDS')
+    nam3 = paste(tdir, nam2, sep='/')
+    saveRDS(file=nam3, sig) 
+    }
 
-##  note: the file name includes the station SMI and the component J
+########################  Now  read files and make the DataBase:
+LF  = list.files(path=tdir, pattern='.RDS', full.names=TRUE)
 
-##########  extract names of stations and components
-das1  <- substr(DB$fn, 58, 60)
-comp1 <- substr(DB$fn, 62,62))
+DB = FmakeDB(LF, kind=-1)
 
-###########  set up times (start and end) in julian days for selection
- DB$t1 <- DB$jd + DB$hr/24 + DB$mi/(24*60) + DB$sec/(24*3600)
-DB$t2 <- DB$t1 + DB$dur/(24*3600)
+IDB = infoDB(DB)
 
-
-#######   method 2:
-
-DB <- makeDB("/Users/lees/Site/Santiaguito/SG09", pattern = "R", kind = 1)
-udays <- unique(paste(DB$yr, DB$jd))
-sdays <-  as.numeric( unlist( strsplit(udays, split=" ") ) )
-
-
-ye <- sdays[seq(from=1, to=length(sdays), by=2)]
-d  <- sdays[seq(from=2, to=length(sdays), by=2)]
-o <- order(ye+d/366)
-
-days <- list(yr = ye[o], jd=d[o])
-
-
-
- das1  <- DB$sta
-  comp1 <-  DB$comp
-
-#######   get unique stations from list:
-usta <- unique(das1)
-
-###########   choose the desired components 
-acomp <- c('I','V')
-
-####   aday refers to one of the days listed in the days structure
-
-
-###  days is a list of days (and associated years) that are in teh DB
-days <- list(jd=c(365,366, 1,2,3,4), yr=c(2008, 2008, rep(2009, times=4)))
-
-
-#### extract days from the DB list:
-udays <- unique(paste(DB$yr, DB$jd))
-sdays <-  as.numeric( unlist( strsplit(udays, split=" ") ) )
-ye <- sdays[seq(from=1, to=length(sdays), by=2)]
-d  <- sdays[seq(from=2, to=length(sdays), by=2)]
-o <- order(ye+d/366)
-
-days <- list(yr = ye[o], jd=d[o])
-
-####
-
-aday <- 3
-SAVEFILE <- 'wpix.out'
+pday <- 5
+SAVEFILE <- tempfile()
 ihour <- 15
 inkhour <- .5
 
+ ###  days is a list of days (and associated years) that are in teh DB
+     days <- list(jd=c(4, 5, 6), yr=c(2000, 2000, 2000) )
+     aday = which(pday == days$jd)
+
+
 ####   aday refers to one of the days listed in the days structure
 
 
-view.seis(aday, ihour, inkhour, SAVEFILE, days, DB, usta, acomp, TZ=(-6))
-
+view.seis(aday, ihour, inkhour, SAVEFILE, days, DB, IDB$usta, IDB$ucomp, TZ=(-6))
 
 
 }
-
 
 
 }

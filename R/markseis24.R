@@ -8,7 +8,13 @@ markseis24<-function(pjj, pix =list(yr=2009, jd=1, hr=0, mi=0, sec=0, dur=0), co
   if(missing(ARROWS)) { ARROWS=TRUE }
   if(missing(lwd)) {lwd=1  }
 
-  alen = 0.06
+    oldpar <- par(no.readonly = TRUE)
+    on.exit(par(oldpar))
+    
+    par(pjj$mypar)
+    
+    
+    alen = 0.06
   jd = pjj$jd
   yr = pjj$yr
 

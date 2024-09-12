@@ -1,5 +1,5 @@
 getPDEcsv <-
-function(pde = '/home/lees/Site/Santiaguito/pdq.eqs')
+function(pde = 'filename')
   {
 
 

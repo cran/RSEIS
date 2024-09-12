@@ -65,55 +65,21 @@ JGET.seis  extracts digital seismic data from binary files
 \seealso{JGET.seis, JSAC.seis , Mine.seis
 }
 \examples{
+Iendian = .Platform$endian
+data(GH)
 
-\dontrun{
+##########  create some SAC files:
+apath = tempdir()
+J =  rseis2sac(GH, sel = 1:5, path = apath, BIGLONG =FALSE )
+####  get SAC file file names:
+Lname  <-  list.files(path=J , pattern='SAC', full.names=TRUE)
 
-############   example of different scenarios
-###  make list of the files
-fls <- list.files(path="/home/lees/SAC", pat="sac")
-
-###  convert them to R
-
-####   was created on a little endian machine
-###          and is being read on a little endian
-convert2Rseis(fls, NEWDIR = "/home/lees/MY_RDATA", kind = 2,
- Iendian = "little", BIGLONG = FALSE)
-
-
-####   was created on a little endian machine
-###     and is being read on a big endian
-convert2Rseis(fls, NEWDIR = "/home/lees/MY_RDATA",
-kind = 2, Iendian = "swap", BIGLONG = FALSE)
-
-####   was created on a little endian machine and is being read on a big
-####                       endian, with  the 64 bit machine used LONG=8
-convert2Rseis(fls, NEWDIR = "/home/lees/MY_RDATA",
-kind = 2, Iendian = "swap", BIGLONG = TRUE)
-
-
-F90dir <- "/mnt/flash/FUEGO/2009/F900"
-kfl <- list.files(path=F90dir, full.names=TRUE)
-
-bname <- basename(kfl)
-
-###  now we want to convert the station names
-
-###  extract the STA name from the file names:
-STA <- unlist( lapply(  strsplit(split="\\.", bname), getmem , 3) )
-###   extract comp name - in this case needs further extraction
-COMP1 <- unlist( lapply(  strsplit(split="\\.", bname), getmem , 4) )
-COMP <- substr(COMP1, 3, 3)
-
-convert2Rseis(kfl, NEWDIR="/home/lees/Site/Fuego/2009",
-kind <- 2, Iendian="swap" , BIGLONG=FALSE, NEWsta=STA, NEWcomp=COMP )
-
-
-
-
-
-
-}
-
+#####   convert each file to a saved RSEIS file, saved in apath
+####  reading in SAC files, kind=2
+convert2Rseis(Lname, NEWDIR = apath, kind = 2, Iendian = Iendian, BIGLONG =
+FALSE )
+####  check if files are there
+list.files(path=apath)
 
 }
 \keyword{misc}

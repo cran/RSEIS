@@ -1,4 +1,4 @@
-filedatetime<-function (orgtim, tims=0, datesep="-", timesep=":", secsep="_" ) 
+filedatetime<-function (orgtim, tims=0, datesep="-", timesep="_", secsep="_" ) 
 {
  ###   orgtime is a vector c(yr, jd, hr, mi, sec)
   if(is.list(orgtim))

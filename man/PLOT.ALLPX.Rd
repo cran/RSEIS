@@ -35,9 +35,18 @@ PLOT.ALLPX(t0, STNS, COMPS, YPX, PHASE = NULL, POLS = TRUE,
 \examples{
 
 
-\dontrun{
-PLOT.ALLPX(Torigin, STNS, COMPS, WPX, PHASE=PHASE,
-FORCE=forcepix) }
+data(GH)
+
+WPX = data.frame(GH$pickfile$STAS)
+T0 = data.frame(GH$info)[1,]
+
+sel = which(GH$COMPS=='V')
+ PLOT.SEISN(GH, sel=sel)
+
+PLOT.ALLPX(T0, GH$STNS, GH$COMPS, WPX, PHASE='P',FORCE=TRUE)
+
+
+
 
 }
 

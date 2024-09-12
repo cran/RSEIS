@@ -1,5 +1,5 @@
 `dateStamp` <-
-function(datelist, sep=":")
+function(datelist, sep="_")
   {
 
 if(is.null(datelist$msec)) { datelist$msec = rep(0, length(datelist$sec) ) }

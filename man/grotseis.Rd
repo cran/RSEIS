@@ -13,16 +13,23 @@ grotseis(ang, flip = FALSE)
 }
 
 \arguments{
-  \item{ang}{Angle to rotate horizontal components, degrees}
+  \item{ang}{Angle to rotate horizontal components, degrees from North}
   \item{flip}{Logical, TRUE=flip the vertical axis, default=FALSE}
 }
 \details{
   Returns a 3 by 3 matrix used for rotationg a 3-component seismic
-  record, usually stored as an N by 3 matrix.  Only the N-E components
-  are rotated, North component is assumed to be in position 2
-  and the east compnent is assumed to be in position 3.
-  The vertical component can be flipped.
+  record, usually stored as an N by 3 matrix.
+  
+  Only the N-E components  are rotated, although the vertical component can be flipped.
 
+  It is important to note the order components are introduced in the
+  rotation matrix.
+  Here we assume East is X (to the right), and North is Y (to the top).
+
+  For data that has (V,N,E) as  (1,2,3) need to switch components (1,3,2)
+
+  For data with  (V,E,N) use the normal  (1,2,3)
+  
   If Back-Azimuth is used, radial is directed towards the source. If azimuth is used,
   radial is directed away from the source.
   

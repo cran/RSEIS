@@ -98,7 +98,7 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 }
 \examples{
 
-\dontrun{
+if(interactive()){
 
 MYFUNC<-function(nh, g)
   {

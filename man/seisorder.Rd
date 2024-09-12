@@ -42,7 +42,7 @@ staf$dist <- d1$dkm
 
 sorder <- seisorder(GH, staf, VNE= c("V", "N", "E"))
 
-\dontrun{
+if(interactive()){
 swig(GH, sel=sorder)
 }
 

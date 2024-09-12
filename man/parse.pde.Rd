@@ -32,4 +32,17 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 \seealso{getPDEcsv, getPDEscreen
 }
 
+
+\examples{
+######  copy/paste  from the screen dump at the NEIC web site
+
+
+K = c(
+' PDE-Q  2008  12 31 053408.80  40.11  -77.00   1  2.4 LgGS    ... ....... ',      
+' PDE-Q  2008  12 31 084757.50  46.75  154.41  14  4.9 mbGS    ... ....... ')      
+
+G = parse.pde(K[1])
+
+}
+
 \keyword{misc}

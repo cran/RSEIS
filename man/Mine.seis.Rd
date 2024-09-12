@@ -93,25 +93,45 @@ BIGLONG=FALSE, CHOP=TRUE, verbose=FALSE, chtoken=NULL, statoken=NULL, RAW=FALSE)
 
 \examples{
 
-\dontrun{
+data(GH)
 
-#######   Assume  k97DB already exists
-for(i in 1:24)
+DD = data.frame(GH$info)
+
+#### get only vertical traces
+WV = which( GH$COMPS=='V' )
+L1 = length(WV)
+
+GIVE = vector(mode='list')
+
+for(j in 1:L1 )
 {
-at1 <- 232+(i-1)/24
-at2 <- at1+1/24
-
-GH <- Mine.seis(at1, at2, k97DB, "kar1", c("4", "1") )
-w <- swig(GH)
-if(identical(w$but, "QUIT"))break
+    i = WV[j]
+    AA = DD[i,]
+    GIVE[[j]] = list(fn = AA$fn, sta =GH$STNS[i] , comp = GH$COMP[i], 
+                     dt = AA$dt, DATTIM = AA, N = AA$n1, units = NA, 
+                     coords = NA, amp = GH$JSTR[[i]]  )
 }
+#### par(mfrow=c(length(GIVE) , 1) )
+#   for(i in 1:length(GIVE) ) { plotGH(GIVE[[i]])   }
+tdir = tempdir()
+for(i in 1:length(GIVE) )
+{
+    sig = GIVE[[i]]
+  d1 =  dateStamp(sig$DATTIM, sep='_')
+   nam1 =  paste(d1,sig$sta, sig$comp, sep='_')
+    nam2 = paste0(nam1, '.RDS')
+    nam3 = paste(tdir, nam2, sep='/')
+    saveRDS(file=nam3, sig) 
+    }
+########################  Now  read files and make the DataBase:
+LF  = list.files(path=tdir,pattern='.RDS',  full.names=TRUE)
+DB = FmakeDB(LF, kind=-1)
+IDB = infoDB(DB)
 
 
+SAMPseis <- Mine.seis(IDB$at1, IDB$at2, DB, IDB$usta[1:3], IDB$ucomp[1], kind = -1   )
 
-
-}
-
-
+w <- swig(SAMPseis, SHOWONLY=0)
 
 
 }

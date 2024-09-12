@@ -31,12 +31,15 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 
 \examples{
 
-
 \dontrun{
+##### this example creates an ascii version of the
+#####   seismic data for exchange purposes
 data("GH")
 tempd = tempdir()
-sel <-  which(GH$COMPS == "V" & GH$STNS=="CE1"  , destdir=tempd )
-ASCII.SEISN(GH, sel = 1, HEAD = TRUE)
+sel <-  which(GH$COMPS == "V" & GH$STNS=="CE1"   )
+ASCII.SEISN(GH, sel = 1, HEAD = TRUE, destdir=tempd)
 }
+
+
 }
 \keyword{misc}

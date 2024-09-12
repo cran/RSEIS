@@ -35,7 +35,7 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 }
 \examples{
 
-\dontrun{
+if(interactive()){
 data(GH)
 
 swig(GH, sel=which(GH$COMPS=="V" ))

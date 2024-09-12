@@ -86,34 +86,42 @@ Jonathan M. Lees<jonathan.lees@unc.edu>
 }
 \examples{
 
-\dontrun{
-###  output directory
-setwd("/home/lees/MARIO_TUNG/LONGFFT")
+if(interactive()){
+ #####  get a time series
+     data(KH)
+     
+     amp = KH$JSTR[[1]]
+     OLDdt = KH$dt[1]
+     ####  downsample to:
+     newdt = 0.1
+     
+     JK = FAKEDATA(amp, OLDdt=OLDdt, newdt = 0.1, yr = 2000,
+              JD = 4, mi = 12, sec = 0,  Ntraces = 24,
+seed=200, noise.est=c(1, 100) , verbose=TRUE  )
+     
+    
+tdir = tempdir()
+for(i in 1:length(JK) )
+{
+    sig = JK[[i]]
+  d1 =  dateStamp(sig$DATTIM, sep='_')
+   nam1 =  paste(d1,sig$sta, sig$comp, sep='_')
+    nam2 = paste0(nam1, '.RDS')
+    nam3 = paste(tdir, nam2, sep='/')
+    saveRDS(file=nam3, sig) 
+    }
 
-###  2 color palettes
-p1 <- Gcols(plow=5, phi=0,  N=100, pal="topo.colors", mingray=0.8)
-p2 <- Gcols(plow=5, phi=0,  N=100, pal="rainbow", mingray=0.8)
+LF  = list.files(path=tdir,pattern='.RDS',  full.names=TRUE)
+DB = FmakeDB(LF, kind=-1)
+IDB = infoDB(DB)
 
-###   one station, vertical component
-longfft(DB, DAYS=c(148:156) , HRS=1:24 ,
-sta="BBIL", comp=c("BHZ") , NPP=6 , CSCALE=FALSE, 
-pal = list(p1=p1, p2=p2), PS=TRUE ,  kind = 2,
-Iendian=1, BIGLONG=FALSE )
-
-###   one station, infrasound
-longfft(DB, DAYS=c(148:156) , HRS=1:24 , sta="BBIL",
-comp=c("BDF") , NPP=6 , CSCALE=FALSE, 
-pal = list(p1=p2, p2=p1), PS=TRUE ,  kind = 2,
-Iendian=1, BIGLONG=FALSE )
-
-###  one station, both vertical and infrasound, alternating
-longfft(DB, DAYS=c(148:156) , HRS=1:24 , sta="BBIL",
-comp=c("BHZ", "BDF") , NPP=6 , CSCALE=FALSE, 
-pal = list(p1=p2, p2=p1), PS=TRUE ,  kind = 2,
-Iendian=1, BIGLONG=FALSE )
-
-
-
+   p1 <- RPMG::Gcols(plow=5, phi=0,  N=100, pal="topo.colors", mingray=0.8)
+     p2 <- RPMG::Gcols(plow=5, phi=0,  N=100, pal="rainbow", mingray=0.8)
+    
+longfft(DB, DAYS=5 , HRS=1:24 ,
+     sta=IDB$usta, comp=IDB$ucomp , NPP=6 , CSCALE=FALSE, 
+     pal = list(p1=p1, p2=p2), PS=FALSE ,  kind = -1,
+     Iendian=1, BIGLONG=TRUE )
 
 
 }

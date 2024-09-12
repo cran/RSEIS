@@ -1,11 +1,16 @@
-view.seis<-function(aday, ihour, inkhour, SAVEFILE, days, DB, usta, acomp,  STDLAB =c("QUIT",  "NEXT", "PREV", "HALF") , TZ=NULL  )
+view.seis<-function(aday, ihour, inkhour, SAVEFILE, days,
+                    DB, usta, acomp,
+                    STDLAB =c("QUIT",  "NEXT", "PREV", "HALF") ,
+                    kind = -1, Iendian=1,
+                    BIGLONG=FALSE, TZ=NULL  )
   {
     ####     aday   = index of which day to use in vector days
     ####     ihour     = hour to start
     ####     inkhour   = increment in hours for viewing panel
     ####     SAVEFILE  = file to save window picks in
     ####     days   =list of years and days to select from days=list()
-    ########## for example: days = list(jd=c(365,366, 1,2,3,4), yr=c(2008, 2008, rep(2009, times=4)))
+########## for example:
+      ###  days = list(jd=c(365,366, 1,2,3,4), yr=c(2008, 2008, rep(2009, times=4)))
 
     ####     DB     = data base list of file names and start-times and durations
     ####     usta   = stations to select
@@ -64,12 +69,7 @@ view.seis<-function(aday, ihour, inkhour, SAVEFILE, days, DB, usta, acomp,  STDL
        }
 
 
-     
-
    }
-
-
-   
    
    eday = EPOCHday(days$yr[aday], jd=days$jd[aday], origyr =  attr(DB, "origyr") )
            
@@ -86,7 +86,10 @@ view.seis<-function(aday, ihour, inkhour, SAVEFILE, days, DB, usta, acomp,  STDL
         at2 =  at1+inkhour/24
 
 ##################   grab data from DB list, glue together station/component pairs
-        GH = Mine.seis(at1, at2, DB, usta, acomp)
+        GH = Mine.seis(at1, at2, DB, usta, acomp, kind = kind, Iendian=Iendian,
+                       BIGLONG=BIGLONG)
+
+          
         GH$TZ=TZ   
 
         if(length(GH$STNS)<1)

@@ -14,7 +14,7 @@ function(why, dt, noctave=6, nvoice=20, w0=5,  flip=TRUE, ploty=TRUE, zscale=1, 
     if(missing(STAMP)) { STAMP=NULL }
    if(missing(w0)) { w0=5 }
 
-      opar = par()
+      opar = par(no.readonly =TRUE)
       on.exit(par(opar))
     ## par(mfrow=c(2,1))
     ## par(xaxs='i')

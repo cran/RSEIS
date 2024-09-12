@@ -153,12 +153,17 @@ write1segy<-function(alist,  fn=NULL , BIGLONG=FALSE )
           
         
         if(formsegy[i]=="char")
-          {
-            ## fchar =  paste(format(SEGYhead.vals[i] , width=charlen[i]-1), "\\0" , sep="" )
-         ##   fchar = format(val , width=charlen[i])
-            
-         ##   writeChar( fchar , zz, nchars =charlen[i] ,eos=NULL)
-            suppressWarnings(writeChar( as.character(val) , zz, nchars =charlen[i] ,eos=NULL))
+        {
+
+
+            ##   fchar =  paste(format(val , width=charlen[i]-1), "\\0" , sep="" )
+
+            #fchar =  paste(format(val , width=charlen[i]), "\\0" , sep=" " )
+                                        # fchar =  as.character( format(val , width=charlen[i]) )
+             fchar = format(val , width=charlen[i])
+             writeChar( fchar, zz, nchars =charlen[i] ,eos=NULL )
+            ##   suppressWarnings(writeChar( as.character(val) ,
+             ##                             zz, nchars =charlen[i] ,eos=NULL))
           }
         else
           {
